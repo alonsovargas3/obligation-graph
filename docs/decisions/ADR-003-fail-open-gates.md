@@ -22,6 +22,25 @@ may never suppress a finding.
 - Gate recall is the headline metric, not cost saved. Target 100% recall on the test set; report precision and skipped-check rate alongside. Every change-order eval runs twice, gated and ungated; the ungated run is ground truth for gate recall.
 - Thresholds are calibrated to a false-negative target on the labeled set, with a Clopper-Pearson upper bound on miss rate reported honestly, wide as it will be on a small set.
 
+## Pre-registered skip policy (wave 3)
+
+Wave 3 freezes the skip rule before any scored run, and this section
+supersedes the calibration sentence in the Decision above. A check is
+skipped only when the deterministic tier found no hit and the classifier
+tier returned a unanimous three-of-three "no" with no error, failed sample,
+or disagreement (`GATE_POLICY = {"samples": 3, "skip": "unanimous_false"}`).
+The threshold is not fitted to the labeled set: with two change orders,
+calibration would be indistinguishable from memorizing the test set, so the
+rule is fixed by policy and every deviation fails open into the full check.
+
+What survives from the superseded sentence: the ungated run remains
+mandatory ground truth, misses are still counted against it, and a
+one-sided Clopper-Pearson 95% upper bound on the miss rate is still reported
+with the miss count and the binomial assumption, however wide two change
+orders make it. Reporting names each skip `zero_baseline_skip`,
+`confirmed_safe_skip`, or `baseline_miss`, so a skip that hid a finding is
+visible as such.
+
 ## Consequences
 
 Safety is bought with redundant full checks; the cost log shows what gating
