@@ -1,0 +1,1025 @@
+{
+  "metric": "aggregate",
+  "date": "2026-10-02",
+  "manifest_sha256": "b7567af6a50061406bf9d8c87398e83b15ff771345909550f08af3b654c378a5",
+  "extraction": {
+    "doc_id": "constantcontact-2011-ex1041",
+    "prompt_version": "extract_v1@6de99191",
+    "textdoc_sha256": "d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478",
+    "integrity": 0,
+    "score": {
+      "metric": "m1",
+      "iou_threshold": 0.3,
+      "n_gold": 50,
+      "n_pred": 166,
+      "matches": [
+        [
+          0,
+          28
+        ],
+        [
+          1,
+          29
+        ],
+        [
+          2,
+          30
+        ],
+        [
+          3,
+          31
+        ],
+        [
+          5,
+          35
+        ],
+        [
+          6,
+          37
+        ],
+        [
+          8,
+          40
+        ],
+        [
+          9,
+          43
+        ],
+        [
+          10,
+          47
+        ],
+        [
+          11,
+          51
+        ],
+        [
+          12,
+          52
+        ],
+        [
+          13,
+          53
+        ],
+        [
+          16,
+          68
+        ],
+        [
+          18,
+          77
+        ],
+        [
+          19,
+          81
+        ],
+        [
+          20,
+          88
+        ],
+        [
+          21,
+          92
+        ],
+        [
+          22,
+          94
+        ],
+        [
+          23,
+          95
+        ],
+        [
+          24,
+          96
+        ],
+        [
+          25,
+          97
+        ],
+        [
+          26,
+          98
+        ],
+        [
+          27,
+          99
+        ],
+        [
+          30,
+          106
+        ],
+        [
+          31,
+          109
+        ],
+        [
+          32,
+          110
+        ],
+        [
+          33,
+          114
+        ],
+        [
+          34,
+          120
+        ],
+        [
+          35,
+          122
+        ],
+        [
+          36,
+          123
+        ],
+        [
+          37,
+          131
+        ],
+        [
+          40,
+          150
+        ],
+        [
+          41,
+          151
+        ],
+        [
+          42,
+          153
+        ],
+        [
+          43,
+          154
+        ],
+        [
+          44,
+          156
+        ],
+        [
+          45,
+          157
+        ],
+        [
+          46,
+          158
+        ],
+        [
+          47,
+          161
+        ],
+        [
+          48,
+          163
+        ],
+        [
+          49,
+          164
+        ]
+      ],
+      "micro": {
+        "tp": 41,
+        "fp": 125,
+        "fn": 9,
+        "precision": null,
+        "recall": 0.82,
+        "f1": null,
+        "precision_lower_bound": 0.2469879518072289
+      },
+      "per_type": {
+        "delivery": {
+          "tp": 3,
+          "fp": 10,
+          "fn": 1,
+          "precision": null,
+          "recall": 0.75,
+          "f1": null,
+          "precision_lower_bound": 0.23076923076923078
+        },
+        "guarantee": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "precision": null,
+          "recall": 1.0,
+          "f1": null,
+          "precision_lower_bound": 0.0
+        },
+        "insurance": {
+          "tp": 3,
+          "fp": 13,
+          "fn": 0,
+          "precision": null,
+          "recall": 1.0,
+          "f1": null,
+          "precision_lower_bound": 0.1875
+        },
+        "notice": {
+          "tp": 6,
+          "fp": 13,
+          "fn": 0,
+          "precision": null,
+          "recall": 1.0,
+          "f1": null,
+          "precision_lower_bound": 0.3157894736842105
+        },
+        "other": {
+          "tp": 10,
+          "fp": 25,
+          "fn": 4,
+          "precision": null,
+          "recall": 0.7142857142857143,
+          "f1": null,
+          "precision_lower_bound": 0.2857142857142857
+        },
+        "payment": {
+          "tp": 7,
+          "fp": 47,
+          "fn": 3,
+          "precision": null,
+          "recall": 0.7,
+          "f1": null,
+          "precision_lower_bound": 0.12962962962962962
+        },
+        "penalty": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": 1.0,
+          "f1": null,
+          "precision_lower_bound": 1.0
+        },
+        "sla": {
+          "tp": 3,
+          "fp": 8,
+          "fn": 0,
+          "precision": null,
+          "recall": 1.0,
+          "f1": null,
+          "precision_lower_bound": 0.2727272727272727
+        },
+        "termination_right": {
+          "tp": 5,
+          "fp": 7,
+          "fn": 1,
+          "precision": null,
+          "recall": 0.8333333333333334,
+          "f1": null,
+          "precision_lower_bound": 0.4166666666666667
+        }
+      },
+      "macro": {
+        "precision": null,
+        "recall": 0.874702380952381,
+        "f1": null,
+        "precision_lower_bound": 0.354849569898912
+      },
+      "fields": {
+        "amount": {
+          "gold_known": 1,
+          "pred_known": 1,
+          "both_known": 1,
+          "both_known_equal": 1,
+          "accuracy_on_known": 1.0,
+          "coverage": 1.0
+        },
+        "currency": {
+          "gold_known": 1,
+          "pred_known": 1,
+          "both_known": 1,
+          "both_known_equal": 1,
+          "accuracy_on_known": 1.0,
+          "coverage": 1.0
+        },
+        "due_date": {
+          "gold_known": 0,
+          "pred_known": 0,
+          "both_known": 0,
+          "both_known_equal": 0,
+          "accuracy_on_known": null,
+          "coverage": null
+        },
+        "offset_days": {
+          "gold_known": 5,
+          "pred_known": 0,
+          "both_known": 0,
+          "both_known_equal": 0,
+          "accuracy_on_known": null,
+          "coverage": 0.0
+        },
+        "anchor_event": {
+          "gold_known": 5,
+          "pred_known": 0,
+          "both_known": 0,
+          "both_known_equal": 0,
+          "accuracy_on_known": null,
+          "coverage": 0.0
+        },
+        "owed_by": {
+          "gold_known": 41,
+          "pred_known": 41,
+          "both_known": 41,
+          "both_known_equal": 38,
+          "accuracy_on_known": 0.926829268292683,
+          "coverage": 1.0
+        },
+        "owed_to": {
+          "gold_known": 41,
+          "pred_known": 40,
+          "both_known": 40,
+          "both_known_equal": 37,
+          "accuracy_on_known": 0.925,
+          "coverage": 0.975609756097561
+        },
+        "status": {
+          "gold_known": 41,
+          "pred_known": 41,
+          "both_known": 41,
+          "both_known_equal": 41,
+          "accuracy_on_known": 1.0,
+          "coverage": 1.0
+        }
+      },
+      "precision_lower_bound": {
+        "micro": 0.2469879518072289,
+        "macro": 0.354849569898912
+      }
+    },
+    "historical": {
+      "label": "historical",
+      "source": "eval/results/2026-10-02-extract-summary.json",
+      "summary": {
+        "date": "2026-10-02",
+        "doc_id": "constantcontact-2011-ex1041",
+        "prompt_version": "extract_v1@6de99191",
+        "model": "claude-sonnet-5-5",
+        "effort": "high",
+        "reference_set": "eval/gold/constantcontact-2011-ex1041.yaml (50 obligations, scope sampled: model-drafted, human-spot-checked)",
+        "metric": "m1 (IoU>=0.3, same type, maximum-cardinality matching)",
+        "samples": [
+          {
+            "file": "2026-10-02-extract-constantcontact-2011-ex1041-s1.json",
+            "n_pred": 166,
+            "recall_micro": 0.82,
+            "recall_macro": 0.874702380952381,
+            "precision_lower_bound_micro": 0.2469879518072289,
+            "owed_by_accuracy_on_known": 0.926829268292683,
+            "owed_by_coverage": 1.0,
+            "proposal_grounding": 0.9661016949152542,
+            "integrity": 0,
+            "served_models": [
+              "claude-sonnet-5-5"
+            ]
+          },
+          {
+            "file": "2026-10-02-extract-constantcontact-2011-ex1041-s2.json",
+            "n_pred": 141,
+            "recall_micro": 0.8,
+            "recall_macro": 0.8211309523809524,
+            "precision_lower_bound_micro": 0.28368794326241137,
+            "owed_by_accuracy_on_known": 1.0,
+            "owed_by_coverage": 1.0,
+            "proposal_grounding": 0.9358974358974359,
+            "integrity": 0,
+            "served_models": [
+              "claude-sonnet-5-5"
+            ]
+          },
+          {
+            "file": "2026-10-02-extract-constantcontact-2011-ex1041-s3.json",
+            "n_pred": 144,
+            "recall_micro": 0.8,
+            "recall_macro": 0.8211309523809524,
+            "precision_lower_bound_micro": 0.2777777777777778,
+            "owed_by_accuracy_on_known": 0.925,
+            "owed_by_coverage": 1.0,
+            "proposal_grounding": 0.93125,
+            "integrity": 0,
+            "served_models": [
+              "claude-sonnet-5-5"
+            ]
+          }
+        ],
+        "n_samples": 3,
+        "variance_note": "ADR-006 asks for 5 uncached samples; 3 were run (budget). s1 is the main run re-verified from cache under verify rev 2.7; s2 and s3 are uncached samples in separate DBs.",
+        "aggregate": {
+          "n_pred": {
+            "mean": 150.3333,
+            "min": 141,
+            "max": 166,
+            "sd": 11.1455
+          },
+          "recall_micro": {
+            "mean": 0.8067,
+            "min": 0.8,
+            "max": 0.82,
+            "sd": 0.0094
+          },
+          "recall_macro": {
+            "mean": 0.839,
+            "min": 0.8211,
+            "max": 0.8747,
+            "sd": 0.0253
+          },
+          "precision_lower_bound_micro": {
+            "mean": 0.2695,
+            "min": 0.247,
+            "max": 0.2837,
+            "sd": 0.0161
+          },
+          "owed_by_accuracy_on_known": {
+            "mean": 0.9506,
+            "min": 0.925,
+            "max": 1.0,
+            "sd": 0.0349
+          },
+          "proposal_grounding": {
+            "mean": 0.9444,
+            "min": 0.9313,
+            "max": 0.9661,
+            "sd": 0.0155
+          }
+        },
+        "corpus_run": {
+          "documents": 7,
+          "chunks": 72,
+          "chunk_status": "all ok",
+          "obligations": 525,
+          "incremental_cost_usd": 2.128
+        },
+        "variance_cost_usd": 1.157,
+        "total_api_spend_usd_approx": 3.38
+      }
+    }
+  },
+  "drops": {
+    "by_reason": {
+      "event_name_not_in_quote": 8,
+      "not_found_in_section": 1,
+      "role_not_bound_to_name": 19
+    },
+    "extraction_run_ids": {
+      "terawulf-2025-ex10-1": "20261002T145518-5912447b",
+      "constantcontact-2011-ex1041": "20261002T145519-86faa0f6",
+      "carbonite-2014-ex1024": "20261002T145519-e96f791a",
+      "mawson-2025-ex101": "20261002T145521-0b724a05",
+      "applieddigital-2026-ex101": "20261002T145523-40eb68be",
+      "constantcontact-2012-ex101": "20261002T145523-acb1d30f",
+      "endurance-2017-ex106": "20261002T145523-30002b97"
+    }
+  },
+  "change": {
+    "constantcontact-2012-ex101": {
+      "change_order_id": "constantcontact-2012-ex101",
+      "chain": [
+        "constantcontact-2011-ex1041",
+        "constantcontact-2012-ex101"
+      ],
+      "findings": {
+        "ungated": {
+          "overall": {
+            "tp": 8,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.8,
+            "recall": 0.8,
+            "predicted": 10,
+            "gold": 10
+          },
+          "per_kind": {
+            "supersedes": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 1,
+              "precision": 0.6,
+              "recall": 0.75
+            },
+            "shifted_date": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "price_change": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "potential_conflict": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "matches": [
+            [
+              1,
+              8
+            ],
+            [
+              2,
+              7
+            ],
+            [
+              3,
+              9
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              1
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              9,
+              4
+            ]
+          ]
+        },
+        "gated": {
+          "overall": {
+            "tp": 8,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.8,
+            "recall": 0.8,
+            "predicted": 10,
+            "gold": 10
+          },
+          "per_kind": {
+            "supersedes": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 1,
+              "precision": 0.6,
+              "recall": 0.75
+            },
+            "shifted_date": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "price_change": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "potential_conflict": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "matches": [
+            [
+              1,
+              8
+            ],
+            [
+              2,
+              7
+            ],
+            [
+              3,
+              9
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              1
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              9,
+              4
+            ]
+          ]
+        },
+        "retention_recall": 1.0
+      },
+      "values": {
+        "old_value": {
+          "gold": 0,
+          "coverage": null,
+          "accuracy": null
+        },
+        "new_value": {
+          "gold": 5,
+          "coverage": 1.0,
+          "accuracy": 1.0
+        },
+        "delta": {
+          "gold": 0,
+          "coverage": null,
+          "accuracy": null
+        },
+        "currency": {
+          "gold": 5,
+          "coverage": 1.0,
+          "accuracy": 1.0
+        },
+        "target_label": {
+          "gold": 3,
+          "coverage": 1.0,
+          "accuracy": 1.0
+        }
+      },
+      "gates": {
+        "cascade": {
+          "vs_reference": {
+            "positives": 5,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 1.0,
+            "miss_upper_95": 0.4507197283469413,
+            "skipped": 1,
+            "skip_rate": 0.16666666666666666
+          },
+          "vs_baseline": {
+            "positives": 3,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 0.6,
+            "miss_upper_95": 0.6315968501359617
+          }
+        },
+        "rules": {
+          "vs_reference": {
+            "positives": 5,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 1.0,
+            "miss_upper_95": 0.4507197283469413
+          },
+          "vs_baseline": {
+            "positives": 3,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 0.6,
+            "miss_upper_95": 0.6315968501359617
+          }
+        },
+        "haiku": {
+          "observed": [
+            "guarantee"
+          ],
+          "coverage": 0.16666666666666666,
+          "vs_reference": {
+            "positives": 0,
+            "misses": 0,
+            "missed": [],
+            "recall": null,
+            "precision": null,
+            "miss_upper_95": null
+          },
+          "vs_baseline": {
+            "positives": 0,
+            "misses": 0,
+            "missed": [],
+            "recall": null,
+            "precision": null,
+            "miss_upper_95": null
+          }
+        }
+      },
+      "skips": [
+        {
+          "category": "guarantee",
+          "kind": "confirmed_safe_skip",
+          "reference": false,
+          "baseline_findings": 0
+        }
+      ],
+      "disagreements": [],
+      "cost": {
+        "recorded_usd": {
+          "ungated": 0.384809,
+          "gated": 0.377907
+        },
+        "incremental_usd": {
+          "ungated": 0.0,
+          "gated": 0.0
+        },
+        "recorded_latency_ms": {
+          "ungated": 43960,
+          "gated": 41335
+        },
+        "gate_cost_usd": 0.012563999999999999
+      }
+    },
+    "endurance-2017-ex106": {
+      "change_order_id": "endurance-2017-ex106",
+      "chain": [
+        "constantcontact-2011-ex1041",
+        "constantcontact-2012-ex101",
+        "endurance-2017-ex106"
+      ],
+      "findings": {
+        "ungated": {
+          "overall": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "recall": 0.5714285714285714,
+            "predicted": 4,
+            "gold": 7
+          },
+          "per_kind": {
+            "supersedes": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "precision": 0.0,
+              "recall": 0.0
+            },
+            "shifted_date": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "price_change": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "potential_conflict": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            }
+          },
+          "matches": [
+            [
+              0,
+              3
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              2
+            ]
+          ]
+        },
+        "gated": {
+          "overall": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "recall": 0.5714285714285714,
+            "predicted": 4,
+            "gold": 7
+          },
+          "per_kind": {
+            "supersedes": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "precision": 0.0,
+              "recall": 0.0
+            },
+            "shifted_date": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "price_change": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            },
+            "potential_conflict": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0
+            }
+          },
+          "matches": [
+            [
+              0,
+              3
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              2
+            ]
+          ]
+        },
+        "retention_recall": 1.0
+      },
+      "values": {
+        "old_value": {
+          "gold": 1,
+          "coverage": 1.0,
+          "accuracy": 1.0
+        },
+        "new_value": {
+          "gold": 4,
+          "coverage": 1.0,
+          "accuracy": 1.0
+        },
+        "delta": {
+          "gold": 1,
+          "coverage": 1.0,
+          "accuracy": 1.0
+        },
+        "currency": {
+          "gold": 3,
+          "coverage": 1.0,
+          "accuracy": 1.0
+        },
+        "target_label": {
+          "gold": 0,
+          "coverage": null,
+          "accuracy": null
+        }
+      },
+      "gates": {
+        "cascade": {
+          "vs_reference": {
+            "positives": 3,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 0.75,
+            "miss_upper_95": 0.6315968501359617,
+            "skipped": 2,
+            "skip_rate": 0.3333333333333333
+          },
+          "vs_baseline": {
+            "positives": 2,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 0.5,
+            "miss_upper_95": 0.7763932022500208
+          }
+        },
+        "rules": {
+          "vs_reference": {
+            "positives": 3,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 0.75,
+            "miss_upper_95": 0.6315968501359617
+          },
+          "vs_baseline": {
+            "positives": 2,
+            "misses": 0,
+            "missed": [],
+            "recall": 1.0,
+            "precision": 0.5,
+            "miss_upper_95": 0.7763932022500208
+          }
+        },
+        "haiku": {
+          "observed": [
+            "guarantee",
+            "sla"
+          ],
+          "coverage": 0.3333333333333333,
+          "vs_reference": {
+            "positives": 0,
+            "misses": 0,
+            "missed": [],
+            "recall": null,
+            "precision": null,
+            "miss_upper_95": null
+          },
+          "vs_baseline": {
+            "positives": 0,
+            "misses": 0,
+            "missed": [],
+            "recall": null,
+            "precision": null,
+            "miss_upper_95": null
+          }
+        }
+      },
+      "skips": [
+        {
+          "category": "guarantee",
+          "kind": "confirmed_safe_skip",
+          "reference": false,
+          "baseline_findings": 0
+        },
+        {
+          "category": "sla",
+          "kind": "confirmed_safe_skip",
+          "reference": false,
+          "baseline_findings": 0
+        }
+      ],
+      "disagreements": [
+        {
+          "backend": "rules",
+          "category": "termination",
+          "answer": true,
+          "reference": false
+        },
+        {
+          "backend": "cascade",
+          "category": "termination",
+          "answer": true,
+          "reference": false
+        }
+      ],
+      "cost": {
+        "recorded_usd": {
+          "ungated": 0.37104000000000004,
+          "gated": 0.34601460000000006
+        },
+        "incremental_usd": {
+          "ungated": 0.0,
+          "gated": 0.0
+        },
+        "recorded_latency_ms": {
+          "ungated": 36900,
+          "gated": 34640
+        },
+        "gate_cost_usd": 0.016581
+      }
+    }
+  },
+  "cost": {
+    "recorded_usd": {
+      "ungated": 0.755849,
+      "gated": 0.7239216
+    },
+    "incremental_usd": {
+      "ungated": 0.0,
+      "gated": 0.0
+    },
+    "recorded_latency_ms": {
+      "ungated": 80860,
+      "gated": 75975
+    },
+    "change_orders": 2
+  }
+}
