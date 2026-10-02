@@ -376,6 +376,16 @@ class _Engine:
             rf"^\([A-Za-z]\){_W}(?P<lbl>{label_alt})\s*:?\s*$", re.IGNORECASE
         )
         self.date_start_rx = re.compile(rf"^(?:{_DATE_SRC})", re.IGNORECASE)
+        # Rev 2.3 `trigger_span` / `calendar_date_not_event`: a comma followed by a
+        # four-digit year inside a calendar date ('June 30, 2020') does not end a
+        # trigger span, and an event phrase that starts with such a date is never
+        # an event.
+        _month_alt = "|".join(_MONTHS)
+        self._month_day_end_rx = re.compile(rf"(?i:(?:{_month_alt})){_W}\d{{1,2}}\Z", re.IGNORECASE)
+        self._year_comma_rx = re.compile(rf",{_W}?\d{{4}}(?!\d)")
+        self.date_event_rx = re.compile(
+            rf"(?i:(?:{_month_alt})){_W}\d{{1,2}}(?:,{_W}\d{{4}})?(?!\d)", re.IGNORECASE
+        )
         self.decl_rxs = [re.compile(self._decl_src(t)) for t in dd["declarations"]]
 
     @staticmethod
@@ -399,12 +409,19 @@ class _Engine:
 
     # -- construction matching -----------------------------------------------------------
 
-    @staticmethod
-    def phrase_end(quote: str, pos: int) -> int:
-        """A trigger span ends before the first comma, semicolon or period."""
+    def phrase_end(self, quote: str, pos: int) -> int:
+        """A trigger span ends before the first comma, semicolon or period; a comma
+        followed by a four-digit year inside a calendar date does not (rev 2.3)."""
         i = pos
-        while i < len(quote) and quote[i] not in _DELIMS:
-            i += 1
+        while i < len(quote):
+            if quote[i] not in _DELIMS:
+                i += 1
+                continue
+            year = self._year_comma_rx.match(quote, i) if quote[i] == "," else None
+            if year is not None and self._month_day_end_rx.search(quote, max(0, i - 40), i):
+                i = year.end()
+                continue
+            return i
         return i
 
     def _count_value(self, m: re.Match) -> tuple[int | None, bool]:
@@ -454,6 +471,15 @@ class _Engine:
         if nxt is not None and (nxt.group(1)[:1].isupper() or nxt.group(1)[:1].isdigit()):
             return None
         return nm.group(0)
+
+    def starts_with_calendar_date(self, quote: str, pos: int) -> bool:
+        """Grammar `calendar_date_not_event`: the event phrase (after an optional
+        'the') opens with a calendar date, Month Day[, Year]."""
+        at = pos
+        skip = self._skip_the_rx.match(quote, pos)
+        if skip is not None:
+            at = skip.end()
+        return self.date_event_rx.match(quote, at) is not None
 
     def trigger_kind(self, quote: str, start: int, end: int, anchor_name: str | None) -> str | None:
         if anchor_name is not None:
@@ -568,6 +594,12 @@ def parse(doc: TextDoc, evidence: Evidence) -> ParsedTiming:
     anchor_name = eng.bind_name(quote, cm.keywords_end)
     trigger = _span(doc, evidence, cm.start, cm.trigger_end)
     kind = eng.trigger_kind(quote, cm.start, cm.trigger_end, anchor_name)
+    if anchor_name is None and eng.starts_with_calendar_date(quote, cm.keywords_end):
+        # Grammar `calendar_date_not_event` (rev 2.3): a calendar date is never an
+        # event; absolute dates belong to the extraction's due_date, never timing.
+        kind = None
+        if reason is None:
+            reason = "anchor_not_found"
     return ParsedTiming(
         cm.spec.id, cm.spec.relation, cm.offset_days, cm.unit, trigger, kind, anchor_name, reason
     )
