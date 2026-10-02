@@ -27,7 +27,7 @@ A3 = "endurance-2017-ex106"
 def ws(tmp_path, monkeypatch):
     root = tmp_path / "ws"
     (root / "data").mkdir(parents=True)
-    shutil.copy(FIX / "real_v4.db", root / "data" / "graph.db")
+    shutil.copy(FIX / "real_v5.db", root / "data" / "graph.db")
     shutil.copytree(FIX / "text", root / "data" / "text")
     shutil.copy(ROOT / "data" / "sources.yaml", root / "data" / "sources.yaml")
     (root / "ui").mkdir()
@@ -41,7 +41,7 @@ def ws(tmp_path, monkeypatch):
 @pytest.fixture
 def expected_con(tmp_path):
     path = tmp_path / "expected.db"
-    shutil.copy(FIX / "real_v4.db", path)
+    shutil.copy(FIX / "real_v5.db", path)
     con = connect(path)
     yield con
     con.close()

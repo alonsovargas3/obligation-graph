@@ -31,6 +31,7 @@ READ_ALLOWLIST = frozenset(
     {
         "visible_obligation",
         "visible_obligation_clause",
+        "visible_obligation_timing",
         "visible_party_binding",
         "visible_event_binding",
         "visible_site_binding",
@@ -51,7 +52,10 @@ MARKERS = {"redacted": "[REDACTED]", "blank": "[BLANK]"}
 MAX_LIMIT = 500
 PENDING_NOTE = (
     "Pending means the documents give no computable due date for this obligation. "
-    "It does not mean overdue, and it does not mean there is no obligation."
+    "It does not mean overdue, and it does not mean there is no obligation. "
+    "Contingent obligations are due relative to a quoted event that has not been "
+    "recorded; unresolved ones have timing the system cannot compute (a reason is "
+    "given); the rest state no deadline."
 )
 # change_order() statuses (rev 2 W4-3 / round-3 response matrix).
 CHANGE_STATUSES = (
@@ -103,6 +107,23 @@ class AgreementOut(TypedDict):
     obligation_count: int
 
 
+class TimingOut(TypedDict):
+    kind: str  # scheduled | contingent | unresolved | untimed
+    trigger_kind: str | None
+    trigger: ClauseRefOut | None  # minimal quoted trigger, inside the obligation quote
+    relation: str | None  # lt | lte | eq | gte | gt
+    offset_days: int | None
+    offset_unit: str | None
+    anchor: EventBindingOut | None  # the cited dated event the bound is computed from
+    reason: str | None  # set iff kind == "unresolved"
+
+
+class DeadlineOut(TypedDict):
+    relation: str  # lt | lte | eq
+    date: str  # ISO bound; with relation "lt" this is a strict before-date, not a due date
+    clause: ClauseRefOut  # the anchor's declaration
+
+
 class ObligationOut(TypedDict):
     id: int
     agreement_id: str
@@ -123,6 +144,8 @@ class ObligationOut(TypedDict):
     agreement_sites: list[SiteOut]
     clauses: list[ClauseRefOut]  # at least one
     superseded_by: list[dict]  # [{obligation_id, change_order_id, clause: ClauseRefOut}]
+    timing: TimingOut  # wave 5; kind "untimed" with nulls when no timing row is visible
+    deadline: DeadlineOut | None  # wave 5; set iff timing.kind == "scheduled"
 
 
 class ObligationPage(TypedDict):
@@ -141,6 +164,10 @@ class DeadlinesOut(TypedDict):
     scheduled: list[ObligationOut]
     pending: list[ObligationOut]  # one page
     pending_total: int
+    contingent: list[ObligationOut]  # one page; a subset of pending (wave 5)
+    contingent_total: int
+    unresolved_total: int
+    untimed_total: int
     offset: int
     truncated: bool
     unresolved_party_count: int

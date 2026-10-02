@@ -28,14 +28,14 @@ def add_ref(con, agreement="a1", grounded=1):
 
 def test_fresh_connect_sets_user_version(tmp_path):
     con = connect(tmp_path / "g.db")
-    assert SCHEMA_VERSION == 4
-    assert con.execute("PRAGMA user_version").fetchone()[0] == 4
+    assert SCHEMA_VERSION == 5
+    assert con.execute("PRAGMA user_version").fetchone()[0] == 5
 
 
 def test_reconnect_is_fine(tmp_path):
     connect(tmp_path / "g.db").close()
     con = connect(tmp_path / "g.db")
-    assert con.execute("PRAGMA user_version").fetchone()[0] == 4
+    assert con.execute("PRAGMA user_version").fetchone()[0] == 5
 
 
 def test_outdated_file_is_refused(tmp_path):
@@ -67,6 +67,18 @@ def test_v3_file_is_refused(tmp_path):
     old = sqlite3.connect(path)
     old.execute("CREATE TABLE source (id TEXT PRIMARY KEY)")
     old.execute("PRAGMA user_version = 3")
+    old.commit()
+    old.close()
+    with pytest.raises(SchemaOutdated, match="make extract"):
+        connect(path)
+
+
+def test_v4_file_is_refused(tmp_path):
+    """Wave 5: a schema-v4 graph.db is rebuilt, not migrated (recorded responses replay at $0)."""
+    path = tmp_path / "v4.db"
+    old = sqlite3.connect(path)
+    old.execute("CREATE TABLE source (id TEXT PRIMARY KEY)")
+    old.execute("PRAGMA user_version = 4")
     old.commit()
     old.close()
     with pytest.raises(SchemaOutdated, match="make extract"):

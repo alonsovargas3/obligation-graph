@@ -2,7 +2,7 @@
 
 The server is a thin, read-only wrapper over og.query. Every tool result is parsed
 from the real mcp 2.2 CallToolResult envelope (content[0].text JSON), never assumed
-to be a plain dict. The real graph fixture (tests/fixtures/graph/real_v4.db) is
+to be a plain dict. The real graph fixture (tests/fixtures/graph/real_v5.db) is
 copied into a temporary workspace (OG_WORKSPACE) before use.
 """
 
@@ -45,7 +45,7 @@ A3 = "endurance-2017-ex106"
 def make_workspace(root: Path) -> Path:
     """A workspace layout: data/graph.db, data/text/*.json, data/sources.yaml, ui/."""
     (root / "data").mkdir(parents=True)
-    shutil.copy(FIX / "real_v4.db", root / "data" / "graph.db")
+    shutil.copy(FIX / "real_v5.db", root / "data" / "graph.db")
     shutil.copytree(FIX / "text", root / "data" / "text")
     shutil.copy(ROOT / "data" / "sources.yaml", root / "data" / "sources.yaml")
     return root
@@ -62,7 +62,7 @@ def ws(tmp_path, monkeypatch):
 def expected_con(tmp_path):
     """A separate copy of the fixture for computing og.query's expected outputs."""
     path = tmp_path / "expected.db"
-    shutil.copy(FIX / "real_v4.db", path)
+    shutil.copy(FIX / "real_v5.db", path)
     con = connect(path)
     yield con
     con.close()
@@ -186,7 +186,7 @@ def test_missing_db_is_a_structured_error(ws):
 
 def test_older_schema_db_is_a_structured_error(ws):
     old = ws / "data" / "old.db"
-    shutil.copy(FIX / "real_v4.db", old)
+    shutil.copy(FIX / "real_v5.db", old)
     con = sqlite3.connect(old)
     con.execute("PRAGMA user_version = 3")
     con.commit()

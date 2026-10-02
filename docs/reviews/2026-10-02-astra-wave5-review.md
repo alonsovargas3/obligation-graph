@@ -298,3 +298,67 @@ No other new blocker is established. The remaining lexicon coverage, minimal-spa
 ### D) Verdict
 
 proceed-after-fixes
+
+## Round 3
+
+### A) R2-1 disposition and executed proof
+
+**R2-1: resolved.** Reviewed rev 2.1 at `025643f`. Implemented the prescribed dependency order in an in-memory backup of `tests/fixtures/graph/real_v4.db`:
+
+```text
+grounded_obligation -> visible_obligation_timing -> visible_obligation
+```
+
+The timing projection reads the internal grounded-owner helper, raw trigger/extraction refs for containment, and `visible_event_binding` for cited same-agreement/base anchors. It never reads the final obligation view or `visible_obligation_clause`, which itself depends on that final view. The final view derives lifecycle and deadline fields from eligible timing. Timing refs have separate ownership; the original extraction citations remain unchanged.
+
+Executable: `/tmp/w5_r3_sql.py`. Output: `/tmp/w5-r3-run.txt`. The probe loaded all 525 round-2 classifications, created the grounded date-declaration events needed by the five schedules, and applied the new month-granularity rule to 443. All mutations stayed in memory. The fixture database hash remained unchanged, and `PRAGMA foreign_key_check` returned no violations.
+
+| Baseline view | Rows |
+|---|---:|
+| grounded_obligation | 525 |
+| visible_obligation_timing | 525 |
+| visible_obligation | 525 |
+| visible_obligation_clause, original extraction evidence | 525 |
+
+Exactly five rows have lifecycle `scheduled`:
+
+| ID | Lifecycle | Deadline relation | Deadline date | effective_due |
+|---|---|---|---|---|
+| 62 | scheduled | lt | 2011-01-01 | null |
+| 65 | scheduled | lt | 2011-01-01 | null |
+| 236 | scheduled | lt | 2014-04-01 | null |
+| 514 | scheduled | lte | 2012-06-01 | 2012-06-01 |
+| 519 | scheduled | lte | 2020-06-30 | 2020-06-30 |
+
+These exact ids, relations, dates and effective-due values were asserted programmatically. Existing supersession precedence remains ahead of scheduled/pending lifecycle derivation.
+
+**Citation negatives:** each mutation ran independently under a savepoint and was rolled back before the next case. All baseline counts returned to 525 after each rollback.
+
+| Mutation | Timing-view rows | Obligation-view rows | Asserted outcome |
+|---|---:|---:|---|
+| Revoke 62's timing trigger ref | 524 | 525 | 62 becomes pending with no deadline, effective due, deadline ref or timing anchor; 65 remains scheduled. |
+| Revoke the shared Commencement Date declaration ref | 523 | 525 | Both 62 and 65 lose timing eligibility and all derived date/binding fields. |
+| Revoke 62's original extraction ref | 524 | 524 | 62 disappears from both public views. |
+| Give 62 real ref 123, the quote belonging to 65 | 524 | 525 | Rejected by containment despite the same agreement and grounded ref; 65 remains scheduled. The timing ownership link was also updated, so this tests containment rather than merely missing link membership. |
+| Give 62 foreign Carbonite event 5 | 524 | 525 | Rejected by agreement/base scope despite a grounded event. The stored candidate bound was also changed to 2014-02-01 to match event 5, ensuring rejection is not merely an arithmetic mismatch. |
+
+**Ninety-day window:** selecting scheduled rows by `deadline_date BETWEEN '2010-12-15' AND date('2010-12-15', '+90 days')` returns exactly:
+
+```text
+62  lt  2011-01-01
+65  lt  2011-01-01
+```
+
+Their null `effective_due` no longer excludes them. Each appears once, retains `lt`, and is excluded from pending by its scheduled lifecycle.
+
+**Month-granularity case:** the new construction recognizer matches only 443 among these quotes and retains the exact slice `in the month that Host receives the Curtailment Program Revenue`. Its visible timing is `unresolved`, reason `month_granularity`, with null relation and bound; its lifecycle is pending. No calendar day or receipt date is invented. With that correction, the loaded prototype has 5 scheduled, 132 contingent, 149 unresolved and 239 untimed rows. As rev 2.1 specifies, these aggregate counts are descriptive, not acceptance targets.
+
+### B) Blockers and known limitations
+
+**New blockers: none.** The reproduced circular dependency is removed, and the real-graph eligibility, lifecycle, strict-window and month-granularity checks above pass.
+
+**Known limitations:** this is an executable proof on the current corpus classifications, not a production schema or a full pipeline test. The current corpus has no legacy explicit due dates or legacy anchor/offset pairs, so their compatibility/conflict paths still need the already-planned B5 tests. The closed grammar, minimal trigger spans and independently adjudicated labels remain B5/C14 work; the prototype's aggregate counts do not substitute for those acceptance checks. No further synthetic cases are raised as blockers in this final round.
+
+### C) Verdict
+
+agree-to-proceed

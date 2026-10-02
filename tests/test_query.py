@@ -1,6 +1,6 @@
 """Task 30: og.query on the real graph (wave 4 Rev 2 W4-1, W4-6, W4-7, W4-8, W4-10, W4-11).
 
-Every check runs on a copy of tests/fixtures/graph/real_v4.db inside a workspace
+Every check runs on a copy of tests/fixtures/graph/real_v5.db inside a workspace
 layout (OG_WORKSPACE), so the committed fixture is never written.
 """
 

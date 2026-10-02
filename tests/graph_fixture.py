@@ -1,8 +1,9 @@
-"""Helpers for the real wave-4 graph fixture (tests/fixtures/graph/).
+"""Helpers for the real graph fixture (tests/fixtures/graph/).
 
-`real_v4.db` is the real wave-3 integration graph in schema v4 plus the four cited
-site pins (see tests/fixtures/graph/README.md). Tests always work on a copy: the
-committed file is never opened for writing.
+`real_v5.db` is the real wave-3 integration graph plus the four cited site pins, copied
+row for row from `real_v4.db` into schema v5 (wave 5) with no timing rows. See
+tests/fixtures/graph/README.md. Tests always work on a copy: the committed file is never
+opened for writing.
 """
 
 from __future__ import annotations
@@ -15,7 +16,7 @@ from og.textdoc import TextDoc
 
 ROOT = Path(__file__).resolve().parents[1]
 FIX = Path(__file__).parent / "fixtures" / "graph"
-REAL_DB = FIX / "real_v4.db"
+REAL_DB = FIX / "real_v5.db"
 TEXT = FIX / "text"
 
 BASE = "constantcontact-2011-ex1041"

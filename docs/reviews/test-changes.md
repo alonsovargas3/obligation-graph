@@ -179,3 +179,11 @@ Red at freeze: 11 modules fail at collection on missing modules, and every wave 
 - **New frozen test:** `tests/test_readme_tables.py`, which applies the real README check from rev 2 W4-14.
 - **What it checks:** the generated tables match the committed aggregate, and the README contains no em dashes.
 - **Status:** green at freeze.
+
+## Wave 5 B5 (2026-10-02)
+
+- **New frozen modules:** `test_timing`, `test_timing_corpus`, `test_schema_v5`, `test_timing_writer`, `test_query_timing`, `test_mcp_timing`, `test_ui_timing`, `test_eval_timing`.
+- **New helper:** `timing_fixture.py`.
+- **New fixture:** `tests/fixtures/graph/real_v5.db`, built by `build_fixture_v5.py`.
+- **Adapted for schema v5, intent kept:** `test_schema_v2.py` (version 5, and a v4 file is refused); `graph_fixture.py`, `eval_workspace.py` and several reader tests now point at `real_v5.db`.
+- **Red at freeze:** 1,345 passed. All 158 failures and 6 errors are in wave 5 modules. Each fork showed satisfiability with throwaway code on a devbox scratch copy.

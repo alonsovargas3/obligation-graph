@@ -1,6 +1,6 @@
 """Test helper (wave 4 Task 34): a workspace built from the real graph fixture.
 
-Copies tests/fixtures/graph/real_v4.db and its TextDocs, the committed reference sets,
+Copies tests/fixtures/graph/real_v5.db and its TextDocs, the committed reference sets,
 and the committed wave 2 extraction summary into a tmp workspace, writes a SYNTHETIC
 extraction run log whose run ids match the fixture's extraction runs, and writes the
 results manifest (shape documented in tests/test_eval_all.py).
@@ -97,7 +97,7 @@ def manifest_dict(root: Path) -> dict:
 def build(root: Path) -> dict:
     """Populate `root`; return {"manifest": path, "expected_drops": {...}, "runs": {...}}."""
     (root / "data").mkdir(parents=True, exist_ok=True)
-    shutil.copy(FIX / "real_v4.db", root / "data" / "graph.db")
+    shutil.copy(FIX / "real_v5.db", root / "data" / "graph.db")
     shutil.copytree(FIX / "text", root / "data" / "text")
     shutil.copytree(REPO / "eval" / "gold", root / "eval" / "gold")
     (root / "eval" / "results").mkdir(parents=True, exist_ok=True)

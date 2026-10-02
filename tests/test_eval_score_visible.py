@@ -1,6 +1,6 @@
 """Task 34: the scorers read only citation-bearing visible bindings (wave 4 rev 2 W4-2, W4-3).
 
-On a copy of the real wave 3 graph (tests/fixtures/graph/real_v4.db):
+On a copy of the real wave 3 graph (tests/fixtures/graph/real_v5.db):
 - pred_from_db takes payer/payee roles from visible_party_binding and anchor names from
   visible_event_binding, so revoking the landlord's party citation (clause_ref 65, CC
   base) removes every landlord-payee prediction of that agreement and leaves obligation
@@ -28,7 +28,7 @@ A3 = "endurance-2017-ex106"
 @pytest.fixture
 def graph(tmp_path):
     path = tmp_path / "graph.db"
-    shutil.copy(FIX / "real_v4.db", path)
+    shutil.copy(FIX / "real_v5.db", path)
     con = sqlite3.connect(path, isolation_level=None)
     con.execute("PRAGMA foreign_keys = ON")
     yield con

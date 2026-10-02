@@ -1,0 +1,120 @@
+# Timing grammar v1 (wave 5; coordinator-authored, frozen). Closed lists drawn from the
+# 7 filings (plan rev 2 W5-4, rev 2.1). Matching is case-insensitive except where a
+# defined term is required; whitespace includes NBSP; offsets are preserved, never
+# normalized. Phrasings outside these lists are documented limitations (stop rule).
+version: timing_grammar_v1
+
+numbers:
+  # A count is digits, a spelled number (one..one hundred twenty), or a spelled number
+  # followed by a parenthesized digit form: "thirty (30)", "ten (10)", "30".
+  spelled_max: 120
+  redacted_tokens: ["[***]", "[*]", "[REDACTED]"]
+
+units:
+  calendar: ["day", "days", "calendar day", "calendar days"]
+  business: ["business day", "business days", "Business Day", "Business Days"]
+  hours: ["hour", "hours"]
+  months: ["month", "months", "calendar month", "calendar months"]
+
+# Precedence: earlier entries win; within an entry, longer alternatives win. The trigger
+# is the phrase immediately following the construction; a defined event must follow
+# directly (optionally after "the").
+# Quote preprocessing and binding rules (B5 freeze, from the corpus):
+preprocessing:
+  enumeration_strip: "a leading enumeration such as '2.2.1.2', '(a)', 'A.' or '1.' is ignored before condition detection (238)"
+condition_scope: "a construction is conditional only if it lies inside a leading If/In the event clause, which runs to the clause's first comma (238 conditional; 293 is not)"
+trigger_span: "starts at the construction and ends before the first comma, semicolon or period, never past the obligation quote"
+trigger_kind_window: "the kind is read from the trigger span extended to the next semicolon or period (14: 'invoice' follows a comma); first lexicon kind in file order wins"
+defined_name: "capitalized or digit tokens (1A, 3A, 409 allowed) ending in 'Date', not followed by another capitalized word ('Commencement Date Conditions' does not bind); names compare with whitespace and NBSP normalized"
+
+constructions:
+  - id: within_business_days
+    pattern: "within {count} business day(s) (with or without a following event)"
+    relation: lte
+    note: "always unresolved, reason business_days, trigger quoted (434)"
+  - id: within_after
+    pattern: "within {count} {unit} (after|following|of|from) {trigger}"
+    relation: lte
+    offset_sign: 1
+  - id: no_later_than_after
+    pattern: "no later than {count} {unit} (after|following) {trigger}"
+    relation: lte
+    offset_sign: 1
+  - id: count_prior_to
+    pattern: "(at least )?{count} {unit} (prior to|before) {trigger}"
+    relation: lte
+    offset_sign: -1
+  - id: on_or_before
+    pattern: "on or (before|prior to) {trigger}"
+    relation: lte
+  - id: no_later_than
+    pattern: "no later than {trigger}"
+    relation: lte
+  - id: prior_to
+    pattern: "(prior to|before) {trigger}"
+    relation: lt
+  - id: upon
+    pattern: "(immediately )?upon {trigger}"
+    relation: eq
+  - id: on_defined
+    pattern: "on {defined_event}"
+    relation: eq
+  - id: after
+    pattern: "(promptly )?(after|following) {trigger}"
+    relation: gt
+
+trigger_kinds:
+  # First matching kind wins, scanning the trigger phrase.
+  invoice: ["invoice", "invoices", "bill", "billing statement"]
+  notice: ["notice", "notification", "written notice"]
+  demand: ["demand", "request", "written request"]
+  default: ["default", "Event of Default", "failure", "breach"]
+  completion: ["completion", "substantial completion", "Substantial Completion", "delivery"]
+  term_end: ["expiration", "termination", "end of the Term", "surrender"]
+  # defined_event: a capitalized defined term naming a date-bearing event ("the
+  # Commencement Date"); other_event: anything else.
+
+# Reasons decided from the quote alone, in this precedence order (rev 2 W5-6).
+unresolved:
+  redacted_offset:
+    note: "a redacted token stands where the count or date would be; never a zero offset"
+  conditional_or_compound:
+    patterns:
+      - "^\\s*(if|in the event that|in the event)\\b"   # the construction sits in a condition
+      - "the (earlier|later) (to occur )?of"
+  recurring_schedule:
+    patterns: ["per month", "per calendar month", "monthly installments",
+               "on the first day of each", "on the first day of every", "each calendar month"]
+  unsupported_unit:
+    note: "units hours or months in a construction"
+  month_granularity:
+    patterns: ["in the month (that|in which)"]
+  cross_reference:
+    patterns: ["within the time (allowed|provided|set forth) (pursuant to|in|under) Section",
+               "as provided in Section", "pursuant to Section [0-9]"]
+  business_days:
+    note: "unit business in a construction; the trigger stays quoted"
+  anchor_not_found:
+    timing_cues: ["within", "promptly", "once", "until", "during", "throughout",
+                  "no later than", "prior to", "on or before"]
+    note: "a timing cue with no recognized construction or event; never untimed"
+
+# Defined dates (plan rev 2 W5-4). BLI rows: label and value in the same segment or in
+# two adjacent segments of the Basic Lease Information section; no forward search.
+defined_dates:
+  bli_labels:
+    - "Effective Date"
+    - "Commencement Date"
+    - "Target Commencement Date"
+    - "Outside Completion Date"
+    - "Early Access Date"
+  bli_label_forms:
+    - "({letter}) {label}: {date}"        # "(a) Effective Date: January 1, 2011"
+    - "({letter}) {label}:"               # value in the next adjacent segment
+  declarations:
+    - "As of {date} (the “{name}”)"       # 1A p0027; requires the closing quote and parenthesis, so the malformed p0014 does not match
+    - "expiring {date} (the “{name}”)"    # 3A p0011, bound to its own date only
+  negatives:
+    - "table of contents entries (no date value)"
+    - "cross-references such as 'as defined in Section 2.1'"
+    - "dates not adjacent to the label"

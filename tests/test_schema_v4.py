@@ -2,7 +2,7 @@
 
 Plan: docs/superpowers/plans/2026-10-02-wave4-mcp-ui-eval-readme.md, Rev 2 W4-8/W4-9
 and Rev 2.1 R2-1. Synthetic checks build tiny graphs; real checks run on a copy of
-tests/fixtures/graph/real_v4.db. Cross-agreement corruptions drop the citation
+tests/fixtures/graph/real_v5.db. Cross-agreement corruptions drop the citation
 triggers inside the copy only, to isolate the view predicates (as in Astra round 3).
 """
 

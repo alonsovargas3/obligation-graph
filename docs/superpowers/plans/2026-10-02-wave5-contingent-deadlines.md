@@ -372,3 +372,36 @@ Event-relative month constructions, such as "in the month that Host receives ...
 ### Classification counts are not acceptance
 
 The round 2 counts (scheduled 5, contingent 132, unresolved 148, untimed 240) come from a disposable prototype. Acceptance is the frozen corpus tests on the 5 scheduled rows and the challenge set, plus the C14 independent labels.
+
+## Rev 2.2 (B5 freeze decisions, coordinator)
+
+These decisions are pinned by the frozen tests. Where the plan text differs, the tests win.
+
+### Grammar
+
+The grammar gains the corpus rules the test forks found:
+- enumeration stripping;
+- condition scope, which runs to the first comma;
+- trigger span boundaries and the trigger-kind window;
+- the defined-name rule;
+- a bare `within N business days` construction, which is always unresolved;
+- the closing `”)` required in the 1A declaration form.
+
+### Schema and writer
+
+- **Timing evidence:** owned through `obligation_timing.trigger_clause_ref_id`, with `clause_ref.obligation_id` left NULL. This is the "timing_clause_ref link" in rev 2.
+- **Untimed rows** must have every timing field null; the CHECK enforces this.
+- **Anchor candidates:** the writer passes every candidate to `og.timing.resolve`, and stores one dateless event per conflicting name.
+- **Base re-extraction:** re-extracting a base whose defined-date event anchors an amendment's timing row raises `WriteRefused("dependents_exist")`.
+
+### Query, MCP, UI and eval
+
+- **Untimed in output:** an untimed obligation's `timing` has `kind: "untimed"` and null fields.
+- **Ordering:** scheduled rows are ordered by deadline date, then agreement, then id.
+- **Timing labels:** they live under `eval/gold/timing/<name>.yaml`. They are matched by IoU of at least 0.3 within the same agreement; obligation type is not used.
+- **Results manifest:** gains an optional top-level `timing` list.
+- **Bound-date metric:** reports `invented`, meaning a predicted date where the reference has none.
+
+### Fixtures
+
+`real_v5.db` holds the v4 rows in schema v5, with no timing rows. Reader tests use it, and `real_v4.db` is kept for the history.

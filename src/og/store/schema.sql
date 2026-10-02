@@ -1,5 +1,5 @@
 PRAGMA foreign_keys = ON;
--- Schema v4 (wave 4). Derived data: an older graph.db is rebuilt, not migrated (ADR-008).
+-- Schema v5 (wave 5). Derived data: an older graph.db is rebuilt, not migrated (ADR-008).
 
 CREATE TABLE IF NOT EXISTS source (
   id TEXT PRIMARY KEY, url TEXT NOT NULL, filer TEXT, filing_date TEXT, form TEXT,
@@ -86,6 +86,29 @@ CREATE TABLE IF NOT EXISTS obligation (
   extraction_run_id INTEGER REFERENCES extraction_run(id),
   CHECK ((anchor_event_id IS NULL) = (offset_days IS NULL)),
   CHECK (NOT (due_date IS NOT NULL AND anchor_event_id IS NOT NULL))
+);
+CREATE TABLE IF NOT EXISTS obligation_timing (
+  obligation_id INTEGER PRIMARY KEY REFERENCES obligation(id),
+  kind TEXT NOT NULL CHECK (kind IN ('scheduled','contingent','unresolved','untimed')),
+  trigger_kind TEXT CHECK (trigger_kind IS NULL OR trigger_kind IN
+    ('invoice','notice','demand','default','completion','term_end','defined_event','other_event')),
+  trigger_clause_ref_id INTEGER REFERENCES clause_ref(id),
+  relation TEXT CHECK (relation IS NULL OR relation IN ('lt','lte','eq','gte','gt')),
+  offset_days INTEGER CHECK (offset_days IS NULL OR typeof(offset_days) = 'integer'),
+  offset_unit TEXT CHECK (offset_unit IS NULL OR offset_unit IN ('calendar','business','hours','months')),
+  anchor_event_id INTEGER REFERENCES event(id),
+  bound_date TEXT CHECK (bound_date IS NULL OR date(bound_date) IS bound_date),
+  reason TEXT CHECK (reason IS NULL OR reason IN
+    ('business_days','anchor_without_date','anchor_not_found','relative_to_other_obligation',
+     'conditional_or_compound','unsupported_unit','cross_reference','redacted_offset',
+     'recurring_schedule','month_granularity','conflicting_dates')),
+  CHECK (kind <> 'scheduled' OR (bound_date IS NOT NULL AND relation IS NOT NULL
+         AND anchor_event_id IS NOT NULL AND (offset_unit IS NULL OR offset_unit = 'calendar'))),
+  CHECK (kind <> 'contingent' OR trigger_clause_ref_id IS NOT NULL),
+  CHECK ((kind = 'unresolved') = (reason IS NOT NULL)),
+  CHECK (kind <> 'untimed' OR (trigger_clause_ref_id IS NULL AND bound_date IS NULL
+         AND anchor_event_id IS NULL AND relation IS NULL AND trigger_kind IS NULL
+         AND offset_days IS NULL AND reason IS NULL))
 );
 CREATE TABLE IF NOT EXISTS supersedes (
   obligation_id INTEGER NOT NULL REFERENCES obligation(id),
@@ -203,6 +226,8 @@ DROP VIEW IF EXISTS visible_triggers;
 DROP VIEW IF EXISTS visible_guarantees;
 DROP VIEW IF EXISTS visible_supersedes;
 DROP VIEW IF EXISTS visible_obligation;
+DROP VIEW IF EXISTS visible_obligation_timing;
+DROP VIEW IF EXISTS grounded_obligation;
 DROP VIEW IF EXISTS eligible_supersedes;
 DROP VIEW IF EXISTS fresh_change_run;
 
@@ -242,6 +267,49 @@ WHERE s.obligation_id <> s.superseded_obligation_id
   AND EXISTS (SELECT 1 FROM clause_ref x WHERE x.obligation_id = o.id AND x.grounded = 1
               AND x.agreement_id = o.agreement_id);
 
+-- Wave 5 rev 2.1 R2-1: acyclic order. grounded_obligation (internal, not for readers)
+-- -> visible_obligation_timing -> visible_obligation. The timing view never reads
+-- visible_obligation.
+CREATE VIEW grounded_obligation AS
+SELECT o.* FROM obligation o
+WHERE EXISTS (SELECT 1 FROM clause_ref c
+              WHERE c.obligation_id = o.id AND c.grounded = 1 AND c.agreement_id = o.agreement_id);
+
+-- A timing row is visible only when its trigger (if any) is a grounded ref in the
+-- obligation's agreement contained in one of the obligation's own grounded extraction
+-- citations, its anchor (if any) is a visible dated event in the obligation's agreement
+-- or its recorded base, and a scheduled row's stored bound equals the bound recomputed
+-- from that cited anchor date and the calendar offset.
+CREATE VIEW visible_obligation_timing AS
+SELECT t.obligation_id, o.agreement_id, t.kind, t.trigger_kind, t.relation,
+  t.offset_days, t.offset_unit, t.reason,
+  tr.id AS trigger_clause_ref_id, tr.section AS trigger_section, tr.page AS trigger_page,
+  tr.char_start AS trigger_char_start, tr.char_end AS trigger_char_end,
+  tr.span_text AS trigger_span_text,
+  eb.event_id AS anchor_event_id, eb.agreement_id AS anchor_agreement_id,
+  eb.name AS anchor_name, eb.date AS anchor_date, eb.clause_ref_id AS anchor_clause_ref_id,
+  eb.section AS anchor_section, eb.page AS anchor_page, eb.char_start AS anchor_char_start,
+  eb.char_end AS anchor_char_end, eb.span_text AS anchor_span_text,
+  CASE WHEN t.kind = 'scheduled' THEN t.bound_date END AS bound_date
+FROM obligation_timing t
+JOIN grounded_obligation o ON o.id = t.obligation_id
+LEFT JOIN clause_ref tr ON tr.id = t.trigger_clause_ref_id
+LEFT JOIN visible_event_binding eb ON eb.event_id = t.anchor_event_id
+WHERE (t.trigger_clause_ref_id IS NULL
+       OR (tr.grounded = 1 AND tr.agreement_id = o.agreement_id
+           AND EXISTS (SELECT 1 FROM clause_ref c
+                       WHERE c.obligation_id = o.id AND c.grounded = 1
+                         AND c.agreement_id = o.agreement_id
+                         AND c.char_start <= tr.char_start AND tr.char_end <= c.char_end)))
+  AND (t.anchor_event_id IS NULL
+       OR (eb.event_id IS NOT NULL
+           AND (eb.agreement_id = o.agreement_id
+                OR eb.agreement_id = (SELECT a.base_agreement_id FROM agreement a
+                                      WHERE a.id = o.agreement_id))))
+  AND (t.kind <> 'scheduled'
+       OR (eb.date IS NOT NULL
+           AND t.bound_date = date(eb.date, printf('%+d days', COALESCE(t.offset_days, 0)))));
+
 CREATE VIEW visible_obligation AS
 WITH anchored AS (
   SELECT o.id AS obligation_id,
@@ -251,18 +319,21 @@ WITH anchored AS (
       AND (e.agreement_id = o.agreement_id
            OR e.agreement_id = (SELECT a.base_agreement_id FROM agreement a WHERE a.id = o.agreement_id))
     THEN date(e.date, printf('%+d days', o.offset_days)) END AS anchored_due
-  FROM obligation o LEFT JOIN event e ON e.id = o.anchor_event_id
+  FROM grounded_obligation o LEFT JOIN event e ON e.id = o.anchor_event_id
 )
 SELECT o.*,
-  COALESCE(o.due_date, an.anchored_due) AS effective_due,
+  COALESCE(o.due_date, an.anchored_due,
+           CASE WHEN vt.kind = 'scheduled' AND vt.relation IN ('lte','eq') THEN vt.bound_date END)
+    AS effective_due,
   CASE WHEN o.status = 'superseded'
          OR EXISTS (SELECT 1 FROM eligible_supersedes es WHERE es.superseded_obligation_id = o.id)
        THEN 'superseded'
-       WHEN COALESCE(o.due_date, an.anchored_due) IS NULL THEN 'pending'
-       ELSE 'scheduled' END AS lifecycle
-FROM obligation o JOIN anchored an ON an.obligation_id = o.id
-WHERE EXISTS (SELECT 1 FROM clause_ref c
-              WHERE c.obligation_id = o.id AND c.grounded = 1 AND c.agreement_id = o.agreement_id);
+       WHEN COALESCE(o.due_date, an.anchored_due) IS NOT NULL OR vt.kind = 'scheduled'
+       THEN 'scheduled'
+       ELSE 'pending' END AS lifecycle
+FROM grounded_obligation o
+JOIN anchored an ON an.obligation_id = o.id
+LEFT JOIN visible_obligation_timing vt ON vt.obligation_id = o.id;
 
 CREATE VIEW visible_supersedes AS
 SELECT s.* FROM eligible_supersedes s
