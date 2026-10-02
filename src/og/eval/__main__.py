@@ -1,4 +1,4 @@
-"""Score CLI: `python -m og.eval extract ...` and `python -m og.eval change ...`.
+"""Score CLI: ``python -m og.eval {extract,change,all,readme-tables}``.
 
 `extract` writes an extraction results JSON: the score against the reference
 set plus the run's honesty signals (proposal grounding, integrity, drops,
@@ -10,7 +10,19 @@ positives).
 `change` (Task 20) scores one change order's paired ungated/gated runs
 against the change reference set: findings per mode with cross-category
 deduplication, value accuracy, gate metrics per backend with a
-Clopper-Pearson bound, honest skip naming, disagreements, and cost.
+Clopper-Pearson bound, honest skip naming, disagreements, and cost. A stale
+pair is refused (``stale_change_run``), never scored as an empty check.
+
+`all` (Task 34, W4-13) builds the pinned aggregate from
+eval/results/MANIFEST.json: extraction score and field coverage, grounding
+drops joined to the current extraction runs, per-change-order findings, gate
+metrics, honest skips, disagreements, and recorded vs incremental cost. It
+refuses (exit 2) on a hash mismatch, a missing input, a run without a log
+record, or a stale change run, and prints the same sections as tables.
+
+`readme-tables` (W4-13/W4-14) renders the README's generated tables from an
+aggregate file: `--check README` exits 1 on drift, `--write README` replaces
+only the marked block.
 """
 
 from __future__ import annotations
@@ -23,10 +35,13 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from og.eval.all import Refusal, build_aggregate, integrity_count
 from og.eval.change_gold import load_change_gold, read_change_chain
 from og.eval.change_score import score_change
 from og.eval.gold import load_gold
-from og.eval.score import pred_from_db, score
+from og.eval.readme import END, START, render_tables
+from og.eval.score import apply_sampled, pred_from_db, score
+from og.paths import workspace
 from og.store.db import connect
 from og.textdoc import TextDoc
 
@@ -75,16 +90,8 @@ def _calls(rec: dict[str, Any] | None) -> list[dict[str, Any]]:
 
 
 def _apply_sampled(score_dict: dict[str, Any]) -> None:
-    """R2-8: null precision and F1, keep recall, add a precision lower bound."""
-    lower = {
-        "micro": score_dict["micro"]["precision"],
-        "macro": score_dict["macro"]["precision"],
-    }
-    blocks = [score_dict["micro"], score_dict["macro"], *score_dict["per_type"].values()]
-    for block in blocks:
-        block["precision"] = None
-        block["f1"] = None
-    score_dict["precision_lower_bound"] = lower
+    """R2-8: delegate to og.eval.score.apply_sampled (single implementation)."""
+    apply_sampled(score_dict)
 
 
 def _run_extract(args: argparse.Namespace) -> int:
@@ -103,12 +110,7 @@ def _run_extract(args: argparse.Namespace) -> int:
     run_id, prompt_version, td_sha = row
 
     rec = _find_record(args.log, run_id)
-    integrity = con.execute(
-        "SELECT COUNT(*) FROM visible_obligation v WHERE v.agreement_id = ?"
-        " AND NOT EXISTS (SELECT 1 FROM clause_ref c WHERE c.obligation_id = v.id"
-        " AND c.grounded = 1 AND c.agreement_id = v.agreement_id)",
-        (args.doc,),
-    ).fetchone()[0]
+    integrity = integrity_count(con, args.doc)
 
     out: dict[str, Any] = {
         "metric": METRIC,
@@ -211,6 +213,83 @@ def _run_change(args: argparse.Namespace) -> int:
     return 0
 
 
+def _workspace_path(value: str | None, default: str) -> Path:
+    """Resolve a CLI path against the workspace (og.paths), not the cwd."""
+    path = Path(value) if value else Path(default)
+    return path if path.is_absolute() else workspace() / path
+
+
+def _run_all(args: argparse.Namespace) -> int:
+    """Build the pinned aggregate (W4-13); refuse before writing anything."""
+    manifest = _workspace_path(args.manifest, args.manifest)
+    db = _workspace_path(args.db, "data/graph.db")
+    text_dir = _workspace_path(args.text_dir, "data/text")
+    log = _workspace_path(args.log, "logs/extract_runs.jsonl")
+    out = _workspace_path(args.out, f"eval/results/{date.today().isoformat()}-aggregate.json")
+    try:
+        agg = build_aggregate(
+            manifest=manifest, db=db, text_dir=text_dir, log=log, root=workspace()
+        )
+    except Refusal as e:
+        print(f"og.eval: {e.code}: {e.message}", file=sys.stderr)
+        return 2
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(agg, indent=2) + "\n", encoding="utf-8")
+    sys.stdout.write(render_tables(agg))
+    print(f"og.eval: aggregate written to {out}")
+    return 0
+
+
+def _latest_aggregate() -> Path:
+    results_dir = workspace() / "eval" / "results"
+    candidates = sorted(results_dir.glob("*-aggregate.json"))
+    if not candidates:
+        raise SystemExit(f"og.eval: no eval/results/*-aggregate.json under {workspace()}")
+    return candidates[-1]
+
+
+def _run_readme_tables(args: argparse.Namespace) -> int:
+    """Render, check, or write the README's generated tables block (W4-14)."""
+    results = _workspace_path(args.results, str(_latest_aggregate()))
+    if not results.is_file():
+        print(f"og.eval: results file not found: {results}", file=sys.stderr)
+        return 2
+    rendered = render_tables(json.loads(results.read_text(encoding="utf-8")))
+    if args.check is None and args.write is None:
+        sys.stdout.write(rendered)
+        return 0
+    target = Path(args.check or args.write)
+    if not target.is_file():
+        print(f"og.eval: README not found: {target}", file=sys.stderr)
+        return 2
+    text = target.read_text(encoding="utf-8")
+    i0 = text.find(START)
+    i1 = text.find(END, i0 + len(START)) if i0 != -1 else -1
+    if args.write is not None:
+        if i0 != -1 and i1 != -1:
+            text = text[:i0] + START + "\n" + rendered + END + text[i1 + len(END) :]
+        else:
+            separator = (
+                ""
+                if not text or text.endswith("\n\n")
+                else ("\n" if text.endswith("\n") else "\n\n")
+            )
+            text = text + separator + START + "\n" + rendered + END + "\n"
+        target.write_text(text, encoding="utf-8")
+        return 0
+    if i0 == -1 or i1 == -1:
+        print(f"og.eval: generated tables block missing from {target}", file=sys.stderr)
+        return 1
+    if text[i0 + len(START) : i1] != "\n" + rendered:
+        print(
+            f"og.eval: README tables differ from {results};"
+            " run: python -m og.eval readme-tables --write",
+            file=sys.stderr,
+        )
+        return 1
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="og.eval", description="Score extractions against the reference set"
@@ -239,11 +318,35 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="results json path (default eval/results/<date>-change-<doc>.json)",
     )
+    aggregate = sub.add_parser("all", help="build the pinned aggregate from the results manifest")
+    aggregate.add_argument("--manifest", required=True, help="eval/results/MANIFEST.json")
+    aggregate.add_argument("--db", default="data/graph.db", help="graph db path")
+    aggregate.add_argument("--text-dir", default="data/text", help="directory of TextDocs")
+    aggregate.add_argument("--log", default="logs/extract_runs.jsonl", help="extraction run log")
+    aggregate.add_argument(
+        "--out",
+        default=None,
+        help="results json path (default eval/results/<date>-aggregate.json)",
+    )
+    readme = sub.add_parser(
+        "readme-tables", help="render, check, or write the README's generated tables"
+    )
+    readme.add_argument(
+        "--results",
+        default=None,
+        help="aggregate json (default: latest eval/results/*-aggregate.json)",
+    )
+    readme.add_argument("--check", default=None, help="README to compare against (exit 1 on drift)")
+    readme.add_argument("--write", default=None, help="README whose tables block to replace")
     args = parser.parse_args(argv)
     if args.command == "extract":
         return _run_extract(args)
     if args.command == "change":
         return _run_change(args)
+    if args.command == "all":
+        return _run_all(args)
+    if args.command == "readme-tables":
+        return _run_readme_tables(args)
     parser.error(f"unknown command: {args.command}")
     return 2
 

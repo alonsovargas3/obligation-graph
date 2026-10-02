@@ -259,6 +259,27 @@ def _field_metrics(
     return out
 
 
+def apply_sampled(score_dict: dict[str, Any]) -> None:
+    """Reinterpret a score dict under a sampled (non-exhaustive) reference set.
+
+    Rev 2.2 R2-8: unlabeled true obligations count as false positives, so the
+    computed precision is only a lower bound. Precision and F1 are nulled at
+    micro, macro, and per-type level, and the pre-nulling precision is kept as
+    ``precision_lower_bound`` (per type and for micro/macro).
+    """
+    lower = {
+        "micro": score_dict["micro"]["precision"],
+        "macro": score_dict["macro"]["precision"],
+    }
+    blocks = [score_dict["micro"], score_dict["macro"], *score_dict["per_type"].values()]
+    for block in blocks:
+        block["precision_lower_bound"] = block["precision"]
+    for block in blocks:
+        block["precision"] = None
+        block["f1"] = None
+    score_dict["precision_lower_bound"] = lower
+
+
 def score(gold: Sequence[GoldItem], predicted: Sequence[PredItem], metric: str = "m1") -> Score:
     matches = _match_pairs(gold, predicted)
     tp = len(matches)
@@ -297,15 +318,34 @@ def score(gold: Sequence[GoldItem], predicted: Sequence[PredItem], metric: str =
 def pred_from_db(con: sqlite3.Connection, doc_id: str) -> list[PredItem]:
     """One PredItem per visible obligation of the agreement.
 
-    The span comes from the earliest grounded clause_ref of the obligation;
-    owed_by/owed_to come back as the resolved party's role word (lowercase).
+    Every field comes from a citation-bearing projection (rev 2.1 R2-1): the
+    span from visible_obligation_clause, payer/payee roles from
+    visible_party_binding, and the anchor name from visible_event_binding.
+    Revoking a citation removes the binding (the role or anchor becomes None)
+    instead of leaving an uncited term in the prediction.
     """
     roles: dict[int, str] = {}
     for party_id, role in con.execute(
-        "SELECT party_id, role FROM agreement_party WHERE agreement_id = ? ORDER BY role",
+        "SELECT party_id, role FROM visible_party_binding"
+        " WHERE agreement_id = ? ORDER BY role, party_id, clause_ref_id",
         (doc_id,),
     ):
         roles.setdefault(party_id, role)
+
+    spans: dict[int, tuple[int, int, str]] = {}
+    for oid, start, end, text in con.execute(
+        "SELECT obligation_id, char_start, char_end, span_text FROM visible_obligation_clause"
+        " WHERE agreement_id = ? ORDER BY obligation_id, char_start, char_end, clause_ref_id",
+        (doc_id,),
+    ):
+        spans.setdefault(oid, (start, end, text))
+
+    anchors: dict[int, str] = dict(
+        con.execute(
+            "SELECT event_id, name FROM visible_event_binding WHERE agreement_id = ?",
+            (doc_id,),
+        )
+    )
 
     items: list[PredItem] = []
     rows = con.execute(
@@ -329,18 +369,10 @@ def pred_from_db(con: sqlite3.Connection, doc_id: str) -> list[PredItem]:
             trigger,
             status,
         ) = row
-        ref = con.execute(
-            "SELECT char_start, char_end, span_text FROM clause_ref"
-            " WHERE obligation_id = ? AND agreement_id = ? AND grounded = 1"
-            " ORDER BY char_start, char_end, id LIMIT 1",
-            (oid, doc_id),
-        ).fetchone()
+        ref = spans.get(oid)
         if ref is None:
             continue  # not visible; the view should already exclude it
-        anchor = None
-        if anchor_event_id is not None:
-            ev = con.execute("SELECT name FROM event WHERE id = ?", (anchor_event_id,)).fetchone()
-            anchor = ev[0] if ev else None
+        anchor = anchors.get(anchor_event_id) if anchor_event_id is not None else None
         items.append(
             PredItem(
                 segment_id=None,
