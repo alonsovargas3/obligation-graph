@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "extraction": {
+    "doc_id": "constantcontact-2011-ex1041",
+    "gold": "eval/gold/constantcontact-2011-ex1041.yaml",
+    "gold_sha256": "8a356b36d63cb61883b964e7262bc3357f571b7c2c3834a023eadb68e017a96b",
+    "historical_summary": "eval/results/2026-10-02-extract-summary.json",
+    "historical_summary_sha256": "8c0d9b2abf9c38f3a5aba81793d6e6749aa34a458f175336e3ac35710bca52f9"
+  },
+  "change": [
+    {
+      "doc_id": "constantcontact-2012-ex101",
+      "gold": "eval/gold/change/constantcontact-2012-ex101.yaml",
+      "gold_sha256": "f22a4c893fdbdabe7e9e04dcab5da66e8e6ced97048e6fd0a92c69b0508ffae2"
+    },
+    {
+      "doc_id": "endurance-2017-ex106",
+      "gold": "eval/gold/change/endurance-2017-ex106.yaml",
+      "gold_sha256": "8c65108e5ebada7959ab0c220d2cc966f6964d96ac7cd065d14f075220943e6b"
+    }
+  ]
+}
