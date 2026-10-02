@@ -205,3 +205,138 @@ Expected $0, since everything is replayed. Cap $1.30, used only on a user decisi
 - Recurring schedules (Phase 2).
 - Holiday calendars.
 - Recording episodes (the "Where this goes" direction).
+
+---
+
+## Rev 2 (Astra wave-5 round 1: 4 blockers, 7 should-fixes, all accepted)
+
+Rev 2 overrides rev 1 wherever they conflict. Review: `docs/reviews/2026-10-02-astra-wave5-review.md`.
+
+The executed prototype found that 5 obligations support a real dated bound: 62, 65, 236, 514, and 519. Of the other sizing candidates, 159 and 239 stay unresolved, and 238 must never be scheduled.
+
+### W5-1. Relation, not just a date
+
+`Timing` carries `relation`, one of `lt | lte | eq | gte | gt`, plus a cited `bound_date`. The phrase mappings are:
+
+| Phrase | Relation |
+|---|---|
+| `prior to`, `before` | `lt` |
+| `on or before`, `no later than`, `within N days after` | `lte` (bound = anchor + N) |
+| `on` | `eq` |
+| `after`, `following` with no "within" | `gt` |
+
+- **`effective_due` keeps its exact meaning.** It is the `lte` or `eq` bound only.
+- **A strict `lt` bound** is exposed as `deadline: {relation: "lt", date, clause}` and is never shown as a due-on date. `upcoming_deadlines` includes `lt` rows in the window, with their relation shown.
+- **Arithmetic:** there is no subtract-a-day conversion. Dates are calendar dates with day granularity, and the relation is stated with them.
+
+### W5-2. Duty versus condition, and compound alternatives
+
+A construction binds a deadline only when it governs the duty clause:
+- **Conditions do not bind.** A `prior to` inside an `If ... have not occurred prior to ...` condition does not bind; it gets reason `conditional_or_compound` (238).
+- **Compound alternatives do not bind.** `the earlier/later to occur of` gets reason `conditional_or_compound` (239).
+- **The trigger is the immediate one.** It is the phrase directly after the construction (89 binds to `upon demand`, never to the historical `as of the Effective Date`).
+
+Conditions stay quoted. A conditional obligation can still have a valid contingent deadline on its stated duty.
+
+### W5-3. Complete eligibility SQL
+
+`visible_obligation_timing` requires all of the following:
+1. The obligation is in `visible_obligation`.
+2. The trigger ref is grounded, in the same agreement, and **contained within one of the obligation's own grounded extraction citations** (char range containment).
+3. The anchor event, if any, is joined by id to `visible_event_binding`, in exactly the obligation's agreement or its recorded base.
+
+Rows with no trigger use an explicit LEFT branch. Derived dates come only from this view. Revoking either citation removes the date everywhere.
+
+**Frozen tests:**
+- the real 62/65 swapped citation (ref 123), which must be rejected;
+- the foreign Carbonite event 5, which must be rejected;
+- revoked refs;
+- a valid base-agreement anchor.
+
+### W5-4. The grammar, published in B5
+
+`timing_grammar_v1.yaml` freezes:
+- exact lexicons, number tokens (digits, spelled numbers, parenthesized digits), precedence, and NBSP handling;
+- the BLI label and value pairs across adjacent segments within the Basic Lease Information section: `(a) Effective Date` / `(b) Commencement Date` (p0427/p0428, p0429/p0430) and the Carbonite NBSP forms;
+- date-before-name parentheticals: 1A p0027 `As of June 1, 2012 (the “1A Expansion Date”)`, preferred over the malformed p0014, and 3A p0011 `expiring June 30, 2020 (the “3A Suite 409 Amended Surrender Date”)`, bound to its own date and not the distractors;
+- `no later than` without "after", and `following`.
+
+The freeze also includes negative TOC and cross-reference cases. Original offsets are preserved.
+
+### W5-5. No business-day exception
+
+The weekday-only exception is cut. The only definition in the corpus (Mawson p0023) excludes public holidays.
+
+A business-day offset is `unresolved` (`business_days`), with its trigger still quoted and visible. An external-event business-day obligation is also `unresolved` (434), never `contingent`.
+
+### W5-6. "Untimed" means no timing language at all
+
+These reasons are added for `unresolved`:
+
+| Reason | Example |
+|---|---|
+| `unsupported_unit` | hours, as in 279 |
+| `cross_reference` | `within the time allowed pursuant to Section 16.1.1`, as in 293 |
+| `redacted_offset` | `within [***] days`, as in 490 and 504. A redaction always wins over a zero-offset fallback. |
+| `recurring_schedule` | `per month for months 85 to 96`, as in 214 |
+
+Wave 5 keeps `untimed` only for quotes with no timing construction. Copy in the UI, MCP, and README says "no stated deadline".
+
+### W5-7. One authority
+
+The contract has two stages:
+1. **`parse(doc, evidence) -> ParsedTiming`:** pure quote parsing, with relation, offset, unit, trigger span, reason, and anchor name.
+2. **`resolve(parsed, anchors: list[CitedAnchor]) -> Timing`:** given the cited dated anchors of the obligation's own agreement and its base. It owns the final kind, relation, and bound.
+
+Rules for the result:
+- **Legacy fields win.** Where a legacy explicit `due_date` or anchor/offset exists, it wins. A conflict gives `unresolved` (`conflicting_dates`). No disputed date is ever used.
+- **CHECK constraints** require `bound_date IS NOT NULL` for `scheduled`, and a reason for `unresolved`.
+- **Same rules everywhere.** SQL, MCP/UI, and eval share the relation and agreement policy, including base-anchor citations.
+
+### W5-8. Event deduplication
+
+Events are deduplicated within one agreement, by normalized name, and a retained dated event cites its full accepted declaration. Specifically:
+- A dated deterministic candidate replaces an undated model event of the same name. Carbonite event 7 then gets 2013-12-31 with the BLI citation; the old name-only evidence is never reused for the new date.
+- Equal dates collapse into one event.
+- Conflicting dates leave the event dateless, with reason `conflicting_dates`.
+- There is no fallback to a base event when the local name is ambiguous.
+
+### W5-9. Independent timing labels and a challenge set
+
+**C14 labels**, for each of the 50 reference obligations plus a cross-document challenge set:
+- `timing_kind`, `relation`, `bound_date`, and the anchor name and evidence;
+- `offset_days`, `offset_unit`, the trigger span, and `reason`.
+
+**The challenge set:** 62, 65, 159, 236, 238, 239, 514, and 519, plus the negatives 89, 490, and 504, plus 57, 279, 293, and 434.
+
+**Scoring:**
+- Scoring happens only within matched obligations, and reports matched and labeled denominators.
+- A trigger span matches with IoU of at least 0.5 against the labeled span inside the same quote.
+- Bound-date accuracy is scored separately from the legacy `due_date`.
+- **Labels are model-drafted** (Astra, blind), **coordinator-adjudicated**, and **user spot-checked** (10). Coverage is sampled.
+
+### W5-10. Timing evidence ownership
+
+Timing ClauseRefs are owned by `obligation_timing`, through a new `timing_clause_ref` link. They are not attached through `clause_ref.obligation_id`, so `visible_obligation_clause` and `pred_from_db` keep the original extraction evidence. The real 128 IoU must be unchanged.
+
+In `_delete_snapshot`, timing rows and refs are deleted first, and dependency detection includes timing anchors.
+
+Writes happen inside the snapshot transaction. A classifier exception rolls back the write and never omits or downgrades the row.
+
+### W5-11. B5 owns compatibility
+
+**B5 changes:**
+- `SCHEMA_VERSION = 5`;
+- the version assertions;
+- `READ_ALLOWLIST` gains `visible_obligation_timing`;
+- `ObligationOut.timing` and the `DeadlinesOut` fields;
+- a rebuilt `tests/fixtures/graph/real_v5.db`, keeping `real_v4.db` for historical tests;
+- the revised deadline totals, recorded in `test-changes.md`.
+
+**Query and UI rules:**
+- `contingent` is a paged subset of pending, with consistent filters and totals and no double counting.
+- Final view columns are frozen before Tasks 40 and 43 run.
+
+### Budget
+
+The budget is unchanged: $0 expected. A model pass, if ever, is a separate user decision, and it would still be subject to these deterministic rules.
