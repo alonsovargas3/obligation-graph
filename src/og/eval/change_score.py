@@ -170,7 +170,14 @@ def _segment_of(
 def _load_predictions(
     con: sqlite3.Connection, gold: ChangeGold, mode: str
 ) -> tuple[list[PredFinding], dict[str, int]]:
-    """Visible findings of one mode, deduplicated across categories (R9)."""
+    """Visible findings of one mode, deduplicated across categories (R9).
+
+    Citations come from the visible_change_finding_ref projection (rev 2.1
+    R2-1): the 'new' side always exists for a visible finding, the 'old' side
+    exists exactly when the finding's own old citation is grounded and in
+    chain, so a revoked old citation drops the finding from scoring rather
+    than scoring an uncited pair.
+    """
     sorted_segments = {
         a: sorted(t.items(), key=lambda kv: kv[1][0]) for a, t in gold.segments.items()
     }
@@ -179,8 +186,8 @@ def _load_predictions(
         "SELECT f.kind, f.category, f.old_origin, f.target_label, f.old_value, f.new_value,"
         " f.delta, f.currency, n.char_start, o.agreement_id, o.char_start"
         " FROM visible_change_finding f"
-        " JOIN clause_ref n ON n.id = f.new_clause_ref_id"
-        " LEFT JOIN clause_ref o ON o.id = f.old_clause_ref_id"
+        " JOIN visible_change_finding_ref n ON n.finding_id = f.id AND n.side = 'new'"
+        " LEFT JOIN visible_change_finding_ref o ON o.finding_id = f.id AND o.side = 'old'"
         " WHERE f.change_order_id = ? AND f.mode = ? ORDER BY f.id",
         (co_id, mode),
     ).fetchall()
@@ -365,11 +372,17 @@ def _cost(run: dict[str, Any]) -> dict[str, Any]:
 
 
 def score_change(con: sqlite3.Connection, gold: ChangeGold) -> dict[str, Any]:
-    """Score one change order's paired ungated/gated runs against the gold."""
+    """Score one change order's paired ungated/gated runs against the gold.
+
+    Both runs must be fresh (rev 2 W4-3): their chain snapshot must still match
+    the current extraction of every chain member. A stored pair whose snapshot
+    no longer matches raises ``ValueError("stale_change_run")`` instead of
+    scoring an empty check; a missing pair raises ``ValueError("unmatched_pair")``.
+    """
     runs: dict[str, dict[str, Any]] = {}
     for row in con.execute(
         "SELECT id, run_id, pair_id, mode, baseline_run_id, cost_usd, incremental_cost_usd,"
-        " latency_ms FROM change_run WHERE change_order_id = ?",
+        " latency_ms FROM fresh_change_run WHERE change_order_id = ?",
         (gold.change_order_id,),
     ):
         runs[row[3]] = {
@@ -383,6 +396,16 @@ def score_change(con: sqlite3.Connection, gold: ChangeGold) -> dict[str, Any]:
         }
     ungated, gated = runs.get("ungated"), runs.get("gated")
     if ungated is None or gated is None:
+        # The pair is stored (a chain snapshot names this change order) but not
+        # fresh: its extraction snapshot moved underneath it. Refuse rather
+        # than score an emptied check.
+        stored = con.execute(
+            "SELECT 1 FROM change_run_chain WHERE agreement_id = ? AND role = 'change_order'"
+            " LIMIT 1",
+            (gold.change_order_id,),
+        ).fetchone()
+        if stored is not None:
+            raise ValueError("stale_change_run")
         raise ValueError("unmatched_pair")
     if gated["baseline_run_id"] != ungated["run_id"] or gated["pair_id"] != ungated["pair_id"]:
         raise ValueError("unmatched_pair")
