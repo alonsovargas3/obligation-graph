@@ -158,6 +158,16 @@ def _drop_record(drop) -> dict[str, Any]:
     }
 
 
+def _correction_record(correction) -> dict[str, Any]:
+    return {
+        "category": correction.category,
+        "kind": correction.raw.kind,
+        "field": correction.field,
+        "reason": correction.reason,
+        "new_segment_id": correction.raw.new_segment_id,
+    }
+
+
 def _sum_cost(values: list[float | None]) -> float | None:
     return None if any(v is None for v in values) else sum(v for v in values if v is not None)
 
@@ -263,6 +273,7 @@ def _run_mode(
 
     findings: list[Finding] = []
     drops = []
+    corrections = []
     if error is None and any(o.status != "ok" for o in outcomes):
         error = next(o.error or o.status for o in outcomes if o.status != "ok")
     if error is None:
@@ -271,6 +282,7 @@ def _run_mode(
                 result = verify_findings(built.chain_docs, outcome.category, outcome.items)
                 findings.extend(result.findings)
                 drops.extend(result.drops)
+                corrections.extend(result.corrections)
         except Exception as exc:  # a short code only; never an exception repr
             error = type(exc).__name__
     complete = error is None
@@ -327,6 +339,7 @@ def _run_mode(
         "decisions": [_decision_record(d) for d in decisions],
         "outcomes": [_outcome_record(o) for o in outcomes],
         "drops": [_drop_record(d) for d in drops],
+        "corrections": [_correction_record(c) for c in corrections],
         "verified": len(findings),
         "cost_usd": cost_usd,
         "incremental_cost_usd": incremental_cost_usd,
