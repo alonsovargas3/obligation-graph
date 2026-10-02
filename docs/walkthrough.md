@@ -74,16 +74,33 @@ The page and the tools use document IDs, not nicknames:
 
 ### 1:30 to 1:50: Ask it as an agent (Claude Desktop)
 
-1. Switch to Claude Desktop, in the new chat you prepared.
+1. Switch to Claude Desktop and open a **new chat**. In a reused chat Claude may answer from earlier results instead of calling the tool, and viewers should see the tool call.
 2. Type: **What does the tenant owe the landlord under the 55 Middlesex Turnpike lease?** and press Enter. Use the third person: a question with "we" makes Claude Desktop check the answer against your personal context instead of answering about the lease.
-3. You'll see a "Used Obligation graph" or "Get obligations" line. Then the answer lists the base rent schedules and additional rent with section references, and says that every item is pending.
+3. Wait for the "Obligation graph: Get obligations" line, then let the answer render. It lists the base rent schedules and additional rent, each with section references, and says that every item is pending.
+4. Point to **one** obligation and its section number, for example base rent "paid monthly in advance on the 1st (§3.1)". Don't scroll through the whole answer.
 
-- **Say:** "Agents ask the same graph over MCP. The answer comes back with its clauses, and it says plainly that none of these has a computable due date yet."
+- **Say:** "I ask in plain English. The agent queries the same obligation graph we just explored. Here's a rent obligation, and here's the section of the lease it cites."
+- **Then, as one line:** "Pending here just means the system hasn't computed a due date yet. It doesn't mean overdue."
+- Pause for a beat after the pending line. Don't add more.
 
-### 1:50 to 2:00: Reproducible numbers (README tab)
+Delivery notes for this scene:
+- Don't read out the dollar amounts. One example obligation and its clause is enough; the grounding is the point.
+- Don't explain why nothing is dated. In particular, don't say "the commencement date isn't pinned down": the lease does state it (January 1, 2011), and the system doesn't yet link obligations to it. If you need a reason, say "the system hasn't linked these obligations to the lease's dates yet."
+- If Claude says schedules B and C "look like an extraction error", ignore it on camera. Those repeated figures appear twice in the filed lease itself.
+
+### 1:50 to 2:00: Close (README tab)
 
 - **Show:** switch to the README and scroll to **Results**, so the first table (Extraction) is visible.
 - **Say:** "Every number here is generated from committed results, and a fresh clone reproduces them without an API key."
+- **Closing line:** "Whether you click through the graph or ask in plain English, every answer points back to the contract text. No guessing."
+- Stop after the closing line.
+
+## Delivery tips for the whole video
+
+- Keep each scene to one example. Show one row, one clause, one finding, and move on.
+- Lead with what the viewer sees, then the claim: "here's the obligation, and here's the text it comes from."
+- Say each caveat once, in one line, then pause. A short pause after a key line reads as confidence.
+- If you stumble, stop and restart the scene instead of correcting yourself on camera. Each scene is short enough to retake.
 
 ## After recording
 
