@@ -18,5 +18,17 @@
       "gold": "eval/gold/change/endurance-2017-ex106.yaml",
       "gold_sha256": "8c65108e5ebada7959ab0c220d2cc966f6964d96ac7cd065d14f075220943e6b"
     }
+  ],
+  "timing": [
+    {
+      "name": "reference",
+      "gold": "eval/gold/timing/reference.yaml",
+      "gold_sha256": "ecfd86995c1c4269732164b4dde49262f3c6c089b88283aeada083fbf68e6d20"
+    },
+    {
+      "name": "challenge",
+      "gold": "eval/gold/timing/challenge.yaml",
+      "gold_sha256": "f1353565ac31b449ce5db19405645df5f882085c618ae9ee21df77fec28be92f"
+    }
   ]
 }
