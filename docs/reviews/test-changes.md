@@ -160,3 +160,10 @@ Red at freeze: 11 modules fail at collection on missing modules, and every wave 
 - `test_extract_cli.py`: recordings now live under `eval/recorded`.
 
 **Red result at freeze:** 1,164 passed; failures only in the wave 4 modules plus 2 adapted extract CLI cases, which wait on Task 33. Each fork showed satisfiability with throwaway implementations on a devbox scratch copy.
+
+## Wave 4 rev 2.3 (2026-10-02): report citation content
+
+- **New frozen test:** `tests/test_change_report_refs.py`. Every new, old, and context citation in both change orders' reports, in both modes, must be an exact slice of its source TextDoc.
+- **The bug it catches:** `og/change/report.py` sliced the finding rows one column off, so the old and context sides were garbage. The Task 32 worker found this. The earlier tests checked only that an old side was present.
+- **Red at freeze:** 7 of 7 failing.
+- **The fix:** approved inside the Task 32 PR.
