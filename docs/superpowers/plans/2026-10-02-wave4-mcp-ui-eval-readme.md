@@ -206,3 +206,211 @@ About $0.80 remains. Wave 4 needs about $0.03 (C9 gate recording) plus a fresh-c
 - `guarantees` and `triggers` edges (as in wave 3: the corpus lacks the counterpart agreements).
 - Running new change orders from MCP.
 - Multi-user serving, auth, and deployment (CLAUDE.md non-goals).
+
+---
+
+## Rev 2 (Astra wave-4 round 1: 4 blockers, 10 should-fixes, all accepted)
+
+Rev 2 overrides rev 1 wherever they conflict. Review: `docs/reviews/2026-10-02-astra-wave4-review.md`.
+
+### W4-1. A citation-complete read contract
+
+**Every supporting binding carries its own grounded citation:**
+
+| Output field | Source and citation |
+|---|---|
+| `owed_by`, `owed_to` | `{name, role, clause}` from `visible_agreement_party` with its ClauseRef |
+| `anchor_event` | `{name, date, clause}`, only when the event's own ref is grounded and same-agreement; otherwise null |
+| `sites` | `{name, location, clause}` from `visible_agreement_site` |
+| Agreement `parties` | `{name, role, clause}` from `visible_agreement_party` |
+
+- A binding without a grounded citation is null and counts as unresolved. It is never shown bare.
+
+**Read rules:**
+- Reads go through views and an explicit allowlist. ClauseRefs are joined only by id, from a visible row, with `grounded = 1` and the same agreement.
+- **Frozen enforcement:** the tests install a `sqlite3` authorizer on the connection during every `og.query` call and fail on any read of `obligation`, `clause_ref`, `agreement_party`, `event`, `change_finding`, `supersedes`, or `agreement_site` except through a `visible_*` or `fresh_change_run` view, or an allowlisted ref-by-id join.
+- **Allowlisted metadata tables:** `agreement`, `source`, `party`, `site`, `change_run_chain`, `gate_decision`.
+
+**Snapshots and labels:**
+- Each public function runs inside one read transaction (`BEGIN`, then `COMMIT`), so it sees one snapshot.
+- Source metadata (filer, URL) and gate diagnostics are labeled `metadata`, not contractual terms. They need no ClauseRef.
+
+**Tests:**
+- An obligation with one grounded and one ungrounded ref.
+- Revoked party ref 65 on real obligation 34: `owed_to` becomes null, and the obligation stays visible with its own quote.
+- A revoked event ref.
+- A revoked site ref.
+
+### W4-2. The scorer uses visible bindings
+
+- `og/eval/score.py:pred_from_db` reads roles from `visible_agreement_party` and anchors from grounded events. Task 34 owns this change.
+- **Frozen real-row regression:** revoking ref 65 changes the role-bound prediction count.
+
+### W4-3. A stale change report is an error, never an empty check
+
+- `load_change_report` and `score_change` require the run to be in `fresh_change_run`.
+- Otherwise they return `{"error": "stale_change_run", "message": "... run make change"}` (or the scorer raises). The states `missing_change_run`, `stale_change_run`, and completed-but-empty stay distinct.
+- A missing TextDoc is an error (`missing_textdoc`), never an empty unresolved list.
+- Task 30 owns `og/change/report.py`, and Task 34 owns `og/eval/change_score.py`.
+- **Test:** the real 3A base-hash mutation through query, MCP, UI, and eval.
+
+### W4-4. Recorded cost vs replay cost
+
+**Contract changes:**
+- `GateDecision` gains `cache_hit: bool = False`.
+- The gate cache payload is `{answer_text, stop_reason, attempts, latency_ms}`.
+- A hit makes no reservation and no client call. It returns the recorded usage, cost, and latency, with `cache_hit = True`.
+
+**Run costs:**
+- `_run_costs` counts gate cost in `cost_usd` (recorded) always, and in `incremental_cost_usd` only when `cache_hit` is false. Change runs and results report these four fields separately:
+  - `recorded_latency_ms` (sum of original call latencies)
+  - `replay_wall_ms`
+  - `cost_usd`
+  - `incremental_cost_usd`
+
+**C9 and C10:**
+- C9's newly recorded gate samples are the pinned baseline. The wave 3 numbers stay in the wave 3 report as historical.
+- C10 compares a **semantic projection** (`og.eval.all.semantic_projection(results)`, frozen). It drops dates, run ids, pair ids, wall times, and incremental spend, and keeps every metric, count, and recorded cost.
+
+### W4-5. Replay manifest and strict mode
+
+- **Manifest:** `eval/recorded/MANIFEST.json` lists, per document:
+  - source sha256, canonical TextDoc sha256;
+  - effective settings: model, effort, chunk chars, max_tokens;
+  - every required fingerprint by kind, and a sha256 of each payload.
+- **Strict mode:** `OG_REPLAY=strict` makes any cache miss an error (`replay_miss <fingerprint>`, exit 4) before any client is constructed. C10 runs in strict mode.
+- **Lazy client:** clients are constructed only on the first miss outside strict mode.
+  - **Test:** monkeypatch `anthropic.Anthropic` to raise; a full replay still succeeds.
+- **Gate fingerprint:** sha256 of the full effective request (`model`, `system`, `messages`, `output_config`, `max_tokens`) plus the change-order canonical TextDoc sha and the sample index. No run ids.
+- Normal runs write new entries into `eval/recorded/` (an intentional record step). Strict mode never writes.
+
+### W4-6. Field-level redaction, per ADR-005
+
+**Preserved:** independently verified fields are kept on redacted or blank rows, for example the cited payer COREWEAVE on Applied Digital 490 and 504. The verbatim quote is always preserved.
+
+**Added:** `marker` (`[REDACTED]` or `[BLANK]`).
+
+**Never inferred:** verify already nulls amount, due date, anchor, and offset when they are not in the quote, and the API adds no value.
+
+**Tests:**
+- Real Carbonite payment rows: a null amount, plus the quote including its unredacted period text.
+- Real Applied Digital 490 and 504: both party bindings preserved.
+
+### W4-7. Honest deadline semantics
+
+- **Coverage:** all 525 obligations are pending today.
+- **`upcoming_deadlines` result shape:** `{scheduled: [...], pending_total, pending: page, unresolved_party_count, note}`.
+  - The `note` says that pending means no computable due date, not overdue, and not no obligation.
+  - `unresolved_party_count` is computed over the same non-party filters, before pagination. It counts payee or payer unbound, unbound by policy, or with a revoked binding. It is distinct from "bound to a different party".
+- **Frozen real coverage fixtures:**
+
+| Fixture | Count |
+|---|---:|
+| Visible obligations | 525 |
+| With an effective due date | 0 |
+| With `owed_to` bound | 168 |
+| Landlord-payee rows | 114 |
+
+- **README demo:** the pending landlord obligations with clauses, plus the cited 3A date shift from `check_change_order`. No date is filled.
+
+### W4-8. Sites are agreement-associated and cited
+
+- **Pins:** exactly four, with `name` and `location` copied from the quote:
+
+| Document | Segment | Pinned text |
+|---|---|---|
+| CC base | `p0542` | `55 Middlesex Turnpike, Bedford, Massachusetts` |
+| 1A | `p0006` | same address |
+| 3A | `p0005` | same address |
+| Carbonite | `p0694` | `2121 South Price Road, Chandler, Arizona` |
+
+- Other documents have no site.
+- `AgreementOut.sites` is a list.
+- `ObligationOut.agreement_sites` is a list of `{name, location, clause}`, labeled "agreement site". There is no singular obligation `site`; `obligation.site_id` stays null.
+- The `site` filter matches agreement sites.
+- Carbonite's mention of `120 E Van Buren Phoenix` (`p0723`) is not pinned.
+
+### W4-9. Sites in snapshot replacement
+
+- **Stable site identity:** a site is unique on (name, location), and its fields are never updated.
+- **Snapshot replacement:** `_delete_snapshot` deletes this agreement's `agreement_site` rows before its clause refs. Verified pins are inserted in the same transaction.
+- **Frozen tests:**
+  - A repeat extraction is idempotent.
+  - A changed or removed pin.
+  - An invalid pin rolls back the whole write.
+  - A site shared by 1A and 3A.
+  - A v3 file raises `SchemaOutdated`.
+- **B4** bumps `SCHEMA_VERSION` to 4. Before C9, the integration graph is rebuilt from recorded extraction ($0) and the change runs are replayed.
+
+### W4-10. One filter, pagination, and counts API
+
+`get_obligations(con, *, party, site, type, status, lifecycle, agreement, include_superseded, limit=50, offset=0)` returns `{obligations, total, returned, offset, truncated, unresolved_party_count}`.
+
+- **Filters and ordering:** all filters run in SQL before limiting. Ordering is deterministic: `effective_due NULLS LAST, agreement_id, id`. `limit` is at most 500.
+- **Pagination:** MCP and the UI expose `limit` and `offset`. Deadlines paginate `pending` with the same metadata.
+- **Tests:** Carbonite's 202 rows and the corpus's 525.
+
+### W4-11. `check_change_order` loads a stored report only
+
+**Description and result:**
+- The tool description and result state `"stored_report": true`, `"analysis_performed": false`.
+- The result includes the change order's source sha256, the chain snapshot vector, and the pair id.
+
+**Inputs accepted exactly:**
+- A change-order id.
+- A manifest `local_path`.
+- A bare filename equal to a pinned `local_path` basename.
+- An existing file at an arbitrary path only if its sha256 equals a pinned change order's source sha256.
+
+**Rejected:** everything else, including ambiguous inputs (`unknown_change_order`, with pipeline instructions). There is no basename fallback for arbitrary paths.
+
+### W4-12. Workspace-independent launch and real SDK envelopes
+
+- **One root:** every data path (db, text, sources, recorded, ui) resolves from `og.paths.workspace()`. That is `OG_WORKSPACE` if set, else the repository root found from the package location.
+- **Desktop config (README):** `{"command": "<abs path to uv>", "args": ["--directory", "<abs repo path>", "run", "--locked", "python", "-m", "og.mcp"]}`.
+- **Tests:**
+  - Launch from an unrelated cwd.
+  - A real stdio initialize, list, and call through `mcp.client.stdio`.
+  - A missing or older db gives a structured error.
+  - Nothing but protocol on stdout.
+  - Results are parsed from the actual `CallToolResult` envelope (`content[0].text` JSON, `is_error`).
+- **C12** stays a required user-confirmed acceptance record.
+
+### W4-13. A pinned aggregate
+
+`og.eval all --manifest eval/results/MANIFEST.json` reads only the inputs listed in the manifest: extraction scoring doc, change orders, and gold files with hashes. It writes `eval/results/<date>-aggregate.json` (schema frozen in `tests/test_eval_all.py`).
+
+The aggregate contains:
+- **Extraction:**
+  - sampled-precision labeling, with per-type lower bounds (added) and field coverage;
+  - the replay score;
+  - the wave 2 n=3 variance, carried as `historical` from the committed summary file.
+- **Drops:** joined from the logs by the current extraction run ids over the corpus; mismatches are rejected.
+- **Change:** finding metrics, reference- and baseline-relative gate metrics, Haiku coverage with null recall, skip classes, miss bounds, and the recorded vs replay cost/latency split.
+
+README tables are generated from that single aggregate file.
+
+### W4-14. Acceptance sequencing
+
+- **Task 34** tests the renderer and checker on temporary README fixtures only.
+- **C11** adds the frozen check on the real README (coordinator-owned).
+- **C13 (new) browser acceptance:** the coordinator drives the UI with Chrome automation. It checks:
+  - filtering;
+  - a Carbonite redacted payment showing its marker;
+  - clicking a row shows its exact clause;
+  - the 1A and 3A change pair with gates.
+
+  Source text is rendered with `textContent`, never `innerHTML`, and a frozen static test greps for `innerHTML` assignments of data.
+- **Final acceptance items, explicitly the user's:**
+  - C12, Claude Desktop confirmation.
+  - The 2-minute walkthrough link.
+
+### Ownership updates
+
+| Task | Additional files |
+|---|---|
+| 30 | `og/change/report.py`, and `og/paths.py` (body; contract by B4) |
+| 33 | `og/gates/haiku.py`, `og/change/__main__.py` (`_run_costs`), `og/extract/__main__.py`, `og/store/writer.py` |
+| 34 | `og/eval/score.py`, `og/eval/change_score.py`, `og/eval/all.py`, `og/eval/readme.py`, `og/eval/__main__.py` |
+
+**B4** also adds `GateDecision.cache_hit`, schema v4, `og/paths.py` and `og/replay.py` contracts, and the four site pins.
