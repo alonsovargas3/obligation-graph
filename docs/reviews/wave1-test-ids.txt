@@ -1,0 +1,391 @@
+tests/test_fetch.py::test_requires_user_agent
+tests/test_fetch.py::test_user_agent_needs_email
+tests/test_fetch.py::test_fetch_writes_file_and_sha
+tests/test_fetch.py::test_sha_mismatch_fails_and_writes_nothing
+tests/test_fetch.py::test_skips_existing_matching_file
+tests/test_fetch.py::test_corrupted_cached_file_is_refetched
+tests/test_fetch.py::test_http_error_names_the_document
+tests/test_fetch.py::test_partial_failure_keeps_completed_pins
+tests/test_fetch.py::test_rate_limiter_spacing
+tests/test_fetch.py::test_rate_limiter_rejects_invalid_rates[0]
+tests/test_fetch.py::test_rate_limiter_rejects_invalid_rates[-1]
+tests/test_fetch.py::test_rate_limiter_rejects_invalid_rates[11]
+tests/test_fetch.py::test_every_request_including_redirects_is_rate_limited
+tests/test_fetch.py::test_resolve_missing_url_from_filing_index
+tests/test_fetch.py::test_resolve_exhibit_url_forms[/Archives/edgar/data/1/2/ex.htm-https://www.sec.gov/Archives/edgar/data/1/2/ex.htm]
+tests/test_fetch.py::test_resolve_exhibit_url_forms[ex.htm-https://www.sec.gov/Archives/edgar/data/1/2/ex.htm]
+tests/test_fetch.py::test_resolve_exhibit_url_forms[https://www.sec.gov/Archives/edgar/data/1/2/ex.htm-https://www.sec.gov/Archives/edgar/data/1/2/ex.htm]
+tests/test_fetch.py::test_resolve_exhibit_from_fixture
+tests/test_fetch.py::test_resolve_exhibit_absent
+tests/test_fetch.py::test_resolve_exhibit_does_not_prefix_match
+tests/test_fetch.py::test_resolve_exhibit_ambiguous
+tests/test_fetch.py::test_resolve_exhibit_rejects_non_sec_host
+tests/test_fetch.py::test_parse_filing_date
+tests/test_fetch_recorded.py::test_resolve_exhibit_from_recorded_real_index
+tests/test_ground.py::test_normalize_ws_only_whitespace
+tests/test_ground.py::test_exact_in_range
+tests/test_ground.py::test_range_is_containment_not_equality
+tests/test_ground.py::test_nbsp_and_newlines_ground
+tests/test_ground.py::test_result_carries_derived_section_and_page
+tests/test_ground.py::test_wrong_offsets_fall_back_to_section
+tests/test_ground.py::test_section_fallback_picks_nearest_occurrence
+tests/test_ground.py::test_fallback_tie_goes_to_earlier
+tests/test_ground.py::test_fallback_does_not_leave_section
+tests/test_ground.py::test_explicit_section_constrains_range_pass
+tests/test_ground.py::test_unknown_section_id_falls_back_to_offset_section
+tests/test_ground.py::test_match_crossing_section_boundary_is_rejected
+tests/test_ground.py::test_curly_quotes_do_not_match_straight
+tests/test_ground.py::test_case_sensitive
+tests/test_ground.py::test_empty_span
+tests/test_ground.py::test_out_of_bounds_offsets_no_section
+tests/test_ground.py::test_log_drop_appends_jsonl
+tests/test_ground.py::test_property_true_range_grounds[sec0-195-197-al]
+tests/test_ground.py::test_property_true_range_grounds[sec1-207-215-ing here]
+tests/test_ground.py::test_property_true_range_grounds[sec2-72-81-pay Addit]
+tests/test_ground.py::test_property_true_range_grounds[sec3-64-123-t shall pay Additional Rent within thirty days. 2.3 Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec4-79-86-itional]
+tests/test_ground.py::test_property_true_range_grounds[sec5-84-115-al Rent within thirty days. 2]
+tests/test_ground.py::test_property_true_range_grounds[sec6-168-204-rm\u201d is ten years. Tenant shall pay n]
+tests/test_ground.py::test_property_true_range_grounds[sec7-23-70-nt shall pay Base Rent monthly. 2.2 Tenant shal]
+tests/test_ground.py::test_property_true_range_grounds[sec8-142-182-ARTICLE 3 TERM 3.1 The \u201cTerm\u201d is ten yea]
+tests/test_ground.py::test_property_true_range_grounds[sec9-184-200-. Tenant shall p]
+tests/test_ground.py::test_property_true_range_grounds[sec10-150-163-3 TERM 3.1 Th]
+tests/test_ground.py::test_property_true_range_grounds[sec11-61-113-nant shall pay Additional Rent within thirty days.]
+tests/test_ground.py::test_property_true_range_grounds[sec12-139-141-s.]
+tests/test_ground.py::test_property_true_range_grounds[sec13-211-213-he]
+tests/test_ground.py::test_property_true_range_grounds[sec14-182-198-rs. Tenant shall]
+tests/test_ground.py::test_property_true_range_grounds[sec15-165-178-\u201cTerm\u201d is ten]
+tests/test_ground.py::test_property_true_range_grounds[sec16-8-48-2 RENT 2.1 Tenant shall pay Base Rent mo]
+tests/test_ground.py::test_property_true_range_grounds[sec17-33-90-ay Base Rent monthly. 2.2 Tenant shall pay Additional R]
+tests/test_ground.py::test_property_true_range_grounds[sec18-208-212-ng h]
+tests/test_ground.py::test_property_true_range_grounds[sec19-205-216-thing here.]
+tests/test_ground.py::test_property_true_range_grounds[sec20-152-173-TERM 3.1 The \u201cTerm\u201d i]
+tests/test_ground.py::test_property_true_range_grounds[sec21-62-64-an]
+tests/test_ground.py::test_property_true_range_grounds[sec22-95-106-ithin thirt]
+tests/test_ground.py::test_property_true_range_grounds[sec23-196-198-ll]
+tests/test_ground.py::test_property_true_range_grounds[sec24-37-92-ase Rent monthly. 2.2 Tenant shall pay Additional Ren]
+tests/test_ground.py::test_property_true_range_grounds[sec25-11-64-ENT 2.1 Tenant shall pay Base Rent monthly. 2.2 Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec26-6-14-E 2 RENT]
+tests/test_ground.py::test_property_true_range_grounds[sec27-30-56-l pay Base Rent monthly. 2]
+tests/test_ground.py::test_property_true_range_grounds[sec28-94-102-within t]
+tests/test_ground.py::test_property_true_range_grounds[sec29-5-18-LE 2 RENT 2.1]
+tests/test_ground.py::test_property_true_range_grounds[sec30-15-75-2.1 Tenant shall pay Base Rent monthly. 2.2 Tenant shall pay]
+tests/test_ground.py::test_property_true_range_grounds[sec31-139-141-s.]
+tests/test_ground.py::test_property_true_range_grounds[sec32-66-71-shall]
+tests/test_ground.py::test_property_true_range_grounds[sec33-186-200-Tenant shall p]
+tests/test_ground.py::test_property_true_range_grounds[sec34-15-48-2.1 Tenant shall pay Base Rent mo]
+tests/test_ground.py::test_property_true_range_grounds[sec35-187-216-enant shall pay nothing here.]
+tests/test_ground.py::test_property_true_range_grounds[sec36-214-215-e]
+tests/test_ground.py::test_property_true_range_grounds[sec37-41-63-Rent monthly. 2.2 Tena]
+tests/test_ground.py::test_property_true_range_grounds[sec38-157-196-3.1 The \u201cTerm\u201d is ten years. Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec39-194-213-hall pay nothing he]
+tests/test_ground.py::test_property_true_range_grounds[sec40-187-200-enant shall p]
+tests/test_ground.py::test_property_true_range_grounds[sec41-161-197-The \u201cTerm\u201d is ten years. Tenant shal]
+tests/test_ground.py::test_property_true_range_grounds[sec42-85-133-l Rent within thirty days. 2.3 Tenant shall pa]
+tests/test_ground.py::test_property_true_range_grounds[sec43-139-141-s.]
+tests/test_ground.py::test_property_true_range_grounds[sec44-61-110-nant shall pay Additional Rent within thirty da]
+tests/test_ground.py::test_property_true_range_grounds[sec45-187-207-enant shall pay noth]
+tests/test_ground.py::test_property_true_range_grounds[sec46-187-206-enant shall pay not]
+tests/test_ground.py::test_property_true_range_grounds[sec47-79-104-itional Rent within thi]
+tests/test_ground.py::test_property_true_range_grounds[sec48-152-153-T]
+tests/test_ground.py::test_property_true_range_grounds[sec49-85-96-l Rent wi]
+tests/test_ground.py::test_property_true_range_grounds[sec50-57-98-2 Tenant shall pay Additional Rent with]
+tests/test_ground.py::test_property_true_range_grounds[sec51-190-213-nt shall pay nothing he]
+tests/test_ground.py::test_property_true_range_grounds[sec52-147-158-LE 3 TERM 3]
+tests/test_ground.py::test_property_true_range_grounds[sec53-150-167-3 TERM 3.1 The \u201cT]
+tests/test_ground.py::test_property_true_range_grounds[sec54-213-214-r]
+tests/test_ground.py::test_property_true_range_grounds[sec55-126-137-hall pay ta]
+tests/test_ground.py::test_property_true_range_grounds[sec56-166-202-Term\u201d is ten years. Tenant shall pay]
+tests/test_ground.py::test_property_true_range_grounds[sec57-33-34-a]
+tests/test_ground.py::test_property_true_range_grounds[sec58-195-206-all pay not]
+tests/test_ground.py::test_property_true_range_grounds[sec59-135-140-taxes]
+tests/test_ground.py::test_property_true_range_grounds[sec60-48-56-nthly. 2]
+tests/test_ground.py::test_property_true_range_grounds[sec61-77-95-dditional Rent w]
+tests/test_ground.py::test_property_true_range_grounds[sec62-152-154-TE]
+tests/test_ground.py::test_property_true_range_grounds[sec63-159-201-1 The \u201cTerm\u201d is ten years. Tenant shall pa]
+tests/test_ground.py::test_property_true_range_grounds[sec64-10-13-REN]
+tests/test_ground.py::test_property_true_range_grounds[sec65-66-102-shall pay Additional Rent within t]
+tests/test_ground.py::test_property_true_range_grounds[sec66-188-207-nant shall pay noth]
+tests/test_ground.py::test_property_true_range_grounds[sec67-126-141-hall pay taxes.]
+tests/test_ground.py::test_property_true_range_grounds[sec68-53-78-. 2.2 Tenant shall pay Ad]
+tests/test_ground.py::test_property_true_range_grounds[sec69-69-91-ll pay Additional Re]
+tests/test_ground.py::test_property_true_range_grounds[sec70-189-212-ant shall pay nothing h]
+tests/test_ground.py::test_property_true_range_grounds[sec71-10-28-RENT 2.1 Tenant sh]
+tests/test_ground.py::test_property_true_range_grounds[sec72-188-201-nant shall pa]
+tests/test_ground.py::test_property_true_range_grounds[sec73-172-176-is t]
+tests/test_ground.py::test_property_true_range_grounds[sec74-77-103-dditional Rent within th]
+tests/test_ground.py::test_property_true_range_grounds[sec75-180-207-ears. Tenant shall pay noth]
+tests/test_ground.py::test_property_true_range_grounds[sec76-157-188-3.1 The \u201cTerm\u201d is ten years. Te]
+tests/test_ground.py::test_property_true_range_grounds[sec77-127-134-all pay]
+tests/test_ground.py::test_property_true_range_grounds[sec78-77-99-dditional Rent withi]
+tests/test_ground.py::test_property_true_range_grounds[sec79-42-83-ent monthly. 2.2 Tenant shall pay Additio]
+tests/test_ground.py::test_property_true_range_grounds[sec80-153-158-ERM 3]
+tests/test_ground.py::test_property_true_range_grounds[sec81-50-98-hly. 2.2 Tenant shall pay Additional Rent with]
+tests/test_ground.py::test_property_true_range_grounds[sec82-15-40-2.1 Tenant shall pay Base]
+tests/test_ground.py::test_property_true_range_grounds[sec83-199-215-pay nothing here]
+tests/test_ground.py::test_property_true_range_grounds[sec84-170-187-\u201d is ten years. T]
+tests/test_ground.py::test_property_true_range_grounds[sec85-110-123-ys. 2.3 Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec86-30-62-l pay Base Rent monthly. 2.2 Ten]
+tests/test_ground.py::test_property_true_range_grounds[sec87-55-95-2.2 Tenant shall pay Additional Rent w]
+tests/test_ground.py::test_property_true_range_grounds[sec88-26-39-shall pay Bas]
+tests/test_ground.py::test_property_true_range_grounds[sec89-190-202-nt shall pay]
+tests/test_ground.py::test_property_true_range_grounds[sec90-26-65-shall pay Base Rent monthly. 2.2 Tenant]
+tests/test_ground.py::test_property_true_range_grounds[sec91-196-213-ll pay nothing he]
+tests/test_ground.py::test_property_true_range_grounds[sec92-183-215-s. Tenant shall pay nothing here]
+tests/test_ground.py::test_property_true_range_grounds[sec93-167-202-erm\u201d is ten years. Tenant shall pay]
+tests/test_ground.py::test_property_true_range_grounds[sec94-2-24-TICLE 2 RENT 2.1 Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec95-132-133-a]
+tests/test_ground.py::test_property_true_range_grounds[sec96-76-77-A]
+tests/test_ground.py::test_property_true_range_grounds[sec97-184-195-. Tenant sh]
+tests/test_ground.py::test_property_true_range_grounds[sec98-209-210-g]
+tests/test_ground.py::test_property_true_range_grounds[sec99-109-123-ays. 2.3 Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec100-184-189-. Ten]
+tests/test_ground.py::test_property_true_range_grounds[sec101-175-195-ten years. Tenant sh]
+tests/test_ground.py::test_property_true_range_grounds[sec102-61-80-nant shall pay Addi]
+tests/test_ground.py::test_property_true_range_grounds[sec103-195-200-all p]
+tests/test_ground.py::test_property_true_range_grounds[sec104-152-196-TERM 3.1 The \u201cTerm\u201d is ten years. Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec105-90-117-ent within thirty days. 2.3]
+tests/test_ground.py::test_property_true_range_grounds[sec106-119-132-enant shall p]
+tests/test_ground.py::test_property_true_range_grounds[sec107-148-155-E 3 TER]
+tests/test_ground.py::test_property_true_range_grounds[sec108-161-163-Th]
+tests/test_ground.py::test_property_true_range_grounds[sec109-33-74-ay Base Rent monthly. 2.2 Tenant shall pa]
+tests/test_ground.py::test_property_true_range_grounds[sec110-155-200-M 3.1 The \u201cTerm\u201d is ten years. Tenant shall p]
+tests/test_ground.py::test_property_true_range_grounds[sec111-166-191-Term\u201d is ten years. Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec112-119-139-enant shall pay taxe]
+tests/test_ground.py::test_property_true_range_grounds[sec113-157-201-3.1 The \u201cTerm\u201d is ten years. Tenant shall pa]
+tests/test_ground.py::test_property_true_range_grounds[sec114-179-187-years. T]
+tests/test_ground.py::test_property_true_range_grounds[sec115-116-128-3 Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec116-11-69-ENT 2.1 Tenant shall pay Base Rent monthly. 2.2 Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec117-133-137-y ta]
+tests/test_ground.py::test_property_true_range_grounds[sec118-23-73-nt shall pay Base Rent monthly. 2.2 Tenant shall p]
+tests/test_ground.py::test_property_true_range_grounds[sec119-37-65-ase Rent monthly. 2.2 Tenant]
+tests/test_ground.py::test_property_true_range_grounds[sec120-152-212-TERM 3.1 The \u201cTerm\u201d is ten years. Tenant shall pay nothing h]
+tests/test_ground.py::test_property_true_range_grounds[sec121-106-111-y day]
+tests/test_ground.py::test_property_true_range_grounds[sec122-106-116-y days. 2.]
+tests/test_ground.py::test_property_true_range_grounds[sec123-114-128-2.3 Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec124-145-177-ICLE 3 TERM 3.1 The \u201cTerm\u201d is te]
+tests/test_ground.py::test_property_true_range_grounds[sec125-145-168-ICLE 3 TERM 3.1 The \u201cTe]
+tests/test_ground.py::test_property_true_range_grounds[sec126-53-54-.]
+tests/test_ground.py::test_property_true_range_grounds[sec127-47-77-onthly. 2.2 Tenant shall pay A]
+tests/test_ground.py::test_property_true_range_grounds[sec128-122-134-nt shall pay]
+tests/test_ground.py::test_property_true_range_grounds[sec129-158-160-.1]
+tests/test_ground.py::test_property_true_range_grounds[sec130-179-198-years. Tenant shall]
+tests/test_ground.py::test_property_true_range_grounds[sec131-26-61-shall pay Base Rent monthly. 2.2 Te]
+tests/test_ground.py::test_property_true_range_grounds[sec132-162-187-he \u201cTerm\u201d is ten years. T]
+tests/test_ground.py::test_property_true_range_grounds[sec133-32-84-pay Base Rent monthly. 2.2 Tenant shall pay Addition]
+tests/test_ground.py::test_property_true_range_grounds[sec134-80-113-tional Rent within thirty days.]
+tests/test_ground.py::test_property_true_range_grounds[sec135-60-109-enant shall pay Additional Rent within thirty d]
+tests/test_ground.py::test_property_true_range_grounds[sec136-74-98-y Additional Rent with]
+tests/test_ground.py::test_property_true_range_grounds[sec137-5-31-LE 2 RENT 2.1 Tenant shall]
+tests/test_ground.py::test_property_true_range_grounds[sec138-180-216-ears. Tenant shall pay nothing here.]
+tests/test_ground.py::test_property_true_range_grounds[sec139-63-92-nt shall pay Additional Ren]
+tests/test_ground.py::test_property_true_range_grounds[sec140-209-210-g]
+tests/test_ground.py::test_property_true_range_grounds[sec141-194-195-h]
+tests/test_ground.py::test_property_true_range_grounds[sec142-183-212-s. Tenant shall pay nothing h]
+tests/test_ground.py::test_property_true_range_grounds[sec143-70-78-l pay Ad]
+tests/test_ground.py::test_property_true_range_grounds[sec144-114-127-2.3 Tenant sh]
+tests/test_ground.py::test_property_true_range_grounds[sec145-63-93-nt shall pay Additional Rent]
+tests/test_ground.py::test_property_true_range_grounds[sec146-201-204-y n]
+tests/test_ground.py::test_property_true_range_grounds[sec147-168-187-rm\u201d is ten years. T]
+tests/test_ground.py::test_property_true_range_grounds[sec148-114-134-2.3 Tenant shall pay]
+tests/test_ground.py::test_property_true_range_grounds[sec149-142-156-ARTICLE 3 TERM]
+tests/test_ground.py::test_property_true_range_grounds[sec150-211-216-here.]
+tests/test_ground.py::test_property_true_range_grounds[sec151-108-139-days. 2.3 Tenant shall pay taxe]
+tests/test_ground.py::test_property_true_range_grounds[sec152-127-140-all pay taxes]
+tests/test_ground.py::test_property_true_range_grounds[sec153-139-141-s.]
+tests/test_ground.py::test_property_true_range_grounds[sec154-147-148-L]
+tests/test_ground.py::test_property_true_range_grounds[sec155-187-197-enant shal]
+tests/test_ground.py::test_property_true_range_grounds[sec156-21-24-nan]
+tests/test_ground.py::test_property_true_range_grounds[sec157-157-191-3.1 The \u201cTerm\u201d is ten years. Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec158-179-198-years. Tenant shall]
+tests/test_ground.py::test_property_true_range_grounds[sec159-133-137-y ta]
+tests/test_ground.py::test_property_true_range_grounds[sec160-105-140-ty days. 2.3 Tenant shall pay taxes]
+tests/test_ground.py::test_property_true_range_grounds[sec161-177-196-n years. Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec162-189-208-ant shall pay nothi]
+tests/test_ground.py::test_property_true_range_grounds[sec163-97-123-hin thirty days. 2.3 Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec164-159-195-1 The \u201cTerm\u201d is ten years. Tenant sh]
+tests/test_ground.py::test_property_true_range_grounds[sec165-187-208-enant shall pay nothi]
+tests/test_ground.py::test_property_true_range_grounds[sec166-195-202-all pay]
+tests/test_ground.py::test_property_true_range_grounds[sec167-204-216-othing here.]
+tests/test_ground.py::test_property_true_range_grounds[sec168-205-216-thing here.]
+tests/test_ground.py::test_property_true_range_grounds[sec169-126-128-ha]
+tests/test_ground.py::test_property_true_range_grounds[sec170-6-29-E 2 RENT 2.1 Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec171-20-64-enant shall pay Base Rent monthly. 2.2 Tenan]
+tests/test_ground.py::test_property_true_range_grounds[sec172-142-166-ARTICLE 3 TERM 3.1 The \u201c]
+tests/test_ground.py::test_property_true_range_grounds[sec173-29-69-ll pay Base Rent monthly. 2.2 Tenant sha]
+tests/test_ground.py::test_property_true_range_grounds[sec174-166-173-Term\u201d i]
+tests/test_ground.py::test_property_true_range_grounds[sec175-163-185-e \u201cTerm\u201d is ten years.]
+tests/test_ground.py::test_property_true_range_grounds[sec176-197-202-l pay]
+tests/test_ground.py::test_property_true_range_grounds[sec177-196-212-ll pay nothing h]
+tests/test_ground.py::test_property_true_range_grounds[sec178-170-183-\u201d is ten year]
+tests/test_ground.py::test_property_true_range_grounds[sec179-168-206-rm\u201d is ten years. Tenant shall pay not]
+tests/test_ground.py::test_property_true_range_grounds[sec180-99-102-n t]
+tests/test_ground.py::test_property_true_range_grounds[sec181-21-77-nant shall pay Base Rent monthly. 2.2 Tenant shall pay A]
+tests/test_ground.py::test_property_true_range_grounds[sec182-59-99-Tenant shall pay Additional Rent withi]
+tests/test_ground.py::test_property_true_range_grounds[sec183-187-201-enant shall pa]
+tests/test_ground.py::test_property_true_range_grounds[sec184-148-189-E 3 TERM 3.1 The \u201cTerm\u201d is ten years. Ten]
+tests/test_ground.py::test_property_true_range_grounds[sec185-89-90-R]
+tests/test_ground.py::test_property_true_range_grounds[sec186-142-151-ARTICLE 3]
+tests/test_ground.py::test_property_true_range_grounds[sec187-109-124-ays. 2.3 Tenant]
+tests/test_ground.py::test_property_true_range_grounds[sec188-213-215-re]
+tests/test_ground.py::test_property_true_range_grounds[sec189-166-188-Term\u201d is ten years. Te]
+tests/test_ground.py::test_property_true_range_grounds[sec190-183-213-s. Tenant shall pay nothing he]
+tests/test_ground.py::test_property_true_range_grounds[sec191-53-109-. 2.2 Tenant shall pay Additional Rent within thirty d]
+tests/test_ground.py::test_property_true_range_grounds[sec192-180-200-ears. Tenant shall p]
+tests/test_ground.py::test_property_true_range_grounds[sec193-212-213-e]
+tests/test_ground.py::test_property_true_range_grounds[sec194-148-207-E 3 TERM 3.1 The \u201cTerm\u201d is ten years. Tenant shall pay noth]
+tests/test_ground.py::test_property_true_range_grounds[sec195-205-213-thing he]
+tests/test_ground.py::test_property_true_range_grounds[sec196-157-163-3.1 Th]
+tests/test_ground.py::test_property_true_range_grounds[sec197-61-68-nant sh]
+tests/test_ground.py::test_property_true_range_grounds[sec198-105-119-ty days. 2.3 T]
+tests/test_ground.py::test_property_true_range_grounds[sec199-46-62-monthly. 2.2 Ten]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec0-195-197-al]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec1-207-215-ing here]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec2-72-81-pay Addit]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec3-64-123-t shall pay Additional Rent within thirty days. 2.3 Tenan]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec4-79-86-itional]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec5-84-115-al Rent within thirty days. 2]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec6-168-204-rm\u201d is ten years. Tenant shall pay n]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec7-23-70-nt shall pay Base Rent monthly. 2.2 Tenant shal]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec8-142-182-ARTICLE 3 TERM 3.1 The \u201cTerm\u201d is ten yea]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec9-184-200-. Tenant shall p]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec10-150-163-3 TERM 3.1 Th]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec11-61-113-nant shall pay Additional Rent within thirty days.]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec12-139-141-s.]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec13-211-213-he]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec14-182-198-rs. Tenant shall]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec15-165-178-\u201cTerm\u201d is ten]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec16-8-48-2 RENT 2.1 Tenant shall pay Base Rent mo]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec17-33-90-ay Base Rent monthly. 2.2 Tenant shall pay Additional R]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec18-208-212-ng h]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec19-205-216-thing here.]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec20-152-173-TERM 3.1 The \u201cTerm\u201d i]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec21-62-64-an]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec22-95-106-ithin thirt]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec23-196-198-ll]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec24-37-92-ase Rent monthly. 2.2 Tenant shall pay Additional Ren]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec25-11-64-ENT 2.1 Tenant shall pay Base Rent monthly. 2.2 Tenan]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec26-6-14-E 2 RENT]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec27-30-56-l pay Base Rent monthly. 2]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec28-94-102-within t]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec29-5-18-LE 2 RENT 2.1]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec30-15-75-2.1 Tenant shall pay Base Rent monthly. 2.2 Tenant shall pay]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec31-139-141-s.]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec32-66-71-shall]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec33-186-200-Tenant shall p]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec34-15-48-2.1 Tenant shall pay Base Rent mo]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec35-187-216-enant shall pay nothing here.]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec36-214-215-e]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec37-41-63-Rent monthly. 2.2 Tena]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec38-157-196-3.1 The \u201cTerm\u201d is ten years. Tenant sha]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec39-194-213-hall pay nothing he]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec40-187-200-enant shall p]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec41-161-197-The \u201cTerm\u201d is ten years. Tenant shal]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec42-85-133-l Rent within thirty days. 2.3 Tenant shall pa]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec43-139-141-s.]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec44-61-110-nant shall pay Additional Rent within thirty da]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec45-187-207-enant shall pay noth]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec46-187-206-enant shall pay not]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec47-79-104-itional Rent within thi]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec48-152-153-T]
+tests/test_ground.py::test_property_fallback_stays_in_section[sec49-85-96-l Rent wi]
+tests/test_ingest.py::test_exact_text
+tests/test_ingest.py::test_validates
+tests/test_ingest.py::test_sections_flat_finest_numbered_level
+tests/test_ingest.py::test_section_headings
+tests/test_ingest.py::test_section_offsets_start_at_heading_lines
+tests/test_ingest.py::test_segments_are_lines
+tests/test_ingest.py::test_pages_from_page_break_before_style
+tests/test_ingest.py::test_page_markers_after_hr_and_edges
+tests/test_ingest.py::test_no_page_markers_single_page_and_preamble
+tests/test_ingest.py::test_script_and_head_excluded
+tests/test_ingest.py::test_deterministic
+tests/test_ingest.py::test_ingest_file_verifies_sha
+tests/test_ingest.py::test_ingest_file_refuses_missing_or_wrong_sha[None]
+tests/test_ingest.py::test_ingest_file_refuses_missing_or_wrong_sha[]
+tests/test_ingest.py::test_ingest_file_refuses_missing_or_wrong_sha[0000000000000000000000000000000000000000000000000000000000000000]
+tests/test_ingest.py::test_pdf_not_supported_yet
+tests/test_ingest.py::test_inline_and_loose_page_markers_flush_the_line
+tests/test_ingest.py::test_article_title_does_not_swallow_a_section_heading
+tests/test_ingest.py::test_consecutive_articles_and_uppercase_title
+tests/test_ingest.py::test_uppercase_numbered_clause_is_not_an_article_title
+tests/test_ingest.py::test_single_level_numbered_clauses
+tests/test_ingest.py::test_number_like_lines_are_not_clauses
+tests/test_ingest.py::test_clause_number_in_its_own_table_cell
+tests/test_markers.py::test_redacted[$[***] per month]
+tests/test_markers.py::test_redacted[[*]]
+tests/test_markers.py::test_redacted[rate of *** per kW]
+tests/test_markers.py::test_redacted[[REDACTED]]
+tests/test_markers.py::test_redacted[[redacted]]
+tests/test_markers.py::test_redacted[[Confidential Treatment Requested]]
+tests/test_markers.py::test_redacted[[ * * * ]]
+tests/test_markers.py::test_blank[means [\u25cf].]
+tests/test_markers.py::test_blank[[\u2022]]
+tests/test_markers.py::test_blank[dated as of [  ], 2025]
+tests/test_markers.py::test_blank[the sum of $______]
+tests/test_markers.py::test_neither[Tenant shall pay $1,000.]
+tests/test_markers.py::test_neither[Section 2.1 [reserved]]
+tests/test_markers.py::test_neither[a * b]
+tests/test_markers.py::test_neither[**bold**]
+tests/test_markers.py::test_neither[[x]]
+tests/test_markers.py::test_neither[___]
+tests/test_schema.py::test_connect_is_idempotent
+tests/test_schema.py::test_foreign_keys_enforced
+tests/test_schema.py::test_ungrounded_obligation_is_invisible
+tests/test_schema.py::test_obligation_without_any_ref_is_invisible
+tests/test_schema.py::test_ref_from_other_agreement_is_rejected
+tests/test_schema.py::test_clause_ref_range_checks[-5-7-Tenant shall]
+tests/test_schema.py::test_clause_ref_range_checks[5-5-Tenant shall]
+tests/test_schema.py::test_clause_ref_range_checks[0-12-]
+tests/test_schema.py::test_clause_ref_range_checks[10-3-Tenant shall]
+tests/test_schema.py::test_clause_ref_range_checks[0-5-Tenant shall]
+tests/test_schema.py::test_status_check_constraint
+tests/test_schema.py::test_blank_status_allowed
+tests/test_schema.py::test_direct_due_date
+tests/test_schema.py::test_invalid_due_date_rejected[garbage]
+tests/test_schema.py::test_invalid_due_date_rejected[2026-02-30]
+tests/test_schema.py::test_invalid_due_date_rejected[2026-1-5]
+tests/test_schema.py::test_invalid_due_date_rejected[03/01/2026]
+tests/test_schema.py::test_leap_day_due_date_ok
+tests/test_schema.py::test_relative_deadline_needs_grounded_event
+tests/test_schema.py::test_relative_deadline_unknown_event_date_is_pending
+tests/test_schema.py::test_negative_offset
+tests/test_schema.py::test_amendment_may_anchor_on_base_agreement_event
+tests/test_schema.py::test_unrelated_agreement_event_is_not_used
+tests/test_schema.py::test_fractional_offset_rejected
+tests/test_schema.py::test_anchor_and_offset_come_together
+tests/test_schema.py::test_direct_and_relative_due_are_exclusive
+tests/test_schema.py::test_superseded_lifecycle
+tests/test_schema.py::test_edges_require_clause_ref
+tests/test_schema.py::test_edge_views_require_grounded_ref_and_visible_endpoints[supersedes]
+tests/test_schema.py::test_edge_views_require_grounded_ref_and_visible_endpoints[guarantees]
+tests/test_schema.py::test_edge_views_require_grounded_ref_and_visible_endpoints[triggers]
+tests/test_schema.py::test_edge_citation_from_unrelated_agreement_is_invisible[supersedes]
+tests/test_schema.py::test_edge_citation_from_unrelated_agreement_is_invisible[guarantees]
+tests/test_schema.py::test_edge_citation_from_unrelated_agreement_is_invisible[triggers]
+tests/test_schema.py::test_event_citation_must_match_event_agreement
+tests/test_schema.py::test_event_citation_update_path_checked
+tests/test_schema.py::test_view_ignores_event_whose_citation_moved_agreement
+tests/test_schema.py::test_defined_term_citation_must_match
+tests/test_schema.py::test_defined_term_view_ignores_moved_citation
+tests/test_schema.py::test_defined_term_view_requires_grounding
+tests/test_schema.py::test_extraction_run_unique_per_source_and_prompt
+tests/test_textdoc.py::test_lookups
+tests/test_textdoc.py::test_valid_doc_validates
+tests/test_textdoc.py::test_roundtrip_json
+tests/test_textdoc.py::test_load_validates
+tests/test_textdoc.py::test_empty_segments_allowed
+tests/test_textdoc.py::test_validate_rejects[<lambda>0]
+tests/test_textdoc.py::test_validate_rejects[<lambda>1]
+tests/test_textdoc.py::test_validate_rejects[<lambda>2]
+tests/test_textdoc.py::test_validate_rejects[<lambda>3]
+tests/test_textdoc.py::test_validate_rejects[<lambda>4]
+tests/test_textdoc.py::test_validate_rejects[<lambda>5]
+tests/test_textdoc.py::test_validate_rejects[<lambda>6]
+tests/test_textdoc.py::test_validate_rejects[<lambda>7]
+tests/test_textdoc.py::test_validate_rejects[<lambda>8]
+tests/test_textdoc.py::test_validate_rejects[<lambda>9]
+tests/test_textdoc.py::test_validate_rejects[<lambda>10]
+tests/test_textdoc.py::test_validate_rejects[<lambda>11]
+tests/test_textdoc.py::test_validate_rejects[<lambda>12]
+tests/test_textdoc.py::test_validate_rejects[<lambda>13]
