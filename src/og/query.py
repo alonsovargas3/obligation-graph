@@ -290,9 +290,13 @@ _UNBOUND = (
 )
 
 
-def _unresolved_party_count(con: sqlite3.Connection, where: str, params: list[Any]) -> int:
+def _unresolved_party_count(
+    con: sqlite3.Connection, where: str, params: list[Any], join: str = ""
+) -> int:
     """Matches whose payer or payee is null, unbound, or has a revoked binding."""
-    sql = "SELECT count(*) FROM visible_obligation o WHERE (" + where + ") AND" + _UNBOUND
+    sql = (
+        "SELECT count(*) FROM visible_obligation o" + join + " WHERE (" + where + ") AND" + _UNBOUND
+    )
     return con.execute(sql, params).fetchone()[0]
 
 
@@ -394,6 +398,75 @@ def _clause_map(
     return out
 
 
+# Wave 5: timing hydration comes only through the visible_obligation_timing projection.
+# A row with no visible timing is untimed: kind "untimed" with null fields (rev 2.2).
+_TIMING_SQL = (
+    "SELECT obligation_id, agreement_id, kind, trigger_kind, relation, offset_days,"
+    " offset_unit, reason, trigger_clause_ref_id, trigger_section, trigger_page,"
+    " trigger_char_start, trigger_char_end, trigger_span_text, anchor_event_id,"
+    " anchor_agreement_id, anchor_name, anchor_date, anchor_section, anchor_page,"
+    " anchor_char_start, anchor_char_end, anchor_span_text, bound_date"
+    " FROM visible_obligation_timing"
+)
+# The stated deadline of a scheduled row: the timing bound when the timing is visible,
+# otherwise the legacy effective_due. Strict lt bounds are exposed with their relation
+# and are never shown as due-on dates (rev 2 W5-1).
+_TIMING_JOIN = " LEFT JOIN visible_obligation_timing vt ON vt.obligation_id = o.id"
+_DEADLINE = "COALESCE(vt.bound_date, o.effective_due)"
+
+
+def _untimed() -> TimingOut:
+    return {
+        "kind": "untimed",
+        "trigger_kind": None,
+        "trigger": None,
+        "relation": None,
+        "offset_days": None,
+        "offset_unit": None,
+        "anchor": None,
+        "reason": None,
+    }
+
+
+def _timing_map(
+    con: sqlite3.Connection, obligation_ids: list[int]
+) -> dict[int, tuple[TimingOut, DeadlineOut | None]]:
+    """obligation_id -> (timing, deadline) from the projection; revoking either citation
+    (trigger, anchor declaration) removes the row here and so everywhere at once."""
+    out: dict[int, tuple[TimingOut, DeadlineOut | None]] = {}
+    if not obligation_ids:
+        return out
+    rows = con.execute(
+        _TIMING_SQL + " WHERE obligation_id IN (" + ",".join("?" * len(obligation_ids)) + ")",
+        obligation_ids,
+    ).fetchall()
+    for row in rows:
+        kind, relation = row[2], row[4]
+        trigger = _clause_ref(row[1], row[9:14]) if row[8] is not None else None
+        anchor = None
+        if row[14] is not None:
+            anchor = {
+                "name": row[16],
+                "date": row[17],
+                "clause": _clause_ref(row[15], row[18:23]),
+            }
+        timing: TimingOut = {
+            "kind": kind,
+            "trigger_kind": row[3],
+            "trigger": trigger,
+            "relation": relation,
+            "offset_days": row[5],
+            "offset_unit": row[6],
+            "anchor": anchor,
+            "reason": row[7],
+        }
+        deadline: DeadlineOut | None = None
+        if kind == "scheduled" and anchor is not None and row[23] is not None:
+            deadline = {"relation": relation, "date": row[23], "clause": anchor["clause"]}
+        out[row[0]] = (timing, deadline)
+    return out
+
+
 def _superseded_by_map(con: sqlite3.Connection, ids: list[int]) -> dict[int, list[dict]]:
     """Per obligation: visible supersession edges against it, each with the superseding
     obligation's own first clause (rev 2.2)."""
@@ -443,6 +516,7 @@ def _hydrate(con: sqlite3.Connection, rows: list[tuple]) -> list[ObligationOut]:
     ids = [row[0] for row in rows]
     clauses = _clause_map(con, ids)
     superseded_by = _superseded_by_map(con, ids)
+    timings = _timing_map(con, ids)
     out: list[ObligationOut] = []
     for row in rows:
         obligation_id, agreement_id, status = row[0], row[1], row[3]
@@ -453,6 +527,7 @@ def _hydrate(con: sqlite3.Connection, rows: list[tuple]) -> list[ObligationOut]:
                 anchor_event = binding
         owed_by = row[13]
         owed_to = row[14]
+        timing, deadline = timings.get(obligation_id, (_untimed(), None))
         out.append(
             {
                 "id": obligation_id,
@@ -474,6 +549,8 @@ def _hydrate(con: sqlite3.Connection, rows: list[tuple]) -> list[ObligationOut]:
                 "agreement_sites": sites.get(agreement_id, []),
                 "clauses": clauses.get(obligation_id, []),
                 "superseded_by": superseded_by.get(obligation_id, []),
+                "timing": timing,
+                "deadline": deadline,
             }
         )
     return out
@@ -621,16 +698,37 @@ def upcoming_deadlines(
         include_superseded=False,
     )
     with _snapshot(con):
+        # Rev 2.1: scheduled rows are selected by their stated deadline date in the
+        # window, whatever the relation (strict lt bounds included, shown with their
+        # relation), and ordered by deadline date, then agreement, then id (rev 2.2).
         scheduled_rows = con.execute(
-            _ROW_SQL + " WHERE (" + where + ") AND o.lifecycle = 'scheduled'"
-            " AND o.effective_due >= ? AND o.effective_due <= ?" + _ORDER,
+            _ROW_SQL
+            + _TIMING_JOIN
+            + " WHERE ("
+            + where
+            + ") AND o.lifecycle = 'scheduled'"
+            + " AND "
+            + _DEADLINE
+            + " >= ? AND "
+            + _DEADLINE
+            + " <= ?"
+            + " ORDER BY "
+            + _DEADLINE
+            + ", o.agreement_id, o.id",
             (*params, start, window_end),
         ).fetchall()
-        pending_total = con.execute(
-            "SELECT count(*) FROM visible_obligation o WHERE (" + where + ")"
-            " AND o.lifecycle = 'pending'",
-            params,
-        ).fetchone()[0]
+        # Pending subdivides into contingent, unresolved, and untimed (no visible
+        # timing row reads as untimed); the three totals partition pending exactly.
+        kind_counts = dict(
+            con.execute(
+                "SELECT COALESCE(vt.kind, 'untimed'), count(*) FROM visible_obligation o"
+                + _TIMING_JOIN
+                + " WHERE ("
+                + where
+                + ") AND o.lifecycle = 'pending' GROUP BY 1",
+                params,
+            ).fetchall()
+        )
         pending_rows = con.execute(
             _ROW_SQL
             + " WHERE ("
@@ -640,14 +738,32 @@ def upcoming_deadlines(
             + " LIMIT ? OFFSET ?",
             (*params, limit, offset),
         ).fetchall()
+        # Contingent is a paged subset of pending under the same filters and ordering.
+        contingent_rows = con.execute(
+            _ROW_SQL
+            + _TIMING_JOIN
+            + " WHERE ("
+            + where
+            + ") AND o.lifecycle = 'pending' AND vt.kind = 'contingent'"
+            + _ORDER
+            + " LIMIT ? OFFSET ?",
+            (*params, limit, offset),
+        ).fetchall()
         unresolved = _unresolved_party_count(
             con,
             "(o.lifecycle = 'pending'"
-            " OR (o.lifecycle = 'scheduled' AND o.effective_due >= ? AND o.effective_due <= ?))",
+            " OR (o.lifecycle = 'scheduled' AND "
+            + _DEADLINE
+            + " >= ? AND "
+            + _DEADLINE
+            + " <= ?))",
             [start, window_end],
+            _TIMING_JOIN,
         )
         scheduled = _hydrate(con, scheduled_rows)
         pending = _hydrate(con, pending_rows)
+        contingent = _hydrate(con, contingent_rows)
+    pending_total = sum(kind_counts.values())
     return {
         "as_of": start,
         "days": days,
@@ -655,6 +771,10 @@ def upcoming_deadlines(
         "scheduled": scheduled,
         "pending": pending,
         "pending_total": pending_total,
+        "contingent": contingent,
+        "contingent_total": kind_counts.get("contingent", 0),
+        "unresolved_total": kind_counts.get("unresolved", 0),
+        "untimed_total": kind_counts.get("untimed", 0),
         "offset": offset,
         "truncated": offset + len(pending) < pending_total,
         "unresolved_party_count": unresolved,

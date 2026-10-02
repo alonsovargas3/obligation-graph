@@ -117,6 +117,10 @@
   .badge.blank { color: var(--blank); background: var(--blank-bg); border: 1px solid #d4d4d4; }
   .badge.superseded { color: var(--blank); background: var(--blank-bg); }
   .badge.lifecycle { color: var(--accent); background: var(--accent-soft); font-weight: 500; }
+  .badge.scheduled { color: var(--ok); background: var(--ok-bg); }
+  .badge.contingent { color: var(--accent); background: var(--accent-soft); }
+  .badge.unresolved { color: var(--redacted); background: var(--redacted-bg); }
+  .badge.untimed { color: var(--muted); background: #eef0f3; font-weight: 500; }
   .badge.ran { color: var(--ok); background: var(--ok-bg); }
   .badge.skipped { color: var(--ok); background: var(--ok-bg); border: 1px dashed #9cc7ab; }
   .badge.error { color: var(--warn); background: var(--warn-bg); }
@@ -211,7 +215,8 @@
           <thead>
             <tr>
               <th>Agreement</th><th>Type</th><th>Status</th><th>Owed by</th>
-              <th>Owed to</th><th>Amount</th><th>Due</th><th>Obligation</th>
+              <th>Owed to</th><th>Amount</th><th>Due</th><th id="col-timing">Timing</th>
+              <th>Obligation</th>
             </tr>
           </thead>
           <tbody id="obligations-body"></tbody>
@@ -245,7 +250,7 @@
   </section>
 </main>
 <footer>
-  <p>Legend: [REDACTED] marks a value redacted in the filing; [BLANK] marks an unfilled placeholder in a form exhibit. Neither is ever inferred. Pending means the documents give no computable due date; it does not mean overdue, and it does not mean there is no obligation.</p>
+  <p>Legend: [REDACTED] marks a value redacted in the filing; [BLANK] marks an unfilled placeholder in a form exhibit. Neither is ever inferred. Pending means the documents give no computable due date; it does not mean overdue, and it does not mean there is no obligation. Pending splits into contingent (due relative to a quoted event that has not been recorded), unresolved (timing the system cannot compute; the reason is shown), and untimed (no stated deadline). A strict bound is shown as before the date, never as a due-on date.</p>
 </footer>
 
 <script>
@@ -326,9 +331,34 @@ function partyName(binding) {
   return text;
 }
 
+/* The stated relation is rendered with words; a strict "lt" bound is a before date,
+   never a due-on date (wave 5 W5-1). */
+var RELATION_WORDS = { "lt": "before", "lte": "on or before", "eq": "on" };
+
+function relationWord(relation) {
+  return RELATION_WORDS[relation] || relation;
+}
+
+function timingLabel(ob) {
+  var t = ob.timing;
+  if (!t || t.kind === "untimed") { return "no stated deadline"; }
+  if (t.kind === "unresolved") { return "unresolved: " + (t.reason || "cannot compute"); }
+  if (t.kind === "contingent") {
+    return "contingent" + (t.trigger_kind ? " (" + t.trigger_kind + ")" : "");
+  }
+  return "scheduled";
+}
+
+function timingBadge(ob) {
+  var t = ob.timing;
+  var kind = t ? t.kind : "untimed";
+  return badge(timingLabel(ob), kind);
+}
+
 function dueCell(ob) {
   if (ob.effective_due) { return ob.effective_due; }
   if (ob.due_date) { return ob.due_date; }
+  if (ob.deadline) { return relationWord(ob.deadline.relation) + " " + ob.deadline.date; }
   return "";
 }
 
@@ -350,6 +380,9 @@ function renderRows(payload) {
     row.appendChild(el("td", null, partyName(ob.owed_to) || "unresolved"));
     row.appendChild(el("td", "num", ob.amount ? (ob.amount + (ob.currency ? " " + ob.currency : "")) : ""));
     row.appendChild(el("td", "num", dueCell(ob) || "pending"));
+    var timingCell = el("td");
+    timingCell.appendChild(timingBadge(ob));
+    row.appendChild(timingCell);
     row.appendChild(el("td", "desc", ob.description));
     row.addEventListener("click", function () { selectRow(ob, row); });
     body.appendChild(row);
@@ -394,6 +427,7 @@ function selectRow(ob, row) {
       ["Characters", clause.char_start + "-" + clause.char_end]
     ]));
   });
+  renderTiming(panel, ob);
   panel.appendChild(el("div", "section-title", "Obligation"));
   var amount = ob.amount ? ob.amount + (ob.currency ? " " + ob.currency : "") : (ob.marker || "not stated");
   panel.appendChild(kv([
@@ -418,6 +452,51 @@ function selectRow(ob, row) {
   }
 }
 
+/* -------------------------------------------------------------- timing */
+
+function renderTiming(panel, ob) {
+  var title = el("div", "section-title", "Timing");
+  title.id = "clause-timing";
+  panel.appendChild(title);
+  var t = ob.timing;
+  if (!t || t.kind === "untimed") {
+    panel.appendChild(el("p", "empty", "No stated deadline: the clause names no deadline construction, so no date is computed."));
+    return;
+  }
+  var head = el("p");
+  head.appendChild(timingBadge(ob));
+  if (t.kind === "unresolved") {
+    head.appendChild(document.createTextNode(" The deadline cannot be computed from the clause: reason " + (t.reason || "unknown") + "."));
+  } else if (t.kind === "contingent") {
+    head.appendChild(document.createTextNode(" Due relative to a quoted event" + (t.trigger_kind ? " (" + t.trigger_kind + ")" : "") + "; no date is computed until that event is recorded."));
+  } else {
+    head.appendChild(document.createTextNode(" Computable deadline" + (ob.deadline ? ": " + relationWord(ob.deadline.relation) + " " + ob.deadline.date : "") + "."));
+  }
+  panel.appendChild(head);
+  if (t.trigger && refHasQuote(t.trigger)) {
+    panel.appendChild(el("div", "section-title", "Trigger, " + t.trigger.agreement_id));
+    panel.appendChild(el("div", "clause-box", t.trigger.span_text));
+    panel.appendChild(kv([["Where", where(t.trigger)]]));
+  }
+  var pairs = [
+    ["Relation", t.relation ? relationWord(t.relation) : null],
+    ["Offset", t.offset_days !== null && t.offset_days !== undefined
+      ? t.offset_days + " " + (t.offset_unit || "calendar") + " days" : null]
+  ];
+  panel.appendChild(kv(pairs));
+  if (t.anchor) {
+    panel.appendChild(el("div", "section-title", "Anchor event"));
+    panel.appendChild(kv([
+      ["Event", t.anchor.name],
+      ["Event date", t.anchor.date]
+    ]));
+    if (refHasQuote(t.anchor.clause)) {
+      panel.appendChild(el("div", "clause-box", t.anchor.clause.span_text));
+      panel.appendChild(kv([["Declaration", t.anchor.clause.agreement_id + " | " + where(t.anchor.clause)]]));
+    }
+  }
+}
+
 function loadObligations(reset) {
   if (reset) { state.offset = 0; }
   api("/api/obligations?" + currentQuery()).then(renderRows).catch(function (err) {
@@ -434,6 +513,9 @@ function loadPendingNote() {
     var strong = el("strong", null, out.pending_total + " pending obligations.");
     note.appendChild(strong);
     note.appendChild(document.createTextNode(" " + out.note));
+    note.appendChild(el("span", null,
+      " Pending kinds: " + out.contingent_total + " contingent, " +
+      out.unresolved_total + " unresolved, " + out.untimed_total + " with no stated deadline."));
   }).catch(function (err) {
     document.getElementById("pending-note").textContent = err.message;
   });
