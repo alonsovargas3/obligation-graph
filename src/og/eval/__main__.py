@@ -1,10 +1,16 @@
-"""Score CLI: `python -m og.eval extract ...` writes an extraction results JSON.
+"""Score CLI: `python -m og.eval extract ...` and `python -m og.eval change ...`.
 
-The results record the score against the reference set plus the run's honesty
-signals: proposal grounding, integrity, drops, corrections, cost, and calls.
-Under a `sampled` reference set (rev 2.2 R2-8) precision and F1 cannot be
-supported, so they are nulled and only a precision lower bound is reported
-(unlabeled true obligations count as false positives).
+`extract` writes an extraction results JSON: the score against the reference
+set plus the run's honesty signals (proposal grounding, integrity, drops,
+corrections, cost, and calls). Under a `sampled` reference set (rev 2.2 R2-8)
+precision and F1 cannot be supported, so they are nulled and only a precision
+lower bound is reported (unlabeled true obligations count as false
+positives).
+
+`change` (Task 20) scores one change order's paired ungated/gated runs
+against the change reference set: findings per mode with cross-category
+deduplication, value accuracy, gate metrics per backend with a
+Clopper-Pearson bound, honest skip naming, disagreements, and cost.
 """
 
 from __future__ import annotations
@@ -13,15 +19,19 @@ import argparse
 import json
 import sys
 from collections import Counter
+from datetime import date
 from pathlib import Path
 from typing import Any
 
+from og.eval.change_gold import load_change_gold, read_change_chain
+from og.eval.change_score import score_change
 from og.eval.gold import load_gold
 from og.eval.score import pred_from_db, score
 from og.store.db import connect
 from og.textdoc import TextDoc
 
 METRIC = "m1"
+CHANGE_METRIC = "change"
 
 
 def _find_record(log_path: str, run_id: str) -> dict[str, Any] | None:
@@ -155,6 +165,52 @@ def _run_extract(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_change(args: argparse.Namespace) -> int:
+    gold_path = args.gold or f"eval/gold/change/{args.doc}.yaml"
+    try:
+        chain = read_change_chain(gold_path)
+    except (OSError, ValueError) as e:
+        print(f"og.eval: cannot read gold: {e}", file=sys.stderr)
+        return 2
+    try:
+        docs = {a: TextDoc.load(Path(args.text_dir) / f"{a}.json") for a in chain}
+        gold = load_change_gold(gold_path, docs)
+    except (OSError, ValueError, KeyError) as e:
+        print(f"og.eval: gold rejected: {e}", file=sys.stderr)
+        return 2
+
+    con = connect(args.db)
+    try:
+        result = score_change(con, gold)
+    except ValueError as e:
+        print(f"og.eval: {e.args[0]}", file=sys.stderr)
+        con.close()
+        return 2
+    con.close()
+
+    out: dict[str, Any] = {
+        "metric": CHANGE_METRIC,
+        **result,
+        "provenance": gold.provenance,
+        "scope": gold.scope,
+        "textdoc_sha256": gold.textdoc_sha256,
+        "disclosures": [
+            "the corpus has two related chain documents from one counterparty pair",
+            "labels were drafted blind by one model and adjudicated by the coordinator;"
+            " gate answers were user-spot-checked only where provenance says so",
+            "the skip rule (unanimous 3/3 no) was pre-registered, not tuned on this set;"
+            " there is no held-out calibration set",
+            "old-side matching is by segment identity: a checker citing a different"
+            " segment inside the same target range is scored as a mismatch",
+        ],
+    }
+    payload = json.dumps(out, indent=2) + "\n"
+    out_path = args.out or f"eval/results/{date.today().isoformat()}-change-{args.doc}.json"
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    Path(out_path).write_text(payload, encoding="utf-8")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="og.eval", description="Score extractions against the reference set"
@@ -169,9 +225,25 @@ def main(argv: list[str] | None = None) -> int:
         "--gold", default=None, help="reference set yaml (skips scoring if omitted)"
     )
     extract.add_argument("--out", default=None, help="results json path (default stdout)")
+    change = sub.add_parser("change", help="score a change order's paired runs against the gold")
+    change.add_argument("--doc", required=True, help="change order id (source and agreement id)")
+    change.add_argument("--db", default="data/graph.db", help="graph db path")
+    change.add_argument(
+        "--gold", default=None, help="change gold yaml (default eval/gold/change/<doc>.yaml)"
+    )
+    change.add_argument(
+        "--text-dir", default="data/text", help="directory of <agreement>.json TextDocs"
+    )
+    change.add_argument(
+        "--out",
+        default=None,
+        help="results json path (default eval/results/<date>-change-<doc>.json)",
+    )
     args = parser.parse_args(argv)
     if args.command == "extract":
         return _run_extract(args)
+    if args.command == "change":
+        return _run_change(args)
     parser.error(f"unknown command: {args.command}")
     return 2
 
