@@ -12,6 +12,9 @@ documents:
   local_path: data/raw/terawulf-2025-ex10-1.htm
   sha256: ba13a3e43b70e39aeb8d4811083d008a422905bb9bb17d4bb6071c1c36095a6b
   notes: anchor document, form exhibit
+  agreement_type: recognition
+  amends: null
+  effective_date: null
 - id: constantcontact-2011-ex1041
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1405277/000095012311023683/0000950123-11-023683-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1405277/000095012311023683/b84112exv10w41.htm
@@ -20,12 +23,14 @@ documents:
   form: 10-K
   filing_date: '2011-03-09'
   exhibit: '10.41'
-  title: 55 Middlesex Turnpike Datacenter Lease (Digital 55 Middlesex, LLC / Constant
-    Contact, Inc.), dated January 1, 2011
+  title: 55 Middlesex Turnpike Datacenter Lease (Digital 55 Middlesex, LLC / Constant Contact, Inc.), dated January 1, 2011
   is_form: false
   local_path: data/raw/constantcontact-2011-ex1041.htm
   sha256: a726b2e4962c33efa0e8a0f51432e9d17ac36b93ed261ba4525039ac13730556
   notes: base lease, ~61 pages, no redactions
+  agreement_type: lease
+  amends: null
+  effective_date: null
 - id: constantcontact-2012-ex101
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1405277/000119312512238274/0001193125-12-238274-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1405277/000119312512238274/d354815dex101.htm
@@ -34,13 +39,14 @@ documents:
   form: 8-K
   filing_date: '2012-05-17'
   exhibit: '10.1'
-  title: First Amendment to Datacenter Lease (Digital 55 Middlesex, LLC / Constant
-    Contact, Inc.)
+  title: First Amendment to Datacenter Lease (Digital 55 Middlesex, LLC / Constant Contact, Inc.)
   is_form: false
   local_path: data/raw/constantcontact-2012-ex101.htm
   sha256: fa33760a933331727710bf1298fc5209345672203b781703f0ed6cc26febc10f
   amends: constantcontact-2011-ex1041
   notes: first amendment, ~4 pages, no redactions
+  agreement_type: amendment
+  effective_date: null
 - id: endurance-2017-ex106
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1237746/000162828017010854/0001628280-17-010854-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1237746/000162828017010854/exhibit10_6.htm
@@ -55,6 +61,8 @@ documents:
   sha256: d5a8db89d56f5fe20f69e485c815264b11524ffc0cd1ea0372d0d2c32f547e1b
   amends: constantcontact-2011-ex1041
   notes: third amendment, ~2 pages, no redactions
+  agreement_type: amendment
+  effective_date: null
 - id: carbonite-2014-ex1024
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1340127/000119312514084500/0001193125-14-084500-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1340127/000119312514084500/d650354dex1024.htm
@@ -63,12 +71,14 @@ documents:
   form: 10-K
   filing_date: '2014-03-05'
   exhibit: '10.24'
-  title: Turn Key Datacenter Lease, 2121 South Price Road, Chandler AZ (Digital 2121
-    South Price, LLC / Carbonite, Inc.)
+  title: Turn Key Datacenter Lease, 2121 South Price Road, Chandler AZ (Digital 2121 South Price, LLC / Carbonite, Inc.)
   is_form: false
   local_path: data/raw/carbonite-2014-ex1024.htm
   sha256: 4d1f564a565a9e0ec9940e08c14489afe3f855f0f9bd32dc3bf48c11bddbe0db
   notes: standalone base lease, ~70 pages, ~57 [***] redaction marks
+  agreement_type: lease
+  amends: null
+  effective_date: null
 - id: mawson-2025-ex101
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1218683/000101376225002419/0001013762-25-002419-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1218683/000101376225002419/ea023566301ex10-1_mawson.htm
@@ -77,12 +87,14 @@ documents:
   form: 8-K
   filing_date: '2025-03-26'
   exhibit: '10.1'
-  title: Master Colocation Agreement (Mawson Hosting LLC / Canaan Inc), dated March
-    16, 2025
+  title: Master Colocation Agreement (Mawson Hosting LLC / Canaan Inc), dated March 16, 2025
   is_form: false
   local_path: data/raw/mawson-2025-ex101.htm
   sha256: d724e36d415d0eff0674fd4a0b6589c123446e81737b22346bd3fd7816428d3d
   notes: colocation agreement, ~26 pages, no redaction marks found by regex
+  agreement_type: colocation
+  amends: null
+  effective_date: null
 - id: applieddigital-2026-ex101
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1144879/000149315226014498/0001493152-26-014498-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1144879/000149315226014498/ex10-1.htm
@@ -96,3 +108,6 @@ documents:
   local_path: data/raw/applieddigital-2026-ex101.htm
   sha256: 04d133a875e655b4b7dbc7d5b0bb0f0196edcc79bf4f2066e198fc182218408d
   notes: springing guaranty, ~14 pages, ~11 [***] redaction marks
+  agreement_type: guarantee
+  amends: null
+  effective_date: null
