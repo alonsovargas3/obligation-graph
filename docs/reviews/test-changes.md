@@ -133,3 +133,10 @@ Adapted for schema v3 (coordinator-owned, original intent kept):
 Authored by three coordinator-side forks. Each module was shown satisfiable by a throwaway implementation on a devbox scratch copy, which was then deleted. The exception is `test_change_cli`, which is only fixture-probed until Tasks 14 to 18 exist.
 
 Red at freeze: 11 modules fail at collection on missing modules, and every wave 1/2 test passes.
+
+## Wave 3 rev 2.3 (C7, 2026-10-02)
+
+- **New frozen test:** `tests/test_change_replay.py`.
+- **Fixtures:** real check responses in `tests/fixtures/api/change_v1/` (6 non-empty categories, allowlisted cache payloads).
+- **Contract addition:** `ChangeCorrection` and `ChangeVerifyResult.corrections`, with an empty default.
+- **Red result:** 2 failing (the two rev 2.3 rules), 6 controls passing, 1,120 others passing.

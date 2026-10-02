@@ -627,3 +627,33 @@ These decisions are pinned by the frozen tests. Where the plan text differs, the
 - Skips are reported as `confirmed_safe_skip`, `zero_baseline_skip`, or `baseline_miss`.
 - An unmatched pair raises `ValueError("unmatched_pair")`.
 - Old-side matching is by segment identity (R9). A checker that cites a different segment inside the same frozen target range is scored as a mismatch, and the results disclose this strictness.
+
+## Rev 2.3 (C7 real-corpus findings, coordinator)
+
+The C7 live run completed: 4 runs, $0.785 real spend, and 3 skips, all with zero ungated findings. Every proposed price finding was dropped because of two mismatches between the frozen prompt/schema and verify. These are pinned by `tests/test_change_replay.py` against the recorded real responses in `tests/fixtures/api/change_v1/`.
+
+### R3-1. Price values written with units
+
+The schema asks for `new_value` "exactly as written in new_quote" (`$41,496.00/month`), but verify accepted only a plain decimal.
+
+A `price_change` `new_value` is accepted when either:
+- it is a plain decimal, as before, or
+- it contains exactly one money token under the wave 2 money grammar.
+
+In both cases the amount must equal a money token of `new_quote`. The stored value stays the plain decimal string.
+
+### R3-2. Stray target label on a price finding
+
+A price finding never stores a target label (rev 2.2). A label on one that is not in the quote is discarded and recorded as a `ChangeCorrection(field="target_label", reason="target_label_not_in_quote")`. The finding is kept.
+
+- `supersedes` and `potential_conflict` keep the strict drop, because there the label is the target.
+- `ChangeVerifyResult.corrections` is a contract addition with an empty default, so existing callers are unaffected.
+- The CLI logs corrections in its run record next to the drops.
+
+### Drops that stay
+
+Under the closed rules, these drops are correct:
+- a supersedes label not in its quote (1A `p0108`, `p0029`);
+- a clipped supersession cue (3A `p0023`).
+
+They count as recall losses and are reported as such.

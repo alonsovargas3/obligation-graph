@@ -8,7 +8,7 @@ diagnostics only.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal, TypedDict
 
 from og.extract.types import Attempt, Evidence
@@ -141,9 +141,20 @@ class ChangeDrop:
 
 
 @dataclass(frozen=True)
+class ChangeCorrection:
+    """A field verify discarded while keeping the finding (rev 2.3); logged, never stored."""
+
+    raw: RawFinding
+    category: str
+    field: str  # e.g. "target_label"
+    reason: str  # e.g. "target_label_not_in_quote"
+
+
+@dataclass(frozen=True)
 class ChangeVerifyResult:
     findings: list[Finding]
     drops: list[ChangeDrop]
+    corrections: list[ChangeCorrection] = field(default_factory=list)
 
 
 @dataclass(frozen=True)

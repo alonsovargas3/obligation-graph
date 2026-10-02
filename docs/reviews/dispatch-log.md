@@ -27,3 +27,4 @@ Accepted base SHA per dispatch (Supervision protocol item 5). Retries start from
 ## Wave 3A (2026-10-02), accepted base 999136e
 
 Pi zai/glm-5.3 workers on devbox worktrees `obligation-graph-wave3-<n>`: t14-rules, t15-haiku, t16-client, t17-verify, t18-writer, t20-eval, t21-adr.
+Wave 3B: t19-cli dispatched from e4a9d9e (Tasks 14-18, 21 merged).
