@@ -143,3 +143,143 @@ Evidence: executed read-only imports with bytecode writing disabled, in-memory S
     **Concrete fix:** Use five independent uncached samples to match ADR-006, or explicitly revise the ADR with a justified smaller exploratory protocol before freezing. Archive each sample's proposals, verified predictions, call metadata, model sequence, scores, and hashes outside the production graph; score it before selecting any production snapshot. Report sample count and an explicit statistic such as mean plus range or standard deviation, with fallback samples labeled. For this portfolio wave, one gold document and a small auditable score artifact are sufficient; defer a general experiment framework, broad model bake-off, and automatic prompt-adoption machinery. This keeps the variance evidence without expanding the project beyond the weekend scope.
 
 proceed-after-fixes
+
+## Round 2
+
+Reviewed bootstrap B2 at `b208907` after `git pull -q`, the revised plan including rev 2.1, the frozen contracts, and all frozen tests. Here, **plan** means `docs/superpowers/plans/2026-10-02-wave2-extract-store-eval.md`. This round changes only this review in the repository.
+
+### A) Round-1 dispositions
+
+1. **Partially resolved.** Kind-specific sanitized payloads and event-date/trigger checks exist, but the new description rule permits unsupported prose and event names remain unchecked; see R2-2 and R2-3.
+2. **Partially resolved.** Decimal equality, money units, direction, and deadline cues fix the original examples, but the new token regexes accept partial numeric tokens and the independently valid deadline fields can violate the DB CHECK; see R2-5 and R2-6.
+3. **Partially resolved.** Cited party rows, exact names, and unique resolution are improvements, but co-occurrence of a name and role does not establish their association, and an invented event name still resolves; see R2-2 and R2-4.
+4. **Partially resolved.** Single-snapshot replacement and transactions pass, but base-first ordering does not repair an existing dependent lineage, and per-document sample DBs cannot represent amendment dependencies; see R2-7.
+5. **Resolved.** Explicit chunk outcomes distinguish successful empty output from failure; the CLI preserves the previous snapshot on an incomplete run.
+6. **Resolved.** Separately supported fields survive markers, outside-quote markers are diagnosed, status precedence is explicit, and supersession is deferred.
+7. **Resolved.** The coordinator-owned v2 contract explicitly replaces migration with a fail-closed rebuild policy, tested on old and reopened databases.
+8. **Resolved.** Bootstrap types/schema, disjoint implementation ownership, the writer's independent prerequisite, and C1's verifier prerequisite remove the original scheduling hazards.
+9. **Resolved.** Equality of the entire verified payload preserves distinct parties and payments sharing one quote.
+10. **Resolved.** The actual nullable schema and local parser contract are compatible; all 35 parser tests pass, including SDK objects, invalid dates, booleans, and NaN. Live schema acceptance remains the already assigned C1 check.
+11. **Partially resolved.** Evidence relocation and oversize segments are defined, but rev 2.1's context prefix conflicts with the non-overlap requirement at small caps; see R2-1.
+12. **Resolved.** Rev 2.1 requires page-reference lines, handles roman numerals and the Page header, and both chunking and verification suppress classified TOC evidence.
+13. **Resolved.** The request/TextDoc fingerprint, atomic successful-only cache, corruption handling, allowlist, and separate no-cache archive are implementable and pass.
+14. **Resolved.** Attempt-level usage, served models, unknown-model cost, and cache-hit metadata replace the flat accounting contract; real fallback shape remains C1's responsibility.
+15. **Partially resolved.** Gold validation, maximum-cardinality matching, deterministic ties, and known-field coverage pass, but the admitted sampled scope has no evaluation boundary; see R2-8. Role accuracy must still be described as role accuracy, not entity accuracy.
+16. **Resolved.** Proposal grounding and integrity are separate, corrections and drops are distinct, and the writer/extract/eval run identity and log interfaces work together in an executed integration probe.
+17. **Resolved.** Five uncached samples, retained sample DBs, mean/range reporting, and fallback labels match ADR-006; amendment isolation needs the operational fix in R2-7.
+
+**Disposition totals: 11 resolved, 6 partially resolved, 0 unresolved.**
+
+### B) Satisfiability proof
+
+Created a fresh disposable copy at `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/og-astra-wave2-r2-0l0vyo1s`. Implemented TOC scanning, chunking, prompt/request construction, response parsing, cache, verification, writer, both CLIs, gold loading, and scoring there. Used the repository's v2 schema/db, types, prompts, and existing wave-1 implementations unchanged. The scorer uses an actual augmenting-path maximum-cardinality matching with exact rational IoU costs, not greedy matching or test-specific answers.
+
+`uv sync --locked` succeeded with CPython **3.12.11**. Ran the full suite using `uv run --locked pytest -o addopts="" -q -p no:cacheprovider`, with an additional `--junitxml` output path for counting. All 35 inspected test/fixture/manifest, contract, prompt, and dependency files in the copy were byte-identical to the repository; no frozen tests were altered.
+
+There are two relevant runs:
+
+- **Literal rev 2.1 context prefix:** 611 passed, 1 failed, 2 skipped. The single failure is the contract conflict below.
+- **Candidate clarification:** freeze context to the leading, at-most-1500-character segments that actually belong to chunk 1. With only that context choice clarified, the full suite passes: **612 passed, 0 failed, 2 skipped**. This is a demonstrated repair, not a claim that the coordinator has approved that rule change.
+
+| Frozen test file | Literal prefix: pass/fail/skip | Clarified prefix: pass/fail/skip |
+|---|---:|---:|
+| `tests/test_eval_cli.py` | 5/0/0 | 5/0/0 |
+| `tests/test_eval_gold.py` | 16/0/0 | 16/0/0 |
+| `tests/test_eval_score.py` | 13/0/0 | 13/0/0 |
+| `tests/test_extract_cache.py` | 11/0/0 | 11/0/0 |
+| `tests/test_extract_chunk.py` | 11/1/0 | 12/0/0 |
+| `tests/test_extract_cli.py` | 7/0/0 | 7/0/0 |
+| `tests/test_extract_parse.py` | 35/0/0 | 35/0/0 |
+| `tests/test_extract_request.py` | 9/0/0 | 9/0/0 |
+| `tests/test_fetch.py` | 23/0/0 | 23/0/0 |
+| `tests/test_fetch_recorded.py` | 1/0/0 | 1/0/0 |
+| `tests/test_ground.py` | 265/0/2 | 265/0/2 |
+| `tests/test_ingest.py` | 23/0/0 | 23/0/0 |
+| `tests/test_ingest_toc.py` | 10/0/0 | 10/0/0 |
+| `tests/test_markers.py` | 17/0/0 | 17/0/0 |
+| `tests/test_schema.py` | 41/0/0 | 41/0/0 |
+| `tests/test_schema_v2.py` | 9/0/0 | 9/0/0 |
+| `tests/test_textdoc.py` | 19/0/0 | 19/0/0 |
+| `tests/test_verify.py` | 78/0/0 | 78/0/0 |
+| `tests/test_writer.py` | 18/0/0 | 18/0/0 |
+| **Total** | **611/1/2** | **612/0/2** |
+
+**Failure classification:** `tests/test_extract_chunk.py:82`, `test_context_block_only_after_first_chunk`, asserts `not set(ctx_ids) & set(c.segment_ids)`. Classified **test-wrong relative to the literal rev 2.1 prefix rule**, meaning a test/contract contradiction, not an instruction to weaken this useful assertion. The literal prefix contains `p0011`, which is also chunk 2's primary segment at cap 800. The same prefix cannot all be in chunk 1 under that cap. Keep the assertion and amend the rule as R2-1 recommends. There are no remaining impl-wrong frozen-test failures and no other frozen-test failures. Both skips are existing `test_ground.py` property cases explicitly skipped for a single-character quote, not missing implementation or network skips.
+
+**Cross-file consistency:** also executed extract CLI -> writer -> eval CLI on the frozen lease fixture in a separate temporary working directory. It produced two visible obligations, `proposed=2`, `verified=2`, proposal grounding `1.0`, and six call records. DB and log `run_id` agree; DB, log, and score prompt versions agree; all three TextDoc hashes equal `sha256(doc.to_json().encode())`. No workaround or special fixture-dependent run identity was needed. The frozen eval log fixture is independently constructed, so this additional round trip verifies the actual producer/consumer boundary.
+
+**Verifier satisfiability:** all 78 verifier tests are simultaneously satisfiable under Task 8/rev 2.1. Their passing result does not establish the stronger invariant: the separate executable probes in R2-2 through R2-6 demonstrate untested unsafe cases in the rule text itself.
+
+Audit artifacts outside the repository: `/tmp/astra-wave2-literal.xml`, `/tmp/astra-wave2-final.xml`, their corresponding `.txt` outputs, `/tmp/astra_w2_probes.py`, and `/tmp/astra_w2_crossfile.py`. Latest field/writer probe results are in `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/astra-w2-probes-93avmhyf/results.json`. These are disposable evidence, not production implementations.
+
+### C) New revision findings
+
+The examples below target the newly specified rev-2 rules or their composition. References to round-1 findings identify the partial resolutions above rather than restating the original review wholesale. **Counts: 6 blockers, 2 should-fixes.**
+
+1. **R2-1, blocker: The context-prefix and primary-segment rules cannot both hold literally.**
+
+   **Location:** plan, Task 7 chunker and rev 2.1 Context block; `tests/test_extract_chunk.py:82`.
+
+   **Problem:** Rev 2.1 selects the leading non-TOC segments up to 1500 characters, while the main task says context segments never belong to later chunks and every non-TOC segment appears as primary exactly once. At an 800-character cap, that prefix extends beyond chunk 1. **Executed:** the literal rule fails the exact non-overlap assertion with `p0011` in both context and chunk 2. A worker must invent precedence to get green.
+
+   **Concrete fix:** State that chunk 1 is packed first and the fixed context prefix is selected only from its primary segments, up to 1500 characters, always at least one when nonempty. Preserve the full rendered-text soft cap and the frozen non-overlap assertion. This clarification produces the demonstrated 612-pass run; add a test pinning exactly which context IDs are chosen so cumulative and fixed-context interpretations do not diverge.
+
+2. **R2-2, blocker: A checked date can be attached to an invented event name and calculate a false deadline.**
+
+   **Location:** plan, Task 8 rules 1, 7, and 8; Task 9 event insertion/anchor resolution; `visible_obligation`.
+
+   **Problem:** Events require a nonempty name, but only their date is checked against the quote. **Executed:** quoting the frozen verifier fixture's `“Delivery Date” means March 1, 2011.` while naming the event `Commencement Date` passes verification and storage. A separate valid 30-days-after-Commencement obligation then becomes visible with `effective_due = 2011-03-31`, although the actual Commencement definition is blank. This bypass remains after the round-1 fabricated-date fix.
+
+   **Concrete fix:** Require the event name in its copied evidence and require the retained date to belong to that named event's defining clause, not another date in the same segment. Conservatively keep the event date null when that local association is ambiguous. Freeze this swapped-name regression through verify, writer, and the effective-due view.
+
+3. **R2-3, blocker: The new digit-only description gate explicitly admits invented terms.**
+
+   **Location:** plan, VerifiedObligation.description and Task 8 rule 10; `tests/test_verify.py` description tests; ADR-005.
+
+   **Problem:** A description with no digits vacuously passes the rule. **Executed:** a rent-payment quote is stored and returned by `visible_obligation` with description `Landlord waives all rent forever.` No correction is emitted. Digit-run presence also cannot validate reordered amounts, units, actors, or negation. Typed-field sanitization does not protect the displayed free-text field.
+
+   **Concrete fix:** For this wave, set the persisted description to the copied quote, with any model paraphrase confined to clearly unverified diagnostics. Update the two frozen tests that require preservation of model paraphrases and add the waiver counterexample. This reduces implementation work and directly preserves the project's stated citation invariant.
+
+4. **R2-4, blocker: Same-quote role co-occurrence can reverse the actual parties.**
+
+   **Location:** plan, Task 8 rules 11 and 12; Task 9 party/role resolution; frozen verifier preamble fixture.
+
+   **Problem:** The new party rule independently checks that a name and a role occur somewhere in the quote. Both roles occur in the shared preamble used by the tests. **Executed:** DIGITAL 55 MIDDLESEX, LLC proposed as tenant and CONSTANT CONTACT, INC. proposed as landlord both pass against that preamble. Unique role resolution then makes DIGITAL the rent payer in the visible obligation. Exact-name matching and cited association rows do not prevent this reversal.
+
+   **Concrete fix:** Accept only a locally evidenced name-role association, such as the source's `NAME, as ROLE` construction, or require a narrower party evidence slice that contains that association unambiguously. Leave unsupported associations absent and retain unresolved role references as null. Add the swapped-role negative beside the existing two-parties-positive test; do not try to solve arbitrary legal coreference in this wave.
+
+5. **R2-5, blocker: The verified deadline payload can violate the frozen schema's mutual exclusion CHECK.**
+
+   **Location:** plan, Task 8 rules 6 through 8 and rev 2.1 pair rule; `src/og/store/schema.sql`, obligation CHECK; Tasks 9 and 11.
+
+   **Problem:** The rules synchronize `anchor_event` and `offset_days` but never reconcile them with `due_date`. **Executed:** `Tenant shall pay by March 1, 2011 within 30 days after Commencement Date.` independently validates all three fields. With a resolvable event, the writer raises `IntegrityError: CHECK constraint failed: NOT (due_date IS NOT NULL AND anchor_event_id IS NOT NULL)` and rolls back the whole otherwise complete document. This is a verifier/writer contract gap, not a reason to remove the CHECK.
+
+   **Concrete fix:** Define deterministic conflict handling before VerifiedObligation construction. A small conservative policy is to retain the separately evidenced absolute due date, null the relative pair, and record a conflict correction; alternatively drop an ambiguous proposal. Add a verifier test and an end-to-end writer test for this case, including preservation of the prior snapshot if verification elects to fail the document.
+
+6. **R2-6, blocker: The new numeric regexes match prefixes and suffixes of larger tokens.**
+
+   **Location:** plan, Task 8 amount and offset regexes; `tests/test_verify.py` numeric cases.
+
+   **Problem:** Exact Decimal comparison is performed after regex tokenization, so it does not make a partial token safe. **Executed:** `$5.123` supports model amount `5.12` under the supplied two-decimal regex and reaches the visible row. Likewise `1000 days after Commencement Date` matches the suffix `000 days`, verifies model offset `0`, and stores zero when the anchor exists. Neither is the value written in the source.
+
+   **Concrete fix:** Add explicit numeric-token boundaries and reject an entire unsupported precision/grouping token instead of matching its prefix. For offsets, either support the full arbitrary-length digit token or reject a token longer than the supported limit without matching its suffix. Freeze these cases and malformed comma/decimal continuations before dispatch.
+
+7. **R2-7, should-fix: Lineage refusal and sample isolation lack an executable recovery path.**
+
+   **Location:** plan, Task 9 `dependents_exist` precondition, Task 11 ordering and `--no-cache --runs-dir`, C4.
+
+   **Problem:** `Re-extract the lineage base-first` cannot cure a base that already has dependent obligations. **Executed:** after writing the frozen base and amendment fixtures, a base-first rerun immediately raises `WriteRefused('dependents_exist')`. Separately, a fresh `X/amendment.db` has neither its base agreement nor base events; writing that amendment with its real `base_agreement_id` raises an FK failure even if the base was processed first into `X/base.db`. The one-document CLI fixtures do not exercise either case.
+
+   **Concrete fix:** Keep the fail-closed writer check, but document a coordinator rebuild into a fresh whole-graph DB followed by promotion for lineage-wide re-extraction. For variance, either explicitly limit samples to standalone base documents in this wave, or build each sample DB with its necessary base lineage. Reject an unsupported amendment sample before any API calls. Add two-document integration coverage; do not silently drop base IDs or anchors to make isolated samples succeed.
+
+8. **R2-8, should-fix: Sampled gold has no boundary for deciding which predictions are false positives.**
+
+   **Location:** plan, Task 10 Gold.scope, `score(gold, predicted)`, score CLI, and C2 export; `tests/test_eval_gold.py` and `tests/test_eval_cli.py`.
+
+   **Problem:** The format admits `scope: sampled`, but contains no sampled segment/range set and the score CLI sends every visible obligation to the matcher. Correct predictions outside the labeled sample therefore count as false positives. The scorer receives only the obligation list, so it cannot infer which unlabelled regions were inspected. The frozen tests cover only a full agreement and do not close this reporting hole.
+
+   **Concrete fix:** For the weekend baseline, require `full_agreement` for scored reference sets and reject sampled sets at the score CLI. Alternatively define explicit sampled regions and filter predictions consistently before scoring, publishing the coverage. Keep role-only field scores labeled as such and do not present localization or role correctness as full legal-term or entity correctness.
+
+### D) Verdict
+
+proceed-after-fixes

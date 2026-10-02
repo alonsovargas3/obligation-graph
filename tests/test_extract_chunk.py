@@ -129,3 +129,20 @@ def test_large_section_splits_at_segment_boundaries():
     chunks = chunk_doc(d, max_chars=900)
     assert len(chunks) > 2
     assert all_ids(chunks) == [s.id for s in d.segments]
+
+
+def test_context_ids_pinned_to_chunk_one_primary_segments():
+    """Rev 2.2 R2-1: context is the leading primary segments of chunk 1, up to 1500 chars."""
+    d = doc_with_toc()
+    chunks = chunk_doc(d, max_chars=800)
+    assert chunks[0].segment_ids == ["p0001", "p0002", "p0009", "p0010"]
+    for c in chunks[1:]:
+        assert CTX.findall(c.text) == ["p0001", "p0002", "p0009", "p0010"]
+
+
+def test_context_ids_pinned_when_chunk_one_exceeds_1500_chars():
+    long_pre = [filler("a", 700), filler("b", 700), filler("c", 700)]
+    d = build_doc([(None, "Preamble", long_pre), ("1.1", "Rent", [filler("r", 900)])])
+    chunks = chunk_doc(d, max_chars=2500)
+    assert chunks[0].segment_ids == ["p0001", "p0002", "p0003"]
+    assert [CTX.findall(c.text) for c in chunks[1:]] == [["p0001", "p0002"]]

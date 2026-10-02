@@ -201,3 +201,46 @@ def test_missing_run_record_gives_nulls(setup):
     assert out["corrections_by_field"] == {}
     assert out["calls"] == []
     assert out["cost_usd"] is None
+
+
+def add_unlabeled_prediction(s):
+    """A second visible obligation (type other) that the reference set does not label."""
+    con = connect(s["db"])
+    oid = con.execute(
+        "INSERT INTO obligation(agreement_id,type,description,status)"
+        " VALUES('d1','other','pay rent','active')"
+    ).lastrowid
+    con.execute(
+        "INSERT INTO clause_ref(obligation_id,agreement_id,section,page,char_start,char_end,"
+        "span_text,grounded) VALUES(?,'d1','1',1,?,?,?,1)",
+        (oid, Q0, Q0 + len(QUOTE), QUOTE),
+    )
+    con.close()
+
+
+def set_scope(s, scope):
+    gold = yaml.safe_load(s["gold"].read_text(encoding="utf-8"))
+    gold["scope"] = scope
+    s["gold"].write_text(yaml.safe_dump(gold, allow_unicode=True), encoding="utf-8")
+
+
+def test_sampled_scope_reports_precision_only_as_lower_bound(setup):
+    """Rev 2.2 R2-8: a non-exhaustive reference set cannot support precision."""
+    add_unlabeled_prediction(setup)
+    set_scope(setup, "sampled")
+    score = run_cli(setup)["score"]
+    assert score["micro"]["precision"] is None
+    assert score["macro"]["precision"] is None
+    assert all(t["precision"] is None for t in score["per_type"].values())
+    assert score["micro"]["recall"] == pytest.approx(1.0)
+    lb = score["precision_lower_bound"]
+    assert lb["micro"] == pytest.approx(0.5)
+    assert lb["macro"] == pytest.approx(1.0)
+
+
+def test_full_agreement_scope_reports_precision(setup):
+    add_unlabeled_prediction(setup)
+    score = run_cli(setup)["score"]
+    assert score["micro"]["precision"] == pytest.approx(0.5)
+    assert score["micro"]["recall"] == pytest.approx(1.0)
+    assert "precision_lower_bound" not in score

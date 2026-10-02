@@ -28,9 +28,13 @@ LEASE = [
         "2.1",
         "Term",
         [
-            ("commence", "2.1 Term. “Commencement Date” means [●]."),
-            ("delivery_def", "“Delivery Date” means March 1, 2011."),
+            ("commence", "2.1 Term. \u201cCommencement Date\u201d means [\u25cf]."),
+            ("delivery_def", "\u201cDelivery Date\u201d means March 1, 2011."),
             ("term_end", "The Term shall end ten years after the Commencement Date."),
+            (
+                "twodefs",
+                "\u201cDelivery Date\u201d and \u201cRent Date\u201d each mean March 1, 2011.",
+            ),
         ],
     ),
     (
@@ -57,6 +61,14 @@ LEASE = [
             ("dollars", "Tenant shall pay a security deposit of 2,500 dollars."),
             ("deposit", "Tenant shall pay the deposit on or before March 1, 2011."),
             ("executed", "This amendment was executed on March 1, 2011 and Tenant shall pay."),
+            (
+                "conflict",
+                "Tenant shall pay by March 1, 2011 within 30 days after Commencement Date.",
+            ),
+            ("frac3", "The cross connect fee is $5.123 per unit."),
+            ("badgroup", "The setup charge is $1,00 per rack."),
+            ("longdays", "Tenant shall vacate within 1000 days after the Commencement Date."),
+            ("cents", "Tenant shall pay a late fee of $1,000.50 per occurrence."),
         ],
     ),
     (
@@ -528,14 +540,14 @@ def test_trigger_case_must_match():
     assert only_obligation(run(raw("default", trigger="upon an event of default"))).trigger is None
 
 
-def test_description_without_numbers_kept():
+def test_description_is_the_quote_not_the_paraphrase():
     ob = only_obligation(run(raw("rent", description="Tenant pays monthly base rent.")))
-    assert ob.description == "Tenant pays monthly base rent."
+    assert ob.description == LINE["rent"] == ob.evidence.span_text
 
 
-def test_description_with_numbers_from_quote_kept():
+def test_description_with_numbers_from_quote_is_still_the_quote():
     ob = only_obligation(run(raw("rent", description="Tenant pays $54,000.00 each month.")))
-    assert ob.description == "Tenant pays $54,000.00 each month."
+    assert ob.description == LINE["rent"] == ob.evidence.span_text
 
 
 def test_nulled_amount_still_in_description_replaced_by_quote():
@@ -543,7 +555,12 @@ def test_nulled_amount_still_in_description_replaced_by_quote():
     ob = only_obligation(r)
     assert ob.amount is None
     assert ob.description == LINE["rent"]
-    assert has_correction(r, "description", "number_not_in_quote")
+
+
+def test_waiver_paraphrase_never_stored():
+    ob = only_obligation(run(raw("rent", description="Landlord waives all rent forever.")))
+    assert ob.description == ob.evidence.span_text == LINE["rent"]
+    assert "waives" not in ob.description
 
 
 def test_missing_description_falls_back_to_quote():
@@ -685,3 +702,95 @@ def test_every_evidence_is_the_doc_slice():
 def test_verify_is_deterministic():
     items = [raw("rent", amount=54000), raw("fees", amount=12500), raw("notice", offset_days=-5)]
     assert verify(DOC, items) == verify(DOC, items)
+
+
+# ---------------------------------------------------------------- rev 2.2 (Astra wave-2 round 2)
+
+
+def test_r2_2_swapped_event_name_dropped():
+    r = run(event("delivery_def", "Commencement Date", date="2011-03-01"))
+    assert r.events == []
+    assert drop_reasons(r) == ["event_name_not_in_quote"]
+
+
+def test_r2_2_event_name_as_quoted_term_kept_with_its_date():
+    r = run(event("delivery_def", "Delivery Date", date="2011-03-01"))
+    assert [(e.name, e.date) for e in r.events] == [("Delivery Date", "2011-03-01")]
+    assert "\u201cDelivery Date\u201d" in r.events[0].evidence.span_text
+
+
+def test_r2_2_date_not_bound_when_another_quoted_term_intervenes():
+    r = run(event("twodefs", "Delivery Date", date="2011-03-01"))
+    assert len(r.events) == 1 and r.events[0].date is None
+    assert has_correction(r, "date", "date_not_bound_to_event")
+
+
+def test_r2_2_date_bound_to_the_nearest_preceding_name():
+    r = run(event("twodefs", "Rent Date", date="2011-03-01"))
+    assert [(e.name, e.date) for e in r.events] == [("Rent Date", "2011-03-01")]
+
+
+def test_r2_3_description_never_carries_model_prose():
+    items = [
+        raw("rent", description="Landlord waives all rent forever."),
+        raw("fees", amount=12500, description="Fees are waived."),
+    ]
+    for ob in run(*items).obligations:
+        assert ob.description == ob.evidence.span_text
+
+
+def test_r2_4_swapped_roles_dropped():
+    r = run(
+        party("parties", "DIGITAL 55 MIDDLESEX, LLC", "tenant"),
+        party("parties", "CONSTANT CONTACT, INC.", "landlord"),
+    )
+    assert r.parties == []
+    assert drop_reasons(r) == ["role_not_bound_to_name", "role_not_bound_to_name"]
+
+
+def test_r2_4_correct_roles_kept_beside_swapped():
+    r = run(
+        party("parties", "DIGITAL 55 MIDDLESEX, LLC", "landlord"),
+        party("parties", "CONSTANT CONTACT, INC.", "landlord"),
+    )
+    assert [(p.name, p.role) for p in r.parties] == [("DIGITAL 55 MIDDLESEX, LLC", "landlord")]
+    assert drop_reasons(r) == ["role_not_bound_to_name"]
+
+
+def test_r2_5_deadline_conflict_keeps_due_date():
+    r = run(
+        raw("conflict", due_date="2011-03-01", offset_days=30, anchor_event="Commencement Date")
+    )
+    ob = only_obligation(r)
+    assert ob.due_date == "2011-03-01"
+    assert (ob.offset_days, ob.anchor_event) == (None, None)
+    assert has_correction(r, "offset_days", "deadline_conflict")
+
+
+def test_r2_5_offset_alone_still_kept_on_conflict_line():
+    ob = only_obligation(run(raw("conflict", offset_days=30, anchor_event="Commencement Date")))
+    assert (ob.offset_days, ob.anchor_event) == (30, "Commencement Date")
+
+
+def test_r2_6_extra_decimal_digit_is_not_an_amount():
+    r = run(raw("frac3", amount=5.12))
+    assert only_obligation(r).amount is None
+    assert has_correction(r, "amount", "amount_not_in_quote")
+
+
+@pytest.mark.parametrize("amount", [1, 100, 1.0])
+def test_r2_6_malformed_grouping_supports_nothing(amount):
+    assert only_obligation(run(raw("badgroup", amount=amount))).amount is None
+
+
+@pytest.mark.parametrize("offset", [0, 100, 1000])
+def test_r2_6_day_count_suffix_is_not_an_offset(offset):
+    r = run(raw("longdays", offset_days=offset, anchor_event="Commencement Date"))
+    ob = only_obligation(r)
+    assert (ob.offset_days, ob.anchor_event) == (None, None)
+
+
+def test_r2_6_complete_money_token_with_cents_kept():
+    ob = only_obligation(run(raw("cents", amount=1000.50)))
+    assert ob.amount == Decimal("1000.50")
+    assert ob.currency == "USD"

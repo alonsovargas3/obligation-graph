@@ -15,3 +15,6 @@ Accepted base SHA per dispatch (Supervision protocol item 5). Retries start from
 | 2026-10-02 | Task 3 ingest | wave1-t3-ingest | Pi zai/glm-5.3 | a6bea97 | Task 1 (PR #2) | ctx_dba9009ab0f3 | succeeded, merged PR #5 (1f9553f) |
 | 2026-10-02 | Task 4 ground | wave1-t4-ground | Pi zai/glm-5.3 | a6bea97 | Task 1 (PR #2) | ctx_c0013517b0b4 | succeeded, merged PR #4 (c43852a) |
 | 2026-10-02 | Task 3 rev 4 | wave1-t3-ingest-rev4 | Pi zai/glm-5.3 | 5a812fc | tests rev 4 | ctx_e12b299819c4 | succeeded, merged PR #6 (ddeeec8) |
+| 2026-10-02 | Wave 2 Task 6 TOC | wave2-t6-toc | Pi zai/glm-5.3 | df000bd | B2 | ctx_3e24be08acdd | running |
+| 2026-10-02 | Wave 2 Task 9 writer | wave2-t9-writer | Pi zai/glm-5.3 | df000bd | B2 | ctx_32d0edc8a3f2 | running |
+| 2026-10-02 | Wave 2 Task 13 ADR-008 | wave2-t13-adr | Pi zai/glm-5.3 | df000bd | B2 | ctx_87c1bc3a7169 | running |

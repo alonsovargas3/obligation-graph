@@ -162,3 +162,21 @@ def test_sentinel_key_never_written(workdir):
     assert written
     for p in written:
         assert SENTINEL_KEY.encode() not in p.read_bytes(), p
+
+
+def test_no_cache_sample_of_amendment_rejected_before_any_call(workdir):
+    """Rev 2.2 R2-7: --no-cache samples are limited to standalone documents."""
+    base = yaml.safe_load(Path("data/sources.yaml").read_text(encoding="utf-8"))["documents"][0]
+    base_entry = dict(base, id="lease_base", local_path="data/raw/lease_base.htm")
+    amend_entry = dict(base, amends="lease_base", agreement_type="amendment")
+    Path("data/sources.yaml").write_text(
+        yaml.safe_dump({"documents": [base_entry, amend_entry]}), encoding="utf-8"
+    )
+    doc = parse_html(FIX.read_text(encoding="utf-8"), "lease_base", SHA)
+    doc.save(Path("data/text") / "lease_base.json")
+    client = FakeClient(responder=echo_responder)
+    rc = main(["--no-cache", "--runs-dir", "eval/runs/s3", "--doc", DOC_ID], client=client)
+    assert rc == 2
+    assert client.calls == []
+    assert not Path("data/graph.db").exists()
+    assert not Path("eval/runs/s3").exists() or not any(Path("eval/runs/s3").rglob("*"))

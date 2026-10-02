@@ -491,3 +491,7 @@ These rules override any earlier text they conflict with.
   - The score CLI then reports recall and field metrics normally, but every precision value is null, and a separate `precision_lower_bound` carries the computed figure (unlabeled true obligations count as false positives).
   - `score.as_dict()` is unchanged; the CLI applies this.
   - The C2 reference set is `scope: sampled` (50 obligations, not exhaustive). The README must report it that way.
+- **R2-8 detail (pinned by tests plus coordinator decision):**
+  - Under `scope: sampled`, the eval output carries `score["precision_lower_bound"] = {"micro": …, "macro": …}`.
+  - Every precision value and every F1 value (micro, macro, per type) is null, because F1 depends on precision.
+  - Recall is unchanged. Under `full_agreement` there is no lower-bound key.
