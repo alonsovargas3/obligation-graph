@@ -1,0 +1,14 @@
+# One entry per document. sha256 is written by `make fetch` on first download and verified after.
+documents:
+  - id: terawulf-2025-ex10-1
+    filing_index_url: https://www.sec.gov/Archives/edgar/data/1083301/000110465925078084/0001104659-25-078084-index.htm
+    filing_url: https://www.sec.gov/Archives/edgar/data/1083301/000110465925078084/tm2523008d2_8k.htm
+    url: null  # exhibit document URL, resolved from the filing index by Task 2
+    filer: TeraWulf Inc.
+    form: 8-K
+    filing_date: null
+    exhibit: "10.1"
+    title: Form of Recognition Agreement
+    is_form: true
+    local_path: data/raw/terawulf-2025-ex10-1.htm
+    sha256: null

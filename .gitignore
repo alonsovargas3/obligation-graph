@@ -1,0 +1,9 @@
+data/raw/
+data/text/
+data/graph.db
+logs/
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
