@@ -167,3 +167,9 @@ Red at freeze: 11 modules fail at collection on missing modules, and every wave 
 - **The bug it catches:** `og/change/report.py` sliced the finding rows one column off, so the old and context sides were garbage. The Task 32 worker found this. The earlier tests checked only that an old side was present.
 - **Red at freeze:** 7 of 7 failing.
 - **The fix:** approved inside the Task 32 PR.
+
+## Wave 4 rev 2.3 (2026-10-02): stored run latency
+
+- **New frozen test:** `tests/test_change_latency.py`. `change_run.latency_ms` must equal the run's `recorded_latency_ms`, both live and on replay.
+- **Found by:** C10 aggregate generation. A replayed run stored milliseconds of wall time, and the aggregate printed it as "recorded latency".
+- **Red at freeze:** 1 of 1 failing.
