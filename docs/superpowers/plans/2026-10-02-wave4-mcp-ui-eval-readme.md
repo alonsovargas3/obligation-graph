@@ -414,3 +414,41 @@ README tables are generated from that single aggregate file.
 | 34 | `og/eval/score.py`, `og/eval/change_score.py`, `og/eval/all.py`, `og/eval/readme.py`, `og/eval/__main__.py` |
 
 **B4** also adds `GateDecision.cache_hit`, schema v4, `og/paths.py` and `og/replay.py` contracts, and the four site pins.
+
+## Rev 2.1 (Astra wave-4 round 2: 1 blocker, accepted)
+
+### R2-1. Citation-bearing projections replace the authorizer rule
+
+The W4-1 "frozen enforcement" bullet is withdrawn. Executed on SQLite 3.45.1, the authorizer:
+- reports reads under inner views and CTEs (`anchored`, `eligible_supersedes`), so the rule rejected a plain `SELECT id FROM visible_obligation`;
+- cannot see join predicates: a constrained join and an `OR 1=1` join emit identical events.
+
+Enforcement moves into the schema.
+
+**Projection views.** B4 adds these to schema v4, each joining a grounded, same-agreement ClauseRef by id inside the view:
+
+| View | Columns |
+|---|---|
+| `visible_obligation_clause` | `obligation_id, agreement_id, clause_ref_id, section, page, char_start, char_end, span_text`. Only grounded refs of visible obligations whose ref agreement equals the obligation agreement. |
+| `visible_party_binding` | `agreement_id, party_id, name, role, clause_ref_id, section, page, char_start, char_end, span_text` |
+| `visible_event_binding` | `event_id, agreement_id, name, date, clause_ref_id, ...ref fields`. Grounded same-agreement event refs only. |
+| `visible_site_binding` | `agreement_id, site_id, name, location, clause_ref_id, ...ref fields` |
+| `visible_change_finding_ref` | `finding_id, side ('new','old','context'), agreement_id, clause_ref_id, ...ref fields`. Only for findings in `visible_change_finding`, with the existing grounded/side rules. |
+
+**What `og/query.py` may read:**
+- **Views:** `visible_obligation`, the five projections above, `visible_change_finding`, `visible_supersedes`, `fresh_change_run`.
+- **Metadata tables:** `agreement`, `source`, `party`, `site`, `change_run_chain`, `gate_decision`.
+
+**Frozen tests:**
+1. **Static allowlist:** every identifier following `FROM` or `JOIN` in the SQL string literals of `og/query.py`, `og/change/report.py`, `og/eval/score.py` (`pred_from_db`) and `og/eval/change_score.py` must be in the allowlist.
+2. **View success:** a real `visible_obligation` query succeeds.
+3. **Projection contracts** on synthetic DBs:
+   - an ungrounded ref is absent;
+   - a cross-agreement ref is absent;
+   - a revoked binding disappears;
+   - an `OR 1=1`-style duplicate cannot arise, because the projection returns exactly one row per (owner, ref).
+4. **Behavioral revocation tests:** ref 65, mixed citations, event, site, and 3A stale.
+
+The authorizer is not used.
+
+**Ownership:** `report.py` (Task 30) and the scorers (Task 34) migrate to the projections, so no wave 4 reader joins `clause_ref` directly.

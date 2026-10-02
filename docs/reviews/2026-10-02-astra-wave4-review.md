@@ -156,3 +156,93 @@ Reviewed main `0b36ca4`, the wave 4 rev 1 plan, CLAUDE.md, ADR-001 through ADR-0
 ## Verdict
 
 proceed-after-fixes
+
+
+## Round 2
+
+Reviewed main `34af97d` and the plan's Rev 2. Dispositions below assess the written rules, not an implementation that has yet to be dispatched. Probes used read-only connections to the real devbox graph and in-memory copies for revocation/staleness mutations; no source, tests, or real data were changed.
+
+### A) Round-1 dispositions
+
+- **W4-1: partially resolved.** Supporting-object citations, metadata distinctions, and a read transaction resolve the data contract; the new authorizer enforcement rejects legitimate existing views and cannot prove join predicates, as demonstrated in R2-1 below.
+- **W4-2: resolved.** Task 34 now owns the scorer changes and the ref-65 regression; visible party bindings remove the unsupported role predictions.
+- **W4-3: resolved.** Both report and scorer must require `fresh_change_run`, with distinct stale/missing/empty states and a missing-TextDoc error.
+- **W4-4: resolved.** Gate cache-hit identity, preserved usage/latency, separate recorded and incremental costs, and semantic comparison replace the impossible byte-for-byte operational comparison.
+- **W4-5: resolved.** The replay manifest, explicit gate key, strict miss behavior, lazy-client test, and strict no-write rule make the intended replay contract concrete.
+- **W4-6: resolved.** Rev 2 preserves independently grounded fields and verbatim quotes while adding a marker, consistent with ADR-005.
+- **W4-7: resolved.** The plan freezes the actual zero-scheduled coverage, explains pending results, and uses the ChangeReport for the date-shift demo.
+- **W4-8: resolved.** Exactly four supported pins, immutable copied fields, and cited agreement-associated site lists replace unsupported obligation-level location claims.
+- **W4-9: resolved.** Association deletion order, immutable site identity, rollback/idempotency tests, schema version ownership, and the integration rebuild are explicit.
+- **W4-10: resolved.** Shared status/lifecycle filters, SQL-before-limit ordering, pagination, and total/returned/truncated metadata are specified for both clients.
+- **W4-11: resolved.** Stored-report identity is explicit; arbitrary file paths require source-hash equality and have no basename fallback.
+- **W4-12: resolved.** Workspace-root resolution, unrelated-cwd and stdio tests, the actual SDK result envelope, and the separate Desktop acceptance step are specified.
+- **W4-13: resolved.** An explicit aggregate manifest, current-run log joins, historical variance labeling, and the required metric caveats are now part of the contract.
+- **W4-14: resolved.** Temporary README fixture tests precede the coordinator's real README check; browser, Desktop, and walkthrough acceptance are distinct steps.
+
+**Disposition count:** 13 resolved, 1 partially resolved, 0 unresolved.
+
+### B) Real-data probes against the revised rules
+
+The new query implementation does not exist yet. I executed small SQL/projection/guard probes implementing the specified rules against the current graph, rather than claiming that the unchanged wave-3 helpers already implement Rev 2.
+
+**Visible party binding and scorer rule.** For obligation 34, a join from `visible_agreement_party` through its grounded, same-agreement ClauseRef returned Digital 55 Middlesex, LLC as landlord/payee with citation 65, and Constant Contact as tenant/payer with citation 66. Revoking only citation 65 in an in-memory graph left obligation 34 and its own quote visible, preserved the tenant binding, and made `owed_to` null. The visible landlord-payee count fell from 114 to 22 across the corpus: the 92 CC landlord-role predictions disappear, while Applied Digital's 22 remain. This resolves the prior scorer counterexample when the scorer uses the same visible-binding rule.
+
+**3A freshness guard.** Both ungated and gated 3A runs initially passed a `fresh_change_run` lookup. Replacing the base extraction's TextDoc hash with 64 zeroes in an in-memory copy made both guards return `stale_change_run`. Checking this before report assembly prevents returning the old six gate decisions alongside an empty finding list. The revised rule requires the same guard in the scorer; the probe did not alter the existing helper.
+
+**Redacted output.** The revised field-preserving projection produced:
+
+| Real obligation | Marker | Typed amount/date/anchor/offset | Party bindings | Quote behavior |
+|---|---|---|---|---|
+| Carbonite 204 | `[REDACTED]` | all null | both null | Preserves the unredacted third-month period beside the hidden rent |
+| Carbonite 381 | `[REDACTED]` | all null | both null | Preserves the thirty-day invoice period and all three hidden amounts |
+| Applied Digital 490 | `[REDACTED]` | all null | COREWEAVE guarantor and APLD ELN-02 landlord, each with its own quote | Hidden Springing Event notice-day count remains hidden |
+| Applied Digital 504 | `[REDACTED]` | all null | The same two cited bindings remain | Hidden delivery timing and Required L/C Amount remain hidden |
+
+No numeric hidden value was introduced, and no independently supported party was suppressed. Quote periods are evidence, not newly computed deadline fields.
+
+**Coverage and deadlines.** Recomputed counts were exactly **525 visible obligations, 0 effective due dates, 168 bound payees, and 114 landlord-payee rows**. All 525 remain pending. There are 357 rows with either payer or payee unbound in this corpus, which also equals the unbound-payee count here. The explicit window from 2018-04-01 through 2018-06-30 returned zero scheduled obligations. The revised demo and pagination contract fit these results.
+
+**Four site pins.** Each proposed text was found as an exact substring of its specified segment, with the following half-open character ranges in the canonical TextDoc:
+
+| Document | Segment | Range | Exact quote |
+|---|---|---|---|
+| constantcontact-2011-ex1041 | p0542 | `[52818, 52863)` | `55 Middlesex Turnpike, Bedford, Massachusetts` |
+| constantcontact-2012-ex101 | p0006 | `[888, 933)` | `55 Middlesex Turnpike, Bedford, Massachusetts` |
+| endurance-2017-ex106 | p0005 | `[1163, 1208)` | `55 Middlesex Turnpike, Bedford, Massachusetts` |
+| carbonite-2014-ex1024 | p0694 | `[52910, 52950)` | `2121 South Price Road, Chandler, Arizona` |
+
+These support agreement-associated site filters. The revised contract correctly avoids treating the Phoenix cross-connection endpoint as a universal obligation site.
+
+**Stored-report input rules.** An isolated resolver using the manifest and actual pinned 3A bytes accepted the exact document ID, `data/raw/endurance-2017-ex106.htm`, and bare `endurance-2017-ex106.htm`. For arbitrary-path cases, I supplied file bytes to the resolver in memory rather than creating remote files: an identical copy under another name resolved to 3A; changed bytes under `/tmp/endurance-2017-ex106.htm` did not. A nonexistent arbitrary path with that basename and an unknown ID returned `unknown_change_order`. The contract distinguishes registry identifiers from arbitrary file inputs and does not claim to analyze either.
+
+**SQLite authorizer.** Executed on devbox SQLite **3.45.1**. The callback's fifth argument is often an immediate view/CTE name, but it is not consistently the public `visible_*` root:
+
+| Query | Observed underlying-read origins | Literal proposed policy |
+|---|---|---|
+| `SELECT * FROM visible_agreement_party` | `visible_agreement_party` | succeeds |
+| `SELECT * FROM visible_change_finding LIMIT 1` | `visible_change_finding`, `fresh_change_run` | succeeds |
+| `SELECT id FROM visible_obligation LIMIT 1` | `anchored`, `visible_obligation`, `eligible_supersedes`, `fresh_change_run`, and null | fails: `access to obligation.id is prohibited` |
+
+For the last query, the callback additionally reported `(table='event', column='', database=None, source=None)`. Thus permitting only underlying reads attributed to `visible_*` or `fresh_change_run` rejects an ordinary real-graph obligation query.
+
+The callback also cannot establish whether a direct ClauseRef join is constrained by ID, grounding, and agreement. I compared a correct party-citation join with one that adds `OR 1=1` to each of those three ON predicates. Both produced **identical sets of authorizer read events**. The correct query returned 4 rows; the unconstrained one returned **3,228** on the same real graph. This is an executed limitation of the enforcement mechanism, not an SDK or SQLite API recollection.
+
+### C) New blockers under the stop rule
+
+#### R2-1 [blocker] The literal authorizer rule rejects the real visible-obligation view and cannot certify its join exception
+
+**Location:** Rev 2 W4-1, Frozen enforcement; B4 schema/read-contract tests; Task 30.
+
+**Problem:** The revised plan makes the authorizer enforce provenance that its callback does not provide. Transitive views and the `anchored` CTE do not report the public root as their source; the existing query also emits a null-source empty-column read. Separately, identical table/column reads can come from either a constrained or an unrestricted join. An implementation following the literal deny rule cannot serve the current corpus, while a broad exception for ClauseRef reads defeats the promised check.
+
+**Concrete real-graph counterexample:** `SELECT id FROM visible_obligation LIMIT 1` fails under the written policy before returning any obligation. A safe party-citation join and its unconstrained variant have identical read-event sets but return 4 versus 3,228 rows. Both counterexamples were executed without changing the real graph.
+
+**Fix:** Freeze an implementable enforcement boundary before B4. Prefer citation-bearing visible projections so application queries need no direct sensitive-table joins. Make the authorizer an explicit audit of the actual trusted view dependency closure, including the existing helper view/CTE and any narrowly documented planner-generated empty-column reads, instead of assuming every source name is the public view. Enforce permitted join shape with reviewed fixed SQL templates or the projections themselves, and enforce returned evidence with the real revocation and mixed-citation tests. Do not treat merely seeing the expected columns in the callback as proof of the predicates. Freeze a real `visible_obligation` success test and a direct raw-table/unrestricted-join rejection test together, so satisfying one cannot silently break the other.
+
+This is one blocker with two related manifestations of the same enforcement design. No other new blocker was found in the requested corpus probes.
+
+**Known limitations:** This round verifies rule satisfiability and real-data behavior through disposable probes, not the future MCP/UI implementation or frozen test suite. Browser and Claude Desktop acceptance remain necessary after implementation. No new synthetic-only phrasing or recall issue is promoted to a blocker.
+
+### D) Verdict
+
+proceed-after-fixes
