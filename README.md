@@ -2,7 +2,7 @@
 
 Obligation Graph turns data center contracts (leases, colocation agreements, guarantees, and their amendments) into structured obligations, each tied to the exact clause it came from. Agents query it over MCP. Amendments arrive already checked against the agreement they change, with cheap decision gates choosing which expensive checks run.
 
-The corpus is public SEC filings only. It includes a public agreement Fluidstack is party to.
+The corpus is public SEC filings only.
 
 **Walkthrough video:** https://youtu.be/GPcP4T1syMk. The same tour, step by step, is in [`docs/walkthrough.md`](docs/walkthrough.md).
 

@@ -35,7 +35,7 @@ All merged commits were produced by Pi zai/glm-5.3. Dispatch IDs and base SHAs a
 ## What supervision caught
 
 - Workers asked instead of working around a pre-existing lint failure: locked ruff formats code blocks in Markdown. Fixed on main (0b6e4fa).
-- Corpus smoke: 4 of 7 exhibits, including the anchor, ingested as a single section, because they use single-level `1.` clause numbering, which rev 3 excluded. Mawson splits clause numbers into table cells. The coordinator added three frozen tests (red-verified) and a rule change (rev 4). The same worker implemented it, and sections now read correctly (anchor: 15 sections, "1 Definitions", "2 Confirmation Regarding Fluidstack Lease; Google Property", ...).
+- Corpus smoke: 4 of 7 exhibits, including the anchor, ingested as a single section, because they use single-level `1.` clause numbering, which rev 3 excluded. Mawson splits clause numbers into table cells. The coordinator added three frozen tests (red-verified) and a rule change (rev 4). The same worker implemented it, and sections now read correctly (anchor: 15 sections, "1 Definitions", "2 Confirmation Regarding ...", ...).
 - One worker misreported a test count (31 vs 19) and one mislabeled expected red errors. The coordinator's own runs are the record, not worker summaries.
 
 ## Known limits carried forward

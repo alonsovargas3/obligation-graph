@@ -74,7 +74,7 @@ Status key: concrete = the TextDoc states a calendar date; by reference = define
 | Mawson | Initial Date | external | `"Initial Date" means the date on which the Colocation Servers under the Service Order, or the first batch of Colocation Servers if there are more than one batch under the Service Order, are powered-on for normal Colocation and operation.` | 1 |
 | Mawson | Initial Term | by reference to an external date | `expiring on the third (3rd) anniversary of the Initial Date (the "Initial Term" and together with the Holdover Period the "Term")` | 2 mention "Term" |
 | TeraWulf | Effective Date | concrete (note: the agreement is flagged `is_form`) | `entered into as of this 13th day of August, 2025 (being the latest of the parties' dates of execution; the "Effective Date")` | 0 |
-| TeraWulf | Term of the Fluidstack Lease | not stated in this document | `the Term of the Fluidstack Lease will be automatically extended for a Transition Period ... (the length of such period to be defined by Google, but not to exceed 120 days)` | 0 |
+| TeraWulf | Term of the [tenant] Lease | not stated in this document | `the Term of the [tenant] Lease will be automatically extended for a Transition Period ... (the length of such period to be defined by Google, but not to exceed 120 days)` | 0 |
 | Applied Digital | Springing Event Trigger Date | external | `(the date of such occurrence, the "Springing Event Trigger Date")` | 1 |
 | Applied Digital | Lease Term | not stated in this document | Guaranty is `made as of March 30, 2026`; the lease dates sit in other documents | 0 |
 | CC 2012 | 1A Expansion Date | concrete (parenthetical) | `Effective as of June 1, 2012 (the "1A Expansion Date", Original Suite 418A is hereby expanded ...` | 2 |
