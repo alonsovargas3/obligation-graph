@@ -23,3 +23,7 @@ Accepted base SHA per dispatch (Supervision protocol item 5). Retries start from
 | 2026-10-02 | Wave 2 Task 7 client | wave2-t7-client | Pi zai/glm-5.3 | 4bcd002 | rev 2.2 | ctx_580f7aea6580 | running |
 | 2026-10-02 | Wave 2 Task 10 eval | wave2-t10-eval | Pi zai/glm-5.3 | 4bcd002 | rev 2.2 | ctx_1b740b0b9007 | running |
 | 2026-10-02 | Wave 2 Task 8 verify | wave2-t8-verify | Pi zai/glm-5.3 | a6015e0 | rev 2.3 | ctx_105864b3508e | running |
+
+## Wave 3A (2026-10-02), accepted base 999136e
+
+Pi zai/glm-5.3 workers on devbox worktrees `obligation-graph-wave3-<n>`: t14-rules, t15-haiku, t16-client, t17-verify, t18-writer, t20-eval, t21-adr.

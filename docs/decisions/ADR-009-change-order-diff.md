@@ -147,7 +147,7 @@ visible.
   exercise, and the prior rates live in the missing 2A.
 - **Edges from gated runs:** gate-skipped categories would silently lack
   edges, making graph state depend on gate answers.
-- **Server-side fallback for checks and gates:** an unbilled second attempt
+- **Server-side fallback for checks and gates:** an unbounded second billed attempt
   would break the provable worst case per call.
 - **Fuzzy or range-level old-side matching:** would credit near misses;
   strict segment identity with the strictness disclosed is chosen instead.
