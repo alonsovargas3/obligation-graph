@@ -292,3 +292,63 @@ No new synthetic contract phrasings were introduced. General amendment interpret
 ### D) Verdict
 
 proceed-after-fixes
+
+## Round 3
+
+### A) Final dispositions and executed probes
+
+Reviewed rev 2.1 at `c69d625`. Refetched the three TextDocs and queried the graph read-only on devbox. The documents are unchanged from round 2; the graph remains schema v2 with 166 base, 5 first-amendment, and 7 third-amendment visible obligations. Probes implement the revised rule text outside the repository; no production wave-3 test-suite or live API execution is claimed.
+
+**R2-1: resolved.** Clause-range checks reject the unrelated rent quote, the added Basic Lease Information production recognizes the real reference, and document-only resolution no longer supplies an asserted old clause or an edge. Freeze these exact **inclusive segment ranges** in B3 for `constantcontact-2011-ex1041`:
+
+| Target | First segment | Last segment, inclusive | Corresponding character range | Following boundary |
+|---|---|---|---|---|
+| Basic Lease Information Item 7 | `p0442` | `p0452` | `[46808, 48424)` | `p0453`: `8. Base Rent:` |
+| Exhibit A | `p0807` | `p0810` | `[159187, 159299)` | `p0811`: `EXHIBIT “B-1”` |
+| Table A of Exhibit F | `p0888` | `p0902` | `[174767, 175539)` | `p0903`: the Service Level Terms heading, punctuation omitted here |
+
+Verified the starting captions: `7. Premises/Pathways:`, `EXHIBIT “A”`, and `Table A.`. Item 7 includes its Premises and Pathways content through `As described on Exhibit “C”.`; it excludes Item 8. Exhibit A contains its caption and page footer `p0810`, not the diagram's terms. Table A includes the electricity thresholds, battery capacity, back-up power specifications, and temperature/humidity specifications. **Its last segment is p0902, not the segment before the next later caption containing the word Table.** The separate service provisions beginning at `p0903` must remain outside Table A. Bind this table to the canonical TextDoc hash so re-ingest cannot silently reuse these segment IDs for other content.
+
+Executed target probes:
+
+| Amendment source | Exact recognized target label | Result |
+|---|---|---|
+| 3A `p0013` | `Section 2.C of 2A` | Clause-unresolved; null old side kept; a base old side rejected with `target_not_in_corpus`. |
+| 1A `p0017` | `Exhibit “A” to the Lease` | Clause-resolved to `p0807`-`p0810`; caption evidence at base `p0808` accepted; base rent `p0455` rejected with `target_range_mismatch`. |
+| 1A `p0019` | `Item 7 of the Basic Lease Information to the Lease` | Clause-resolved to `p0442`-`p0452`; base premises evidence at `p0445` accepted; base rent `p0455` rejected. The label preserves the source's nonbreaking space after Item. |
+| 1A `p0037` | `Table A of Exhibit “F” to the Original Lease` | Clause-resolved to `p0888`-`p0902`; base threshold evidence at `p0893` accepted; base rent `p0455` rejected. |
+
+The positive old quotes prove location within the target; the Exhibit A caption does not prove any content of its missing diagram. First and last segment quotes in all three ranges also pass the existing `ground()` function. These amendments still need no forced obligation edge for the demo.
+
+**R2-2: resolved.** Recomputed roles from the full real 3A `p0011` source segment, using the nearest preceding role word after the previous date token, and requiring that role word inside the selected quote. The following outcomes were asserted by execution:
+
+| Probe | Result |
+|---|---|
+| Old scheduled surrender June 30, 2018; new `expiring June 30, 2020` | END / END; accepted, **+731 days**. The governing words are `surrendered` and `expiring`. |
+| Same quotes reversed | Rejected with `old_state_cue_missing`. |
+| Old scheduled surrender; new `commencing July 1, 2018` | END / START; rejected with `date_role_mismatch`. |
+| Old scheduled surrender; new `commencing July 1, 2018 and expiring` | END / START; rejected with `date_role_mismatch`. The later `expiring` word cannot classify the earlier July date. |
+| Old scheduled surrender; new quote containing only `June 30, 2020` | Rejected with `date_role_outside_quote`; the source role exists but its cue was omitted from the quote. |
+
+**R2-3: resolved.** Under the revised contract, let `N` be the count returned for the complete effective input, and let `M=4096` be the output ceiling. A single Sonnet attempt reserves `(2.50*N + 10*M)/1,000,000` dollars. This covers cold creation, ordinary input, cache reads, or a mixture at the supplied price table because each input-token tariff is at most $2.50/M. Removing server-side fallback removes the extra fallback-attempt charge from this arithmetic. Failure to obtain the count permits no model call.
+
+The numerical probe uses **token-count response fixtures**, not measured provider counts. Values 80,596 and 84,099 reproduce the round-2 arithmetic comparison; they are now fed as `count_tokens` return values rather than derived by the reservation from character counts. No API key was read and no provider counting call was made in this review. C0 must obtain the actual counts for the final effective requests.
+
+| Count-response fixture | Reservation at cold-write price and 4096 output tokens | Cold-write maximum in probe | Admission at exactly reservation | Admission at reservation minus $0.000001 |
+|---|---:|---:|---|---|
+| 80,596 | $0.242450 | $0.242450 | Yes | No |
+| 84,099 | $0.2512075 | $0.2512075 | Yes | No |
+
+Asserted that actual cost is no greater than the reservation for 24 combinations of input/cache distributions and output counts across those two fixtures. Tested ordinary input, all cache writes, all cache reads, and mixed input, at 0, 2,000 and 4096 output tokens. This fixes the prior under-reservation at the same input count. Twelve reservations are sequential and release unused funds after settlement; they are not twelve concurrently affordable $0.26 charges. A later reservation that does not fit still stops the run incomplete instead of forcing the demo or spending beyond the remaining allowance.
+
+Evidence: `/tmp/astra-w3-r3-corpus.json`, `/tmp/astra_w3_r3_probes.py`, and `/tmp/astra-w3-r3-probes.json`. These record the exact ranges, source-derived role decisions, target positives/negatives, and reservation assertions.
+
+### B) Blockers and Known limitations
+
+**Blockers: none.** All three round-2 findings are resolved at the plan level on the requested cases. Freeze the range endpoints above and the existing positive/negative probes in B3; this completes the third and final advisor round.
+
+**Known limitations:** 2A and the OS Rider remain outside the corpus; Exhibit A's diagram is not represented by its caption; clause-target/date rules remain conservative heuristics. No additional synthetic phrasing search was performed. Actual request counts, count-request compatibility, usage settlement, and the no-fallback request shape remain C0/B3 implementation checks. The arithmetic confirmation assumes the revised exact-count, single-attempt contract and the stated tariff; it does not report actual spend or guarantee that all live checks will fit. Keep the agreed incomplete-run behavior if they do not. A real confirmed-safe skip and the committed evaluation results are still execution outcomes, not results manufactured by this review.
+
+### C) Verdict
+
+agree-to-proceed
