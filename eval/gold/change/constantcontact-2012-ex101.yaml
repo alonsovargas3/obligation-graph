@@ -1,0 +1,177 @@
+change_order_id: constantcontact-2012-ex101
+chain:
+- constantcontact-2011-ex1041
+- constantcontact-2012-ex101
+textdoc_sha256:
+  constantcontact-2011-ex1041: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+  constantcontact-2012-ex101: 8ee2c82ed01031e48749248bb9d0aa088b6c5ba0c55288b1da5b4917efa81b27
+provenance:
+  drafted_by: gpt-6-astra (blind)
+  adjudicated_by: claude-opus-5-5 (coordinator)
+  spot_checked: 0
+scope: full_agreement
+gates:
+  price:
+    answer: true
+    segment_ids:
+    - p0039
+    - p0042
+    - p0044
+    - p0046
+    - p0048
+    - p0050
+    - p0052
+  dates:
+    answer: true
+    segment_ids:
+    - p0014
+    - p0027
+    - p0035
+    - p0041
+    - p0043
+    - p0045
+    - p0047
+    - p0049
+  termination:
+    answer: true
+    segment_ids:
+    - p0035
+  guarantee:
+    answer: false
+    segment_ids: []
+  sla:
+    answer: true
+    segment_ids:
+    - p0037
+    - p0108
+  parties_or_sites:
+    answer: true
+    segment_ids:
+    - p0012
+    - p0014
+    - p0017
+    - p0019
+    - p0027
+    - p0037
+    - p0108
+findings:
+- kind: supersedes
+  new_segment_id: p0012
+  new_span_text: B. Accordingly, effective as of, and from and after, the 1A Effective Date, (i) all references in the Lease to “Suite 1.14A” are hereby deemed to be references to “Suite 418A”, (ii) all references in the Lease to “Suite 1.5” are hereby deemed to be references to “Suite 405”, (iii) all references in the Lease to “Suite 1.5.1” are hereby deemed to be references to “Suite 407”, and (iv) all references in the Lease to “Suite 1.5.2” are hereby deemed to be references to “Suite 409”.
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0451
+  old_span_text: Each of Suite 1.5, Suite 1.5.1, Suite 1.5.2 and Suite 1.14A may be referred to herein, individually, as a “Suite”.
+  target_label: null
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null
+- kind: supersedes
+  new_segment_id: p0017
+  new_span_text: (ii) Exhibit “A” to the Lease is hereby deleted in its entirety and replaced by Exhibit “A-1-A”, attached hereto;
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0808
+  old_span_text: DEPICTION OF THE SUITES, THE WEST POP ROOM, THE EAST POP ROOM
+  target_label: Exhibit “A” to the Lease
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null
+- kind: supersedes
+  new_segment_id: p0019
+  new_span_text: '(iv) Item 7 of the Basic Lease Information to the Lease is hereby amended and restated in its entirety as follows:'
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0442
+  old_span_text: '7. Premises/Pathways:'
+  target_label: Item 7 of the Basic Lease Information to the Lease
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null
+- kind: supersedes
+  new_segment_id: p0037
+  new_span_text: 3. Service Levels. Effective as of, and from and after, the 1A Expansion Date, (a) Table A of Exhibit “F” to the Original Lease is hereby replaced by Table A-1 as set forth on Exhibit “F-1”, attached hereto and incorporated herein, and (b) all references in the Lease to Table A of Exhibit “F” are hereby deemed to mean and refer to Table A-1 of Exhibit “F-1”.
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0893
+  old_span_text: 'Suite 1.14A: 225 total kW (the “ECT-Suite 1.14A”)'
+  target_label: Table A of Exhibit “F” to the Original Lease
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null
+- kind: potential_conflict
+  new_segment_id: p0035
+  new_span_text: Additionally, provided that Landlord is working diligently using commercially reasonable efforts after the 1A Expansion Date to complete the installation of Landlord’s Suite 418A Installations, Landlord shall not be in default of its obligation to complete Landlord’s Suite 418A Installations.
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0721
+  old_span_text: '16.1.1.1 if: (a) Landlord shall fail to perform or observe any of Landlord’s Lease Undertakings, and (b) such failure continues for a period of ten (10) days following written notice to Landlord of such failure; provided, however, that in the event that Landlord’s failure to perform or observe any of Landlord’s Lease Undertakings cannot reasonably be cured within ten (10) days following written notice to Landlord, such failure to cure shall not be a Landlord Default if Landlord commences its cure within such ten (10) day period and thereafter diligently prosecutes the curing thereof to completion. Landlord agrees to use commercially reasonable efforts to provide daily updates to Tenant regarding progress toward such completion.'
+  target_label: null
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null
+- kind: price_change
+  new_segment_id: p0042
+  new_span_text: $0.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '0.00'
+  delta: null
+  currency: USD
+- kind: price_change
+  new_segment_id: p0044
+  new_span_text: $41,496.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '41496.00'
+  delta: null
+  currency: USD
+- kind: price_change
+  new_segment_id: p0046
+  new_span_text: $42,741.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '42741.00'
+  delta: null
+  currency: USD
+- kind: price_change
+  new_segment_id: p0048
+  new_span_text: $44,023.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '44023.00'
+  delta: null
+  currency: USD
+- kind: price_change
+  new_segment_id: p0050
+  new_span_text: $45,344.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '45344.00'
+  delta: null
+  currency: USD

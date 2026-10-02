@@ -200,7 +200,7 @@ def test_edges_require_clause_ref(db):
 
 EDGE_SQL = {
     "supersedes": "INSERT INTO supersedes(obligation_id,superseded_obligation_id,"
-    "change_order_id,clause_ref_id) VALUES(?,?,'a1x',?)",
+    "change_order_id,clause_ref_id,change_run_id) VALUES(?,?,'a1x',?,?)",
     "guarantees": "INSERT INTO guarantees(guarantee_obligation_id,guaranteed_obligation_id,"
     "clause_ref_id) VALUES(?,?,?)",
     "triggers": "INSERT INTO triggers(obligation_id,triggered_by_obligation_id,kind,"
@@ -208,15 +208,52 @@ EDGE_SQL = {
 }
 # The agreement an edge's citation must come from, per edge type.
 EDGE_REF_AGREEMENT = {"supersedes": "a1x", "guarantees": "a1", "triggers": "a1"}
+# Endpoint agreements: a supersedes edge runs from the change order (a1x) to an
+# obligation of an earlier chain document (a1); schema v3 makes that part of visibility.
+EDGE_ENDPOINTS = {"supersedes": ("a1x", "a1"), "guarantees": ("a1", "a1"), "triggers": ("a1", "a1")}
+
+
+def add_fresh_change_run(con):
+    """A completed ungated change run for a1x over the chain [a1, a1x], matching extraction."""
+    con.execute(
+        "INSERT INTO extraction_run(run_id,source_id,prompt_version,model,textdoc_sha256)"
+        " VALUES('er','src','v1','m','t')"
+    )
+    cur = con.execute(
+        "INSERT INTO change_run(run_id,pair_id,change_order_id,mode,prompt_version,"
+        "question_set_sha256,model,chain_size,completed_at)"
+        " VALUES('cr','p','a1x','ungated','change_v1@x','q','m',2,datetime('now'))"
+    )
+    rid = cur.lastrowid
+    for pos, (agr, role) in enumerate([("a1", "base"), ("a1x", "change_order")]):
+        con.execute(
+            "INSERT INTO change_run_chain(change_run_id,position,agreement_id,role,"
+            "textdoc_sha256,extraction_run_id) VALUES(?,?,?,?,'t','er')",
+            (rid, pos, agr, role),
+        )
+    return rid
+
+
+def insert_edge(con, table, a, b, ref):
+    if table == "supersedes":
+        con.execute(EDGE_SQL[table], (a, b, ref, add_fresh_change_run(con)))
+    else:
+        con.execute(EDGE_SQL[table], (a, b, ref))
+
+
+def edge_endpoints(con, table):
+    agr_a, agr_b = EDGE_ENDPOINTS[table]
+    a, b = add_obligation(con, agreement=agr_a), add_obligation(con, agreement=agr_b)
+    add_ref(con, a, agreement=agr_a)
+    add_ref(con, b, agreement=agr_b)
+    return a, b
 
 
 @pytest.mark.parametrize("table", ["supersedes", "guarantees", "triggers"])
 def test_edge_views_require_grounded_ref_and_visible_endpoints(db, table):
-    a, b = add_obligation(db), add_obligation(db)
-    add_ref(db, a)
-    add_ref(db, b)
+    a, b = edge_endpoints(db, table)
     edge_ref = add_ref(db, grounded=0, agreement=EDGE_REF_AGREEMENT[table])
-    db.execute(EDGE_SQL[table], (a, b, edge_ref))
+    insert_edge(db, table, a, b, edge_ref)
     count = f"SELECT count(*) FROM visible_{table}"
     assert db.execute(count).fetchone()[0] == 0
     db.execute("UPDATE clause_ref SET grounded=1 WHERE id=?", (edge_ref,))
@@ -227,10 +264,8 @@ def test_edge_views_require_grounded_ref_and_visible_endpoints(db, table):
 
 @pytest.mark.parametrize("table", ["supersedes", "guarantees", "triggers"])
 def test_edge_citation_from_unrelated_agreement_is_invisible(db, table):
-    a, b = add_obligation(db), add_obligation(db)
-    add_ref(db, a)
-    add_ref(db, b)
-    db.execute(EDGE_SQL[table], (a, b, add_ref(db, agreement="b1")))
+    a, b = edge_endpoints(db, table)
+    insert_edge(db, table, a, b, add_ref(db, agreement="b1"))
     assert db.execute(f"SELECT count(*) FROM visible_{table}").fetchone()[0] == 0
 
 

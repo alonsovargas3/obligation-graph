@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "answer": {
+      "type": "string",
+      "enum": [
+        "yes",
+        "no"
+      ]
+    }
+  },
+  "required": [
+    "answer"
+  ]
+}

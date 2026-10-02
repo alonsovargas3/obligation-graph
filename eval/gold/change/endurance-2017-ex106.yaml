@@ -1,0 +1,132 @@
+change_order_id: endurance-2017-ex106
+chain:
+- constantcontact-2011-ex1041
+- constantcontact-2012-ex101
+- endurance-2017-ex106
+textdoc_sha256:
+  constantcontact-2011-ex1041: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+  constantcontact-2012-ex101: 8ee2c82ed01031e48749248bb9d0aa088b6c5ba0c55288b1da5b4917efa81b27
+  endurance-2017-ex106: 3a1dca055a888969cc785597b452da98049c841696711293ef7c3c4d98d5f345
+provenance:
+  drafted_by: gpt-6-astra (blind)
+  adjudicated_by: claude-opus-5-5 (coordinator)
+  spot_checked: 0
+scope: full_agreement
+gates:
+  price:
+    answer: true
+    segment_ids:
+    - p0014
+    - p0018
+    - p0020
+    - p0022
+    - p0034
+  dates:
+    answer: true
+    segment_ids:
+    - p0011
+    - p0012
+    - p0013
+    - p0017
+    - p0019
+    - p0021
+  termination:
+    answer: false
+    segment_ids: []
+  guarantee:
+    answer: false
+    segment_ids: []
+  sla:
+    answer: false
+    segment_ids: []
+  parties_or_sites:
+    answer: true
+    segment_ids:
+    - p0023
+    - p0024
+    - p0026
+findings:
+- kind: shifted_date
+  new_segment_id: p0011
+  new_span_text: expiring June 30, 2020
+  old_origin: self
+  old_doc: null
+  old_segment_id: p0011
+  old_span_text: Currently, the portion of the Premises located in Suite 409 of the Building is scheduled to be surrendered to Landlord on June 30, 2018
+  target_label: null
+  old_value: '2018-06-30'
+  new_value: '2020-06-30'
+  delta: '731'
+  currency: null
+- kind: supersedes
+  new_segment_id: p0012
+  new_span_text: B.    Notwithstanding anything in the Lease to the contrary, Tenant agrees to surrender Suite 409 to Landlord no later than the 3A Suite 409 Amended Surrender Date, and acknowledges and agrees that the terms and conditions stated in Sections 1.A and 1.B of 2A shall apply in connection with such surrender, the same as if the 3A Suite 409 Amended Surrender Date was the Suite 409 Surrender Date (as defined in Section 1.A of 2A). For the avoidance of doubt, all references in the Lease to the Suite 409 Surrender Date shall be deemed to refer to the 3A Suite 409 Amended Surrender Date.
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: Section 1.A of 2A
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null
+- kind: supersedes
+  new_segment_id: p0013
+  new_span_text: C.    Effective as of the 3A Effective Date, Section 2.C of 2A is hereby deleted in its entirety and of no further force or effect.
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: Section 2.C of 2A
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null
+- kind: price_change
+  new_segment_id: p0018
+  new_span_text: '| $35,596.80/month'
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '35596.80'
+  delta: null
+  currency: USD
+- kind: price_change
+  new_segment_id: p0020
+  new_span_text: '| $36,664.70/month'
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '36664.70'
+  delta: null
+  currency: USD
+- kind: price_change
+  new_segment_id: p0022
+  new_span_text: '| $37,764.65/month'
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  target_label: null
+  old_value: null
+  new_value: '37764.65'
+  delta: null
+  currency: USD
+- kind: supersedes
+  new_segment_id: p0023
+  new_span_text: '3.Landlord’s Address for Notices. Notwithstanding anything in the Lease to the contrary, effective as of and from and after the 3A Effective Date, the following shall be Landlord’s addresses for notices:'
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0489
+  old_span_text: '11. Landlord’s Address for Notices:'
+  target_label: null
+  old_value: null
+  new_value: null
+  delta: null
+  currency: null

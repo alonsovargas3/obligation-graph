@@ -1,0 +1,136 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "new_quote": {
+            "type": "string",
+            "description": "Verbatim quote copied character-for-character from exactly one change-order line. Write this first."
+          },
+          "new_segment_id": {
+            "type": "string",
+            "description": "The pNNNN id of the change-order line the new quote comes from."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "supersedes",
+              "shifted_date",
+              "price_change",
+              "potential_conflict"
+            ]
+          },
+          "old_doc": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The agreement_id of the earlier chain document holding the old term, \"self\" if the change order itself restates the old term, or null if the target document is not provided."
+          },
+          "old_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Verbatim quote of the old term copied from one line of old_doc, or null."
+          },
+          "old_segment_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The pNNNN id of the line the old quote comes from, or null."
+          },
+          "old_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For shifted_date: the old date as YYYY-MM-DD, written in old_quote. Otherwise null."
+          },
+          "new_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For shifted_date: the new date as YYYY-MM-DD. For price_change: the new amount exactly as written in new_quote. Otherwise null."
+          },
+          "target_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The target reference copied from new_quote, e.g. Section 2.C of 2A, or null."
+          },
+          "context_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For price_change: a verbatim quote from one change-order line giving the row period or heading, or null."
+          },
+          "context_segment_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The pNNNN id of the context quote line, or null."
+          }
+        },
+        "required": [
+          "new_quote",
+          "new_segment_id",
+          "kind",
+          "old_doc",
+          "old_quote",
+          "old_segment_id",
+          "old_value",
+          "new_value",
+          "target_label",
+          "context_quote",
+          "context_segment_id"
+        ]
+      }
+    }
+  },
+  "required": [
+    "findings"
+  ]
+}

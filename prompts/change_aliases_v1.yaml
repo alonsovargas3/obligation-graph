@@ -1,0 +1,33 @@
+# Change-order target resolution v1 (wave 3 rev 2 R1 / rev 2.1 R2-1; frozen).
+# Per chain: document aliases, aliases named by the change orders but absent from
+# the corpus, and clause target ranges (inclusive segment ids) pinned to the
+# canonical TextDoc hash. Ranges verified in Astra wave-3 round 3.
+version: change_aliases_v1
+chains:
+  - base: constantcontact-2011-ex1041
+    aliases:
+      constantcontact-2011-ex1041: [Lease, Original Lease, Datacenter Lease]
+      constantcontact-2012-ex101: [1A, First Amendment]
+    unresolved: [2A, Second Amendment, OS Rider, Office Space Rider, TKD Lease]
+    targets:
+      - doc: constantcontact-2011-ex1041
+        textdoc_sha256: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+        kind: Item
+        id: "7"
+        qualifier: Basic Lease Information
+        first: p0442
+        last: p0452
+      - doc: constantcontact-2011-ex1041
+        textdoc_sha256: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+        kind: Exhibit
+        id: A
+        first: p0807
+        last: p0810
+        note: caption and page footer only; the diagram is not in the TextDoc
+      - doc: constantcontact-2011-ex1041
+        textdoc_sha256: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+        kind: Table
+        id: A
+        parent: {kind: Exhibit, id: F}
+        first: p0888
+        last: p0902

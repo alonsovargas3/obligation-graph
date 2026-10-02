@@ -112,3 +112,24 @@ New `tests/test_pipeline_regressions_r6.py`:
 - `tests/test_verify.py`: `test_r7_label_row_binds_whole_name` (2) and `test_r7_label_row_negatives` (5), using the exact real label rows (NBSP gaps) from constantcontact-2011-ex1041 p0967/p0968.
 - `tests/test_extract_cli.py::test_incremental_cost_counts_only_real_calls`
 - `tests/test_eval_cli.py::test_module_entrypoint_runs_main` (subprocess, so a missing `__main__` guard fails)
+
+## Wave 3 B3 (2026-10-02)
+
+New frozen modules:
+- `test_budget`
+- `test_gates_{rules,haiku,cascade}`
+- `test_change_{request,parse,verify,regressions,writer,invalidation,cli}`
+- `test_schema_v3`
+- `test_eval_change`
+
+Helpers: `tests/change_fakes.py` and `tests/change_db.py` (synthetic).
+
+Fixtures: the real TextDocs of the base lease, 1A, and 3A in `tests/fixtures/change/` (public SEC filings).
+
+Adapted for schema v3 (coordinator-owned, original intent kept):
+- `test_schema.py`: supersedes rows now carry a fresh ungated `change_run`.
+- `test_schema_v2.py`: the version is 3, and a v2 file raises `SchemaOutdated`.
+
+Authored by three coordinator-side forks. Each module was shown satisfiable by a throwaway implementation on a devbox scratch copy, which was then deleted. The exception is `test_change_cli`, which is only fixture-probed until Tasks 14 to 18 exist.
+
+Red at freeze: 11 modules fail at collection on missing modules, and every wave 1/2 test passes.

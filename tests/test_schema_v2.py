@@ -28,14 +28,14 @@ def add_ref(con, agreement="a1", grounded=1):
 
 def test_fresh_connect_sets_user_version(tmp_path):
     con = connect(tmp_path / "g.db")
-    assert SCHEMA_VERSION == 2
-    assert con.execute("PRAGMA user_version").fetchone()[0] == 2
+    assert SCHEMA_VERSION == 3
+    assert con.execute("PRAGMA user_version").fetchone()[0] == 3
 
 
 def test_reconnect_is_fine(tmp_path):
     connect(tmp_path / "g.db").close()
     con = connect(tmp_path / "g.db")
-    assert con.execute("PRAGMA user_version").fetchone()[0] == 2
+    assert con.execute("PRAGMA user_version").fetchone()[0] == 3
 
 
 def test_outdated_file_is_refused(tmp_path):
@@ -46,6 +46,18 @@ def test_outdated_file_is_refused(tmp_path):
     old.commit()
     old.close()
     with pytest.raises(SchemaOutdated, match="delete"):
+        connect(path)
+
+
+def test_v2_file_is_refused(tmp_path):
+    """Wave 3: a schema-v2 graph.db is rebuilt, not migrated (cached re-extraction is free)."""
+    path = tmp_path / "v2.db"
+    old = sqlite3.connect(path)
+    old.execute("CREATE TABLE source (id TEXT PRIMARY KEY)")
+    old.execute("PRAGMA user_version = 2")
+    old.commit()
+    old.close()
+    with pytest.raises(SchemaOutdated, match="make extract"):
         connect(path)
 
 

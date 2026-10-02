@@ -1,0 +1,50 @@
+# Gate questions v1 (wave 3; coordinator-authored, frozen). Lexicons and section types
+# are frozen as proposed in docs/reviews/2026-10-02-astra-wave3-review.md (round 1),
+# accepted in plan rev 2 R10. Terms match whole words, case-insensitive; a trailing *
+# is a prefix wildcard from a word start to that word's end. Multiword terms match
+# with any whitespace between words. These are run-check triggers, never assertions
+# that a category changed.
+version: gate_questions_v1
+questions:
+  - id: touches_price
+    category: price
+    definition: >-
+      Does the change order add, remove, or change any price term: rent, fees,
+      escalators, caps, or other amounts payable?
+    lexicon: [rent, fee, fees, "escalat*", cap, caps, "commission*", "cost*"]
+    section_types: [payment, penalty]
+  - id: touches_dates
+    category: dates
+    definition: >-
+      Does the change order add, remove, or change any date or period: delivery,
+      commencement, expiration, surrender, milestones, or notice periods?
+    lexicon: ["date*", "commenc*", "expir*", "surrender*", "extend*", "extension*", "deliver*", "milestone*", "notice period*"]
+    section_types: [delivery, notice]
+  - id: touches_termination
+    category: termination
+    definition: >-
+      Does the change order add, remove, or change any termination right, cure
+      period, or event of default?
+    lexicon: ["terminat*", "cure*", "default*", "surrender*"]
+    section_types: [termination_right, penalty, notice]
+  - id: touches_guarantee
+    category: guarantee
+    definition: >-
+      Does the change order add, remove, or change any guarantor, guaranty,
+      backstop, letter of credit, or other credit support?
+    lexicon: ["guarant*", backstop, credit support, letter of credit, surety, collateral]
+    section_types: [guarantee]
+  - id: touches_sla
+    category: sla
+    definition: >-
+      Does the change order add, remove, or change any service level: uptime,
+      power, cooling, HVAC, electricity thresholds, or service credits?
+    lexicon: [uptime, power, "cool*", "service level*", "service credit*", "electric*", HVAC, battery, "ECT*", "generator*"]
+    section_types: [sla]
+  - id: touches_parties_or_sites
+    category: parties_or_sites
+    definition: >-
+      Does the change order change the parties or the premises: assignment, a new
+      site or suite, a capacity change, or party contact details?
+    lexicon: ["assign*", premises, "site*", "suite*", capacity, "pathway*", "address*"]
+    section_types: [delivery, other]

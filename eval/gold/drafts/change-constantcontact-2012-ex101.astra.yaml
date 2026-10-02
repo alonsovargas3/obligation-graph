@@ -1,0 +1,366 @@
+change_order_id: constantcontact-2012-ex101
+chain:
+- constantcontact-2011-ex1041
+- constantcontact-2012-ex101
+textdoc_sha256:
+  constantcontact-2011-ex1041: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+  constantcontact-2012-ex101: 8ee2c82ed01031e48749248bb9d0aa088b6c5ba0c55288b1da5b4917efa81b27
+provenance:
+  drafted_by: gpt-6-astra
+  blind: true
+scope: full_agreement
+draft_notes:
+- Blind source-only draft for adjudication; no model check output was inspected.
+- Gate answers cover the whole amendment, including changes outside the four representable finding kinds; lexical
+  mentions alone do not make a gate positive.
+- Each rent schedule row is a separate changed amount-and-period target; each grouped replacement or renaming is
+  one clause target, not one finding per cross-reference or suite.
+- Caption old spans identify replaced clause-level targets without asserting unseen diagram contents or making an
+  obligation-edge claim.
+- Supersedes and potential_conflict values are null; price_change amounts are added or restated amounts with no
+  old rate or computed delta.
+gates:
+  price:
+    answer: true
+    segment_ids:
+    - p0039
+    - p0042
+    - p0044
+    - p0046
+    - p0048
+    - p0050
+    - p0052
+    rationale: Adds a dated schedule of expansion-space rent and an amendment-specific broker-cost indemnity.
+  dates:
+    answer: true
+    segment_ids:
+    - p0014
+    - p0027
+    - p0035
+    - p0041
+    - p0043
+    - p0045
+    - p0047
+    - p0049
+    rationale: Adds the June 1 expansion date, installation deadline, and expansion-rent periods.
+  termination:
+    answer: true
+    segment_ids:
+    - p0035
+    rationale: Excludes a Landlord installation default while diligent commercially reasonable completion efforts
+      continue after the expansion date.
+  guarantee:
+    answer: false
+    segment_ids: []
+    rationale: No guarantor, guaranty, letter of credit, backstop, or other credit support is added, removed, or
+      changed.
+  sla:
+    answer: true
+    segment_ids:
+    - p0037
+    - p0108
+    rationale: Replaces the service-level table and changes the renamed Suite 418A electricity threshold from 225
+      to 380 total kW.
+  parties_or_sites:
+    answer: true
+    segment_ids:
+    - p0012
+    - p0014
+    - p0017
+    - p0019
+    - p0027
+    - p0037
+    - p0108
+    rationale: Renames four suites, expands Suite 418A, replaces premises descriptions, and changes capacity.
+findings:
+- kind: supersedes
+  categories:
+  - parties_or_sites
+  new_segment_id: p0012
+  new_span_text: B. Accordingly, effective as of, and from and after, the 1A Effective Date, (i) all references
+    in the Lease to “Suite 1.14A” are hereby deemed to be references to “Suite 418A”, (ii) all references in the
+    Lease to “Suite 1.5” are hereby deemed to be references to “Suite 405”, (iii) all references in the Lease to
+    “Suite 1.5.1” are hereby deemed to be references to “Suite 407”, and (iv) all references in the Lease to “Suite
+    1.5.2” are hereby deemed to be references to “Suite 409”.
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0451
+  old_span_text: Each of Suite 1.5, Suite 1.5.1, Suite 1.5.2 and Suite 1.14A may be referred to herein, individually,
+    as a “Suite”.
+  old_value: null
+  new_value: null
+  target_label: null
+  context_segment_id: null
+  context_span_text: null
+  rationale: Treats the four suite-reference substitutions as one naming-convention clause; the old segment names
+    all four original suites.
+- kind: supersedes
+  categories:
+  - parties_or_sites
+  new_segment_id: p0017
+  new_span_text: (ii) Exhibit “A” to the Lease is hereby deleted in its entirety and replaced by Exhibit “A-1-A”,
+    attached hereto;
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0808
+  old_span_text: DEPICTION OF THE SUITES, THE WEST POP ROOM, THE EAST POP ROOM
+  old_value: null
+  new_value: null
+  target_label: Exhibit “A” to the Lease
+  context_segment_id: null
+  context_span_text: null
+  rationale: Deletes and replaces Exhibit A; the old evidence is its caption, not the unavailable diagram, and p0018
+    repeats this same target.
+- kind: supersedes
+  categories:
+  - parties_or_sites
+  new_segment_id: p0019
+  new_span_text: '(iv) Item 7 of the Basic Lease Information to the Lease is hereby amended and restated in its
+    entirety as follows:'
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0442
+  old_span_text: '7. Premises/Pathways:'
+  old_value: null
+  new_value: null
+  target_label: Item 7 of the Basic Lease Information to the Lease
+  context_segment_id: null
+  context_span_text: null
+  rationale: Restates the whole Basic Lease Information Item 7 premises clause; the following segments give the
+    expanded premises rather than separate replacement findings.
+- kind: supersedes
+  categories:
+  - sla
+  - parties_or_sites
+  new_segment_id: p0037
+  new_span_text: 3. Service Levels. Effective as of, and from and after, the 1A Expansion Date, (a) Table A of Exhibit
+    “F” to the Original Lease is hereby replaced by Table A-1 as set forth on Exhibit “F-1”, attached hereto and
+    incorporated herein, and (b) all references in the Lease to Table A of Exhibit “F” are hereby deemed to mean
+    and refer to Table A-1 of Exhibit “F-1”.
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0893
+  old_span_text: 'Suite 1.14A: 225 total kW (the “ECT-Suite 1.14A”)'
+  old_value: null
+  new_value: null
+  target_label: Table A of Exhibit “F” to the Original Lease
+  context_segment_id: null
+  context_span_text: null
+  rationale: Replaces Table A of Exhibit F as one service-capacity clause; the old Suite 1.14A row lies within that
+    table and the replacement Suite 418A row is p0108.
+- kind: potential_conflict
+  categories:
+  - termination
+  new_segment_id: p0035
+  new_span_text: Additionally, provided that Landlord is working diligently using commercially reasonable efforts
+    after the 1A Expansion Date to complete the installation of Landlord’s Suite 418A Installations, Landlord shall
+    not be in default of its obligation to complete Landlord’s Suite 418A Installations.
+  old_origin: chain
+  old_doc: constantcontact-2011-ex1041
+  old_segment_id: p0721
+  old_span_text: '16.1.1.1 if: (a) Landlord shall fail to perform or observe any of Landlord’s Lease Undertakings,
+    and (b) such failure continues for a period of ten (10) days following written notice to Landlord of such failure;
+    provided, however, that in the event that Landlord’s failure to perform or observe any of Landlord’s Lease Undertakings
+    cannot reasonably be cured within ten (10) days following written notice to Landlord, such failure to cure shall
+    not be a Landlord Default if Landlord commences its cure within such ten (10) day period and thereafter diligently
+    prosecutes the curing thereof to completion. Landlord agrees to use commercially reasonable efforts to provide
+    daily updates to Tenant regarding progress toward such completion.'
+  old_value: null
+  new_value: null
+  target_label: null
+  context_segment_id: null
+  context_span_text: null
+  rationale: 'Model-proposed, needs review: the new installation-specific diligent-efforts default exception may
+    displace the base ten-day notice and cure-commencement conditions without expressly replacing Section 16.1.1.1.'
+- kind: price_change
+  categories:
+  - price
+  new_segment_id: p0042
+  new_span_text: $0.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  old_value: null
+  new_value: '0.00'
+  target_label: null
+  context_segment_id: p0041
+  context_span_text: June 1, 2012 – January 31, 2013 (months 18 – 25 of the Term)
+  rationale: Adds this monthly Suite 418A Expansion Space Base Rent for the cited row period; no existing-suite
+    rent comparison is asserted.
+- kind: price_change
+  categories:
+  - price
+  new_segment_id: p0044
+  new_span_text: $41,496.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  old_value: null
+  new_value: '41496.00'
+  target_label: null
+  context_segment_id: p0043
+  context_span_text: February 1, 2013 – December 31, 2013 (months 26 – 36 of the Term)
+  rationale: Adds this monthly Suite 418A Expansion Space Base Rent for the cited row period; no existing-suite
+    rent comparison is asserted.
+- kind: price_change
+  categories:
+  - price
+  new_segment_id: p0046
+  new_span_text: $42,741.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  old_value: null
+  new_value: '42741.00'
+  target_label: null
+  context_segment_id: p0045
+  context_span_text: January 1, 2014 – December 31, 2014 (months 37 – 48 of the Term)
+  rationale: Adds this monthly Suite 418A Expansion Space Base Rent for the cited row period; no existing-suite
+    rent comparison is asserted.
+- kind: price_change
+  categories:
+  - price
+  new_segment_id: p0048
+  new_span_text: $44,023.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  old_value: null
+  new_value: '44023.00'
+  target_label: null
+  context_segment_id: p0047
+  context_span_text: January 1, 2015 – December 31, 2015 (months 49 – 60 of the Term)
+  rationale: Adds this monthly Suite 418A Expansion Space Base Rent for the cited row period; no existing-suite
+    rent comparison is asserted.
+- kind: price_change
+  categories:
+  - price
+  new_segment_id: p0050
+  new_span_text: $45,344.00/month
+  old_origin: unresolved
+  old_doc: null
+  old_segment_id: null
+  old_span_text: null
+  old_value: null
+  new_value: '45344.00'
+  target_label: null
+  context_segment_id: p0049
+  context_span_text: January 1, 2016 – December 31, 2016 (months 61 – 72 of the Term)
+  rationale: Adds this monthly Suite 418A Expansion Space Base Rent for the cited row period; no existing-suite
+    rent comparison is asserted.
+unrepresentable:
+- change: New expansion date and installation completion deadline
+  segment_ids:
+  - p0014
+  - p0027
+  - p0035
+  evidence:
+  - segment_id: p0014
+    span_text: A. Additional Premises. Effective as of June 1, 2012 (the “1A Expansion Date”, Original Suite 418A
+      is hereby expanded to include approximately 1,225 square feet of caged area approximately as shown on Exhibit
+      “A-1”, attached hereto (the “Suite 418A Expansion Space”).
+  - segment_id: p0027
+    span_text: As of June 1, 2012 (the “1A Expansion Date”), Suite 418A shall be deemed to have been expanded to
+      2,425 square feet of area in the Building, caged as set froth on Exhibit “A-1-A”.
+  - segment_id: p0035
+    span_text: (i) Subject to Landlord’s completion of Landlord’s Suite 418A Installations (as defined on Exhibit
+      “E-1”, attached hereto), Tenant hereby accepts the Suite 418A Expansion Space in its “AS IS, WHERE IS” condition
+      on the 1A Expansion Date, without the benefit of a warranty of suitability or fitness for Tenant’s intended
+      use. Landlord hereby agrees to cause the completion of Landlord’s Suite 418A Installations (as defined on
+      Exhibit “E-1”, attached hereto) on or before the 1A Expansion Date. The foregoing notwithstanding, Landlord
+      and Tenant acknowledge and agree that Landlord’s completion of Landlord’s Suite 418A Installations is not
+      a condition precedent to any obligation of Tenant to pay Rent, nor is such completion a condition precedent
+      to the occurrence of the 1A Expansion Date. Additionally, provided that Landlord is working diligently using
+      commercially reasonable efforts after the 1A Expansion Date to complete the installation of Landlord’s Suite
+      418A Installations, Landlord shall not be in default of its obligation to complete Landlord’s Suite 418A Installations.
+      For the avoidance of doubt, Landlord’s Suite 418A Installations are hereby deemed to be included in the definition
+      of “Landlord’s Installations” for the purposes of Section 8.3.1 and 9.1.1 of the Lease.
+  reason: These add an expansion milestone and a defined-date completion obligation, not a shift between two quoted
+    ISO dates of the same role; no shifted_date finding is supportable.
+- change: Added installation scope and definitive default treatment
+  segment_ids:
+  - p0035
+  - p0036
+  - p0097
+  - p0099
+  - p0101
+  evidence:
+  - segment_id: p0035
+    span_text: (i) Subject to Landlord’s completion of Landlord’s Suite 418A Installations (as defined on Exhibit
+      “E-1”, attached hereto), Tenant hereby accepts the Suite 418A Expansion Space in its “AS IS, WHERE IS” condition
+      on the 1A Expansion Date, without the benefit of a warranty of suitability or fitness for Tenant’s intended
+      use. Landlord hereby agrees to cause the completion of Landlord’s Suite 418A Installations (as defined on
+      Exhibit “E-1”, attached hereto) on or before the 1A Expansion Date. The foregoing notwithstanding, Landlord
+      and Tenant acknowledge and agree that Landlord’s completion of Landlord’s Suite 418A Installations is not
+      a condition precedent to any obligation of Tenant to pay Rent, nor is such completion a condition precedent
+      to the occurrence of the 1A Expansion Date. Additionally, provided that Landlord is working diligently using
+      commercially reasonable efforts after the 1A Expansion Date to complete the installation of Landlord’s Suite
+      418A Installations, Landlord shall not be in default of its obligation to complete Landlord’s Suite 418A Installations.
+      For the avoidance of doubt, Landlord’s Suite 418A Installations are hereby deemed to be included in the definition
+      of “Landlord’s Installations” for the purposes of Section 8.3.1 and 9.1.1 of the Lease.
+  - segment_id: p0036
+    span_text: (ii) Accordingly, effective as of, and from and after, the 1A Effective Date, the Original Lease
+      is hereby amended to include Exhibit “E-1” attached hereto.
+  - segment_id: p0097
+    span_text: The removal of the Existing Suite 418A Cage Walls (as depicted on Exhibit “A-1”)
+  - segment_id: p0099
+    span_text: The installation of a cage wall (the “Suite 418A Expansion Space Cage Wall”) substantially in the
+      layout set forth on Exhibit “A-1”
+  - segment_id: p0101
+    span_text: The installation of an electrical meter to monitor power consumption in the Suite 418A Expansion
+      Space
+  reason: New installation obligations and the actual default carveout have no dedicated finding kind, and their
+    operative text has no closed supersession cue; the narrowly scoped potential_conflict above flags only their
+    possible interaction with the base default provision.
+- change: Typed square-footage and power-capacity deltas
+  segment_ids:
+  - p0027
+  - p0108
+  evidence:
+  - segment_id: p0027
+    span_text: As of June 1, 2012 (the “1A Expansion Date”), Suite 418A shall be deemed to have been expanded to
+      2,425 square feet of area in the Building, caged as set froth on Exhibit “A-1-A”.
+  - segment_id: p0108
+    span_text: 'Suite 418A: 380 total kW (the “ECT-Suite 418A”)'
+  reason: The premises and service-table replacements are represented above, but the schema has no numeric capacity-change
+    kind; do not mislabel square feet or kW as money or dates.
+- change: Diagram geometry of expanded and revised premises
+  segment_ids:
+  - p0085
+  - p0089
+  evidence:
+  - segment_id: p0085
+    span_text: EXHIBIT “A-1”
+  - segment_id: p0089
+    span_text: EXHIBIT “A-1-A”
+  reason: The TextDoc preserves exhibit captions but not the diagrams, so no geometry or diagram-specific term can
+    be quoted.
+- change: Amendment-specific broker-cost indemnity amount
+  segment_ids:
+  - p0052
+  evidence:
+  - segment_id: p0052
+    span_text: 6. Commissions. Tenant represents that it has dealt with no broker, agent or other person in connection
+      with this Amendment, and that no broker, agent or other person brought about this Amendment. Tenant shall
+      indemnify and hold Landlord harmless from and against any and all claims, losses, costs or expenses (including
+      attorneys’ fees and expenses) by any broker, agent or other person claiming a commission or other form of
+      compensation by virtue of having dealt with Tenant with regard to the transaction contemplated by this Amendment.
+      The provisions of this paragraph shall survive the expiration of the Term of the Lease or any renewal or extension
+      thereof.
+  reason: The clause adds contingent cost liability without a numeric money token; price_change cannot encode an
+    unknown amount.
+- change: Confidentiality applied to amendment terms
+  segment_ids:
+  - p0053
+  evidence:
+  - segment_id: p0053
+    span_text: 7. Confidentiality. Notwithstanding anything to the contrary contained in the Lease, each party agrees
+      that the terms and provisions of this Amendment are confidential and constitute proprietary information of
+      the parties and shall be governed by Section 17.19 of the Lease as though the terms hereof were originally
+      part of the Lease.
+  reason: The clause extends an existing obligation but its notwithstanding formulation is not in the closed supersession
+    cue list; there is no supported date, amount, or concrete conflict to substitute.

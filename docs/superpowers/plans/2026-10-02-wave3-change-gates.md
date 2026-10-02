@@ -583,3 +583,47 @@ Rev 2 overrides rev 1 wherever they conflict. Review: `docs/reviews/2026-10-02-a
 - `settle` releases the unused reservation using the actual priced usage.
 - **Frozen tests:** the real 1A and 3A chain lengths with cold-cache pricing, the boundary case (remaining equals the reservation minus $0.000001 gives no call), a `count_tokens` error, and the absence of `fallbacks`/`betas` in change and gate requests.
 - **Budget order:** 12 sequential reservations of at most $0.26 each fit under $1.09 only because each settles below its reservation. If one does not fit, the run stops incomplete and is reported, never forced. C7b runs only if at least $0.25 remains after C7.
+
+## Rev 2.2 (B3 freeze decisions, coordinator)
+
+These decisions are pinned by the frozen tests. Where the plan text differs, the tests win.
+
+### C0 (live, $0.0053)
+
+- `change_v1.schema.json` is accepted on Sonnet 5.5 and `gate_v1.schema.json` on Haiku 4.5, with no fallback.
+- `count_tokens` must receive the complete request **including `output_config`**. Without it, the count leaves out the schema's system-prompt tokens (119 counted vs 1,340 billed). With it, the count equals billed input exactly (1,340 and 225).
+
+### Target rules
+
+- The target rules (R1, R2-1) apply only to `supersedes` and `potential_conflict`. 3A `p0011` names "Section 2.C of 2A" inside a `shifted_date` paragraph whose self old side is valid.
+- `target_resolution` takes these values:
+  - `"section"` for a numbered Section/Article.
+  - `"range"` for a frozen range target.
+  - `"document"` for an Item/Exhibit/Table in a corpus document with no range. The finding gets `old_origin = unresolved` and no old clause.
+  - `"unresolved"` for a document outside the corpus.
+  - None when the quote names no explicit target.
+- `verify` fills `target_label` from the recognized text when the model leaves it null.
+
+### Values and prices
+
+- A price added gets `old_origin = "unresolved"`, `old = None`, and `target_label = None`.
+
+### Gates
+
+- A 1:1 split between valid gate samples answers yes.
+- `HaikuGate` passes `timeout=timeout_s` to `create`.
+- Error codes:
+  - `refused`, `truncated`, `invalid`, `timeout` (`TimeoutError` or `anthropic.APITimeoutError`), and `budget_stop`;
+  - any other exception gets its class name;
+  - only the first error is kept.
+
+### Writer
+
+- `write_change_run(con, *, info, snapshot, docs, findings, decisions)` has no `mode` keyword; `info.mode` decides.
+- A gated run whose baseline is not the current paired ungated run raises `SnapshotChanged`.
+
+### Scorer
+
+- Skips are reported as `confirmed_safe_skip`, `zero_baseline_skip`, or `baseline_miss`.
+- An unmatched pair raises `ValueError("unmatched_pair")`.
+- Old-side matching is by segment identity (R9). A checker that cites a different segment inside the same frozen target range is scored as a mismatch, and the results disclose this strictness.
