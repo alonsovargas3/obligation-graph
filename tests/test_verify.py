@@ -896,3 +896,114 @@ def test_r3_parenthetical_roles_bind_to_their_own_names():
         ("DIGITAL 55 MIDDLESEX, LLC", "landlord"),
     ]
     assert [d.reason for d in res.drops] == ["role_not_bound_to_name"] * 2
+
+
+# --- Rev 2.4 (Astra wave-2 round 4): declaration grammar for event dates and party roles --
+
+R4 = [
+    (
+        None,
+        "Preamble",
+        [
+            (
+                "designate",
+                "Landlord and Tenant designate Alpha LLC as Landlord.",
+            ),
+            (
+                "inside_name",
+                "Landlord Holdings LLC, as Tenant, leases space from Alpha LLC, as Landlord.",
+            ),
+            ("crossing", "Alpha LLC leases space to Beta Inc., as Tenant."),
+        ],
+    ),
+    (
+        "1",
+        "Dates",
+        [
+            (
+                "relative",
+                "“Commencement Date” means the date that is 30 days after March 1, 2011.",
+            ),
+            (
+                "negated",
+                "“Commencement Date” is not March 1, 2011; it is April 1, 2011.",
+            ),
+            (
+                "later_of",
+                "“Commencement Date” means the later of January 1, 2011 and March 1, 2011.",
+            ),
+            ("qualified", "“Delivery Date” means March 1, 2011, subject to Force Majeure."),
+            ("shall_be", "The Expiration Date shall be December 31, 2020."),
+        ],
+    ),
+]
+R4_DOC, R4_IDS = build(R4)
+R4_LINE = {k: line for _, _, rows in R4 for k, line in rows}
+
+
+def r4(seg_key, **kw):
+    return raw(span=R4_LINE[seg_key], segment_id=R4_IDS[seg_key], **kw)
+
+
+def r4_event(seg_key, name, date):
+    return r4(seg_key, kind="event", type=None, name=name, date=date, status="active")
+
+
+def r4_party(seg_key, name, role):
+    return r4(seg_key, kind="party", type=None, name=name, role=role, status=None)
+
+
+@pytest.mark.parametrize(
+    "seg_key,date",
+    [
+        ("relative", "2011-03-01"),
+        ("negated", "2011-03-01"),
+        ("negated", "2011-04-01"),
+        ("later_of", "2011-01-01"),
+        ("later_of", "2011-03-01"),
+        ("qualified", "2011-03-01"),
+    ],
+)
+def test_r4_non_literal_event_dates_are_null(seg_key, date):
+    name = "Delivery Date" if seg_key == "qualified" else "Commencement Date"
+    res = verify(R4_DOC, [r4_event(seg_key, name, date)])
+    assert [e.date for e in res.events] == [None]
+    assert any(c.field == "date" and c.reason == "date_not_bound_to_event" for c in res.corrections)
+
+
+def test_r4_unquoted_name_with_shall_be_is_a_declaration():
+    res = verify(R4_DOC, [r4_event("shall_be", "Expiration Date", "2020-12-31")])
+    assert [e.date for e in res.events] == ["2020-12-31"]
+
+
+def test_r4_explicit_as_role_after_earlier_conjunction_binds():
+    res = verify(R4_DOC, [r4_party("designate", "Alpha LLC", "landlord")])
+    assert [(p.name, p.role) for p in res.parties] == [("Alpha LLC", "landlord")]
+
+
+def test_r4_role_word_inside_a_company_name_is_not_a_role_prefix():
+    res = verify(
+        R4_DOC,
+        [
+            r4_party("inside_name", "Holdings LLC", "landlord"),
+            r4_party("inside_name", "Landlord Holdings LLC", "tenant"),
+            r4_party("inside_name", "Alpha LLC", "landlord"),
+        ],
+    )
+    assert sorted((p.name, p.role) for p in res.parties) == [
+        ("Alpha LLC", "landlord"),
+        ("Landlord Holdings LLC", "tenant"),
+    ]
+    assert [d.reason for d in res.drops] == ["role_not_bound_to_name"]
+
+
+def test_r4_role_of_another_entity_is_not_bound_across_a_verb_phrase():
+    res = verify(
+        R4_DOC,
+        [
+            r4_party("crossing", "Alpha LLC", "tenant"),
+            r4_party("crossing", "Beta Inc.", "tenant"),
+        ],
+    )
+    assert [(p.name, p.role) for p in res.parties] == [("Beta Inc.", "tenant")]
+    assert [d.reason for d in res.drops] == ["role_not_bound_to_name"]

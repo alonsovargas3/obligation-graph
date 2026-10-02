@@ -18,3 +18,8 @@ Accepted base SHA per dispatch (Supervision protocol item 5). Retries start from
 | 2026-10-02 | Wave 2 Task 6 TOC | wave2-t6-toc | Pi zai/glm-5.3 | df000bd | B2 | ctx_3e24be08acdd | running |
 | 2026-10-02 | Wave 2 Task 9 writer | wave2-t9-writer | Pi zai/glm-5.3 | df000bd | B2 | ctx_32d0edc8a3f2 | running |
 | 2026-10-02 | Wave 2 Task 13 ADR-008 | wave2-t13-adr | Pi zai/glm-5.3 | df000bd | B2 | ctx_87c1bc3a7169 | running |
+| 2026-10-02 | Wave 2 Task 13 follow-up | wave2-t13-adr | Pi zai/glm-5.3 | 11605d2 | review | ctx_2c8202f3887a | succeeded, merged PR #7 (807d99c) |
+| 2026-10-02 | Wave 2 Task 6 TOC | wave2-t6-toc | Pi zai/glm-5.3 | df000bd | B2 | ctx_3e24be08acdd | succeeded, merged PR #8 (ec732bf) |
+| 2026-10-02 | Wave 2 Task 7 client | wave2-t7-client | Pi zai/glm-5.3 | 4bcd002 | rev 2.2 | ctx_580f7aea6580 | running |
+| 2026-10-02 | Wave 2 Task 10 eval | wave2-t10-eval | Pi zai/glm-5.3 | 4bcd002 | rev 2.2 | ctx_1b740b0b9007 | running |
+| 2026-10-02 | Wave 2 Task 8 verify | wave2-t8-verify | Pi zai/glm-5.3 | a6015e0 | rev 2.3 | ctx_105864b3508e | running |

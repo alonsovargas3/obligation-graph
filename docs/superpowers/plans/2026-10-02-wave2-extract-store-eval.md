@@ -510,3 +510,27 @@ These rules replace the R2-2 date rule and the R2-4 party rule.
   - (b) **Role after the name:** a role word follows the name in the form `as ROLE`, `as the ROLE`, `(“ROLE”)`, `(the “ROLE”)`, or `(ROLE)`. The text between the name and that construction is at most 120 chars and contains neither the standalone word `and` nor `;`.
   - The party is kept only if the bound role equals the claimed role. Otherwise (including when no role is bound) Drop `role_not_bound_to_name`.
 - **Frozen tests:** `tests/test_verify.py` (`test_r3_*`) and `tests/test_pipeline_regressions_r3.py`.
+
+## Rev 2.4 (Astra wave-2 round 4: 2 blockers, accepted). Declaration grammar.
+
+These rules replace R2-2, R3-1, R2-4, and R3-2 for event dates and party roles. They close the class rather than patch examples: unsupported layouts lose recall but never produce a term.
+
+- **R4-1, event date.** The date is kept only if the quote contains, at the event-name occurrence:
+  - `[“]Name[”]`, then whitespace;
+  - then one connector: `means`, `mean`, `each means`, `each mean`, `shall mean`, `is`, or `shall be`;
+  - then whitespace and a supported date form (exactly the claimed date);
+  - then optional whitespace and one of `.`, `;`, or the end of the quote.
+
+  Nothing else may come between the connector and the date (no `not`, `the`, `later of`, `date that is`), and nothing may follow the date before the terminator (`, subject to …` fails). A leading `The` before an unquoted name is allowed (`The Expiration Date shall be December 31, 2020.`).
+
+  Otherwise the date is null, plus FieldCorrection(`date`, `date_not_bound_to_event`). The event itself is kept if its name is in the quote, and the earlier R2-2 quoted-term guard still applies. Relative, negated, conditional, and alternative dates are never computed.
+
+- **R4-2, party role.** The claimed name must occur with word boundaries on both sides (no letter or digit adjacent). A role binds only through one of these declarations at that occurrence:
+  - **(a) Role before the name:** a role word immediately before the name (whitespace only). The role word is itself preceded by the start of the quote, `between`, `by`, `and`, or a comma. The name is followed by `and`, `,`, `.`, `;`, `(`, or the end of the quote.
+  - **(b) Role after the name:** the name, then optionally `,` + `a|an <descriptor of up to 80 chars without , ( ) “ ”>` + optional `,`, then `as ROLE`, `as the ROLE`, `(“ROLE”)`, `(the “ROLE”)`, or `(ROLE)`. Nothing else may come between them.
+
+  If both (a) and (b) bind and they disagree, nothing binds. The party is kept only when exactly one role binds and it equals the claimed role. Otherwise Drop `role_not_bound_to_name`.
+
+  Example: `Landlord Holdings LLC, as Tenant` binds the full name to tenant. The claim `Holdings LLC` as landlord is a conflict, so it is dropped.
+
+- **Frozen tests:** `tests/test_verify.py` (`test_r4_*`) and `tests/test_pipeline_regressions_r4.py`.

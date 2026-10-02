@@ -57,3 +57,17 @@ New `tests/test_pipeline_regressions_r3.py`, which carries the round-3 counterex
 - `test_defining_date_schedules_the_deadline`
 - `test_next_party_role_does_not_make_alpha_the_payer`
 - `test_bound_roles_resolve_the_real_payer`
+
+## 2026-10-02: rev 2.4 (Astra wave-2 round 4), additions only
+
+Added to `tests/test_verify.py` (own R4 fixture doc):
+- `test_r4_non_literal_event_dates_are_null` (6 cases)
+- `test_r4_unquoted_name_with_shall_be_is_a_declaration`
+- `test_r4_explicit_as_role_after_earlier_conjunction_binds`
+- `test_r4_role_word_inside_a_company_name_is_not_a_role_prefix`
+- `test_r4_role_of_another_entity_is_not_bound_across_a_verb_phrase`
+
+New `tests/test_pipeline_regressions_r4.py`, which runs the five round-4 counterexamples through verify, the writer, and the view:
+- `test_non_literal_event_date_never_schedules_a_deadline` (3 cases)
+- `test_truncated_company_name_never_becomes_the_payer`
+- `test_role_across_another_entity_never_becomes_the_payer`

@@ -374,3 +374,84 @@ Disposable evidence: `/tmp/astra-wave2-r3.xml`, `/tmp/astra-wave2-r3.txt`, `/tmp
 ### D) Verdict
 
 proceed-after-fixes
+
+## Round 4
+
+Reviewed `a6015e0` after `git pull -q`, Rev 2.3, and the recorded frozen-test additions. The pre-existing modification to `docs/reviews/dispatch-log.md` was left alone; this worker changes only this review.
+
+### A) Round-3 dispositions
+
+1. **R3-1: resolved for the reported counterexample.** The later rent date no longer becomes the event date, and its dependent obligation stays pending. The defining-date positive still schedules January 31 correctly. New same-sentence counterexamples are reported separately below.
+2. **R3-2: resolved for the reported counterexample.** In `Landlord Alpha LLC and Tenant Beta Inc.`, Alpha-as-tenant is rejected and the correct roles resolve Beta as payer. New corporate-name and intervening-party cases are reported separately below.
+
+### B) Full suite and adversarial proof
+
+Refreshed the disposable implementation from the current repository at `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/og-astra-wave2-r4-kq7s8w4x`, updated only its verifier, and used locked CPython 3.12.11 dependencies. All 37 inspected frozen test/fixture/manifest, contract, prompt, and dependency files remained byte-identical to the repository.
+
+Executed `uv run --locked pytest -o addopts="" -q -p no:cacheprovider`, with JUnit output for counts. Final result: **650 passed, 0 failed, 2 skipped**.
+
+| Test file under `tests/` | Passed | Failed | Skipped |
+|---|---:|---:|---:|
+| `test_eval_cli.py` | 7 | 0 | 0 |
+| `test_eval_gold.py` | 16 | 0 | 0 |
+| `test_eval_score.py` | 13 | 0 | 0 |
+| `test_extract_cache.py` | 11 | 0 | 0 |
+| `test_extract_chunk.py` | 14 | 0 | 0 |
+| `test_extract_cli.py` | 8 | 0 | 0 |
+| `test_extract_parse.py` | 35 | 0 | 0 |
+| `test_extract_request.py` | 9 | 0 | 0 |
+| `test_fetch.py` | 23 | 0 | 0 |
+| `test_fetch_recorded.py` | 1 | 0 | 0 |
+| `test_ground.py` | 265 | 0 | 2 |
+| `test_ingest.py` | 23 | 0 | 0 |
+| `test_ingest_toc.py` | 10 | 0 | 0 |
+| `test_markers.py` | 17 | 0 | 0 |
+| `test_pipeline_regressions.py` | 5 | 0 | 0 |
+| `test_pipeline_regressions_r3.py` | 4 | 0 | 0 |
+| `test_schema.py` | 41 | 0 | 0 |
+| `test_schema_v2.py` | 9 | 0 | 0 |
+| `test_textdoc.py` | 19 | 0 | 0 |
+| `test_verify.py` | 102 | 0 | 0 |
+| `test_writer.py` | 18 | 0 | 0 |
+| **Total** | **650** | **0** | **2** |
+
+**Failure classification:** the initial disposable run had 649 passes, one failure, and two skips. It failed `test_verify.py::test_r2_2_date_not_bound_when_another_quoted_term_intervenes` after I removed the older quoted-term guard while applying Rev 2.3's replacement rule. Classified **impl-wrong against the unchanged frozen test**: the new first-date/same-sentence conditions are necessary conditions and can coexist with the older conservative exclusion. Restoring that guard yielded the final result without editing tests. No remaining failures or demonstrated test-wrong failures. The two skips remain the existing single-character-quote property cases.
+
+**Original R3 probes rerun:** the later unrelated date is nulled with `date_not_bound_to_event`, giving null visible effective due; Alpha-as-tenant in the role-before-name example is dropped with `role_not_bound_to_name`, so no false payer resolves. The amendment sample still exits 2 before any API call or output, and the sampled-gold precision/F1 nulling checks still pass.
+
+**Three adversarial variants per rule, all executed through verify -> writer -> visible view:** date cases each include a separate obligation due 30 days after Commencement Date; party cases include an obligation whose payer is the proposed role.
+
+| Variant | Source and proposal | Observed result |
+|---|---|---|
+| Date 1: relative definition | `“Commencement Date” means the date that is 30 days after March 1, 2011.` Proposed event date March 1. | **Wrong visible term:** stores event March 1 and effective due March 31. The source makes March 1 the relative definition's input, not Commencement Date itself. |
+| Date 2: negation | `“Commencement Date” is not March 1, 2011; it is April 1, 2011.` Proposed March 1. | **Wrong visible term:** stores the explicitly negated date and effective due March 31. |
+| Date 3: alternative dates | `“Commencement Date” means the later of January 1, 2011 and March 1, 2011.` Proposed January 1. | **Wrong visible term:** stores the earlier date and effective due January 31. |
+| Party 1: earlier conjunction | `Landlord and Tenant designate Alpha LLC as Landlord.` Proposed Alpha as landlord. | **Safe positive:** retains the explicit Alpha-landlord association and resolves Alpha for a Landlord-pays obligation. The earlier `and` does not incorrectly block it. |
+| Party 2: role word inside company name | `Landlord Holdings LLC, as Tenant, leases space from Alpha LLC, as Landlord.` Proposed `Holdings LLC` as landlord. | **Wrong visible term:** the `Landlord` token inside the full corporate name is treated as a role prefix; fabricated party `Holdings LLC` becomes the visible payer of a Landlord-pays obligation. |
+| Party 3: intervening entity without `and` | `Alpha LLC leases space to Beta Inc., as Tenant.` Proposed Alpha as tenant. | **Wrong visible term:** the unrestricted intervening text meets the 120-character/no-and/no-semicolon rule, so Beta's explicit role is assigned to Alpha, which becomes the visible tenant payer. |
+
+A full-name control for Party 2 correctly stores `Landlord Holdings LLC` as tenant and resolves that full name for a Tenant-pays obligation. The failure is the accepted truncated-name/prefix interpretation, not rejection of all companies containing role words. None of the five unsafe variants emits a correction or drop.
+
+Evidence outside the repository: `/tmp/astra-wave2-r4.xml`, `/tmp/astra-wave2-r4.txt`, initial `/tmp/astra-wave2-r4-literal.xml`, and `/tmp/astra_w2_r4_probes.py`. Adversarial results: `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/astra-w2-r4-probes-rrkytbz_/results.json`. Original R3 probe rerun: `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/astra-w2-r3-probes-b564l42j/results.json`.
+
+### C) New blockers
+
+1. **R4-1, blocker: The first date in the sentence need not be the event's literal date.**
+
+   **Location:** plan, Rev 2.3 R3-1; verifier event-date binding and downstream effective-due calculation.
+
+   **Problem:** The executed relative, negated, and later-of variants above all satisfy the new positional test and create wrong visible deadlines. Sentence locality and date order do not distinguish a literal definition from an input to a relative expression or an expressly rejected date.
+
+   **Concrete fix:** Restrict accepted event dates to a small explicit definition grammar, with the date directly following a supported affirmative connector and with no unconsumed qualifying expression. For this wave, leave relative, negative, conditional, and alternative-date definitions null; do not infer or calculate their event date. Freeze the three variants through the visible view, plus the existing direct-date positives. A direct template such as `“Name” means DATE` is a starting point, not a license to accept arbitrary text between the connector and date or to ignore qualifying text afterward.
+
+2. **R4-2, blocker: Party binding can truncate a corporate name or cross another named party.**
+
+   **Location:** plan, Rev 2.3 R3-2(a)/(b); Task 8 name matching; Task 9 unique-role resolution.
+
+   **Problem:** The executed Party 2 and Party 3 cases create wrong visible payers. Case/space-normalized substring matching cannot establish a complete party-name boundary, and arbitrary text excluding only `and` and `;` still admits a different entity before `as ROLE`.
+
+   **Concrete fix:** Match a complete local party declaration and derive the party name and role together from that declaration. Permit only explicit connectors and supported company-descriptor text, not an arbitrary 120-character gap. Treat conflicting name parses, including a role-like word inside a longer declared company name, as unresolved unless a full declaration disambiguates them. For the counterexample, `Landlord Holdings LLC, as Tenant` must bind the full name to tenant and must not license `Holdings LLC` as landlord. Add both failing cases and retain the earlier-conjunction/full-name positives. Unsupported layouts may lose recall; they must not manufacture an association.
+
+### D) Verdict
+
+proceed-after-fixes
