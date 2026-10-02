@@ -35,14 +35,15 @@ The page and the tools use document IDs, not nicknames:
 
 ### 0:15 to 0:40: A redacted clause (review page, top half)
 
-1. Switch to the review page tab. It shows a blue header, **Obligation Graph**, and a grey note: "525 pending obligations ...".
+1. Switch to the review page tab. It shows a blue header, **Obligation Graph**, and a grey note: "520 pending obligations ...".
 2. In the **Obligations** panel, set the filters:
    - **Agreement** (second row, left): choose `carbonite-2014-ex1024`.
    - **Status** (first row, right): choose `redacted`.
 
    The table shrinks to **17 rows**, each with an orange `[REDACTED]` tag.
-3. Click the **second row**: payment, `$[***] per month for the period commencing on the Commencement Date ...`.
-4. Point to the **Clause** panel on the right. It shows the verbatim text, **Section 8, Page 17**, the character range, the `[REDACTED]` explanation, and "Agreement site: 2121 South Price Road, Chandler, Arizona".
+3. In the **Due / timing** column, the second row shows an `unresolved: recurring_schedule` tag: the rent repeats monthly, so no single due date is given.
+4. Click the **second row**: payment, `$[***] per month for the period commencing on the Commencement Date ...`.
+5. Point to the **Clause** panel on the right. It shows the verbatim text, **Section 8, Page 17**, the character range, the `[REDACTED]` explanation, and "Agreement site: 2121 South Price Road, Chandler, Arizona".
 
 - **Say:** "Every row is a quoted clause with its section, page and exact character range. This lease redacts its rent. The system keeps it redacted and never guesses a number."
 
