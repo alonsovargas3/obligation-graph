@@ -4,6 +4,13 @@ The writer is the only code that sets grounded = 1. Every row it writes
 carries a ClauseRef copied from verified evidence (or, for defined terms,
 located deterministically in the TextDoc), and re-extracting a source
 replaces that source's snapshot in a single transaction (ADR-008).
+
+Wave 4 (Task 33, rev 2 W4-8/W4-9): a sources.yaml entry may pin its site
+(``site: {segment_id, quote, name, location}``). The pin is verified against
+the TextDoc before any write (the quote grounds exactly in that segment;
+name and location are copied from the quote); an invalid pin refuses the
+whole write. A site is immutable and unique on (name, location); the cited
+``agreement_site`` binding is replaced with the snapshot.
 """
 
 from __future__ import annotations
@@ -54,6 +61,76 @@ def extract_defined_terms(doc: TextDoc) -> list[tuple[str, int, int]]:
     return list(found.values())
 
 
+def _verify_site_pin(doc: TextDoc, pin: object) -> dict[str, Any] | None:
+    """Verify a sources.yaml site pin; WriteRefused("site_pin_invalid") on any mismatch.
+
+    Returns the grounded pin ({name, location, section, page, char_start,
+    char_end, span_text}) or None when the entry carries no pin. The quote
+    must appear verbatim inside the pinned segment; name and location must be
+    copied from it (never inferred).
+    """
+    if pin is None:
+        return None
+    if not isinstance(pin, dict):
+        raise WriteRefused("site_pin_invalid")
+    segment_id = pin.get("segment_id")
+    quote = pin.get("quote")
+    name = pin.get("name")
+    location = pin.get("location")
+    if not all(isinstance(v, str) and v for v in (segment_id, quote, name, location)):
+        raise WriteRefused("site_pin_invalid")
+    segment = next((s for s in doc.segments if s.id == segment_id), None)
+    if segment is None:
+        raise WriteRefused("site_pin_invalid")
+    start = doc.text.find(quote, segment.char_start, segment.char_end)
+    if start < 0:
+        raise WriteRefused("site_pin_invalid")
+    if name not in quote or location not in quote:
+        raise WriteRefused("site_pin_invalid")
+    section = doc.section_for(start)
+    return {
+        "name": name,
+        "location": location,
+        "section": section.number if section is not None else None,
+        "page": doc.page_for(start),
+        "char_start": start,
+        "char_end": start + len(quote),
+        "span_text": quote,
+    }
+
+
+def _write_site_pin(con: sqlite3.Connection, agreement_id: str, pin: dict[str, Any]) -> None:
+    """One immutable site row (unique on name, location) plus its cited binding.
+
+    The site row is never updated: a re-extraction either reuses it or leaves
+    it for the other agreements that cite it (W4-9).
+    """
+    row = con.execute(
+        "SELECT id FROM site WHERE name = ? AND location IS ?",
+        (pin["name"], pin["location"]),
+    ).fetchone()
+    if row is not None:
+        site_id = row[0]
+    else:
+        site_id = con.execute(
+            "INSERT INTO site(name, location, capacity_mw) VALUES(?, ?, NULL)",
+            (pin["name"], pin["location"]),
+        ).lastrowid
+    ref = _insert_ref(
+        con,
+        agreement_id,
+        section=pin["section"],
+        page=pin["page"],
+        char_start=pin["char_start"],
+        char_end=pin["char_end"],
+        span_text=pin["span_text"],
+    )
+    con.execute(
+        "INSERT INTO agreement_site(agreement_id, site_id, clause_ref_id) VALUES(?, ?, ?)",
+        (agreement_id, site_id, ref),
+    )
+
+
 def write_snapshot(
     con: sqlite3.Connection,
     *,
@@ -65,7 +142,9 @@ def write_snapshot(
 ) -> WriteStats:
     """Replace this source's snapshot with the verified extraction result."""
     agreement_id = agreement["id"]
-    _check_preconditions(con, source=source, agreement_id=agreement_id, doc=doc, result=result)
+    site_pin = _check_preconditions(
+        con, source=source, agreement_id=agreement_id, doc=doc, result=result
+    )
     con.execute("BEGIN IMMEDIATE")
     try:
         _upsert_source(con, source)
@@ -75,6 +154,8 @@ def write_snapshot(
         party_rows = _write_parties(con, agreement_id, result.parties)
         event_rows = _write_events(con, agreement_id, result.events)
         n_terms = _write_defined_terms(con, agreement_id, doc)
+        if site_pin is not None:
+            _write_site_pin(con, agreement_id, site_pin)
         unresolved_parties, unresolved_anchors = _write_obligations(
             con,
             agreement_id,
@@ -105,13 +186,17 @@ def _check_preconditions(
     agreement_id: str,
     doc: TextDoc,
     result: VerifyResult,
-) -> None:
-    """Fail closed before any write; the previous snapshot must survive."""
+) -> dict[str, Any] | None:
+    """Fail closed before any write; the previous snapshot must survive.
+
+    Returns the verified site pin (or None when the entry has no pin).
+    """
     if doc.source_sha256 != source["sha256"]:
         raise WriteRefused("pin_mismatch")
     row = con.execute("SELECT sha256 FROM source WHERE id = ?", (source["id"],)).fetchone()
     if row is not None and row[0] != source["sha256"]:
         raise WriteRefused("source_repin")
+    site_pin = _verify_site_pin(doc, source.get("site"))
     evidences: list[Evidence] = [
         *(o.evidence for o in result.obligations),
         *(e.evidence for e in result.events),
@@ -127,6 +212,7 @@ def _check_preconditions(
     ).fetchone()[0]
     if dependents:
         raise WriteRefused("dependents_exist")
+    return site_pin
 
 
 def _upsert_source(con: sqlite3.Connection, source: dict[str, Any]) -> None:
@@ -213,6 +299,9 @@ def delete_change_runs(con: sqlite3.Connection, run_row_ids: Iterable[int]) -> N
 
 def _delete_snapshot(con: sqlite3.Connection, agreement_id: str, *, source_id: str) -> None:
     """Children before parents; party rows themselves are never deleted."""
+    # Site bindings go before the clause refs they cite (W4-9), so a
+    # re-extraction with a changed or removed pin replaces the binding.
+    con.execute("DELETE FROM agreement_site WHERE agreement_id = ?", (agreement_id,))
     # Re-extraction invalidation (rev 2 R4): every change run whose chain
     # includes this agreement was computed against a snapshot about to vanish.
     delete_change_runs(

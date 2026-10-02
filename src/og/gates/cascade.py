@@ -8,6 +8,10 @@ only under the pre-registered policy: an error-free, unanimous three-sample
 decision object, a missing backend, any error, any dissent, anything but
 three literal ``False`` samples) runs the check. A gate may skip work; it may
 never suppress a finding.
+
+Wave 4 (rev 2.2): ``og.replay.ReplayMiss`` is the one exception that is
+re-raised instead of failing open, so ``OG_REPLAY=strict`` surfaces a missing
+recorded response as an error rather than silently paying for a live call.
 """
 
 from __future__ import annotations
@@ -15,6 +19,7 @@ from __future__ import annotations
 from dataclasses import replace
 
 from ..change.types import CATEGORIES
+from ..replay import ReplayMiss
 from ..textdoc import TextDoc
 from .types import GATE_POLICY, GateContext, GateDecision, Question
 
@@ -83,6 +88,8 @@ def run_cascade(
         rules_backend = _backend_name(rules, "rules")
         try:
             rules_decision = rules.decide(question, change_order, context)
+        except ReplayMiss:
+            raise
         except Exception as exc:
             decisions.append(
                 _fail_open(question, backend=rules_backend, tier="rules", error=type(exc).__name__)
@@ -105,6 +112,8 @@ def run_cascade(
         classifier_backend = _backend_name(classifier, "classifier")
         try:
             decision = classifier.decide(question, change_order, context)
+        except ReplayMiss:
+            raise
         except Exception as exc:
             decisions.append(
                 _fail_open(
