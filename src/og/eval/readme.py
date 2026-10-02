@@ -130,6 +130,39 @@ def _gates_row(name: str, b: dict[str, Any], extra: str) -> str:
     )
 
 
+def _timing(agg: dict[str, Any], out: list[str]) -> None:
+    timing = agg.get("timing") or {}
+    if not timing:
+        return
+    out.append("### Timing")
+    out.append("")
+    out.append(
+        "Timing reference sets: model-drafted, adjudicated, scope sampled. Labels match"
+        " within the same agreement (IoU >= 0.3); metrics are scored over matched"
+        " obligations only. An invented bound is a predicted date the reference set"
+        " does not state."
+    )
+    out.append("")
+    out.append(
+        "| set | labeled | matched | missing | kind | relation | bound date | invented"
+        " | trigger span | reason |"
+    )
+    out.append("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+    for name in sorted(timing):
+        b = timing[name]
+        out.append(
+            f"| {name} | {_int(b.get('labeled'))} | {_int(b.get('matched'))}"
+            f" | {_int(len(b.get('missing') or []))}"
+            f" | {_pct((b.get('timing_kind') or {}).get('accuracy'))}"
+            f" | {_pct((b.get('relation') or {}).get('accuracy'))}"
+            f" | {_pct((b.get('bound_date') or {}).get('accuracy'))}"
+            f" | {_int((b.get('bound_date') or {}).get('invented'))}"
+            f" | {_pct((b.get('trigger') or {}).get('rate'))}"
+            f" | {_pct((b.get('reason') or {}).get('accuracy'))} |"
+        )
+    out.append("")
+
+
 def _change(agg: dict[str, Any], out: list[str]) -> None:
     for co in sorted(agg.get("change") or {}):
         block = agg["change"][co]
@@ -237,6 +270,7 @@ def render_tables(aggregate: dict[str, Any]) -> str:
     _extraction(aggregate, out)
     _historical(aggregate, out)
     _drops(aggregate, out)
+    _timing(aggregate, out)
     _change(aggregate, out)
     _totals(aggregate, out)
     return "\n".join(out)

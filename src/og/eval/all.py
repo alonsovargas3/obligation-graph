@@ -11,6 +11,10 @@ Refusals (exit 2) never write a partial file: a stale change pair
 input (``missing_input``), or a current extraction run without a log record
 (``log_run_mismatch``) all abort before anything is written.
 
+An optional ``timing`` manifest block (wave 5 W5-9) adds one score per timing
+reference set (``eval/gold/timing/<name>.yaml``), each pinned by sha256 and
+scored by ``og.eval.timing_score`` against the visible timing projection.
+
 ``semantic_projection`` drops the volatile fields (dates, run ids, pair ids,
 wall times, incremental spend, the manifest hash) at any depth, so a
 fresh-clone replay is compared by its metrics and recorded costs only (C10).
@@ -27,10 +31,14 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from og.eval.change_gold import load_change_gold, read_change_chain
 from og.eval.change_score import score_change
 from og.eval.gold import load_gold
 from og.eval.score import apply_sampled, pred_from_db, score
+from og.eval.timing_gold import load_timing_gold
+from og.eval.timing_score import score_timing
 from og.textdoc import TextDoc
 
 METRIC = "aggregate"
@@ -247,6 +255,35 @@ def _change_block(con: sqlite3.Connection, gold_path: Path, text_dir: Path) -> d
     }
 
 
+def _timing_block(
+    con: sqlite3.Connection, entry: dict[str, Any], root: Path, text_dir: Path
+) -> dict[str, Any]:
+    """Score one timing reference set (wave 5 W5-9): pinned gold, then score_timing."""
+    gold_path = _pinned(root, entry["gold"], entry["gold_sha256"], f"timing gold {entry['name']}")
+    try:
+        raw = yaml.safe_load(gold_path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as e:
+        raise Refusal("gold_rejected", f"{gold_path}: {e}") from None
+    if not isinstance(raw, dict) or not isinstance(raw.get("documents"), dict):
+        raise Refusal("gold_rejected", f"{gold_path}: bad_format")
+
+    docs: dict[str, TextDoc] = {}
+    for agreement_id in sorted(raw["documents"]):
+        text_path = text_dir / f"{agreement_id}.json"
+        if not text_path.is_file():
+            raise Refusal("missing_input", f"TextDoc not found: {text_path}")
+        try:
+            docs[agreement_id] = TextDoc.load(text_path)
+        except (OSError, ValueError) as e:
+            raise Refusal("missing_input", f"cannot load {text_path}: {e}") from None
+
+    try:
+        gold = load_timing_gold(gold_path, docs)
+    except ValueError as e:
+        raise Refusal("gold_rejected", f"{gold_path}: {e.args[0]}") from None
+    return score_timing(con, gold)
+
+
 def build_aggregate(
     *, manifest: Path, db: Path, text_dir: Path, log: Path, root: Path
 ) -> dict[str, Any]:
@@ -274,6 +311,9 @@ def build_aggregate(
                 root, entry["gold"], entry["gold_sha256"], f"change gold {entry['doc_id']}"
             )
             change[entry["doc_id"]] = _change_block(con, gold_path, text_dir)
+        timing: dict[str, dict[str, Any]] = {}
+        for entry in manifest_data.get("timing", []):
+            timing[entry["name"]] = _timing_block(con, entry, root, text_dir)
     finally:
         con.close()
 
@@ -295,5 +335,6 @@ def build_aggregate(
         "extraction": extraction,
         "drops": drops,
         "change": change,
+        "timing": timing,
         "cost": cost,
     }
