@@ -25,6 +25,8 @@ packages = ["src/og"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+# Markdown (plans, ADRs) is prose; its code blocks are references, not sources.
+extend-exclude = ["docs", "*.md"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM"]
