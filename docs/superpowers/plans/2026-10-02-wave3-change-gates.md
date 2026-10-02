@@ -548,3 +548,38 @@ Rev 2 overrides rev 1 wherever they conflict. Review: `docs/reviews/2026-10-02-a
 | Cascade Haiku: at most 3 categories × 3 samples (rules misses) | ≤9 Haiku | $0.04 |
 | C7b standalone Haiku baseline (optional) | 36 Haiku | $0.16 |
 | **Total** | | **$0.72 to $0.88**, hard cap $1.10 by reservation |
+
+## Rev 2.1 (Astra wave-3 round 2: 3 blockers, all accepted)
+
+### R2-1. Clause-level target resolution
+
+- **Target table:** document resolution and clause resolution are separate. B3 freezes a target table in `prompts/change_aliases_v1.yaml`, mapping `(document, target kind, id)` to a segment range `[first, last]`. Each range starts at the caption and ends before the next caption at the same level.
+  - The coordinator computes and records the ranges from the TextDoc. At minimum: base Basic Lease Information Item 7 (from `p0442`), Exhibit A (from `p0807`), and Table A of Exhibit F (from `p0888`).
+- **Resolution levels:**
+  - **Clause-resolved:** a numbered `Section`/`Article` with the section-number rule, or an Item/Exhibit/Table target that is in the table. The old span must lie inside the range, or the finding is dropped with `target_range_mismatch`.
+  - **Clause-unresolved:** an Item/Exhibit/Table target that resolves to a document but has no table entry. The finding is kept with the copied `target_label`, `old = None`, and `old_origin = unresolved`. A grounded old quote supplied for it is dropped with `target_clause_unresolved`.
+  - Edges require clause-resolved targets.
+- **Basic Lease Information production:** the target pattern gains the literal production `Item <id> of the Basic Lease Information( to the <alias>)?` for 1A `p0019`.
+- **Exhibit A:** the report states that the TextDoc holds Exhibit A's caption, not the diagram, so no diagram terms are claimed.
+- **Frozen tests:**
+  - Negatives: base `p0455` rent as the old side of 1A `p0017` and `p0037`.
+  - Positives, with exact expected labels and resolution levels: the four target examples (3A `p0013`, 1A `p0017`, `p0019`, `p0037`).
+
+### R2-2. Date role bound in the source
+
+- A date token's role is the class of the nearest role word that precedes it in the containing source segment, with no other date token in between. It is computed on the segment, not the quote.
+- That role word must lie inside the cited quote. Otherwise the finding is dropped with `date_role_outside_quote`.
+- Old and new roles must be equal. Otherwise the finding is dropped with `date_role_mismatch`.
+- **Frozen 3A `p0011` cases:**
+  - positive: scheduled surrender, June 30, 2018 (END), to expiring June 30, 2020 (END), +731 days;
+  - negatives: the isolated `commencing July 1, 2018`, the clipped `commencing July 1, 2018 and expiring` (START), and the reversed pair.
+
+### R2-3. A provable hard cap
+
+- **No server-side fallback** for change checks and gates. There is no `fallbacks` parameter and no fallback beta, so each call bills at most one model attempt. A refusal makes the outcome `refused` and the run incomplete. This differs from extraction, which keeps its fallback, and ADR-009 records the reason.
+- **Reservation is exact on input.** Before each call, `client.messages.count_tokens` runs on the complete effective request. It is free. The reservation is `input_tokens × max(input, cache_write) price + max_tokens × output price`.
+  - For example, the 1A check at about 81k tokens reserves about $0.20 + $0.04 = $0.24.
+  - A `count_tokens` failure means no call (`budget_stop`).
+- `settle` releases the unused reservation using the actual priced usage.
+- **Frozen tests:** the real 1A and 3A chain lengths with cold-cache pricing, the boundary case (remaining equals the reservation minus $0.000001 gives no call), a `count_tokens` error, and the absence of `fallbacks`/`betas` in change and gate requests.
+- **Budget order:** 12 sequential reservations of at most $0.26 each fit under $1.09 only because each settles below its reservation. If one does not fit, the run stops incomplete and is reported, never forced. C7b runs only if at least $0.25 remains after C7.
