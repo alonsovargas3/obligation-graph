@@ -158,3 +158,143 @@ The current grammar does not yet justify a claim of broad contingent-deadline re
 ## Verdict
 
 proceed-after-fixes
+
+## Round 2
+
+Reviewed rev 2 at `4e6a3cd`. Only this review file was changed; all prototype writes and SQLite mutations were outside the repository or in memory. No API calls.
+
+### A) Disposition of round-1 findings
+
+- **W5-1: resolved.** Strict and inclusive relations are distinct; strict bounds retain their dates without becoming due-on dates.
+- **W5-2: resolved.** Rev 2 rejects conditional/compound deadlines and requires immediate trigger binding; the real challenge cases pass the refreshed prototype.
+- **W5-3: partially resolved.** Containment, agreement/base scope and citation revocation are now explicit, but the specified view dependencies form a cycle. See R2-1 below.
+- **W5-4: resolved.** The added BLI pairs, amendment parentheticals and bare `no later than` support the five intended dated bounds. Exact lexicons remain a B5 deliverable.
+- **W5-5: resolved.** The weekday-only exception is removed; external-event business-day obligations also stay unresolved.
+- **W5-6: resolved.** Unsupported units, cross-references, redacted offsets and recurring schedules receive explicit unresolved reasons rather than being defined as absent timing.
+- **W5-7: resolved.** Parsing and cited resolution are separate; conflicts with legacy dates stay unresolved, and scheduled rows require a bound. B5 still needs the concrete types and lifecycle/filter implementation.
+- **W5-8: resolved.** Deduplication is agreement-local, dates retain their full declaration evidence, conflicting dates stay dateless, and local ambiguity does not fall back to a base event.
+- **W5-9: resolved.** Independent bound/relation/anchor labels and the cross-document challenge set now support a separate derived-bound metric with disclosed denominators.
+- **W5-10: resolved.** Timing citations have separate ownership; snapshot cleanup, dependency detection and rollback are explicitly extended.
+- **W5-11: resolved.** B5 owns versions, fixtures, output contracts, the read allowlist and intentional changes to frozen assertions before parallel workers start.
+
+Disposition total: **10 resolved, 1 partially resolved, 0 unresolved**, assessed as plan commitments rather than completed production implementations.
+
+### B) Executed rev-2 corpus prototype
+
+Executable: `/tmp/w5_r2.py`. Results: `/tmp/w5-r2-results.json` and `/tmp/w5-r2-run.txt`. It reads the same pinned `real_v4.db` and seven TextDocs as round 1. All 525 original evidence slices and all emitted spans were checked against the original text, with NBSP preserved.
+
+The refresh implements the written relation mapping, immediate defined-name binding, conditional/compound rejection, new unresolved reasons, adjacent same-section BLI pairs, the two specified date-before-name forms, and no business-day exception. No rule dispatches on obligation id. Explicit assertions check the complete set of scheduled ids, their relations/dates, and all five challenge negatives.
+
+The grammar YAML is still deferred to B5, so **aggregate counts are for this documented implementation of the prose, not uniquely implied frozen-test counts**. Necessary choices where rev 2 does not give a closed lexicon:
+
+- Longer constructions precede their suffixes; the first remaining recognized construction is selected. `on` requires an immediately following defined event, preventing incidental uses from becoming deadlines. `upon` without an offset is treated as an event-relative `eq`; `within ... following/of` uses the same inclusive upper-bound rule as `within ... after`.
+- Reason precedence is redacted offset, conditional/compound, recurring schedule, unsupported unit, cross-reference, business days, then missing anchor. This gives 239 `conditional_or_compound` rather than `business_days`.
+- Recurring detection includes `per month`, monthly installments, first-day-of-each/every-month phrases and immediately following month. Hours/minutes are unsupported units. An otherwise unmatched quote containing a timing cue such as `within`, `promptly`, `once`, `until`, `during` or `throughout` is conservatively unresolved with `anchor_not_found`.
+- BLI labels and values must be adjacent segments in the same date-information section. Parentheticals must match the stated `As of DATE (the NAME)` or `expiring DATE (the NAME)` form. The existing closed declaration verifier is also reused. There is no forward search from a cross-reference to an unrelated date.
+- Unresolved cases retain the full exact source quote as context in this probe. Other contingent spans can also be broader than their event noun phrase. These are not proposed gold trigger-span labels; B5 and C14 must freeze minimal-span boundaries and retain offsets/units when independently supported.
+
+| Timing kind | Count |
+|---|---:|
+| scheduled | 5 |
+| contingent | 132 |
+| unresolved | 148 |
+| untimed | 240 |
+| **Total** | **525** |
+
+| Unresolved reason | Count |
+|---|---:|
+| anchor_not_found | 65 |
+| recurring_schedule | 39 |
+| business_days | 25 |
+| anchor_without_date | 6 |
+| unsupported_unit | 5 |
+| redacted_offset | 4 |
+| cross_reference | 2 |
+| conditional_or_compound | 2 |
+| conflicting_dates | 0 |
+| relative_to_other_obligation | 0 |
+| **Total** | **148** |
+
+These are classification counts, not measured accuracy. In particular, the random inspection below found an implementation recall miss. No business-day or redacted offset produced a date.
+
+#### All scheduled results, hand checked
+
+| Obligation | Exact timing phrase | Relation | Bound | Cited anchor evidence |
+|---|---|---|---|---|
+| 62 | `prior to the Commencement Date` | lt | 2011-01-01 | Base p0429/p0430, label plus date at `[44806,44844)`. |
+| 65 | `prior to the Commencement Date` | lt | 2011-01-01 | Same BLI pair; the obligation is separately the Card Reader Installation. |
+| 236 | `prior to the Target Commencement Date` | lt | 2014-04-01 | Carbonite p0572/p0573 at `[48757,48801)`, including the NBSP label. |
+| 514 | `on or before the 1A Expansion Date` | lte | 2012-06-01 | 1A p0027 at `[4057,4101)`: `As of June 1, 2012 (the “1A Expansion Date”)`. |
+| 519 | `no later than the 3A Suite 409 Amended Surrender Date` | lte | 2020-06-30 | 3A p0011 at `[2775,2841)`: `expiring June 30, 2020 (the “3A Suite 409 Amended Surrender Date”)`. |
+
+Exactly these five rows are scheduled. The first three are strict bounds, with no subtract-a-day conversion and no due-on claim. The last two are inclusive upper bounds. The commercially reasonable efforts qualifications on 62, 65 and 236 remain in the original obligation evidence. 519 does not bind either the old surrender date, 2018-06-30, or commencement, 2018-07-01.
+
+#### Challenge negatives and additional controls
+
+| ID | Result | Evidence and assessment |
+|---|---|---|
+| 89 | contingent, no bound | Trigger is exactly `upon demand`; the later historical Effective Date does not bind. |
+| 238 | unresolved, conditional_or_compound | `If the Commencement Date Conditions have not occurred prior to the Outside Completion Date` qualifies the termination right, with Force Majeure and further provisos retained. No May 31 deadline. |
+| 239 | unresolved, conditional_or_compound | `prior to the earlier to occur of` leaves the unknown completion alternative intact. No selection of just the dated business-day branch. |
+| 490 | unresolved, redacted_offset | `within [***] days after the occurrence thereof` never supplies a numeric offset or bound. |
+| 504 | unresolved, redacted_offset | `On or prior to the date that is [***] after the date hereof` does not fall back to zero days. |
+| 159 | unresolved, business_days | Ten business days after the Effective Date remains quoted and undated. |
+| 57 | contingent, lte, offset 30 | `no later than thirty (30) days following receipt of an invoice` now matches. |
+| 279 | unresolved, unsupported_unit | The 120-hour cure period is recognized as timing without calendar conversion. |
+| 293 | unresolved, cross_reference | `within the time allowed pursuant to Section 16.1.1` supplies no guessed offset. |
+| 434 | unresolved, business_days | The interrupted construction, `within three (3) Business Days ... once all outstanding fees have been paid`, stays undated. |
+
+#### Fifteen fresh random hand checks
+
+Selection: `random.Random(20261003).sample(ids_excluding_round_1_sample, 15)`, sorted. No row from the previous random sample was reused. Interpretations below are confined to the actual stored quote.
+
+| ID | Result | Hand check |
+|---|---|---|
+| 3 | untimed | `Fluidstack shall pay all such Rent`: the extracted quote states no deadline. |
+| 16 | untimed | Early termination right refers to Exhibit D. No self-contained performance deadline is quoted; wider cross-reference coverage remains an adjudication/recall concern, not a date to infer. |
+| 56 | unresolved, recurring_schedule | Monthly rent for months 61 through 72. Correct recurring-schedule deferral. |
+| 75 | untimed | Keep complete books and records of Additional Rent charges; no stated deadline in this quote. |
+| 151 | unresolved, unsupported_unit | The 120-hour remedy period is not converted to days; the separate rolling 30-day default condition remains context. |
+| 178 | untimed | Auto-liability coverage limits and covered vehicles; no stated deadline. |
+| 203 | contingent, lte, offset 3 | Give written Tenant Delay notice within three days of its alleged first occurrence. Correct upper bound relative to an unobserved event. |
+| 260 | unresolved, anchor_not_found | Resolve billing disputes `within thirty (30) calendar days`; the quote does not state what starts the period. Correct not to invent a start date. |
+| 270 | contingent, lte, offset 30 | Credit/pay the abatement share within thirty days after Landlord actually receives the proceeds. Kind/offset are supported; the probe's broad quote boundary should be narrowed before gold span scoring. |
+| 275 | contingent, gt | Notify `promptly after making any changes to the Datacenter`. After is a lower relation, not a computed due-on day; the original quote retains `promptly`. |
+| 321 | contingent, lte, offset 10 | Pay insurance costs within ten days after Landlord's demand. Correct. |
+| 327 | contingent, eq | Pay Excess Rent `immediately upon Tenant’s receipt thereof`. Immediate receipt-based timing, no known occurrence date. |
+| 443 | untimed | **Prototype recall miss:** credit goes to the monthly invoice `in the month that Host receives the Curtailment Program Revenue`. This is event-relative month timing, not absent timing. Add the corpus construction at B5 and retain it as contingent or unresolved unsupported calendar granularity; do not invent a day. |
+| 482 | untimed | Commercial-bribery prohibition; no deadline construction. |
+| 485 | untimed | Non-solicitation prohibition in the extracted quote; no deadline construction. |
+
+The miss on 443 is not a contradiction between rev 2 and the source: rev 2 already says timing language must not be called absent timing. It is a missing recognizer in this disposable completion of the still-unpublished lexicon. The counts above deliberately include that miss rather than presenting a corrected/adjudicated count as a frozen acceptance result.
+
+### C) New blockers under the stop rule
+
+#### R2-1 [blocker] Literal visible-owner joins create circular SQLite views
+
+**Location:** rev 2 W5-3, especially “The obligation is in `visible_obligation`” and “Derived dates come only from this view”; rev-1 schema-v5 `visible_obligation` derivation, still applicable.
+
+**Problem:** implementing the specified visible-owner membership with a join makes `visible_obligation_timing` read `visible_obligation`, while the final `visible_obligation` reads `visible_obligation_timing` for derived dates. That literal implementation is a cyclic view definition, not a recursive row query that SQLite can evaluate. It blocks the real graph readers before the strengthened evidence predicates can help. Equivalent raw eligibility predicates can satisfy the logical membership requirement without a join to the final view, but the section titled Complete eligibility SQL does not yet specify that crucial dependency split.
+
+**Executed corpus reproduction:** `/tmp/w5_r2_sql.py` backs up `real_v4.db` into memory, preserves the real `visible_obligation` definition, adds a timing-bound subquery to it, and defines the timing view with the literal visible-owner join. The temporary timing table contains all 525 prototype classifications. Both queries fail:
+
+```text
+SELECT count(*) FROM visible_obligation
+  -> view visible_obligation is circularly defined
+SELECT count(*) FROM visible_obligation_timing
+  -> view visible_obligation_timing is circularly defined
+```
+
+Adding containment and anchor predicates cannot remove this dependency cycle. This is reproducible on the actual corpus graph and prevents the required MCP/UI readers from working, so it meets the stop rule.
+
+**Concrete fix:** split owner evidence eligibility from lifecycle/date derivation. Use an internal nonrecursive helper view or equivalent raw-table predicates that implement the existing grounded-own-citation rule. Have `visible_obligation_timing` depend on that helper plus its trigger-containment and cited same/base-anchor predicates. Have the final `visible_obligation` consume the helper and eligible timing projection. No path from timing eligibility may lead back through final `visible_obligation`. Keep the helper internal to schema SQL; readers still use the public projections.
+
+I executed this acyclic dependency shape on the same in-memory graph: both the obligation and timing queries returned 525 rows. This is a satisfiability proof for the dependency split, not a complete implementation of the final eligibility SQL. B5 should freeze executable view definitions and a real-graph query test, then retain the revoked-ref, swapped-ref and foreign-anchor tests.
+
+**Related integration check, not a second blocker:** do not keep the old `effective_due IS NULL` test as the sole classifier/filter for strict bounds. 62, 65 and 236 intentionally have null `effective_due` under rev 2 but must be included in the deadline window by their bound and relation. Freeze their lifecycle/bucket treatment explicitly so they are neither omitted nor counted twice. The existing v4 lifecycle reports all five prototype dated rows as pending until the new derivation is wired; that is expected old-code behavior, not proof that the new relation policy is wrong.
+
+No other new blocker is established. The remaining lexicon coverage, minimal-span boundaries and typed-field retention are B5 implementation/labeling work. No model call or holiday-calendar expansion is needed to fix the reproduced issue.
+
+### D) Verdict
+
+proceed-after-fixes

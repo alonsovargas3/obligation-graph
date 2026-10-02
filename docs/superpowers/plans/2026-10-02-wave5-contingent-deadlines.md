@@ -340,3 +340,35 @@ Writes happen inside the snapshot transaction. A classifier exception rolls back
 ### Budget
 
 The budget is unchanged: $0 expected. A model pass, if ever, is a separate user decision, and it would still be subject to these deterministic rules.
+
+## Rev 2.1 (Astra wave-5 round 2: 1 blocker, accepted)
+
+### R2-1. Acyclic views
+
+Executed on the real graph, the literal rev 2 shape (timing view joins `visible_obligation`, and `visible_obligation` reads timing) fails with "view ... is circularly defined". B5 freezes this dependency order:
+
+1. **`grounded_obligation`** (internal helper, not on the reader allowlist): obligations that have at least one grounded ClauseRef in their own agreement. This is the existing visibility predicate, factored out.
+2. **`visible_obligation_timing`:** reads `grounded_obligation`, `obligation_timing`, the timing trigger refs (contained in one of the owner's grounded extraction citations, same agreement), and `visible_event_binding`, which allows the same agreement or its recorded base. It never reads `visible_obligation`.
+3. **`visible_obligation`:** reads `grounded_obligation` and `visible_obligation_timing`.
+
+A frozen real-graph test asserts that both views are queryable and return 525 rows. The revoked-ref, swapped-ref (62/65, ref 123), and foreign-anchor (Carbonite event 5) tests remain.
+
+### Strict bounds in lifecycle and windows
+
+**Lifecycle:** `lifecycle = 'scheduled'` whenever timing is `scheduled`, for any relation.
+
+**Dates:**
+- `effective_due` is set only for `lte` and `eq` bounds.
+- Every scheduled row also exposes `deadline: {relation, date, clause}`.
+
+**Windows:** `upcoming_deadlines` selects scheduled rows by `deadline.date` in `[as_of, as_of + days]`, whatever the relation. It shows the relation, so strict bounds (62, 65, 236) are neither omitted nor double counted.
+
+**Pending:** `pending` now means not scheduled and not superseded. `contingent` is a paged subset of it.
+
+### Month-granularity timing (round 2 recall miss, 443)
+
+Event-relative month constructions, such as "in the month that Host receives ...", are `unresolved` with reason `month_granularity`. The trigger stays quoted, and no day is invented. B5 adds this case to the grammar and to the corpus tests.
+
+### Classification counts are not acceptance
+
+The round 2 counts (scheduled 5, contingent 132, unresolved 148, untimed 240) come from a disposable prototype. Acceptance is the frozen corpus tests on the 5 scheduled rows and the challenge set, plus the C14 independent labels.
