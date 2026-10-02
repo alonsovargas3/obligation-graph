@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obligation Graph</title>
+<style>
+  :root {
+    --ink: #1a2333;
+    --muted: #5b6472;
+    --line: #d9dee6;
+    --bg: #f6f7f9;
+    --panel: #ffffff;
+    --accent: #1f4e79;
+    --accent-soft: #eaf0f6;
+    --redacted: #8a4b08;
+    --redacted-bg: #fdf0dd;
+    --blank: #4a4a4a;
+    --blank-bg: #ececec;
+    --ok: #1e6b3a;
+    --ok-bg: #e4f2e8;
+    --warn: #8f1d1d;
+    --warn-bg: #fbe4e4;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font: 14px/1.45 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 22px;
+  }
+  header h1 { margin: 0; font-size: 19px; font-weight: 650; letter-spacing: 0.2px; }
+  header p { margin: 3px 0 0; font-size: 12.5px; opacity: 0.92; }
+  main { padding: 16px 22px 40px; max-width: 1500px; margin: 0 auto; }
+  .banner {
+    background: var(--accent-soft);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 0 0 14px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .banner strong { color: var(--ink); }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(640px, 1fr) minmax(360px, 460px);
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .card h2 {
+    margin: 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+    background: #fbfcfd;
+  }
+  .card-body { padding: 12px 14px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .filters label { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--muted); }
+  .filters select { min-width: 130px; }
+  .filters .chk { flex-direction: row; align-items: center; gap: 5px; padding-bottom: 6px; }
+  select, button {
+    font: inherit;
+    padding: 4px 7px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--ink);
+  }
+  button { cursor: pointer; }
+  button:disabled { opacity: 0.45; cursor: default; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+  th, td { text-align: left; padding: 6px 9px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    background: #fbfcfd;
+    white-space: nowrap;
+    position: sticky; top: 0;
+  }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--accent-soft); }
+  tbody tr.selected { background: var(--accent-soft); outline: 1px solid var(--accent); }
+  td.num { font-family: var(--mono); white-space: nowrap; }
+  td.desc { max-width: 330px; }
+  .badge {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 10.5px;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+  .badge.redacted { color: var(--redacted); background: var(--redacted-bg); border: 1px solid #ecd2a8; }
+  .badge.blank { color: var(--blank); background: var(--blank-bg); border: 1px solid #d4d4d4; }
+  .badge.superseded { color: var(--blank); background: var(--blank-bg); }
+  .badge.lifecycle { color: var(--accent); background: var(--accent-soft); font-weight: 500; }
+  .badge.ran { color: var(--ok); background: var(--ok-bg); }
+  .badge.skipped { color: var(--ok); background: var(--ok-bg); border: 1px dashed #9cc7ab; }
+  .badge.error { color: var(--warn); background: var(--warn-bg); }
+  .pager {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .clause-box {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    background: #f4f6f8;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 10px 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 8px 0;
+  }
+  .kv { display: grid; grid-template-columns: 130px 1fr; gap: 3px 10px; font-size: 12.5px; margin: 8px 0; }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; }
+  .section-title { font-size: 12px; font-weight: 650; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 14px 0 6px; }
+  .empty { color: var(--muted); font-style: italic; padding: 6px 0; }
+  .findings { display: flex; flex-direction: column; gap: 12px; }
+  .finding { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; background: #fdfdfe; }
+  .finding-head { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; margin-bottom: 8px; }
+  .finding-head .kind { font-weight: 650; }
+  .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 800px) { .sides { grid-template-columns: 1fr; } }
+  .side { border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; background: #fff; }
+  .side .tag { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin-bottom: 4px; }
+  .side.old { border-left: 3px solid #b3b9c2; }
+  .side.new { border-left: 3px solid var(--accent); }
+  .side .where { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
+  .values { margin-top: 8px; font-family: var(--mono); font-size: 12.5px; }
+  .gates { width: 100%; }
+  .gates td, .gates th { font-size: 12.5px; }
+  .chain { font-size: 12.5px; color: var(--muted); margin: 6px 0; }
+  .chain span.role { color: var(--ink); font-weight: 600; }
+  .status-line { font-size: 12.5px; color: var(--muted); margin: 6px 0; }
+  .status-line.error { color: var(--warn); }
+  footer { color: var(--muted); font-size: 11.5px; padding: 8px 22px 24px; max-width: 1500px; margin: 0 auto; }
+  noscript p { display: block; padding: 10px 22px; color: var(--warn); font-weight: 600; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Obligation Graph</h1>
+  <p>Every row cites the clause it comes from, verbatim. Redacted and blank terms are marked, never inferred.</p>
+</header>
+<noscript><p>This page needs JavaScript to load obligations from the local server. Enable JavaScript, or query the same data through the MCP server.</p></noscript>
+<main>
+  <div class="banner" id="pending-note">Loading pending obligations count...</div>
+
+  <div class="layout">
+    <section class="card" id="obligations-card">
+      <h2>Obligations</h2>
+      <div class="filters">
+        <label>Payee (owed to)
+          <select id="filter-party"><option value="">Any payee</option></select>
+        </label>
+        <label>Site
+          <select id="filter-site"><option value="">Any site</option></select>
+        </label>
+        <label>Type
+          <select id="filter-type">
+            <option value="">Any type</option>
+            <option>payment</option><option>delivery</option><option>sla</option>
+            <option>penalty</option><option>termination_right</option><option>guarantee</option>
+            <option>notice</option><option>insurance</option><option>other</option>
+          </select>
+        </label>
+        <label>Status
+          <select id="filter-status">
+            <option value="">Any status</option>
+            <option>active</option><option>redacted</option><option>blank</option>
+            <option>superseded</option>
+          </select>
+        </label>
+        <label>Agreement
+          <select id="filter-agreement"><option value="">Any agreement</option></select>
+        </label>
+        <label class="chk"><input type="checkbox" id="filter-superseded"> Include superseded</label>
+      </div>
+      <div class="table-wrap">
+        <table id="obligations-table">
+          <thead>
+            <tr>
+              <th>Agreement</th><th>Type</th><th>Status</th><th>Owed by</th>
+              <th>Owed to</th><th>Amount</th><th>Due</th><th>Obligation</th>
+            </tr>
+          </thead>
+          <tbody id="obligations-body"></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <button id="pager-prev" disabled>&#9664; Prev</button>
+        <button id="pager-next" disabled>Next &#9654;</button>
+        <span id="pager-label"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Clause</h2>
+      <div class="card-body" id="clause-panel">
+        <p class="empty">Click a row to see the clause it comes from, verbatim, with agreement, section, and page.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="card" id="change-view" style="margin-top:16px">
+    <h2>Change orders</h2>
+    <div class="card-body">
+      <div class="filters" style="border-bottom:none; padding:0 0 10px;">
+        <label>Change order
+          <select id="change-select"><option value="">Select a change order...</option></select>
+        </label>
+      </div>
+      <div id="change-report"><p class="empty">Pick an amendment to see its findings: each shows the old clause and the new clause side by side, plus the gate decisions that routed it.</p></div>
+    </div>
+  </section>
+</main>
+<footer>
+  <p>Legend: [REDACTED] marks a value redacted in the filing; [BLANK] marks an unfilled placeholder in a form exhibit. Neither is ever inferred. Pending means the documents give no computable due date; it does not mean overdue, and it does not mean there is no obligation.</p>
+</footer>
+
+<script>
+"use strict";
+
+var LIMIT = 50;
+var state = { offset: 0, total: 0, returned: 0, selectedId: null, agreements: {} };
+
+function el(tag, className, text) {
+  var node = document.createElement(tag);
+  if (className) { node.className = className; }
+  if (text !== undefined && text !== null) { node.textContent = text; }
+  return node;
+}
+
+function badge(text, className) {
+  return el("span", "badge " + className, text);
+}
+
+function kv(pairs) {
+  var list = el("dl", "kv");
+  pairs.forEach(function (pair) {
+    if (pair[1] === null || pair[1] === undefined || pair[1] === "") { return; }
+    list.appendChild(el("dt", null, pair[0]));
+    list.appendChild(el("dd", null, pair[1]));
+  });
+  return list;
+}
+
+function where(ref) {
+  var bits = [];
+  if (ref.section) { bits.push("Section " + ref.section); }
+  if (ref.page !== null && ref.page !== undefined) { bits.push("Page " + ref.page); }
+  bits.push("chars " + ref.char_start + "-" + ref.char_end);
+  return bits.join(" | ");
+}
+
+function refHasQuote(ref) {
+  return Boolean(ref) && typeof ref.span_text === "string" && ref.span_text.length > 0;
+}
+
+function api(path) {
+  return fetch(path).then(function (resp) {
+    return resp.json().catch(function () { return {}; }).then(function (payload) {
+      if (!resp.ok) {
+        var message = (payload && payload.message) ? payload.message : ("request failed: " + resp.status);
+        throw new Error(message);
+      }
+      return payload;
+    });
+  });
+}
+
+/* ------------------------------------------------------------- obligations */
+
+function currentQuery() {
+  var params = new URLSearchParams();
+  var party = document.getElementById("filter-party").value;
+  var site = document.getElementById("filter-site").value;
+  var type = document.getElementById("filter-type").value;
+  var status = document.getElementById("filter-status").value;
+  var agreement = document.getElementById("filter-agreement").value;
+  if (party) { params.set("party", party); }
+  if (site) { params.set("site", site); }
+  if (type) { params.set("type", type); }
+  if (status) { params.set("status", status); }
+  if (agreement) { params.set("agreement", agreement); }
+  params.set("include_superseded", document.getElementById("filter-superseded").checked ? "true" : "false");
+  params.set("limit", String(LIMIT));
+  params.set("offset", String(state.offset));
+  return params.toString();
+}
+
+function partyName(binding) {
+  if (!binding) { return ""; }
+  var text = binding.name || "";
+  if (binding.role) { text += " (" + binding.role + ")"; }
+  return text;
+}
+
+function dueCell(ob) {
+  if (ob.effective_due) { return ob.effective_due; }
+  if (ob.due_date) { return ob.due_date; }
+  return "";
+}
+
+function renderRows(payload) {
+  var body = document.getElementById("obligations-body");
+  body.replaceChildren();
+  state.total = payload.total;
+  state.returned = payload.obligations.length;
+  payload.obligations.forEach(function (ob) {
+    var row = document.createElement("tr");
+    row.dataset.id = String(ob.id);
+    row.appendChild(el("td", null, ob.agreement_id));
+    row.appendChild(el("td", null, ob.type));
+    var statusCell = el("td");
+    statusCell.appendChild(el("span", null, ob.status));
+    if (ob.marker) { statusCell.appendChild(document.createTextNode(" ")); statusCell.appendChild(badge(ob.marker, ob.status)); }
+    row.appendChild(statusCell);
+    row.appendChild(el("td", null, partyName(ob.owed_by) || "unresolved"));
+    row.appendChild(el("td", null, partyName(ob.owed_to) || "unresolved"));
+    row.appendChild(el("td", "num", ob.amount ? (ob.amount + (ob.currency ? " " + ob.currency : "")) : ""));
+    row.appendChild(el("td", "num", dueCell(ob) || "pending"));
+    row.appendChild(el("td", "desc", ob.description));
+    row.addEventListener("click", function () { selectRow(ob, row); });
+    body.appendChild(row);
+  });
+  var label = document.getElementById("pager-label");
+  var from = state.total === 0 ? 0 : state.offset + 1;
+  var to = state.offset + state.returned;
+  var bits = ["Showing " + from + "-" + to + " of " + state.total + " obligations."];
+  if (payload.truncated) { bits.push("More follow."); }
+  if (payload.unresolved_party_count > 0) {
+    bits.push(payload.unresolved_party_count + " matching rows have an unresolved payer or payee.");
+  }
+  label.textContent = bits.join(" ");
+  document.getElementById("pager-prev").disabled = state.offset <= 0;
+  document.getElementById("pager-next").disabled = !payload.truncated;
+}
+
+function selectRow(ob, row) {
+  var body = document.getElementById("obligations-body");
+  Array.prototype.forEach.call(body.children, function (tr) { tr.classList.remove("selected"); });
+  row.classList.add("selected");
+  var panel = document.getElementById("clause-panel");
+  panel.replaceChildren();
+  var title = state.agreements[ob.agreement_id] || ob.agreement_id;
+  panel.appendChild(el("p", null, "")).appendChild(el("strong", null, title));
+  if (ob.marker) {
+    var mark = el("p");
+    mark.appendChild(badge(ob.marker, ob.status));
+    mark.appendChild(document.createTextNode(
+      ob.status === "redacted"
+        ? " The value is redacted in the filing, so it is reported as redacted, never inferred."
+        : " The value is an unfilled placeholder in a form exhibit, reported as blank, never inferred."
+    ));
+    panel.appendChild(mark);
+  }
+  ob.clauses.forEach(function (clause) {
+    panel.appendChild(el("div", "section-title", "Verbatim, " + ob.agreement_id));
+    panel.appendChild(el("div", "clause-box", clause.span_text));
+    panel.appendChild(kv([
+      ["Section", clause.section],
+      ["Page", clause.page],
+      ["Characters", clause.char_start + "-" + clause.char_end]
+    ]));
+  });
+  panel.appendChild(el("div", "section-title", "Obligation"));
+  var amount = ob.amount ? ob.amount + (ob.currency ? " " + ob.currency : "") : (ob.marker || "not stated");
+  panel.appendChild(kv([
+    ["Type", ob.type],
+    ["Status", ob.status],
+    ["Lifecycle", ob.lifecycle],
+    ["Owed by", partyName(ob.owed_by) || "unresolved"],
+    ["Owed to", partyName(ob.owed_to) || "unresolved"],
+    ["Amount", amount],
+    ["Due date", ob.due_date],
+    ["Effective due", ob.effective_due],
+    ["Anchor event", ob.anchor_event ? (ob.anchor_event.name + (ob.offset_days !== null ? ", " + ob.offset_days + " days after" : "")) : null],
+    ["Trigger", ob.trigger],
+    ["Agreement site", ob.agreement_sites.map(function (s) { return s.name + (s.location ? ", " + s.location : ""); }).join("; ") || null]
+  ]));
+  if (ob.superseded_by.length) {
+    panel.appendChild(el("div", "section-title", "Superseded by"));
+    ob.superseded_by.forEach(function (edge) {
+      var line = el("p", null, "Obligation " + edge.obligation_id + " under " + edge.change_order_id + ".");
+      panel.appendChild(line);
+    });
+  }
+}
+
+function loadObligations(reset) {
+  if (reset) { state.offset = 0; }
+  api("/api/obligations?" + currentQuery()).then(renderRows).catch(function (err) {
+    document.getElementById("pager-label").textContent = err.message;
+  });
+}
+
+/* --------------------------------------------------------------- deadlines */
+
+function loadPendingNote() {
+  api("/api/deadlines?days=90&limit=1").then(function (out) {
+    var note = document.getElementById("pending-note");
+    note.replaceChildren();
+    var strong = el("strong", null, out.pending_total + " pending obligations.");
+    note.appendChild(strong);
+    note.appendChild(document.createTextNode(" " + out.note));
+  }).catch(function (err) {
+    document.getElementById("pending-note").textContent = err.message;
+  });
+}
+
+/* ------------------------------------------------------------- agreements */
+
+function loadAgreements() {
+  return api("/api/agreements").then(function (out) {
+    var partyNames = {};
+    var siteNames = {};
+    var partySelect = document.getElementById("filter-party");
+    var siteSelect = document.getElementById("filter-site");
+    var agreementSelect = document.getElementById("filter-agreement");
+    var changeSelect = document.getElementById("change-select");
+    var roles = ["landlord", "tenant", "guarantor", "provider", "customer", "lender"];
+    roles.forEach(function (role) {
+      var option = el("option", null, "Payee role: " + role);
+      option.value = role;
+      partySelect.appendChild(option);
+    });
+    out.agreements.forEach(function (ag) {
+      state.agreements[ag.id] = ag.title || ag.id;
+      var option = el("option", null, ag.id);
+      option.value = ag.id;
+      agreementSelect.appendChild(option);
+      if (ag.type === "amendment") {
+        var changeOption = el("option", null, ag.id + (ag.base_agreement_id ? " (amends " + ag.base_agreement_id + ")" : ""));
+        changeOption.value = ag.id;
+        changeSelect.appendChild(changeOption);
+      }
+      ag.parties.forEach(function (p) { if (p.name) { partyNames[p.name] = true; } });
+      ag.sites.forEach(function (s) {
+        siteNames[s.name + (s.location ? ", " + s.location : "")] = true;
+      });
+    });
+    Object.keys(partyNames).sort().forEach(function (name) {
+      var option = el("option", null, "Payee name: " + name);
+      option.value = name;
+      partySelect.appendChild(option);
+    });
+    Object.keys(siteNames).sort().forEach(function (name) {
+      var option = el("option", null, name);
+      option.value = name;
+      siteSelect.appendChild(option);
+    });
+  });
+}
+
+/* ---------------------------------------------------------- change orders */
+
+var KIND_LABELS = {
+  supersedes: "Supersession",
+  shifted_date: "Shifted date",
+  price_change: "Price change",
+  potential_conflict: "Potential conflict"
+};
+
+function clauseSide(ref, sideClass, heading, fallback) {
+  var box = el("div", "side " + sideClass);
+  box.appendChild(el("div", "tag", heading));
+  if (refHasQuote(ref)) {
+    box.appendChild(el("div", "clause-box", ref.span_text));
+    box.appendChild(el("div", "where", (ref.agreement_id || "") + (where(ref) ? " | " + where(ref) : "")));
+  } else {
+    box.appendChild(el("div", "empty", fallback));
+  }
+  return box;
+}
+
+function renderFinding(finding) {
+  var card = el("div", "finding");
+  var head = el("div", "finding-head");
+  head.appendChild(el("span", "kind", KIND_LABELS[finding.kind] || finding.kind));
+  finding.categories.forEach(function (category) { head.appendChild(badge(category, "lifecycle")); });
+  if (finding.target_label) { head.appendChild(badge("target: " + finding.target_label, "lifecycle")); }
+  card.appendChild(head);
+  var sides = el("div", "sides");
+  sides.appendChild(clauseSide(finding.old, "old", "Old clause", "No old-side quote is stored for this finding."));
+  sides.appendChild(clauseSide(finding.new, "new", "New clause", "No new-side quote is stored for this finding."));
+  card.appendChild(sides);
+  var values = [];
+  if (finding.old_value) { values.push("old: " + finding.old_value); }
+  if (finding.new_value) { values.push("new: " + finding.new_value); }
+  if (finding.delta) { values.push("delta: " + finding.delta + " days"); }
+  if (finding.currency) { values.push(finding.currency); }
+  if (values.length) { card.appendChild(el("div", "values", values.join("   "))); }
+  if (finding.context && refHasQuote(finding.context)) {
+    card.appendChild(el("div", "section-title", "Context"));
+    card.appendChild(el("div", "clause-box", finding.context.span_text));
+  }
+  return card;
+}
+
+function renderGates(gates, summary) {
+  var wrap = el("div");
+  if (summary) {
+    wrap.appendChild(el("p", "status-line",
+      "Gates: " + summary.questions + " questions, " + summary.run_check + " checks ran, " +
+      summary.skipped + " skipped."));
+  }
+  var table = el("table", "gates");
+  var headRow = document.createElement("tr");
+  ["Question", "Answer", "Decision", "Backend", "Confidence"].forEach(function (title) {
+    headRow.appendChild(el("th", null, title));
+  });
+  var thead = document.createElement("thead");
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+  var tbody = document.createElement("tbody");
+  gates.forEach(function (gate) {
+    var row = document.createElement("tr");
+    row.appendChild(el("td", null, gate.question));
+    row.appendChild(el("td", null, gate.answer === null || gate.answer === undefined ? "unknown" : (gate.answer ? "yes" : "no")));
+    var decision = el("td");
+    if (gate.error) {
+      decision.appendChild(badge("error, check ran anyway", "error"));
+    } else if (gate.run_check) {
+      decision.appendChild(badge("check ran", "ran"));
+    } else {
+      decision.appendChild(badge("check skipped", "skipped"));
+    }
+    row.appendChild(decision);
+    row.appendChild(el("td", null, (gate.tier || "?") + " / " + (gate.backend || "?")));
+    row.appendChild(el("td", "num", gate.confidence === null || gate.confidence === undefined ? "" : String(gate.confidence)));
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  wrap.appendChild(el("p", "status-line",
+    "A gate may skip a check; it can never suppress a finding. Low confidence or an error means the check runs."));
+  return wrap;
+}
+
+function renderChange(payload) {
+  var host = document.getElementById("change-report");
+  host.replaceChildren();
+  if (payload.status !== "ok") {
+    host.appendChild(el("p", "status-line error", payload.message || ("Change order check failed: " + payload.status)));
+    return;
+  }
+  host.appendChild(el("p", "status-line", payload.message));
+  var chain = el("p", "chain", "");
+  var steps = payload.chain.map(function (member) {
+    return member.agreement_id + " (" + member.role + ")";
+  });
+  chain.appendChild(document.createTextNode("Chain: " + steps.join(" -> ")));
+  host.appendChild(chain);
+  var report = payload.ungated;
+  host.appendChild(el("div", "section-title", "Gate decisions (gated run)"));
+  host.appendChild(renderGates((payload.gated || payload.ungated).gates, payload.gate_summary));
+  var groups = [
+    ["Supersessions", report.supersessions],
+    ["Shifted dates", report.shifted_dates],
+    ["Price changes", report.price_changes],
+    ["Potential conflicts", report.potential_conflicts]
+  ];
+  groups.forEach(function (group) {
+    if (!group[1].length) { return; }
+    host.appendChild(el("div", "section-title", group[0] + " (" + group[1].length + ")"));
+    var list = el("div", "findings");
+    group[1].forEach(function (finding) { list.appendChild(renderFinding(finding)); });
+    host.appendChild(list);
+  });
+  if (report.new_obligations.length) {
+    host.appendChild(el("div", "section-title", "New obligations without a supersession (" + report.new_obligations.length + ")"));
+    var newList = el("div", "findings");
+    report.new_obligations.forEach(function (ob) {
+      var card = el("div", "finding");
+      card.appendChild(el("div", "kind", ob.type));
+      card.appendChild(el("p", null, ob.description));
+      if (ob.clause && ob.clause.span_text) {
+        card.appendChild(el("div", "clause-box", ob.clause.span_text));
+        card.appendChild(el("div", "where", (ob.clause.agreement_id || "") + " | " + where(ob.clause)));
+      }
+      newList.appendChild(card);
+    });
+    host.appendChild(newList);
+  }
+  if (report.unresolved_documents && report.unresolved_documents.length) {
+    host.appendChild(el("p", "status-line error",
+      "Unresolved documents named by this change order: " + report.unresolved_documents.join(", ") + "."));
+  }
+  var counts = groups.map(function (group) { return group[0].toLowerCase() + ": " + group[1].length; }).join(", ");
+  host.appendChild(el("p", "status-line", "Findings: " + counts + "."));
+}
+
+function loadChange() {
+  var id = document.getElementById("change-select").value;
+  if (!id) { return; }
+  api("/api/change/" + encodeURIComponent(id))
+    .then(renderChange)
+    .catch(function (err) {
+      var host = document.getElementById("change-report");
+      host.replaceChildren();
+      host.appendChild(el("p", "status-line error", err.message));
+    });
+}
+
+/* ------------------------------------------------------------------ boot */
+
+function wire() {
+  ["filter-party", "filter-site", "filter-type", "filter-status", "filter-agreement", "filter-superseded"]
+    .forEach(function (id) {
+      var node = document.getElementById(id);
+      node.addEventListener("change", function () { loadObligations(true); });
+    });
+  document.getElementById("pager-prev").addEventListener("click", function () {
+    state.offset = Math.max(0, state.offset - LIMIT);
+    loadObligations(false);
+  });
+  document.getElementById("pager-next").addEventListener("click", function () {
+    if (state.offset + state.returned < state.total) {
+      state.offset = state.offset + LIMIT;
+      loadObligations(false);
+    }
+  });
+  document.getElementById("change-select").addEventListener("change", loadChange);
+}
+
+loadAgreements()
+  .then(function () { loadObligations(true); })
+  .catch(function (err) {
+    document.getElementById("pager-label").textContent = err.message;
+    document.getElementById("pending-note").textContent = err.message;
+  });
+loadPendingNote();
+wire();
+</script>
+</body>
+</html>
