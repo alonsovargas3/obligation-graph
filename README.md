@@ -4,7 +4,7 @@ Obligation Graph turns data center contracts (leases, colocation agreements, gua
 
 The corpus is public SEC filings only. It includes a public agreement Fluidstack is party to.
 
-**Walkthrough video (about 3 minutes):** link coming soon. The script is in [`docs/walkthrough.md`](docs/walkthrough.md).
+**Walkthrough video:** https://youtu.be/GPcP4T1syMk. The same tour, step by step, is in [`docs/walkthrough.md`](docs/walkthrough.md).
 
 ## The invariant
 
