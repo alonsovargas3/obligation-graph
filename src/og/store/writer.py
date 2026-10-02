@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
+from collections.abc import Iterable
 from dataclasses import asdict
 from typing import Any
 
@@ -163,8 +164,68 @@ def _upsert_agreement(
     )
 
 
+def delete_change_runs(con: sqlite3.Connection, run_row_ids: Iterable[int]) -> None:
+    """Delete change runs and everything they own, children before parents.
+
+    A run owns its supersedes edges, gate decisions, findings, chain rows, and
+    the ClauseRefs those findings cite (extraction never owns those refs).
+    Called by _delete_snapshot (re-extraction invalidation) and by the change
+    writer (run replacement), always inside a transaction.
+    """
+    ids = sorted({i for i in run_row_ids if i is not None})
+    if not ids:
+        return
+    runs = ",".join("?" * len(ids))
+    con.execute(f"DELETE FROM supersedes WHERE change_run_id IN ({runs})", ids)
+    con.execute(f"DELETE FROM gate_decision WHERE change_run_id IN ({runs})", ids)
+    refs = [
+        row[0]
+        for row in con.execute(
+            f"SELECT new_clause_ref_id FROM change_finding WHERE change_run_id IN ({runs})"
+            f" UNION SELECT old_clause_ref_id FROM change_finding WHERE change_run_id IN ({runs})"
+            f" UNION SELECT context_clause_ref_id FROM change_finding"
+            f" WHERE change_run_id IN ({runs})",
+            ids * 3,
+        )
+        if row[0] is not None
+    ]
+    con.execute(f"DELETE FROM change_finding WHERE change_run_id IN ({runs})", ids)
+    if refs:
+        cited = ",".join("?" * len(refs))
+        con.execute(
+            f"DELETE FROM clause_ref WHERE id IN ({cited}) AND obligation_id IS NULL"
+            " AND id NOT IN (SELECT clause_ref_id FROM agreement_party)"
+            " AND id NOT IN (SELECT clause_ref_id FROM defined_term)"
+            " AND id NOT IN (SELECT clause_ref_id FROM event WHERE clause_ref_id IS NOT NULL)"
+            " AND id NOT IN (SELECT clause_ref_id FROM supersedes)"
+            " AND id NOT IN (SELECT clause_ref_id FROM guarantees)"
+            " AND id NOT IN (SELECT clause_ref_id FROM triggers)"
+            " AND id NOT IN (SELECT new_clause_ref_id FROM change_finding)"
+            " AND id NOT IN (SELECT old_clause_ref_id FROM change_finding"
+            " WHERE old_clause_ref_id IS NOT NULL)"
+            " AND id NOT IN (SELECT context_clause_ref_id FROM change_finding"
+            " WHERE context_clause_ref_id IS NOT NULL)",
+            refs,
+        )
+    con.execute(f"DELETE FROM change_run_chain WHERE change_run_id IN ({runs})", ids)
+    con.execute(f"DELETE FROM change_run WHERE id IN ({runs})", ids)
+
+
 def _delete_snapshot(con: sqlite3.Connection, agreement_id: str, *, source_id: str) -> None:
     """Children before parents; party rows themselves are never deleted."""
+    # Re-extraction invalidation (rev 2 R4): every change run whose chain
+    # includes this agreement was computed against a snapshot about to vanish.
+    delete_change_runs(
+        con,
+        (
+            row[0]
+            for row in con.execute(
+                "SELECT id FROM change_run WHERE change_order_id = ?"
+                " UNION SELECT change_run_id FROM change_run_chain WHERE agreement_id = ?",
+                (agreement_id, agreement_id),
+            )
+        ),
+    )
     con.execute(
         "DELETE FROM clause_ref WHERE obligation_id IN"
         " (SELECT id FROM obligation WHERE agreement_id = ?)",
