@@ -10,7 +10,7 @@ textdoc_sha256:
 provenance:
   drafted_by: gpt-6-astra (blind)
   adjudicated_by: claude-opus-5-5 (coordinator)
-  spot_checked: 0
+  spot_checked: 12
 scope: full_agreement
 gates:
   price:

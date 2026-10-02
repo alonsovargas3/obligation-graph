@@ -38,7 +38,7 @@ All accepted as drafted. Each chain-origin finding was checked against its sourc
 | sla | yes | no |
 | parties_or_sites | yes | yes |
 
-The user spot-check is pending, and `spot_checked` is updated after it.
+The user spot-checked all 12 gate answers on 2026-10-02 and accepted them as-is (`spot_checked: 12`). The labels are frozen before any scored run.
 
 ## Out-of-scope items
 
