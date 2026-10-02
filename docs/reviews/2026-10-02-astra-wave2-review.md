@@ -283,3 +283,94 @@ The examples below target the newly specified rev-2 rules or their composition. 
 ### D) Verdict
 
 proceed-after-fixes
+
+## Round 3
+
+Reviewed `36dbbc3` after `git pull -q`, the plan's overriding Rev 2.2 section and R2-8 detail, the recorded frozen-test changes, and the new pipeline regressions. Only this review is changed in the repository.
+
+### A) Round-2 dispositions
+
+1. **R2-1: resolved.** Chunk-1-only fixed context is explicit and both exact-ID tests pass.
+2. **R2-2: not resolved.** The original invented-name case is rejected, but the new date-binding rule still attaches a later unrelated date to a real event name; see R3-1.
+3. **R2-3: resolved.** Every stored obligation description is its copied evidence slice, including the waiver counterexample.
+4. **R2-4: not resolved.** The original shared-preamble reversal is rejected, but the new first-following-role rule misbinds ordinary role-before-name text; see R3-2.
+5. **R2-5: resolved.** Absolute-date precedence nulls the relative pair and the conflict writes and replaces a prior snapshot successfully.
+6. **R2-6: resolved.** Complete-token rules reject extra decimal digits, malformed grouping, and the suffix of a four-digit day count.
+7. **R2-7: resolved.** The plan retains the writer's fail-closed check, specifies a fresh whole-graph rebuild, and rejects amendment samples at the CLI before calls or output creation.
+8. **R2-8: resolved.** The explicitly sampled reference set reports precision lower bounds, null precision and F1, and recall over the supplied labels. This is the coordinator's accepted alternative to requiring exhaustive gold; these figures must retain that sampled-scope disclosure.
+
+**Totals: 6 resolved, 2 not resolved. All original round-2 counterexamples now have the intended safe behavior; the two remaining issues are new variants of the binding rules.**
+
+### B) Refreshed satisfiability proof and probes
+
+Created a fresh copy of the current repository at `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/og-astra-wave2-r3-00xg_fwt`, carried over only the disposable implementation modules, and updated verification and both CLIs to Rev 2.2. The chunker already implements the now-accepted fixed-context rule. `uv sync --locked` succeeded with CPython 3.12.11. All 36 inspected test/fixture/manifest, frozen contract, prompt, and dependency files remained byte-identical to the repository.
+
+Executed the full suite with `uv run --locked pytest -o addopts="" -q -p no:cacheprovider`, adding `--junitxml=/tmp/astra-wave2-r3.xml` solely to record counts: **640 passed, 0 failed, 2 skipped**.
+
+| Frozen test file | Passed | Failed | Skipped |
+|---|---:|---:|---:|
+| `tests/test_eval_cli.py` | 7 | 0 | 0 |
+| `tests/test_eval_gold.py` | 16 | 0 | 0 |
+| `tests/test_eval_score.py` | 13 | 0 | 0 |
+| `tests/test_extract_cache.py` | 11 | 0 | 0 |
+| `tests/test_extract_chunk.py` | 14 | 0 | 0 |
+| `tests/test_extract_cli.py` | 8 | 0 | 0 |
+| `tests/test_extract_parse.py` | 35 | 0 | 0 |
+| `tests/test_extract_request.py` | 9 | 0 | 0 |
+| `tests/test_fetch.py` | 23 | 0 | 0 |
+| `tests/test_fetch_recorded.py` | 1 | 0 | 0 |
+| `tests/test_ground.py` | 265 | 0 | 2 |
+| `tests/test_ingest.py` | 23 | 0 | 0 |
+| `tests/test_ingest_toc.py` | 10 | 0 | 0 |
+| `tests/test_markers.py` | 17 | 0 | 0 |
+| `tests/test_pipeline_regressions.py` | 5 | 0 | 0 |
+| `tests/test_schema.py` | 41 | 0 | 0 |
+| `tests/test_schema_v2.py` | 9 | 0 | 0 |
+| `tests/test_textdoc.py` | 19 | 0 | 0 |
+| `tests/test_verify.py` | 96 | 0 | 0 |
+| `tests/test_writer.py` | 18 | 0 | 0 |
+| **Total** | **640** | **0** | **2** |
+
+**Failure classification:** no test-wrong or impl-wrong frozen-test failures. The two skips are the existing single-character-quote property cases in `test_ground.py`. No test was weakened, edited, or skipped to obtain this result.
+
+Re-executed the round-2 probes against the refreshed implementation:
+
+| Probe | Observed outcome |
+|---|---|
+| Delivery Date quote proposed as Commencement Date | Event dropped; no event row; dependent visible obligation has null effective due date. |
+| `Landlord waives all rent forever.` description | Stored description is the original rent-payment quote. The invented waiver is absent. |
+| Swapped DIGITAL/CONSTANT CONTACT roles in the shared preamble | Both false party associations dropped; no incorrect payer resolves. The positive pipeline test still resolves the real tenant. |
+| Absolute date plus relative pair | Retains `2011-03-01`, nulls offset and anchor, and writes successfully. The frozen replacement regression also passes. |
+| `$5.123` proposed as `5.12` | Amount null in verification and the visible row. |
+| `1000 days` proposed as `0` | Offset and anchor null, including with an available named event. |
+| Amendment `--no-cache` sample | CLI returns 2, makes zero API calls, and creates neither graph.db nor the sample directory. |
+
+The direct-writer lineage probes still raise `dependents_exist` for replacement of an anchored base and an FK error for an amendment inserted into an empty isolated DB. These are the intended writer safeguards, not frozen-test failures: Rev 2.2 moves recovery to a fresh whole-graph rebuild and prevents unsupported samples at the public CLI boundary.
+
+Also repeated extract CLI -> writer -> eval CLI: two visible obligations, matching run identity, matching prompt version and canonical TextDoc hash, and proposal grounding 1.0. An additional sampled-gold probe explicitly checked the R2-8 F1 detail, which the frozen tests do not assert: all micro/macro/per-type precision and F1 values are null, recall remains 1.0 for that fixture, and lower bounds are micro 0.5 and macro 1.0.
+
+Disposable evidence: `/tmp/astra-wave2-r3.xml`, `/tmp/astra-wave2-r3.txt`, `/tmp/astra_w2_r3_update.py`, and `/tmp/astra_w2_r3_probes.py`. Original-probe outputs are at `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/astra-w2-probes-5v4t9nrq/results.json`; new binding and CLI probes are at `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/astra-w2-r3-probes-6fw7717g/results.json`.
+
+### C) New blockers and should-fixes
+
+**Counts: 2 blockers, 0 should-fixes.** Both were verified by execution through verification, the writer, and the visible view. They are gaps in the prescribed rules despite a fully passing frozen suite, not claims that the implementation suite failed.
+
+1. **R3-1, blocker: Absence of another quoted term does not bind a later date to the event.**
+
+   **Location:** plan, Rev 2.2 R2-2 event-date rule; `tests/test_verify.py` event-binding cases and `tests/test_pipeline_regressions.py`.
+
+   **Problem:** The new rule checks order and intervening curly-quoted terms, but not which statement supplies the date. **Executed:** for `“Commencement Date” means January 1, 2011. Rent is payable March 1, 2011.`, a proposal naming Commencement Date with date `2011-03-01` passes without corrections. Both dates follow the name and neither has another quoted term between it and the name. The event is stored as March 1, and a separate 30-days-after-Commencement obligation gets visible effective due `2011-03-31`, although the definition expressly gives January 1.
+
+   **Concrete fix:** Bind the date using a small supported local definition grammar, such as `“Name” means DATE`, rather than an unbounded interval following a name. Stop at unrelated clauses and leave the date null when the name/date relation is not recognized unambiguously. Preserve the existing supported positives, including the explicitly tested `“Rent Date” each mean DATE` case. Add this two-date negative and its January-1 positive through the effective-due view. A conservative grammar is sufficient for this wave; no general semantic parser is needed.
+
+2. **R3-2, blocker: The first role after a name can belong to the next party.**
+
+   **Location:** plan, Rev 2.2 R2-4 party rule; Task 9 unique-role resolution; `tests/test_verify.py` party-binding cases.
+
+   **Problem:** The 120-character window still treats proximity as an association. **Executed:** `This lease is between Landlord Alpha LLC and Tenant Beta Inc.` validates the false party item `{name: "Alpha LLC", role: "tenant"}` because Tenant is the first role after Alpha LLC. The writer stores Alpha LLC as tenant, and an ordinary Tenant-pays obligation resolves its visible payer to Alpha LLC. No drop or correction occurs. The source clearly binds Landlord to Alpha LLC, so this is a wrong association, not merely lost recall on an unsupported layout.
+
+   **Concrete fix:** Require a recognized local name-role construction, such as `NAME, as ROLE`, `NAME (the ROLE)`, or `ROLE NAME`, with bounded connectors and party boundaries. Unsupported constructions should produce no association instead of scanning forward into the next party. Add both false-tenant and correct-landlord cases for this exact quote, and keep the existing two-party preamble positive tests.
+
+### D) Verdict
+
+proceed-after-fixes

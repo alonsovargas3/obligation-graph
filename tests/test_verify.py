@@ -794,3 +794,105 @@ def test_r2_6_complete_money_token_with_cents_kept():
     ob = only_obligation(run(raw("cents", amount=1000.50)))
     assert ob.amount == Decimal("1000.50")
     assert ob.currency == "USD"
+
+
+# --- Rev 2.3 (Astra wave-2 round 3): bound dates and bound roles -------------------------
+
+R3 = [
+    (
+        None,
+        "Preamble",
+        [
+            ("between", "This lease is between Landlord Alpha LLC and Tenant Beta Inc."),
+            ("between_as", "This lease is between Alpha LLC and Beta Inc., as Tenant."),
+            (
+                "paren",
+                "DIGITAL 55 MIDDLESEX, LLC, a Delaware limited liability company"
+                " (“Landlord”), and CONSTANT CONTACT, INC., a Delaware corporation"
+                " (“Tenant”).",
+            ),
+        ],
+    ),
+    (
+        "1",
+        "Dates",
+        [
+            (
+                "two_dates",
+                "“Commencement Date” means January 1, 2011. Rent is payable March 1, 2011.",
+            ),
+            ("abbrev", "“Delivery Date” means Jan. 5, 2026."),
+        ],
+    ),
+]
+R3_DOC, R3_IDS = build(R3)
+R3_LINE = {k: line for _, _, rows in R3 for k, line in rows}
+
+
+def r3(seg_key, **kw):
+    return raw(span=R3_LINE[seg_key], segment_id=R3_IDS[seg_key], **kw)
+
+
+def r3_run(*items):
+    return verify(R3_DOC, list(items))
+
+
+def r3_event(seg_key, name, date):
+    return r3(seg_key, kind="event", type=None, name=name, date=date, status="active")
+
+
+def r3_party(seg_key, name, role):
+    return r3(seg_key, kind="party", type=None, name=name, role=role, status=None)
+
+
+def test_r3_event_date_from_a_later_sentence_is_not_bound():
+    res = r3_run(r3_event("two_dates", "Commencement Date", "2011-03-01"))
+    assert len(res.events) == 1
+    assert res.events[0].date is None
+    assert any(c.field == "date" and c.reason == "date_not_bound_to_event" for c in res.corrections)
+
+
+def test_r3_event_date_in_the_defining_sentence_is_kept():
+    res = r3_run(r3_event("two_dates", "Commencement Date", "2011-01-01"))
+    assert [e.date for e in res.events] == ["2011-01-01"]
+
+
+def test_r3_month_abbreviation_is_not_a_sentence_boundary():
+    res = r3_run(r3_event("abbrev", "Delivery Date", "2026-01-05"))
+    assert [e.date for e in res.events] == ["2026-01-05"]
+
+
+def test_r3_role_before_name_binds_and_next_party_role_does_not():
+    res = r3_run(
+        r3_party("between", "Alpha LLC", "tenant"),
+        r3_party("between", "Alpha LLC", "landlord"),
+        r3_party("between", "Beta Inc.", "tenant"),
+    )
+    assert sorted((p.name, p.role) for p in res.parties) == [
+        ("Alpha LLC", "landlord"),
+        ("Beta Inc.", "tenant"),
+    ]
+    assert "role_not_bound_to_name" in [d.reason for d in res.drops]
+
+
+def test_r3_and_is_a_party_boundary():
+    res = r3_run(
+        r3_party("between_as", "Alpha LLC", "tenant"),
+        r3_party("between_as", "Beta Inc.", "tenant"),
+    )
+    assert [(p.name, p.role) for p in res.parties] == [("Beta Inc.", "tenant")]
+    assert [d.reason for d in res.drops] == ["role_not_bound_to_name"]
+
+
+def test_r3_parenthetical_roles_bind_to_their_own_names():
+    res = r3_run(
+        r3_party("paren", "DIGITAL 55 MIDDLESEX, LLC", "landlord"),
+        r3_party("paren", "CONSTANT CONTACT, INC.", "tenant"),
+        r3_party("paren", "DIGITAL 55 MIDDLESEX, LLC", "tenant"),
+        r3_party("paren", "CONSTANT CONTACT, INC.", "landlord"),
+    )
+    assert sorted((p.name, p.role) for p in res.parties) == [
+        ("CONSTANT CONTACT, INC.", "tenant"),
+        ("DIGITAL 55 MIDDLESEX, LLC", "landlord"),
+    ]
+    assert [d.reason for d in res.drops] == ["role_not_bound_to_name"] * 2

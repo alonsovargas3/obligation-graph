@@ -41,3 +41,19 @@ Added:
 - `test_pipeline_regressions.py` (new file; verify -> write_snapshot -> visible_obligation): `test_swapped_event_name_does_not_schedule_a_deadline`, `test_swapped_party_roles_do_not_make_landlord_the_payer`, `test_correct_party_roles_resolve_the_payer`, `test_deadline_conflict_writes_without_integrity_error`, `test_conflict_rerun_replaces_prior_snapshot`.
 - `test_extract_cli.py`, R2-7: `test_no_cache_sample_of_amendment_rejected_before_any_call`.
 - `test_eval_cli.py`, R2-8: `test_sampled_scope_reports_precision_only_as_lower_bound`, `test_full_agreement_scope_reports_precision`. Contract: `score.precision_lower_bound = {micro, macro, ...}`, present only for `scope: sampled`. Precision values are null under sampled; F1 is not asserted.
+
+## 2026-10-02: rev 2.3 (Astra wave-2 round 3), additions only
+
+Added to `tests/test_verify.py` (own R3 fixture doc; no existing assertion changed):
+- `test_r3_event_date_from_a_later_sentence_is_not_bound`
+- `test_r3_event_date_in_the_defining_sentence_is_kept`
+- `test_r3_month_abbreviation_is_not_a_sentence_boundary`
+- `test_r3_role_before_name_binds_and_next_party_role_does_not`
+- `test_r3_and_is_a_party_boundary`
+- `test_r3_parenthetical_roles_bind_to_their_own_names`
+
+New `tests/test_pipeline_regressions_r3.py`, which carries the round-3 counterexamples through verify, the writer, and `visible_obligation`:
+- `test_later_unrelated_date_does_not_schedule_the_deadline`
+- `test_defining_date_schedules_the_deadline`
+- `test_next_party_role_does_not_make_alpha_the_payer`
+- `test_bound_roles_resolve_the_real_payer`

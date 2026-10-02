@@ -495,3 +495,18 @@ These rules override any earlier text they conflict with.
   - Under `scope: sampled`, the eval output carries `score["precision_lower_bound"] = {"micro": …, "macro": …}`.
   - Every precision value and every F1 value (micro, macro, per type) is null, because F1 depends on precision.
   - Recall is unchanged. Under `full_agreement` there is no lower-bound key.
+
+## Rev 2.3 (Astra wave-2 round 3: 2 blockers, accepted)
+
+These rules replace the R2-2 date rule and the R2-4 party rule.
+
+- **R3-1, event dates:**
+  - The date is kept only if it is the first date in the quote after the event-name occurrence, and it lies in the same sentence.
+  - A sentence ends at `.`, `;`, or `!` followed by whitespace and a capital letter. A period that ends a month abbreviation (`Jan.`, `Feb.`, …, `Sept.`) or a single capital initial does not end a sentence.
+  - Otherwise the date is null plus FieldCorrection(`date`, `date_not_bound_to_event`).
+  - The name-in-quote requirement (`event_name_not_in_quote`) is unchanged.
+- **R3-2, party roles:** the bound role of a name occurrence (case/space-normalized) is decided by the first rule that matches:
+  - (a) **Role before the name:** a role word immediately precedes the name, with only whitespace between them (`Landlord Alpha LLC`).
+  - (b) **Role after the name:** a role word follows the name in the form `as ROLE`, `as the ROLE`, `(“ROLE”)`, `(the “ROLE”)`, or `(ROLE)`. The text between the name and that construction is at most 120 chars and contains neither the standalone word `and` nor `;`.
+  - The party is kept only if the bound role equals the claimed role. Otherwise (including when no role is bound) Drop `role_not_bound_to_name`.
+- **Frozen tests:** `tests/test_verify.py` (`test_r3_*`) and `tests/test_pipeline_regressions_r3.py`.
