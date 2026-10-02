@@ -568,3 +568,16 @@ This is the final rule revision under the stop rule. All three changes come from
 - **R6-2, production (a) requires an entity-name field.** The text after the role word, up to the (a) tail delimiter, must be an entity-name field per R6-1 and must equal the claimed name. `Guarantor hereby consents, …` binds nothing.
 - **R6-3, connector `shall mean and refer to`.** Added to the R4-1 connectors because the real corpus uses it (Carbonite: `“Early Access Date” shall mean and refer to February 1, 2014.`). The grammar otherwise stays closed.
 - **Frozen tests:** `tests/test_verify.py` (`test_r6_*`) and `tests/test_pipeline_regressions_r6.py`. Both use the exact real source sentences.
+
+## Rev 2.7 (C3 real-corpus findings, coordinator)
+
+- **R7-1, label-form party rows.**
+  - Production (c): the whole cited segment, stripped of surrounding whitespace, is `ROLE:` followed by whitespace (NBSP included), then an entity-name field (R6-1), then optionally the finite descriptor (R5-3), then an optional `.`.
+  - That binds the field to the role. The quote must cover the whole segment, and the claimed name must equal the field. Governing words (R5-1) still apply.
+  - Real source: constantcontact-2011-ex1041 p0967 `Landlord: … Digital 55 Middlesex, LLC, a Delaware limited liability company.`. Without (c), no party binds in that lease and payer/payee coverage is 0.
+- **R7-2, `python -m og.eval` entrypoint.** `og/eval/__main__.py` must call `main()` under `if __name__ == "__main__"`. The bug was found in C3: the in-process tests could not catch it.
+- **R7-3, incremental cost.**
+  - Each extract run record adds `incremental_cost_usd`: the priced usage of attempts in chunks with `cache_hit == false` only (0.0 when all chunks hit the cache).
+  - `cost_usd` keeps the historical usage of every chunk, including cache replays.
+  - Budget and README cost figures use `incremental_cost_usd`.
+- **Frozen tests:** `tests/test_verify.py` (`test_r7_*`), `tests/test_extract_cli.py::test_incremental_cost_counts_only_real_calls`, `tests/test_eval_cli.py::test_module_entrypoint_runs_main`.

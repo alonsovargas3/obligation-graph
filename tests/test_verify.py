@@ -1192,3 +1192,68 @@ def test_r6_shall_mean_and_refer_to_is_a_connector():
     )
     res = verify(R6_DOC, [item])
     assert [e.date for e in res.events] == ["2014-02-01"]
+
+
+# --- Rev 2.7 (C3 real-corpus finding): label-form party rows -----------------------------
+
+LABEL_LANDLORD = (
+    "Landlord: " + " " * 30 + "Digital 55 Middlesex, LLC, a Delaware limited liability company."
+)
+LABEL_TENANT = "Tenant: " + " " * 33 + "Constant Contact, Inc., a Delaware corporation."
+R7 = [
+    (
+        None,
+        "Basic Lease Information",
+        [
+            ("landlord", LABEL_LANDLORD),
+            ("tenant", LABEL_TENANT),
+            ("operative", "Landlord: shall maintain the Building in good repair."),
+            (
+                "not_label",
+                "The Landlord: Digital 55 Middlesex, LLC, a Delaware limited liability company.",
+            ),
+        ],
+    ),
+]
+R7_DOC, R7_IDS = build(R7)
+R7_LINE = {k: line for _, _, rows in R7 for k, line in rows}
+
+
+def r7_party(seg_key, name, role, span=None):
+    return raw(
+        span=span if span is not None else R7_LINE[seg_key],
+        segment_id=R7_IDS[seg_key],
+        kind="party",
+        type=None,
+        name=name,
+        role=role,
+        status=None,
+    )
+
+
+@pytest.mark.parametrize(
+    "seg_key,name,role",
+    [
+        ("landlord", "Digital 55 Middlesex, LLC", "landlord"),
+        ("tenant", "Constant Contact, Inc.", "tenant"),
+    ],
+)
+def test_r7_label_row_binds_whole_name(seg_key, name, role):
+    res = verify(R7_DOC, [r7_party(seg_key, name, role)])
+    assert [(p.name, p.role) for p in res.parties] == [(name, role)]
+
+
+@pytest.mark.parametrize(
+    "seg_key,name,role,span",
+    [
+        ("landlord", "Digital 55 Middlesex, LLC", "tenant", None),
+        ("landlord", "Middlesex, LLC", "landlord", None),
+        ("landlord", "Digital 55 Middlesex, LLC", "landlord", "Digital 55 Middlesex, LLC"),
+        ("operative", "shall maintain the Building in good repair", "landlord", None),
+        ("not_label", "Digital 55 Middlesex, LLC", "landlord", None),
+    ],
+)
+def test_r7_label_row_negatives(seg_key, name, role, span):
+    res = verify(R7_DOC, [r7_party(seg_key, name, role, span)])
+    assert res.parties == []
+    assert [d.reason for d in res.drops] == ["role_not_bound_to_name"]

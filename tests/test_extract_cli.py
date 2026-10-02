@@ -180,3 +180,13 @@ def test_no_cache_sample_of_amendment_rejected_before_any_call(workdir):
     assert client.calls == []
     assert not Path("data/graph.db").exists()
     assert not Path("eval/runs/s3").exists() or not any(Path("eval/runs/s3").rglob("*"))
+
+
+def test_incremental_cost_counts_only_real_calls(workdir):
+    assert main([], client=FakeClient(responder=echo_responder)) == 0
+    assert main([], client=FakeClient(responder=echo_responder)) == 0
+    a, b = log_records()
+    assert "incremental_cost_usd" in a and "incremental_cost_usd" in b
+    assert a["incremental_cost_usd"] is not None and a["incremental_cost_usd"] > 0
+    assert b["incremental_cost_usd"] == 0.0
+    assert b["cost_usd"] == a["cost_usd"]

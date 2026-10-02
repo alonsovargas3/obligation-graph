@@ -244,3 +244,15 @@ def test_full_agreement_scope_reports_precision(setup):
     assert score["micro"]["precision"] == pytest.approx(0.5)
     assert score["micro"]["recall"] == pytest.approx(1.0)
     assert "precision_lower_bound" not in score
+
+
+def test_module_entrypoint_runs_main(setup):
+    """`python -m og.eval` must call main(); in-process tests alone cannot catch a missing guard."""
+    import subprocess
+    import sys
+
+    argv = ["extract", "--doc", "d1", "--db", str(setup["db"]), "--text", str(setup["text"])]
+    argv += ["--log", str(setup["log"]), "--out", str(setup["out"]), "--gold", str(setup["gold"])]
+    proc = subprocess.run([sys.executable, "-m", "og.eval", *argv], capture_output=True, text=True)
+    assert proc.returncode == 0, proc.stderr
+    assert json.loads(setup["out"].read_text(encoding="utf-8"))["metric"] == "m1"

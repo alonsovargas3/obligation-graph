@@ -106,3 +106,9 @@ Added to `tests/test_verify.py` (own R6 fixture doc of exact real sentences from
 New `tests/test_pipeline_regressions_r6.py`:
 - `test_partial_field_or_clause_never_becomes_a_visible_party` (3)
 - `test_complete_corporate_names_are_visible`
+
+## 2026-10-02: rev 2.7 (C3 real-corpus findings), additions only
+
+- `tests/test_verify.py`: `test_r7_label_row_binds_whole_name` (2) and `test_r7_label_row_negatives` (5), using the exact real label rows (NBSP gaps) from constantcontact-2011-ex1041 p0967/p0968.
+- `tests/test_extract_cli.py::test_incremental_cost_counts_only_real_calls`
+- `tests/test_eval_cli.py::test_module_entrypoint_runs_main` (subprocess, so a missing `__main__` guard fails)
