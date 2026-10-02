@@ -104,8 +104,13 @@ def build_server(db_path: str | Path | None = None) -> MCPServer:
         party matches the payee (who is owed): a role word (landlord, tenant,
         guarantor, provider, customer, lender) or a party name, case-insensitive.
         site matches an agreement site name or location. Redacted and blank
-        obligations carry a marker and null values, never an inferred term. Page
-        with limit (1 to 500) and offset; the response reports total and
+        obligations carry a marker and null values, never an inferred term. Each
+        obligation carries a cited timing classification: scheduled (a computable
+        deadline, stated with its relation: a strict bound is before, never a due-on
+        date), contingent (due relative to a quoted trigger event, offset given,
+        no date until the event is recorded), unresolved (timing the system cannot
+        compute, reason given), or untimed (no stated deadline). Page with limit
+        (1 to 500) and offset; the response reports total and
         unresolved_party_count alongside the rows.
         """
         return read(
@@ -131,12 +136,18 @@ def build_server(db_path: str | Path | None = None) -> MCPServer:
         limit: int = 50,
         offset: int = 0,
     ) -> dict:
-        """Obligations whose effective due date falls in [as_of, as_of + days], plus pending ones.
+        """Obligations with a stated deadline in [as_of, as_of + days], plus pending ones.
 
-        as_of is an ISO date, defaulting to today in UTC; the corpus spans 2011
-        to 2020, so pass it explicitly for historical windows. Pending means the
-        documents give no computable due date; pending rows are listed separately
-        and no date is ever guessed. party matches the payee (who is owed).
+        Scheduled rows are selected by their deadline date whatever the relation:
+        strict bounds read as before that date, never as due-on dates, and each
+        row carries the cited anchor declaration. Pending means the documents
+        give no computable due date; pending rows are listed one page at a time
+        and never double counted, with the contingent rows (due relative to a
+        quoted trigger event) as a paged subset and totals per kind: contingent,
+        unresolved (timing the system cannot compute, reason given), and untimed
+        (no stated deadline). No date is ever guessed. as_of is an ISO date,
+        defaulting to today in UTC; the corpus spans 2011 to 2020, so pass it
+        explicitly for historical windows. party matches the payee (who is owed).
         """
         return read(
             lambda con: query.upcoming_deadlines(
