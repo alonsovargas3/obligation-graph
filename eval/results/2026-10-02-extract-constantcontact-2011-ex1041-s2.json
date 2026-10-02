@@ -1,0 +1,568 @@
+{
+  "metric": "m1",
+  "prompt_version": "extract_v1@6de99191",
+  "doc_id": "constantcontact-2011-ex1041",
+  "textdoc_sha256": "d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478",
+  "score": {
+    "metric": "m1",
+    "iou_threshold": 0.3,
+    "n_gold": 50,
+    "n_pred": 141,
+    "matches": [
+      [
+        0,
+        10
+      ],
+      [
+        1,
+        11
+      ],
+      [
+        2,
+        12
+      ],
+      [
+        3,
+        13
+      ],
+      [
+        5,
+        17
+      ],
+      [
+        6,
+        20
+      ],
+      [
+        8,
+        23
+      ],
+      [
+        9,
+        26
+      ],
+      [
+        10,
+        31
+      ],
+      [
+        11,
+        35
+      ],
+      [
+        12,
+        36
+      ],
+      [
+        13,
+        37
+      ],
+      [
+        16,
+        50
+      ],
+      [
+        17,
+        53
+      ],
+      [
+        18,
+        59
+      ],
+      [
+        19,
+        63
+      ],
+      [
+        20,
+        67
+      ],
+      [
+        21,
+        71
+      ],
+      [
+        22,
+        72
+      ],
+      [
+        23,
+        73
+      ],
+      [
+        24,
+        74
+      ],
+      [
+        25,
+        75
+      ],
+      [
+        26,
+        76
+      ],
+      [
+        27,
+        77
+      ],
+      [
+        30,
+        84
+      ],
+      [
+        31,
+        87
+      ],
+      [
+        32,
+        88
+      ],
+      [
+        33,
+        91
+      ],
+      [
+        34,
+        96
+      ],
+      [
+        35,
+        98
+      ],
+      [
+        36,
+        99
+      ],
+      [
+        37,
+        107
+      ],
+      [
+        40,
+        126
+      ],
+      [
+        41,
+        128
+      ],
+      [
+        42,
+        130
+      ],
+      [
+        43,
+        131
+      ],
+      [
+        44,
+        132
+      ],
+      [
+        47,
+        137
+      ],
+      [
+        48,
+        139
+      ],
+      [
+        49,
+        140
+      ]
+    ],
+    "micro": {
+      "tp": 40,
+      "fp": 101,
+      "fn": 10,
+      "precision": null,
+      "recall": 0.8,
+      "f1": null
+    },
+    "per_type": {
+      "delivery": {
+        "tp": 3,
+        "fp": 9,
+        "fn": 1,
+        "precision": null,
+        "recall": 0.75,
+        "f1": null
+      },
+      "guarantee": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0,
+        "precision": null,
+        "recall": 1.0,
+        "f1": null
+      },
+      "insurance": {
+        "tp": 3,
+        "fp": 12,
+        "fn": 0,
+        "precision": null,
+        "recall": 1.0,
+        "f1": null
+      },
+      "notice": {
+        "tp": 6,
+        "fp": 10,
+        "fn": 0,
+        "precision": null,
+        "recall": 1.0,
+        "f1": null
+      },
+      "other": {
+        "tp": 11,
+        "fp": 25,
+        "fn": 3,
+        "precision": null,
+        "recall": 0.7857142857142857,
+        "f1": null
+      },
+      "payment": {
+        "tp": 7,
+        "fp": 30,
+        "fn": 3,
+        "precision": null,
+        "recall": 0.7,
+        "f1": null
+      },
+      "penalty": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.5,
+        "f1": null
+      },
+      "sla": {
+        "tp": 3,
+        "fp": 9,
+        "fn": 0,
+        "precision": null,
+        "recall": 1.0,
+        "f1": null
+      },
+      "termination_right": {
+        "tp": 5,
+        "fp": 5,
+        "fn": 1,
+        "precision": null,
+        "recall": 0.8333333333333334,
+        "f1": null
+      }
+    },
+    "macro": {
+      "precision": null,
+      "recall": 0.8211309523809524,
+      "f1": null
+    },
+    "fields": {
+      "amount": {
+        "gold_known": 1,
+        "pred_known": 1,
+        "both_known": 1,
+        "both_known_equal": 1,
+        "accuracy_on_known": 1.0,
+        "coverage": 1.0
+      },
+      "currency": {
+        "gold_known": 1,
+        "pred_known": 1,
+        "both_known": 1,
+        "both_known_equal": 1,
+        "accuracy_on_known": 1.0,
+        "coverage": 1.0
+      },
+      "due_date": {
+        "gold_known": 0,
+        "pred_known": 0,
+        "both_known": 0,
+        "both_known_equal": 0,
+        "accuracy_on_known": null,
+        "coverage": null
+      },
+      "offset_days": {
+        "gold_known": 5,
+        "pred_known": 0,
+        "both_known": 0,
+        "both_known_equal": 0,
+        "accuracy_on_known": null,
+        "coverage": 0.0
+      },
+      "anchor_event": {
+        "gold_known": 5,
+        "pred_known": 0,
+        "both_known": 0,
+        "both_known_equal": 0,
+        "accuracy_on_known": null,
+        "coverage": 0.0
+      },
+      "owed_by": {
+        "gold_known": 40,
+        "pred_known": 40,
+        "both_known": 40,
+        "both_known_equal": 40,
+        "accuracy_on_known": 1.0,
+        "coverage": 1.0
+      },
+      "owed_to": {
+        "gold_known": 40,
+        "pred_known": 40,
+        "both_known": 40,
+        "both_known_equal": 40,
+        "accuracy_on_known": 1.0,
+        "coverage": 1.0
+      },
+      "status": {
+        "gold_known": 40,
+        "pred_known": 40,
+        "both_known": 40,
+        "both_known_equal": 40,
+        "accuracy_on_known": 1.0,
+        "coverage": 1.0
+      }
+    },
+    "precision_lower_bound": {
+      "micro": 0.28368794326241137,
+      "macro": 0.3837180930930931
+    }
+  },
+  "proposal_grounding": 0.9358974358974359,
+  "integrity": 0,
+  "drops_by_reason": {
+    "role_not_bound_to_name": 6,
+    "event_name_not_in_quote": 4
+  },
+  "corrections_by_field": {
+    "description": 141,
+    "anchor_event": 22,
+    "offset_days": 1,
+    "trigger": 25,
+    "owed_by": 1
+  },
+  "cost_usd": 0.5814147,
+  "cost_basis": "PRICES_2026_10",
+  "calls": [
+    {
+      "chunk_id": "c0001",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 367,
+      "output_tokens": 369,
+      "cache_read_tokens": 0,
+      "cache_write_tokens": 2389,
+      "refused": false,
+      "latency_ms": 3967,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0002",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4530,
+      "output_tokens": 1341,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 8416,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0003",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4515,
+      "output_tokens": 250,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 2857,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0004",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4611,
+      "output_tokens": 1037,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 6600,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0005",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4237,
+      "output_tokens": 1030,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 7050,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0006",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 5270,
+      "output_tokens": 1906,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 10058,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0007",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4025,
+      "output_tokens": 2556,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 14116,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0008",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4306,
+      "output_tokens": 3151,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 15634,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0009",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 3824,
+      "output_tokens": 3239,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 16065,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0010",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4373,
+      "output_tokens": 3799,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 19445,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0011",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4429,
+      "output_tokens": 3959,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 20027,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0012",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 3965,
+      "output_tokens": 2158,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 12286,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0013",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4351,
+      "output_tokens": 2249,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 11632,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0014",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4253,
+      "output_tokens": 2579,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 16296,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0015",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 3955,
+      "output_tokens": 1533,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 8610,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0016",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 3355,
+      "output_tokens": 1771,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 10120,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0017",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4546,
+      "output_tokens": 3184,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 16266,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0018",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 4083,
+      "output_tokens": 2172,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 11612,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0019",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 2964,
+      "output_tokens": 2215,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 11554,
+      "cache_hit": false
+    },
+    {
+      "chunk_id": "c0020",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 2868,
+      "output_tokens": 373,
+      "cache_read_tokens": 2389,
+      "cache_write_tokens": 0,
+      "refused": false,
+      "latency_ms": 3422,
+      "cache_hit": false
+    }
+  ]
+}
