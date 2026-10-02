@@ -173,3 +173,9 @@ Red at freeze: 11 modules fail at collection on missing modules, and every wave 
 - **New frozen test:** `tests/test_change_latency.py`. `change_run.latency_ms` must equal the run's `recorded_latency_ms`, both live and on replay.
 - **Found by:** C10 aggregate generation. A replayed run stored milliseconds of wall time, and the aggregate printed it as "recorded latency".
 - **Red at freeze:** 1 of 1 failing.
+
+## Wave 4 C11 (2026-10-02)
+
+- **New frozen test:** `tests/test_readme_tables.py`, which applies the real README check from rev 2 W4-14.
+- **What it checks:** the generated tables match the committed aggregate, and the README contains no em dashes.
+- **Status:** green at freeze.
