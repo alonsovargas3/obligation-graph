@@ -61,6 +61,17 @@ SEC EDGAR (SHA-256 pinned) -> ingest (text, sections, pages, paragraphs)
    - **Fail open.** Any error, timeout, or disagreement runs the check. A gate may skip work; it can never hide a finding.
    - **Ground truth.** Every change order is also checked with no gates at all, and that run is the ground truth for gate recall.
 
+5. **Deadlines.** Each obligation's timing is classified deterministically from its own quote, with no model involved:
+
+   | Timing | What it means |
+   |---|---|
+   | **Scheduled** | It has a computable deadline from a dated, cited declaration, such as "Commencement Date: January 1, 2011". |
+   | **Contingent** | It is due relative to a quoted outside event, such as "within thirty (30) days after receipt of an invoice". |
+   | **Unresolved** | It has timing the system cannot compute, and the reason is stated, such as business days or a redacted day count. |
+   | **No stated deadline** | The quote contains no timing language. |
+
+   A "prior to" deadline is kept as a strict before-date, never shown as a due date.
+
 Design decisions are recorded in [`docs/decisions/`](docs/decisions/) (ADR-001 to ADR-010).
 
 ## Results
@@ -70,6 +81,7 @@ All numbers below are generated from the committed aggregate (`eval/results/*-ag
 - **Extraction reference set:** 50 obligations on the 2011 Constant Contact datacenter lease. It is a model-drafted, human-spot-checked reference set: drafted blind by a second model, adjudicated by the coordinator, and spot-checked by a person.
 - **Precision on the reference lease** is a lower bound, because the reference set is a sample, not every obligation.
 - **Change-order references** cover the First and Third Amendments. The user checked all 12 gate labels.
+- **Timing reference sets** cover 50 obligations on the base lease plus 16 cross-document challenge cases. They are model-drafted and model-reviewed: drafted blind by gpt-6-astra, reviewed independently by Claude Opus 5.5 and gpt-6-astra, and adjudicated by the coordinator. No person spot-checked them.
 
 <!-- og:tables:start -->
 ### Extraction: constantcontact-2011-ex1041
@@ -124,6 +136,15 @@ Source: `eval/results/2026-10-02-extract-summary.json` (committed; not this run)
 | not_found_in_section | 1 |
 | role_not_bound_to_name | 19 |
 | total | 28 |
+
+### Timing
+
+Timing reference sets: model-drafted, adjudicated, scope sampled. Labels match within the same agreement (IoU >= 0.3); metrics are scored over matched obligations only. An invented bound is a predicted date the reference set does not state.
+
+| set | labeled | matched | missing | kind | relation | bound date | invented | trigger span | reason |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| challenge | 16 | 16 | 0 | 100.0% | 100.0% | 100.0% | 0 | 81.2% | 100.0% |
+| reference | 50 | 46 | 4 | 71.7% | 72.7% | 100.0% | 0 | 45.7% | 40.0% |
 
 ### Change order: constantcontact-2012-ex101
 
@@ -231,7 +252,7 @@ Four read-only tools, which never write and never call a model. Every returned i
 | Question | What comes back |
 |---|---|
 | "List the agreements in the obligation graph." | 7 agreements |
-| "What do we owe the landlord at 55 Middlesex Turnpike?" | Cited rent and additional-rent clauses, all pending (see limitations) |
+| "What does the tenant owe the landlord under the 55 Middlesex Turnpike lease?" | Cited rent and additional-rent clauses. Invoice-driven items come back as contingent deadlines, such as "within thirty (30) days after receipt of an invoice", with the trigger quoted. |
 | "Check change order endurance-2017-ex106." | The Suite 409 surrender date moved from June 30, 2018 to June 30, 2020 (+731 days), three new monthly rents, and the guarantee and SLA checks skipped by the gates |
 | "Show redacted payment obligations in the Carbonite lease." | Rows marked `[REDACTED]`, with no amount filled in |
 
@@ -245,15 +266,19 @@ Four read-only tools, which never write and never call a model. Every returned i
 
 ## Known limitations
 
-- **No computable due dates yet.** All 525 obligations are pending, meaning the documents give no computable due date, which is not the same as overdue. A sizing scan found:
+- **Few computable dates.** Most obligations have no computable date, so they are pending, which is not the same as overdue. Of the 525 obligations:
 
-  | Timing | Share |
+  | Timing | Count |
   |---|---:|
-  | Depends on an outside event (an invoice, a notice, a default) | About 41% |
-  | No timing language at all | About 39% |
-  | Datable from stated dates or rent schedules | About 6% |
+  | Scheduled | 5 |
+  | Contingent on a quoted event | 132 |
+  | Unresolved, with a reason | 132 |
+  | No stated deadline | 256 |
 
-  Classifying obligations as scheduled, contingent on a cited trigger, or unresolved is the next piece of work.
+  The leading unresolved reasons are a timing word with no recognizable anchor (55), recurring rent schedules (39) and business-day counts (19). The only Business Day definition in the corpus excludes public holidays, so business days stay uncomputed.
+- **Timing recall is conservative.** On the base-lease reference set, the timing kind is right for 72% of matched obligations. Most misses (9 of 13) lean toward less timing: an event-relative duty reported as no stated deadline, or as unresolved. The other 4 are classified as contingent or unresolved where the reference reads them differently. No obligation was given a date the reference does not support (0 invented dates).
+  - Wording outside the closed grammar is the main cause: ordinal counts ("thirtieth (30th) day"), "when changes are made", and "Once ..., as soon as reasonably practicable".
+  - Recurring rent schedules are not expanded into monthly dates.
 - **Party roles bind in 2 of 7 filings.** Elsewhere the payer and payee stay empty rather than guessed.
 - **Missing amendment.** The Second Amendment to the Constant Contact lease and an office space rider are referenced but were never filed. Clauses they hold are reported as unresolved targets, and 3A's rent changes carry no prior rate.
 - **Closed grammars.** Date and role binding, the supersession cue list, and the target grammar are conservative closed rules. A phrasing outside them is dropped and logged, never accepted unverified.

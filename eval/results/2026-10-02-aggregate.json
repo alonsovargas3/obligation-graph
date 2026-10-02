@@ -1,7 +1,7 @@
 {
   "metric": "aggregate",
   "date": "2026-10-02",
-  "manifest_sha256": "b7567af6a50061406bf9d8c87398e83b15ff771345909550f08af3b654c378a5",
+  "manifest_sha256": "761356fcd6d41cd8376ceeda6b11979bf7fa56e770538df843b81105548eb0fe",
   "extraction": {
     "doc_id": "constantcontact-2011-ex1041",
     "prompt_version": "extract_v1@6de99191",
@@ -461,13 +461,13 @@
       "role_not_bound_to_name": 19
     },
     "extraction_run_ids": {
-      "terawulf-2025-ex10-1": "20261002T145518-5912447b",
-      "constantcontact-2011-ex1041": "20261002T145519-86faa0f6",
-      "carbonite-2014-ex1024": "20261002T145519-e96f791a",
-      "mawson-2025-ex101": "20261002T145521-0b724a05",
-      "applieddigital-2026-ex101": "20261002T145523-40eb68be",
-      "constantcontact-2012-ex101": "20261002T145523-acb1d30f",
-      "endurance-2017-ex106": "20261002T145523-30002b97"
+      "terawulf-2025-ex10-1": "20261002T200410-5580d89a",
+      "constantcontact-2011-ex1041": "20261002T200410-3874633e",
+      "carbonite-2014-ex1024": "20261002T200411-eff9f0d4",
+      "mawson-2025-ex101": "20261002T200412-1ae2e3c2",
+      "applieddigital-2026-ex101": "20261002T200414-26173536",
+      "constantcontact-2012-ex101": "20261002T200414-7ea14709",
+      "endurance-2017-ex106": "20261002T200415-d19f1f89"
     }
   },
   "change": {
@@ -1004,6 +1004,119 @@
           "gated": 34640
         },
         "gate_cost_usd": 0.016581
+      }
+    }
+  },
+  "timing": {
+    "reference": {
+      "name": "reference",
+      "labeled": 50,
+      "matched": 46,
+      "missing": [
+        {
+          "agreement_id": "constantcontact-2011-ex1041",
+          "segment_id": "p0576"
+        },
+        {
+          "agreement_id": "constantcontact-2011-ex1041",
+          "segment_id": "p0584"
+        },
+        {
+          "agreement_id": "constantcontact-2011-ex1041",
+          "segment_id": "p0863"
+        },
+        {
+          "agreement_id": "constantcontact-2011-ex1041",
+          "segment_id": "p0875"
+        }
+      ],
+      "timing_kind": {
+        "correct": 33,
+        "denominator": 46,
+        "accuracy": 0.717391304347826
+      },
+      "relation": {
+        "correct": 16,
+        "denominator": 22,
+        "accuracy": 0.7272727272727273
+      },
+      "bound_date": {
+        "correct": 2,
+        "denominator": 2,
+        "accuracy": 1.0,
+        "invented": 0
+      },
+      "trigger": {
+        "matched": 16,
+        "denominator": 35,
+        "rate": 0.45714285714285713
+      },
+      "reason": {
+        "correct": 6,
+        "denominator": 15,
+        "accuracy": 0.4
+      },
+      "confusion": {
+        "scheduled": {
+          "scheduled": 2
+        },
+        "unresolved": {
+          "contingent": 3,
+          "unresolved": 8,
+          "untimed": 4
+        },
+        "contingent": {
+          "contingent": 13,
+          "untimed": 3,
+          "unresolved": 2
+        },
+        "untimed": {
+          "unresolved": 1,
+          "untimed": 10
+        }
+      }
+    },
+    "challenge": {
+      "name": "challenge",
+      "labeled": 16,
+      "matched": 16,
+      "missing": [],
+      "timing_kind": {
+        "correct": 16,
+        "denominator": 16,
+        "accuracy": 1.0
+      },
+      "relation": {
+        "correct": 12,
+        "denominator": 12,
+        "accuracy": 1.0
+      },
+      "bound_date": {
+        "correct": 5,
+        "denominator": 5,
+        "accuracy": 1.0,
+        "invented": 0
+      },
+      "trigger": {
+        "matched": 13,
+        "denominator": 16,
+        "rate": 0.8125
+      },
+      "reason": {
+        "correct": 9,
+        "denominator": 9,
+        "accuracy": 1.0
+      },
+      "confusion": {
+        "scheduled": {
+          "scheduled": 5
+        },
+        "unresolved": {
+          "unresolved": 9
+        },
+        "contingent": {
+          "contingent": 2
+        }
       }
     }
   },
