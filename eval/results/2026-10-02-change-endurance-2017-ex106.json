@@ -1,0 +1,280 @@
+{
+  "metric": "change",
+  "change_order_id": "endurance-2017-ex106",
+  "chain": [
+    "constantcontact-2011-ex1041",
+    "constantcontact-2012-ex101",
+    "endurance-2017-ex106"
+  ],
+  "pair_id": "20261002T123959-17977579",
+  "findings": {
+    "ungated": {
+      "overall": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 3,
+        "precision": 1.0,
+        "recall": 0.5714285714285714,
+        "predicted": 4,
+        "gold": 7
+      },
+      "per_kind": {
+        "supersedes": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "shifted_date": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "price_change": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "potential_conflict": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "matches": [
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          2
+        ]
+      ]
+    },
+    "gated": {
+      "overall": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 3,
+        "precision": 1.0,
+        "recall": 0.5714285714285714,
+        "predicted": 4,
+        "gold": 7
+      },
+      "per_kind": {
+        "supersedes": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "shifted_date": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "price_change": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "potential_conflict": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "matches": [
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          2
+        ]
+      ]
+    },
+    "retention_recall": 1.0
+  },
+  "values": {
+    "old_value": {
+      "gold": 1,
+      "coverage": 1.0,
+      "accuracy": 1.0
+    },
+    "new_value": {
+      "gold": 4,
+      "coverage": 1.0,
+      "accuracy": 1.0
+    },
+    "delta": {
+      "gold": 1,
+      "coverage": 1.0,
+      "accuracy": 1.0
+    },
+    "currency": {
+      "gold": 3,
+      "coverage": 1.0,
+      "accuracy": 1.0
+    },
+    "target_label": {
+      "gold": 0,
+      "coverage": null,
+      "accuracy": null
+    }
+  },
+  "gates": {
+    "cascade": {
+      "vs_reference": {
+        "positives": 3,
+        "misses": 0,
+        "missed": [],
+        "recall": 1.0,
+        "precision": 0.75,
+        "miss_upper_95": 0.6315968501359617,
+        "skipped": 2,
+        "skip_rate": 0.3333333333333333
+      },
+      "vs_baseline": {
+        "positives": 2,
+        "misses": 0,
+        "missed": [],
+        "recall": 1.0,
+        "precision": 0.5,
+        "miss_upper_95": 0.7763932022500208
+      }
+    },
+    "rules": {
+      "vs_reference": {
+        "positives": 3,
+        "misses": 0,
+        "missed": [],
+        "recall": 1.0,
+        "precision": 0.75,
+        "miss_upper_95": 0.6315968501359617
+      },
+      "vs_baseline": {
+        "positives": 2,
+        "misses": 0,
+        "missed": [],
+        "recall": 1.0,
+        "precision": 0.5,
+        "miss_upper_95": 0.7763932022500208
+      }
+    },
+    "haiku": {
+      "observed": [
+        "guarantee",
+        "sla"
+      ],
+      "coverage": 0.3333333333333333,
+      "vs_reference": {
+        "positives": 0,
+        "misses": 0,
+        "missed": [],
+        "recall": null,
+        "precision": null,
+        "miss_upper_95": null
+      },
+      "vs_baseline": {
+        "positives": 0,
+        "misses": 0,
+        "missed": [],
+        "recall": null,
+        "precision": null,
+        "miss_upper_95": null
+      }
+    }
+  },
+  "skips": [
+    {
+      "category": "guarantee",
+      "kind": "confirmed_safe_skip",
+      "reference": false,
+      "baseline_findings": 0
+    },
+    {
+      "category": "sla",
+      "kind": "confirmed_safe_skip",
+      "reference": false,
+      "baseline_findings": 0
+    }
+  ],
+  "disagreements": [
+    {
+      "backend": "rules",
+      "category": "termination",
+      "answer": true,
+      "reference": false
+    },
+    {
+      "backend": "cascade",
+      "category": "termination",
+      "answer": true,
+      "reference": false
+    }
+  ],
+  "cost": {
+    "ungated": {
+      "cost_usd": 0.37104000000000004,
+      "incremental_cost_usd": 0.0,
+      "latency_ms": 89
+    },
+    "gated": {
+      "cost_usd": 0.34601460000000006,
+      "incremental_cost_usd": 0.016581,
+      "latency_ms": 5497
+    },
+    "gate_cost_usd": 0.016581,
+    "note": "gated check responses replay the ungated run's cache; the gated latency is a replay comparison, not two independently timed live pipelines"
+  },
+  "provenance": {
+    "drafted_by": "gpt-6-astra (blind)",
+    "adjudicated_by": "claude-opus-5-5 (coordinator)",
+    "spot_checked": 12
+  },
+  "scope": "full_agreement",
+  "textdoc_sha256": {
+    "constantcontact-2011-ex1041": "d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478",
+    "constantcontact-2012-ex101": "8ee2c82ed01031e48749248bb9d0aa088b6c5ba0c55288b1da5b4917efa81b27",
+    "endurance-2017-ex106": "3a1dca055a888969cc785597b452da98049c841696711293ef7c3c4d98d5f345"
+  },
+  "disclosures": [
+    "the corpus has two related chain documents from one counterparty pair",
+    "labels were drafted blind by one model and adjudicated by the coordinator; gate answers were user-spot-checked only where provenance says so",
+    "the skip rule (unanimous 3/3 no) was pre-registered, not tuned on this set; there is no held-out calibration set",
+    "old-side matching is by segment identity: a checker citing a different segment inside the same target range is scored as a mismatch"
+  ]
+}
