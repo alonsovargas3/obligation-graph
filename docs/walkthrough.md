@@ -1,4 +1,4 @@
-# Two-minute walkthrough: recording guide
+# Walkthrough: recording guide
 
 ## Names used on screen
 
@@ -28,82 +28,109 @@ The page and the tools use document IDs, not nicknames:
 
 ## Recording script
 
-### 0:00 to 0:15: The idea (README tab)
+Read the quoted lines aloud. The numbered steps are what to click and point to. The narration is about 520 words, roughly three and a half minutes at a relaxed pace; the final beat is optional.
 
-- **Show:** the top of the README, with the "The invariant" heading visible.
-- **Say:** "Obligation Graph turns public data center contracts into obligations that each point to the exact clause they came from. The rule: never state a term the system cannot point to."
+### 1. Opening: what the system does (about 20 seconds)
 
-### 0:15 to 0:40: A redacted clause (review page, top half)
+1. Show the top of the README, with the "The invariant" heading visible.
+2. Switch to the review page tab.
 
-1. Switch to the review page tab. It shows a blue header, **Obligation Graph**, and a grey note: "520 pending obligations ...".
-2. In the **Obligations** panel, set the filters:
-   - **Agreement** (second row, left): choose `carbonite-2014-ex1024`.
-   - **Status** (first row, right): choose `redacted`.
+> "Contracts contain commitments that people need to track. Obligation Graph turns those commitments into structured records, while keeping each one attached to the exact contract language that supports it.
+>
+> The rule is simple: never state a term the system cannot point to."
 
-   The table shrinks to **17 rows**, each with an orange `[REDACTED]` tag.
-3. In the **Due / timing** column, the second row shows an `unresolved: recurring_schedule` tag: the rent repeats monthly, so no single due date is given.
-4. Click the **second row**: payment, `$[***] per month for the period commencing on the Commencement Date ...`.
-5. Point to the **Clause** panel on the right. It shows the verbatim text, **Section 8, Page 17**, the character range, the `[REDACTED]` explanation, and "Agreement site: 2121 South Price Road, Chandler, Arizona".
+### 2. Obligations and redacted rent (about 40 seconds)
 
-- **Say:** "Every row is a quoted clause with its section, page and exact character range. This lease redacts its rent. The system keeps it redacted and never guesses a number."
+1. Show the obligations table. The grey note above it starts "520 pending obligations ...".
 
-### 0:40 to 1:10: An amendment checked against the lease (review page, bottom half)
+> "Here's our list of obligations, 525 in this build. The graph connects them to their agreements and supporting clauses, so we can explore those relationships or ask an agent to retrieve them.
+>
+> Let's look at the Carbonite lease and filter to the redacted items."
+
+2. In the **Obligations** panel, set **Agreement** (second row, left) to `carbonite-2014-ex1024` and **Status** (first row, right) to `redacted`. The table shrinks to **17 rows**, each with an orange `[REDACTED]` tag.
+3. Click the **second row**: payment, `$[***] per month for the period commencing on the Commencement Date ...`.
+4. Point to the **Clause** panel on the right: the verbatim text, **Section 8, Page 17**, and the `[REDACTED]` explanation.
+
+> "Here's a payment obligation. When I click it, you can see the exact passage where that information came from. Notice that the rent amount is hidden in the original document. The system keeps it redacted rather than guessing a number."
+
+Pause so the audience can read the source text. If you want a timing beat here, point to the row's **Due / timing** tag, `unresolved: recurring_schedule`, without adding a line.
+
+### 3. Amendments: what changed (about 50 seconds)
 
 1. Scroll down past the obligations table to the panel titled **Change orders**.
-2. Open the **Change order** dropdown, which shows "Select a change order...". Choose `endurance-2017-ex106 (amends constantcontact-2011-ex1041)`. That is the Third Amendment.
-3. Read the two status lines that appear:
-   - "Stored, verified report for endurance-2017-ex106 (no analysis performed)."
-   - "Chain: constantcontact-2011-ex1041 (base) -> constantcontact-2012-ex101 (prior_amendment) -> endurance-2017-ex106 (change_order)".
-4. Scroll past the gate table (you'll come back to it) to **Shifted dates (1)**. It shows two boxes side by side:
-   - **Old clause:** "scheduled to be surrendered to Landlord on June 30, 2018".
-   - **New clause:** "expiring June 30, 2020".
+2. Open the **Change order** dropdown ("Select a change order...") and choose `endurance-2017-ex106 (amends constantcontact-2011-ex1041)`. Two status lines appear: "Stored, verified report for endurance-2017-ex106 (no analysis performed)." and the chain base -> First Amendment -> Third Amendment.
 
-   Underneath: "old: 2018-06-30 new: 2020-06-30 delta: 731 days".
-5. Scroll a little more to **Price changes (3)**. The first shows `$35,596.80/month` under **New clause**, "No old-side quote is stored for this finding" under **Old clause**, and the period "July 1, 2018 – December 31, 2018" under **Context**.
+> "Now that you've seen how we get the information and where it comes from, let's look at what happens when an agreement changes.
+>
+> This is the Third Amendment. We're viewing a stored, verified report comparing it with the base lease and the earlier amendment available in the graph."
 
-- **Say:** "Amendments are checked against the agreement they change. The Third Amendment moves the Suite 409 surrender date from June 30, 2018 to June 30, 2020, and both dates are cited. Its rents are new amounts with no prior rate, because the amendment they replace was never filed."
+3. Scroll past the gate table (you'll come back to it) to **Shifted dates (1)**. Point to **Old clause** ("scheduled to be surrendered to Landlord on June 30, 2018"), then **New clause** ("expiring June 30, 2020").
 
-### 1:10 to 1:30: Decision gates (review page, same panel)
+> "Here's the old text, and here's the new text. The Suite 409 surrender date moves from June 30, 2018, to June 30, 2020. You can see the contract language supporting both dates."
 
-1. Scroll back up within **Change orders** to **Gate decisions (gated run)**. Its summary line reads "Gates: 6 questions, 4 checks ran, 2 skipped."
-2. Point to the two rows with the green **check skipped** tag:
-   - `touches_guarantee`: answer **no**, backend classifier / haiku.
-   - `touches_sla`: answer **no**, backend classifier / haiku.
-3. Point to the line under the table: "A gate may skip a check; it can never suppress a finding."
+4. Scroll to **Price changes (3)** and point to the first one: `$35,596.80/month` under **New clause**, "No old-side quote is stored for this finding" under **Old clause**.
 
-- **Say:** "Six yes or no questions decide which expensive checks run. Here the guarantee and SLA checks were skipped after three unanimous answers from a small model. A separate run with every check confirms nothing was missed."
+> "Here's a new rent amount: $35,596.80 per month for July through December 2018.
+>
+> There's no prior rate shown because the referenced amendment containing that information wasn't filed. The system makes that gap visible rather than filling it in."
 
-### 1:30 to 1:50: Ask it as an agent (Claude Desktop)
+5. Scroll to **New obligations without a supersession (7)**: the surrender obligation and the Suite 409 rent lines, each with its quoted clause.
 
-1. Switch to Claude Desktop and open a **new chat**. In a reused chat Claude may answer from earlier results instead of calling the tool, and viewers should see the tool call.
-2. Type: **What does the tenant owe the landlord under the 55 Middlesex Turnpike lease?** and press Enter. Use the third person: a question with "we" makes Claude Desktop check the answer against your personal context instead of answering about the lease.
-3. Wait for the "Obligation graph: Get obligations" line, then let the answer render. It groups what the tenant owes into base rent, additional rent, costs after a default, and non-monetary obligations, each with its lease section.
-4. Scroll to **Additional rent** and point to **one** line with a stated trigger, for example "Generator fuel: due within 30 days of each invoice (§3.5.4)". Don't scroll through the whole answer.
-5. If time allows, scroll to the end and point to the line saying the rent periods count from the Commencement Date, which isn't recorded, so no calendar dates are given.
+> "So you can see exactly what changed, and here are the updated obligations that result."
 
-- **Say:** "I ask in plain English. The agent queries the same obligation graph we just explored. Here's an obligation, the section it cites, and when it comes due: thirty days after the landlord's invoice. That timing is quoted from the lease."
-- **Then, as one line:** "If the contract doesn't let the system compute a date, it says so and gives the reason. It never guesses one."
-- Pause for a beat after that line. Don't add more.
+### 4. Gates: deciding which checks to run (about 35 seconds)
 
-Delivery notes for this scene:
-- Don't read out the dollar amounts. One obligation and its trigger is enough; the grounding is the point.
-- Don't say "pending" means overdue. If asked, pending means no computable date yet.
-- Claude may flag the base rent table ("Suite A drops by about 60% at month 25", identical figures from month 37) as a possible extraction error. Don't comment on it on camera. Section 8 of the filed lease states exactly those figures, so the extraction is faithful.
-- Claude may label the suites "A/B/C". The lease names them Suite 1.5.1, 1.5.2 and 1.14A; don't read the labels out.
+1. Scroll back up to **Gate decisions (gated run)**. Its summary reads "Gates: 6 questions, 4 checks ran, 2 skipped."
+2. Point to the two rows tagged **check skipped**: `touches_guarantee` and `touches_sla`, both answered **no** by the classifier (haiku).
 
-### 1:50 to 2:00: Close (README tab)
+> "Here you can see which detailed checks ran and which were skipped. These gates help us decide which checks this amendment needs.
+>
+> Simple rules run first. Where those don't decide, a small model answers three times. We skip a check only after three unanimous 'no' answers. If there's disagreement, an error, or a timeout, we run the check anyway.
+>
+> For this amendment, the guarantee and SLA checks were skipped. We also tested it with every check turned on, and both runs produced the same findings."
 
-- **Show:** switch to the README and scroll to **Results**, so the first table (Extraction) is visible.
-- **Say:** "Every number here is generated from committed results, and a fresh clone reproduces them without an API key."
-- **Closing line:** "Whether you click through the graph or ask in plain English, every answer points back to the contract text. No guessing."
-- Stop after the closing line.
+Pause. The point to leave with the viewer: when in doubt, run the check.
 
-## Delivery tips for the whole video
+### 5. Ask the agent (about 35 seconds)
 
-- Keep each scene to one example. Show one row, one clause, one finding, and move on.
-- Lead with what the viewer sees, then the claim: "here's the obligation, and here's the text it comes from."
-- Say each caveat once, in one line, then pause. A short pause after a key line reads as confidence.
-- If you stumble, stop and restart the scene instead of correcting yourself on camera. Each scene is short enough to retake.
+1. Switch to Claude Desktop and open a **new chat**. In a reused chat Claude may answer from earlier results instead of calling the tool.
+2. Type **What does the tenant owe the landlord under the 55 Middlesex Turnpike lease?** and press Enter. Use this third-person wording, not "What do we owe...": a question with "we" makes Claude Desktop check your personal context instead of answering about the lease.
+3. Let the "Obligation graph: Get obligations" line and the answer appear before you speak.
+
+> "Now I'm asking a question in plain English. The agent queries the same obligation graph we were just exploring.
+>
+> It can tell us what the contract requires, but it can't tell us a current balance, because it doesn't know what has been paid.
+>
+> Here are the rent obligations, and here are the contract references supporting them."
+
+4. Point to one base-rent line and its section reference (for example "Prepaid rent ... (§10)").
+5. Scroll to **Additional rent** and point to "Generator fuel: due within 30 days of each invoice (§3.5.4)".
+
+> "Where the contract ties a payment to an event, like thirty days after an invoice, the agent shows that trigger from the lease. Where the documents don't give a computable date, it says so. Pending doesn't mean overdue."
+
+Pause without reading the amounts aloud.
+
+### 6. Closing (about 10 seconds)
+
+> "Whether you click through the graph or ask in plain English, the obligations come back with the contract text supporting them. When information is missing, the system makes that visible."
+
+### Optional final beat: reproducibility (about 10 seconds)
+
+Switch to the README and scroll to **Results**, so the Extraction table is visible.
+
+> "The numbers here come from committed evaluation results. A fresh clone can replay the recorded model calls and reproduce those results without an API key."
+
+## Presenter reminders
+
+- Show one example, point to its source, then pause.
+- The change-order view retrieves a stored report; selecting it does not run fresh analysis.
+- A skipped check was not performed. It does not mean the check ran and passed.
+- "Both runs produced the same findings for this amendment" is the supported claim. Avoid "nothing was missed."
+- Grounded citations verify source support; they do not guarantee complete extraction or perfect interpretation.
+- Keep the due-date explanation general. Since wave 5, 5 obligations have a computed date bound, 132 are contingent on a quoted event, 132 are unresolved with a reason, and 256 state no deadline. Don't attribute a missing date to the Commencement Date without checking the clause.
+- Claude may flag the base rent table ("Suite A drops by about 60% at month 25", identical figures from month 37) as a possible extraction error. Don't comment on it on camera. Section 8 of the filed lease states exactly those figures.
+- Claude may label the suites "A/B/C". The lease names them Suite 1.5, 1.5.1, 1.5.2 and 1.14A; don't read the labels out.
+- If you stumble, stop and restart the section instead of correcting yourself on camera.
 
 ## After recording
 
