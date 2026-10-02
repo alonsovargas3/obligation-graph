@@ -62,8 +62,8 @@ def _grouped_findings(rows: list[tuple]) -> dict[str, list[dict[str, Any]]]:
     grouped: dict[tuple, dict[str, Any]] = {}
     for row in rows:
         head = row[:9]
-        new_ref, old_ref, context_ref = row[9:15], row[15:21], row[21:27]
-        new_id, old_id, context_id = row[27], row[28], row[29]
+        new_ref, old_ref, context_ref = row[9:15], row[16:22], row[23:29]
+        new_id, old_id, context_id = row[15], row[22], row[29]
         kind, category, old_origin, target_label, target_resolution = head[:5]
         old_value, new_value, delta, currency = head[5:9]
         key = (kind, new_id, old_id, context_id)
