@@ -76,20 +76,19 @@ The page and the tools use document IDs, not nicknames:
 
 1. Switch to Claude Desktop and open a **new chat**. In a reused chat Claude may answer from earlier results instead of calling the tool, and viewers should see the tool call.
 2. Type: **What does the tenant owe the landlord under the 55 Middlesex Turnpike lease?** and press Enter. Use the third person: a question with "we" makes Claude Desktop check the answer against your personal context instead of answering about the lease.
-3. Wait for the "Obligation graph: Get obligations" line, then let the answer render. Since wave 5, it groups the 92 landlord-payee obligations by timing:
-   - **contingent** (28), for example "no later than thirty (30) days following receipt of an invoice therefor";
-   - **unresolved** (38), each with a reason such as business days or a recurring rent schedule;
-   - **no stated deadline** (26).
-4. Point to **one** contingent obligation and its quoted trigger. Don't scroll through the whole answer.
+3. Wait for the "Obligation graph: Get obligations" line, then let the answer render. It groups what the tenant owes into base rent, additional rent, costs after a default, and non-monetary obligations, each with its lease section.
+4. Scroll to **Additional rent** and point to **one** line with a stated trigger, for example "Generator fuel: due within 30 days of each invoice (§3.5.4)". Don't scroll through the whole answer.
+5. If time allows, scroll to the end and point to the line saying the rent periods count from the Commencement Date, which isn't recorded, so no calendar dates are given.
 
-- **Say:** "I ask in plain English. The agent queries the same obligation graph we just explored. Here's an obligation, the section it cites, and when it comes due: thirty days after the landlord's invoice arrives. The trigger is quoted from the lease."
+- **Say:** "I ask in plain English. The agent queries the same obligation graph we just explored. Here's an obligation, the section it cites, and when it comes due: thirty days after the landlord's invoice. That timing is quoted from the lease."
 - **Then, as one line:** "If the contract doesn't let the system compute a date, it says so and gives the reason. It never guesses one."
 - Pause for a beat after that line. Don't add more.
 
 Delivery notes for this scene:
 - Don't read out the dollar amounts. One obligation and its trigger is enough; the grounding is the point.
 - Don't say "pending" means overdue. If asked, pending means no computable date yet.
-- If Claude says schedules B and C "look like an extraction error", ignore it on camera. Those repeated figures appear twice in the filed lease itself.
+- Claude may flag the base rent table ("Suite A drops by about 60% at month 25", identical figures from month 37) as a possible extraction error. Don't comment on it on camera. Section 8 of the filed lease states exactly those figures, so the extraction is faithful.
+- Claude may label the suites "A/B/C". The lease names them Suite 1.5.1, 1.5.2 and 1.14A; don't read the labels out.
 
 ### 1:50 to 2:00: Close (README tab)
 
