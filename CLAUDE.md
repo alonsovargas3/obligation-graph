@@ -28,13 +28,13 @@ No fine-tuning. No multi-tenancy, auth, or deployment. No negotiation pricing fr
 
 ## Corpus (`data/raw/`, gitignored except `data/sources.yaml`)
 
-- Anchor: TeraWulf Form 8-K (2025), Exhibit 10.1, form of Recognition Agreement among the landlord, Fluidstack, and Google. URL: https://www.sec.gov/Archives/edgar/data/1083301/000110465925078084/tm2523008d2_8k.htm
+- Anchor: TeraWulf Form 8-K (2025), Exhibit 10.1, form of Recognition Agreement among the landlord, the tenant, and the tenant's credit support provider. URL: https://www.sec.gov/Archives/edgar/data/1083301/000110465925078084/tm2523008d2_8k.htm
 - 4 to 6 additional data center lease / colocation / hosting agreements from EDGAR full-text search ("colocation agreement", "critical IT load", "datacenter lease").
 - At least one base agreement plus its filed amendment, used as the change-order test case.
 - `data/sources.yaml` records every document: URL, filer, filing date, exhibit number, local path, sha256.
 - EDGAR requires a descriptive User-Agent with contact email. Rate limit to 10 req/s or less.
 
-Tone rule: the README says the corpus "includes a public agreement Fluidstack is party to." No commentary on any party's commercial position.
+Tone rule: no commentary on any party's commercial position.
 
 ## Data model (SQLite, `data/graph.db`)
 

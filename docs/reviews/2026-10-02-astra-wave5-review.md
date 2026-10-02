@@ -250,7 +250,7 @@ Selection: `random.Random(20261003).sample(ids_excluding_round_1_sample, 15)`, s
 
 | ID | Result | Hand check |
 |---|---|---|
-| 3 | untimed | `Fluidstack shall pay all such Rent`: the extracted quote states no deadline. |
+| 3 | untimed | `[Tenant] shall pay all such Rent`: the extracted quote states no deadline. |
 | 16 | untimed | Early termination right refers to Exhibit D. No self-contained performance deadline is quoted; wider cross-reference coverage remains an adjudication/recall concern, not a date to infer. |
 | 56 | unresolved, recurring_schedule | Monthly rent for months 61 through 72. Correct recurring-schedule deferral. |
 | 75 | untimed | Keep complete books and records of Additional Rent charges; no stated deadline in this quote. |
