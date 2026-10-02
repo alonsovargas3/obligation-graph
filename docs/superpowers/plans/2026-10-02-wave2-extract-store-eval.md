@@ -247,7 +247,14 @@ Waves:
   - Run the Extractor against 2 chunks of the Constant Contact first amendment (small, unredacted) and 1 chunk of the Carbonite lease (redactions).
   - Save the raw response JSON (body only) to `tests/fixtures/api/extract_v1/*.json`.
   - Add frozen replay tests showing that `parse_response` + `verify` on recorded responses produce items whose spans all ground.
-- **C2 (needs labels):** export the artifact db (`ArtifactData list labels`) to `eval/gold/constantcontact-2011-ex1041.yaml` via a small script. Validate with `load_gold`. Commit. Gold labels are never edited to make a run pass.
+- **C2 (reference set, user decision 2026-10-02):** the user chose a model-drafted, human-spot-checked reference set over hand labeling.
+  1. Codex `gpt-6-astra` drafts 30 to 50 obligations for constantcontact-2011-ex1041. It is a different model family from the Sonnet extractor, which limits self-agreement bias. It works blind to any extraction output and writes `eval/gold/drafts/constantcontact-2011-ex1041.astra.yaml`, quoting verbatim from one segment each.
+  2. The coordinator validates every quote against the TextDoc (exact substring of the cited segment) and adjudicates type, parties, amounts, and dates against the text. The coordinator records each change with a reason in the draft's `adjudication` field.
+  3. The adjudicated draft is loaded into the labeler artifact (`labels` collection, `origin: astra-draft`).
+  4. The user spot-checks about 10 labels there, marking each checked, editing it, or deleting it.
+  5. Export to `eval/gold/constantcontact-2011-ex1041.yaml` with `provenance: {drafted_by: gpt-6-astra, adjudicated_by: coordinator, spot_checked: <n>}`.
+  6. The README must call it a "model-drafted, human-spot-checked reference set", never hand-labeled gold.
+  7. Labels are never edited after the first extraction run is scored. Any change after that needs a recorded reason and a re-score of every prior result.
 - **C3:** `make ingest && make extract` on the integration checkout. Record cost and latency.
 - **C4:**
   - Score the gold doc and write `eval/results/<date>-extract.json` (per-type P/R, field accuracy, grounded rate, drops, cost, latency, prompt_version, served model).
