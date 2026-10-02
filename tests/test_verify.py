@@ -1007,3 +1007,102 @@ def test_r4_role_of_another_entity_is_not_bound_across_a_verb_phrase():
     )
     assert [(p.name, p.role) for p in res.parties] == [("Beta Inc.", "tenant")]
     assert [d.reason for d in res.drops] == ["role_not_bound_to_name"]
+
+
+# --- Rev 2.5 (Astra wave-2 round 5): source-sentence context, whole-name fields, finite descriptors
+
+R5 = [
+    (
+        None,
+        "Preamble",
+        [
+            ("silver", "Silver Cloud Holdings LLC, as Tenant."),
+            ("noncorp", "Alpha LLC, a non-tenant company appointing Beta Inc. as Tenant."),
+            ("not_designate", "The agreement does not designate Alpha LLC as Tenant."),
+            ("xalpha", "XAlpha LLC, as Tenant."),
+            ("delaware", "Gamma LLC, a Delaware limited liability company, as Landlord."),
+        ],
+    ),
+    (
+        "1",
+        "Dates",
+        [
+            ("false_that", "It is false that “Commencement Date” is March 1, 2011."),
+            (
+                "provided",
+                "“Commencement Date” means March 1, 2011; provided that Landlord first"
+                " delivers possession.",
+            ),
+            (
+                "unless",
+                "“Commencement Date” means March 1, 2011 unless the premises are unavailable.",
+            ),
+            ("plain", "“Delivery Date” means March 1, 2011."),
+        ],
+    ),
+]
+R5_DOC, R5_IDS = build(R5)
+R5_LINE = {k: line for _, _, rows in R5 for k, line in rows}
+
+
+def r5(seg_key, span=None, **kw):
+    return raw(
+        span=span if span is not None else R5_LINE[seg_key], segment_id=R5_IDS[seg_key], **kw
+    )
+
+
+def r5_event(seg_key, name, date, span=None):
+    return r5(seg_key, span, kind="event", type=None, name=name, date=date, status="active")
+
+
+def r5_party(seg_key, name, role, span=None):
+    return r5(seg_key, span, kind="party", type=None, name=name, role=role, status=None)
+
+
+@pytest.mark.parametrize(
+    "seg_key,span",
+    [
+        ("false_that", None),
+        ("false_that", "“Commencement Date” is March 1, 2011."),
+        ("provided", None),
+        ("provided", "“Commencement Date” means March 1, 2011;"),
+        ("unless", None),
+    ],
+)
+def test_r5_governed_event_declarations_leave_the_date_null(seg_key, span):
+    res = verify(R5_DOC, [r5_event(seg_key, "Commencement Date", "2011-03-01", span)])
+    assert [e.date for e in res.events] == [None]
+    assert any(c.field == "date" and c.reason == "date_not_bound_to_event" for c in res.corrections)
+
+
+def test_r5_plain_declaration_still_binds():
+    res = verify(R5_DOC, [r5_event("plain", "Delivery Date", "2011-03-01")])
+    assert [e.date for e in res.events] == ["2011-03-01"]
+
+
+@pytest.mark.parametrize(
+    "seg_key,name,role,span",
+    [
+        ("silver", "Holdings LLC", "tenant", None),
+        ("noncorp", "Alpha LLC", "tenant", None),
+        ("not_designate", "Alpha LLC", "tenant", None),
+        ("not_designate", "Alpha LLC", "tenant", "designate Alpha LLC as Tenant."),
+        ("xalpha", "Alpha LLC", "tenant", None),
+    ],
+)
+def test_r5_unsupported_party_declarations_bind_nothing(seg_key, name, role, span):
+    res = verify(R5_DOC, [r5_party(seg_key, name, role, span)])
+    assert res.parties == []
+    assert [d.reason for d in res.drops] == ["role_not_bound_to_name"]
+
+
+@pytest.mark.parametrize(
+    "seg_key,name,role",
+    [
+        ("silver", "Silver Cloud Holdings LLC", "tenant"),
+        ("delaware", "Gamma LLC", "landlord"),
+    ],
+)
+def test_r5_whole_name_and_finite_descriptor_bind(seg_key, name, role):
+    res = verify(R5_DOC, [r5_party(seg_key, name, role)])
+    assert [(p.name, p.role) for p in res.parties] == [(name, role)]

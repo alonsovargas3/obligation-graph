@@ -455,3 +455,100 @@ Evidence outside the repository: `/tmp/astra-wave2-r4.xml`, `/tmp/astra-wave2-r4
 ### D) Verdict
 
 proceed-after-fixes
+
+## Round 5
+
+Reviewed the assigned `cf22043` baseline after `git pull -q` and implemented Rev 2.4 in a fresh disposable copy. Main advanced concurrently to `ff7b205` during the review; the proof below is explicitly pinned to the requested `cf22043` contracts and frozen suite, rather than mixing later implementation, prompt-schema, or C1 replay changes into it. Repository code and tests were not edited.
+
+### A) Round-4 dispositions
+
+1. **R4-1: not resolved as a class.** All previously reported relative, negated, alternative-date, and directly qualified examples now fail safely, but the grammar's substring search still admits an explicitly negated declaration or a condition beyond its accepted terminator; see R5-1.
+2. **R4-2: not resolved as a class.** The exact conflicting-role and verb-phrase examples are fixed, but word boundaries still admit a corporate-name suffix, and the unrestricted descriptor admits another entity's role; see R5-2 and R5-3.
+
+### B) Full suite and executed probes
+
+Disposable copy: `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/og-astra-wave2-r5-xotony_v`. Updated the verifier to the declaration grammar, retaining the explicitly required quoted-term guard. Bare punctuation before `as ROLE` is accepted as required by the plan's own `Landlord Holdings LLC, as Tenant` example and frozen positives. Checked all 38 test/fixture/manifest, contract, prompt, and dependency files in the copy byte-for-byte against Git objects at `cf22043`; none changed.
+
+`uv sync --locked` succeeded with CPython 3.12.11. The first full run of `uv run --locked pytest -o addopts="" -q -p no:cacheprovider`, with additional JUnit output for counts, returned **665 passed, 0 failed, 2 skipped**.
+
+| Test file under `tests/` | Passed | Failed | Skipped |
+|---|---:|---:|---:|
+| `test_eval_cli.py` | 7 | 0 | 0 |
+| `test_eval_gold.py` | 16 | 0 | 0 |
+| `test_eval_score.py` | 13 | 0 | 0 |
+| `test_extract_cache.py` | 11 | 0 | 0 |
+| `test_extract_chunk.py` | 14 | 0 | 0 |
+| `test_extract_cli.py` | 8 | 0 | 0 |
+| `test_extract_parse.py` | 35 | 0 | 0 |
+| `test_extract_request.py` | 9 | 0 | 0 |
+| `test_fetch.py` | 23 | 0 | 0 |
+| `test_fetch_recorded.py` | 1 | 0 | 0 |
+| `test_ground.py` | 265 | 0 | 2 |
+| `test_ingest.py` | 23 | 0 | 0 |
+| `test_ingest_toc.py` | 10 | 0 | 0 |
+| `test_markers.py` | 17 | 0 | 0 |
+| `test_pipeline_regressions.py` | 5 | 0 | 0 |
+| `test_pipeline_regressions_r3.py` | 4 | 0 | 0 |
+| `test_pipeline_regressions_r4.py` | 5 | 0 | 0 |
+| `test_schema.py` | 41 | 0 | 0 |
+| `test_schema_v2.py` | 9 | 0 | 0 |
+| `test_textdoc.py` | 19 | 0 | 0 |
+| `test_verify.py` | 112 | 0 | 0 |
+| `test_writer.py` | 18 | 0 | 0 |
+| **Total** | **665** | **0** | **2** |
+
+**Failure classification:** no test-wrong or impl-wrong failures. The two skips are the unchanged single-character-quote property cases in `test_ground.py`.
+
+**Prior probes rerun:**
+
+- **R2:** swapped event names and party roles are rejected; waiver descriptions become copied quotes; deadline conflicts keep the absolute date and write; `$5.123` and `1000 days` cannot supply truncated numeric values. Direct writer calls still enforce dependency/FK safeguards as intended.
+- **R3:** later unrelated dates and the next party's role do not resolve; amendment samples exit 2 before calls or output; sampled precision and F1 remain null with the lower bounds retained.
+- **R4:** relative definitions, internal negation, later-of dates, truncated corporate-name/role conflicts, and cross-entity verb phrases all fail safely. Earlier-conjunction and complete corporate-name positives still work.
+
+**New adversarial attempts under the written grammar:** all were executed through verification, the writer, and a visible view. Each date case includes a separate obligation due 30 days after Commencement Date; each party case includes a Tenant-pays obligation.
+
+| Attempt | Observed visible result |
+|---|---|
+| Full quote `It is false that “Commencement Date” is March 1, 2011.` | **Wrong:** stores event March 1 and returns scheduled effective due March 31, with no correction. |
+| Same source, but model quotes only `“Commencement Date” is March 1, 2011.` | **Wrong:** identical scheduled deadline. Grounding the clipped substring does not recover the governing negation. |
+| `“Commencement Date” means March 1, 2011; provided that Landlord first delivers possession.` | **Wrong:** the accepted semicolon terminates the match before the condition, yielding an unconditional scheduled deadline of March 31. |
+| `“Commencement Date” means March 1, 2011 unless the premises are unavailable.` | **Safe control:** date null, visible obligation pending, because the qualifier occurs before an accepted terminator. |
+| `Silver Cloud Holdings LLC, as Tenant.` with proposed party `Holdings LLC`, role tenant | **Wrong:** `Holdings LLC` appears as tenant in `visible_agreement_party` and as payer in `visible_obligation`. |
+| `Alpha LLC, a non-tenant company appointing Beta Inc. as Tenant.` with proposed Alpha as tenant | **Wrong:** Alpha is a visible tenant and payer, despite the explicit non-tenant description and Beta's appointment. |
+| `The agreement does not designate Alpha LLC as Tenant.` with proposed Alpha as tenant | **Wrong:** Alpha is a visible tenant and payer; the negative prefix is outside the matched local construction. |
+| `XAlpha LLC, as Tenant.` with proposed `Alpha LLC` | **Safe control:** letter adjacency is rejected and payer stays null. |
+| `Silver Cloud Holdings LLC, as Tenant.` with the full proposed company name | **Safe positive:** stores and resolves the full company name. |
+
+These are six unsafe executions and three controls, grouped into the three blockers below. No unsafe case required bypassing verification or forging a VerifiedItem.
+
+Evidence: `/tmp/astra-wave2-r5.xml`, `/tmp/astra-wave2-r5.txt`, `/tmp/astra_w2_r5_update.py`, `/tmp/astra_w2_r5_probes.py`, and `/tmp/astra-wave2-r5-new-probes.txt`. The prior-round outputs are `/tmp/astra-wave2-r5-prior-r2.txt`, `/tmp/astra-wave2-r5-prior-r3.txt`, and `/tmp/astra-wave2-r5-prior-r4.txt`. New probe results and databases are at `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/astra-w2-r5-probes-yw66k3up/`.
+
+### C) New blockers
+
+1. **R5-1, blocker: A matching declaration fragment can be governed by negation or a condition outside the match.**
+
+   **Location:** plan, Rev 2.4 event-date `quote contains` rule, accepted terminators, and party declarations at a name occurrence; Task 8 grounding.
+
+   **Problem:** The negative-prefix event and party examples satisfy every local token requirement. The semicolon condition also satisfies the exact permitted terminator. They produce wrong scheduled dates or visible party roles. Matching the entire model quote instead of a substring would not fix the clipped-quote version, because the omitted negation remains in the source segment.
+
+   **Concrete fix:** Validate a complete source declaration in its containing source context, not an arbitrary model-selected substring. Define supported affirmative declaration boundaries and reject unconsumed governing prefixes, conditions, or provisos. Use the full source segment/declaration to detect incomplete quote selection; a semicolon is not sufficient proof that qualification ended. For this wave, leave unsupported contextual declarations unresolved. Freeze both full-quote and clipped-quote negative examples plus the semicolon condition, so tightening only the regex inside the quote cannot make the tests superficially green.
+
+2. **R5-2, blocker: Word boundaries do not establish the beginning of a complete corporate name.**
+
+   **Location:** plan, Rev 2.4 party-name boundary requirement and role-after-name declaration.
+
+   **Problem:** In `Silver Cloud Holdings LLC, as Tenant.`, the suffix `Holdings LLC` has no adjacent letter or digit and is immediately followed by the supported role construction. It therefore passes as written, yet creates a different party name and visible payer. The previous conflict safeguard helps only when the discarded prefix happens to be a conflicting role word.
+
+   **Concrete fix:** Parse the name as a whole field from a supported declaration boundary, then compare the proposed name with that entire captured field. Do not search for any word-delimited suffix of the proposed declaration. Derive stored party names from the complete source field, with no silent alias shortening. Add the suffix-name negative and full-name positive together; punctuation-adjacency tests alone do not cover this failure.
+
+3. **R5-3, blocker: The descriptor slot is still unrestricted prose that can assign a role to another entity.**
+
+   **Location:** plan, Rev 2.4 role-after-name optional `a|an <descriptor>` grammar.
+
+   **Problem:** `non-tenant company appointing Beta Inc.` is under 80 characters and contains none of the prohibited punctuation. It is therefore a legal descriptor under the written grammar, and the following `as Tenant` binds to Alpha rather than Beta. The resulting visible association explicitly contradicts Alpha's non-tenant status. This is the old cross-entity failure through the newly permitted descriptor production, not mere recall loss.
+
+   **Concrete fix:** Replace the arbitrary descriptor character class with a finite set of supported company descriptors, such as a jurisdiction plus `corporation` or `limited liability company`. Reject descriptors containing an unrecognized clause or another entity instead of consuming them up to `as ROLE`. Preserve the existing Delaware-descriptor positives and add this explicit non-tenant counterexample through both visible views.
+
+### D) Verdict
+
+proceed-after-fixes

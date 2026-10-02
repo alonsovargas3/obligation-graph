@@ -83,3 +83,15 @@ Added `tests/fixtures/api/extract_v1/` (3 real responses and their chunk texts, 
 - `test_recorded_response_parses` (3)
 - `test_attempt_model_falls_back_to_message_model` (3): red against the merged Task 7 client. The live API returns `usage.iterations[].model = null` when no fallback ran, so the attempt model must fall back to `message.model`.
 - `test_recorded_quotes_come_from_their_cited_line` (3)
+
+## 2026-10-02: rev 2.5 (Astra wave-2 round 5), additions only
+
+Added to `tests/test_verify.py` (own R5 fixture doc):
+- `test_r5_governed_event_declarations_leave_the_date_null` (5)
+- `test_r5_plain_declaration_still_binds`
+- `test_r5_unsupported_party_declarations_bind_nothing` (5)
+- `test_r5_whole_name_and_finite_descriptor_bind` (2)
+
+New `tests/test_pipeline_regressions_r5.py`:
+- `test_governed_event_date_never_schedules_a_deadline` (3)
+- `test_unsupported_declaration_never_creates_a_visible_tenant` (3)

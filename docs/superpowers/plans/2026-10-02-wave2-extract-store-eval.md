@@ -534,3 +534,24 @@ These rules replace R2-2, R3-1, R2-4, and R3-2 for event dates and party roles. 
   Example: `Landlord Holdings LLC, as Tenant` binds the full name to tenant. The claim `Holdings LLC` as landlord is a conflict, so it is dropped.
 
 - **Frozen tests:** `tests/test_verify.py` (`test_r4_*`) and `tests/test_pipeline_regressions_r4.py`.
+
+## Rev 2.5 (Astra wave-2 round 5: 3 blockers, accepted) and the stop rule
+
+These rules add to Rev 2.4 and can only make the grammar smaller.
+
+- **R5-1, governing context from the source.**
+  - For any event-date or party-role declaration, the coordinator rule takes the full source sentence that contains the matched declaration. It is taken from the cited segment's text, not from the model's quote.
+  - Sentence boundaries are the R3-1 boundaries (`.`, `!`, `?` followed by whitespace and a capital letter; month abbreviations and single initials excepted). Semicolons do not end the sentence for this check.
+  - If that sentence contains any governing word (whole word, case-insensitive: `not`, `no`, `never`, `false`, `unless`, `if`, `provided`, `except`, `notwithstanding`, `neither`, `nor`, `without`, `subject to`), the declaration binds nothing. An event date becomes null plus `date_not_bound_to_event`; a party gets Drop `role_not_bound_to_name`.
+  - A clipped quote does not escape this check, because the context comes from the segment.
+- **R5-2, whole-name fields.**
+  - For declaration (b) (role after the name), the claimed name must start at a declaration boundary: the start of the sentence, or immediately after one of `between`, `by`, `and`, `with`, `from`, `to`, `designate`, `designates`, `appoint`, `appoints`, a comma, or an opening parenthesis (whitespace allowed after the token).
+  - A word-bounded suffix of a longer name (`Holdings LLC` in `Silver Cloud Holdings LLC`) does not start at a boundary, so it binds nothing. The stored name is the claimed name, which then equals the whole field.
+- **R5-3, finite descriptors.** The optional descriptor in declaration (b) is exactly: `,` + `a|an` + up to 4 capitalized jurisdiction words + one of `limited liability company`, `limited partnership`, `general partnership`, `real estate investment trust`, `statutory trust`, `corporation`, `partnership`, `company`, `trust` + optional `,`. Anything else between the name and `as ROLE`/`(“ROLE”)` binds nothing.
+- **Frozen tests:** `tests/test_verify.py` (`test_r5_*`) and `tests/test_pipeline_regressions_r5.py`.
+
+**Stop rule (user decision 2026-10-02).**
+- After Rev 2.5, one final advisor round checks only the R5 fixes plus the real corpus (all 7 filings).
+- Further synthetic adversarial phrasings become documented known limitations in ADR-008 and the README, unless the phrasing occurs in the corpus.
+- The disclosure wording: date/role binding is a conservative heuristic over a closed grammar; semantic correctness of extracted terms is measured by eval, not proven.
+- The quote-existence invariant (every stored term points to a verbatim source span) is unaffected and remains enforced deterministically.
