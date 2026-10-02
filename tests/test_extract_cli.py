@@ -110,7 +110,7 @@ def test_rerun_replaces_snapshot_from_cache(workdir):
 def test_refused_chunk_keeps_previous_snapshot(workdir):
     assert main([], client=FakeClient(responder=echo_responder)) == 0
     before = runs()
-    shutil.rmtree("data/cache")
+    shutil.rmtree("eval/recorded")  # wave 4: recorded responses replace data/cache
     calls = {"n": 0}
 
     def responder(kwargs):
@@ -139,6 +139,7 @@ def test_no_cache_sample_is_isolated(workdir):
     assert not Path("data/graph.db").exists()
     assert visible(f"eval/runs/s1/{DOC_ID}.db") == 2
     assert not list(Path("data").rglob("cache/**/*.json"))
+    assert not list(Path("eval").rglob("recorded/**/*.json"))
 
 
 def test_doc_filter(workdir):
@@ -149,7 +150,7 @@ def test_doc_filter(workdir):
 
 def test_sentinel_key_never_written(workdir):
     assert main([], client=FakeClient(responder=echo_responder)) == 0
-    shutil.rmtree("data/cache")
+    shutil.rmtree("eval/recorded")  # wave 4: recorded responses replace data/cache
     calls = {"n": 0}
 
     def responder(kwargs):

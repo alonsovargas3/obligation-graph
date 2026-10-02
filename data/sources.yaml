@@ -31,6 +31,11 @@ documents:
   agreement_type: lease
   amends: null
   effective_date: null
+  site:
+    segment_id: p0542
+    quote: 55 Middlesex Turnpike, Bedford, Massachusetts
+    name: 55 Middlesex Turnpike
+    location: Bedford, Massachusetts
 - id: constantcontact-2012-ex101
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1405277/000119312512238274/0001193125-12-238274-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1405277/000119312512238274/d354815dex101.htm
@@ -47,6 +52,11 @@ documents:
   notes: first amendment, ~4 pages, no redactions
   agreement_type: amendment
   effective_date: null
+  site:
+    segment_id: p0006
+    quote: 55 Middlesex Turnpike, Bedford, Massachusetts
+    name: 55 Middlesex Turnpike
+    location: Bedford, Massachusetts
 - id: endurance-2017-ex106
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1237746/000162828017010854/0001628280-17-010854-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1237746/000162828017010854/exhibit10_6.htm
@@ -63,6 +73,11 @@ documents:
   notes: third amendment, ~2 pages, no redactions
   agreement_type: amendment
   effective_date: null
+  site:
+    segment_id: p0005
+    quote: 55 Middlesex Turnpike, Bedford, Massachusetts
+    name: 55 Middlesex Turnpike
+    location: Bedford, Massachusetts
 - id: carbonite-2014-ex1024
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1340127/000119312514084500/0001193125-14-084500-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1340127/000119312514084500/d650354dex1024.htm
@@ -79,6 +94,11 @@ documents:
   agreement_type: lease
   amends: null
   effective_date: null
+  site:
+    segment_id: p0694
+    quote: 2121 South Price Road, Chandler, Arizona
+    name: 2121 South Price Road
+    location: Chandler, Arizona
 - id: mawson-2025-ex101
   filing_index_url: https://www.sec.gov/Archives/edgar/data/1218683/000101376225002419/0001013762-25-002419-index.htm
   filing_url: https://www.sec.gov/Archives/edgar/data/1218683/000101376225002419/ea023566301ex10-1_mawson.htm

@@ -1,0 +1,1 @@
+{"attempts": [{"cache_read_tokens": 2389, "cache_write_tokens": 0, "input_tokens": 5209, "model": "claude-sonnet-5-5", "output_tokens": 154, "refused": false}], "chunk_id": "c0004", "doc_id": "carbonite-2014-ex1024", "items": [], "prompt_version": "extract_v1@6de99191"}

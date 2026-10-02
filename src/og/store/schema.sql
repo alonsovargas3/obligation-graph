@@ -1,5 +1,5 @@
 PRAGMA foreign_keys = ON;
--- Schema v3 (wave 3). Derived data: an older graph.db is rebuilt, not migrated (ADR-008).
+-- Schema v4 (wave 4). Derived data: an older graph.db is rebuilt, not migrated (ADR-008).
 
 CREATE TABLE IF NOT EXISTS source (
   id TEXT PRIMARY KEY, url TEXT NOT NULL, filer TEXT, filing_date TEXT, form TEXT,
@@ -24,6 +24,13 @@ CREATE TABLE IF NOT EXISTS agreement_party (
 CREATE TABLE IF NOT EXISTS site (
   id INTEGER PRIMARY KEY, name TEXT NOT NULL, location TEXT, capacity_mw REAL
 );
+CREATE TABLE IF NOT EXISTS agreement_site (
+  agreement_id TEXT NOT NULL REFERENCES agreement(id),
+  site_id INTEGER NOT NULL REFERENCES site(id),
+  clause_ref_id INTEGER NOT NULL REFERENCES clause_ref(id),
+  PRIMARY KEY (agreement_id, site_id)
+);
+CREATE UNIQUE INDEX IF NOT EXISTS site_identity ON site(name, location);
 CREATE TABLE IF NOT EXISTS clause_ref (
   id INTEGER PRIMARY KEY,
   obligation_id INTEGER REFERENCES obligation(id),
@@ -184,6 +191,11 @@ CREATE TRIGGER IF NOT EXISTS defined_term_citation_upd BEFORE UPDATE OF clause_r
 WHEN NEW.agreement_id IS NOT (SELECT agreement_id FROM clause_ref WHERE id = NEW.clause_ref_id)
 BEGIN SELECT RAISE(ABORT, 'defined term citation from another agreement'); END;
 
+DROP VIEW IF EXISTS visible_change_finding_ref;
+DROP VIEW IF EXISTS visible_site_binding;
+DROP VIEW IF EXISTS visible_event_binding;
+DROP VIEW IF EXISTS visible_party_binding;
+DROP VIEW IF EXISTS visible_obligation_clause;
 DROP VIEW IF EXISTS visible_change_finding;
 DROP VIEW IF EXISTS visible_agreement_party;
 DROP VIEW IF EXISTS visible_defined_term;
@@ -290,3 +302,48 @@ WHERE (f.old_clause_ref_id IS NULL
   AND (f.context_clause_ref_id IS NULL
        OR EXISTS (SELECT 1 FROM clause_ref x WHERE x.id = f.context_clause_ref_id
                   AND x.grounded = 1 AND x.agreement_id = r.change_order_id));
+
+-- Citation-bearing projections (wave 4 rev 2.1 R2-1). Readers (og.query, the change
+-- report, the scorers) take every citation from these; none joins clause_ref directly.
+-- Each row is one (owner, grounded same-agreement ref) pair.
+CREATE VIEW visible_obligation_clause AS
+SELECT o.id AS obligation_id, o.agreement_id, c.id AS clause_ref_id,
+       c.section, c.page, c.char_start, c.char_end, c.span_text
+FROM visible_obligation o
+JOIN clause_ref c ON c.obligation_id = o.id AND c.grounded = 1 AND c.agreement_id = o.agreement_id;
+
+CREATE VIEW visible_party_binding AS
+SELECT ap.agreement_id, ap.party_id, p.name, ap.role, c.id AS clause_ref_id,
+       c.section, c.page, c.char_start, c.char_end, c.span_text
+FROM visible_agreement_party ap
+JOIN party p ON p.id = ap.party_id
+JOIN clause_ref c ON c.id = ap.clause_ref_id AND c.grounded = 1 AND c.agreement_id = ap.agreement_id;
+
+CREATE VIEW visible_event_binding AS
+SELECT e.id AS event_id, e.agreement_id, e.name, e.date, c.id AS clause_ref_id,
+       c.section, c.page, c.char_start, c.char_end, c.span_text
+FROM event e
+JOIN clause_ref c ON c.id = e.clause_ref_id AND c.grounded = 1 AND c.agreement_id = e.agreement_id;
+
+CREATE VIEW visible_site_binding AS
+SELECT a.agreement_id, a.site_id, s.name, s.location, c.id AS clause_ref_id,
+       c.section, c.page, c.char_start, c.char_end, c.span_text
+FROM agreement_site a
+JOIN site s ON s.id = a.site_id
+JOIN clause_ref c ON c.id = a.clause_ref_id AND c.grounded = 1 AND c.agreement_id = a.agreement_id;
+
+CREATE VIEW visible_change_finding_ref AS
+SELECT f.id AS finding_id, 'new' AS side, c.agreement_id, c.id AS clause_ref_id,
+       c.section, c.page, c.char_start, c.char_end, c.span_text
+FROM visible_change_finding f
+JOIN clause_ref c ON c.id = f.new_clause_ref_id AND c.grounded = 1 AND c.agreement_id = f.change_order_id
+UNION ALL
+SELECT f.id, 'old', c.agreement_id, c.id, c.section, c.page, c.char_start, c.char_end, c.span_text
+FROM visible_change_finding f
+JOIN clause_ref c ON c.id = f.old_clause_ref_id AND c.grounded = 1
+JOIN change_run_chain k ON k.change_run_id = f.change_run_id AND k.agreement_id = c.agreement_id
+WHERE (f.old_origin = 'self') = (c.agreement_id = f.change_order_id)
+UNION ALL
+SELECT f.id, 'context', c.agreement_id, c.id, c.section, c.page, c.char_start, c.char_end, c.span_text
+FROM visible_change_finding f
+JOIN clause_ref c ON c.id = f.context_clause_ref_id AND c.grounded = 1 AND c.agreement_id = f.change_order_id;

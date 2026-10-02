@@ -1,0 +1,1033 @@
+{
+ "doc_id": "applieddigital-2026-ex101",
+ "source_sha256": "04d133a875e655b4b7dbc7d5b0bb0f0196edcc79bf4f2066e198fc182218408d",
+ "text": "EX-10.1 2 ex10-1.htm EX-10.1\nExhibit 10.1\nCERTAIN IDENTIFIED INFORMATION HAS BEEN EXCLUDED FROM THIS EXHIBIT BECAUSE IT IS BOTH (I) NOT MATERIAL AND (II) IS A TYPE OF INFORMATION THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL. [***] INDICATES THAT INFORMATION HAS BEEN REDACTED.\nUNCONDITIONAL SPRINGING GUARANTY OF PAYMENT AND PERFORMANCE\nTHIS UNCONDITIONAL SPRINGING GUARANTY OF PAYMENT AND PERFORMANCE (this “Guaranty”) is made as of March 30, 2026 by COREWEAVE, INC., a Delaware corporation (“Guarantor”), to APLD ELN-02 LLC, a Delaware limited liability company (“Landlord”), and is acknowledged and agreed to by Landlord.\nR E C I T A L S\nA. Landlord, as landlord, and Guarantor, as tenant, entered into that certain Datacenter Lease Building 2, dated as of May 28, 2025 (the “Original Lease”);\nB. The Original Lease has been amended by that certain First Amendment to Datacenter Lease Building 2, dated as of the date hereof (the “First Amendment”, with the Original Lease and as otherwise amended, supplemented and/or affected, collectively, the “Lease”), pursuant to which Landlord has agreed to remove the Phase 2/4 Space (as defined in the First Amendment) from the Tenant Space (as defined in the Original Lease), upon the terms and conditions more particularly set forth therein;\nC. Further, Landlord, as landlord, and CoreWeave Compute Acquisition Co. VIII, LLC, a Delaware limited liability company (“SPV Tenant”), as tenant, have entered into that certain Datacenter Lease Building 2 - SPV, dated as of the date hereof (the “SPV Lease”), pursuant to which SPV Tenant has leased the Phase 2/4 Space from Landlord, upon the terms and conditions more particularly set forth therein;\nD. In connection with the SPV Lease, SPV Tenant became an obligor under that certain Credit Agreement, dated as of March 30, 2026, by and among SPV Tenant, MUFG Bank Ltd., as administrative agent, U.S. Bank National Association, as depositary bank, U.S. Bank Trust Company, National Association, as collateral agent and the other financial institutions from time to time party thereto (as amended, restated, amended and restated, supplemented, renewed, replaced, and otherwise modified from time to time, the “Equipment Financing”); and\nE. SPV Tenant is a wholly owned subsidiary of Guarantor and Guarantor will derive substantial economic benefit from the execution and delivery of the SPV Lease.\nNOW, THEREFORE, in consideration of Landlord’s execution and delivery of the SPV Lease and of other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, Guarantor covenants and agrees as follows:\n1. DEFINITIONS. Capitalized terms used in this Guaranty and not otherwise defined herein have the meanings assigned to them in the SPV Lease.\n2. COVENANTS OF GUARANTOR.\nA. | Guarantor hereby agrees that upon, and from and after, the occurrence of any one or more of the Springing Events (defined below) (the date of such occurrence, the “Springing Event Trigger Date”), Guarantor absolutely, unconditionally and irrevocably guarantees, as a primary obligor and not merely as a surety: (i) the full and prompt payment of all Base Rent, Additional Rent and all other sums and charges of every type and nature payable by SPV Tenant under the SPV Lease, whether due by acceleration or otherwise, including costs and expenses of collection, and whether arising or accruing prior to, upon, or after the Springing Event (collectively, the “Monetary Obligations”), and (ii) the full, timely and complete performance of all covenants, terms, conditions, obligations, indemnities and agreements to be performed by SPV Tenant under the SPV Lease, including any indemnities or other obligations of SPV Tenant that survive the expiration or earlier termination of the SPV Lease, whether arising or accruing prior to, upon, or after the Springing Event (all of the obligations described in clauses (i) and (ii) are collectively referred to herein as the “Obligations”). Upon, and from and after, the occurrence of any one or more of the Springing Events, Guarantor will, upon demand from Landlord, promptly pay and perform all of the Obligations, when and as due as provided under the SPV Lease and immediately for any past due Obligations. As used herein, the term “Springing Events” shall include the following:\n(i) | the receipt by the Equipment Financing of a debt rating that is [***];\n(ii) | the occurrence of (a) the expiration or earlier termination (for any or no reason) of the Colocation Agreement by and between SPV Tenant and its Colocation Customer, (b) any modification, amendment, waiver, restatement or restructuring of the Colocation Agreement which is material and adverse to the interests of the Landlord or (c) any event, with the giving of notice or passage of time or both, would constitute a breach or event of default under the Colocation Agreement and such breach or event of default would reasonably be expected to have a material and adverse impact on the interests of the Landlord or give the counterparty thereto the right to terminate or cease making, or materially reduce, payments under the Colocation Agreement;\n(iii) | the occurrence of any of the following with respect to SPV Tenant or Guarantor: (a) the commencement of a voluntary case under Title 11 of the United States Code (as now or hereafter amended or recodified, the “Bankruptcy Code”) or any other federal or state bankruptcy, insolvency, receivership, reorganization, or similar law, or the commencement of any voluntary insolvency, bankruptcy, administration, receivership, liquidation, winding-up, reorganization, moratorium, composition, or similar proceeding under the laws of any jurisdiction outside the United States, (b) the commencement of an involuntary case against SPV Tenant or Guarantor under the Bankruptcy Code or any other federal or state bankruptcy, insolvency, receivership, reorganization, or similar law, or the commencement of any involuntary insolvency, bankruptcy, administration, receivership, liquidation, winding-up, reorganization, or similar proceeding against SPV Tenant or Guarantor under the laws of any jurisdiction outside the United States, (c) the consent to, support of, acquiescence in, or failure to timely contest (within the time period prescribed by Laws or court rule) any involuntary case or proceeding filed against SPV Tenant or Guarantor, whether under United States or non-United States law, or the entry of an order for relief or similar order in any such involuntary case or proceeding, (d) the filing of, or consent to the filing of, any petition, proceeding, or action seeking reorganization, arrangement, composition, adjustment, liquidation, dissolution, or similar relief with respect to SPV Tenant or Guarantor or its debts under the Bankruptcy Code or any other applicable federal, or state, or non-United States bankruptcy, insolvency, or similar law; (e) the appointment of, or application for the appointment of, or the consent to or acquiescence in the appointment of, a receiver, interim receiver, trustee, examiner, custodian, conservator, sequestrator, liquidator, rehabilitator, administrator, administrative receiver, or similar official for SPV Tenant or Guarantor or for all or a substantial portion of the assets or property of SPV Tenant or Guarantor, whether under the laws of the United States or any other jurisdiction; (f) the making of a general assignment for the benefit of creditors by SPV Tenant or Guarantor; (g) the admission in writing or in any legal proceeding by SPV Tenant or Guarantor of its insolvency or inability to pay its debts generally as they become due; (h) the dissolution, liquidation, or winding up of SPV Tenant or Guarantor, whether voluntary or involuntary, or the taking of any corporate or entity action to authorize or effect any of the foregoing; (i) SPV Tenant or Guarantor becoming subject to substantive consolidation, or any assets of SPV Tenant or Guarantor (including, without limitation, any rights, title or interest in or to the Equipment Financing or the SPV Lease) being substantively consolidated with or into the estate of SPV Tenant or Guarantor (or any other person or entity), whether pursuant to any order of any court or other governmental authority, by operation of law, or otherwise, in each case, in connection with any of the events or proceedings described in subclauses (a) through (h) of this clause (iii); or (j) all or substantially all assets of SPV Tenant (including, without limitation, any rights, title or interest in or to the Equipment Financing or the SPV Lease) being clawed back, avoided, recovered, or otherwise returned or transferred to or for the benefit of Guarantor (or its estate) or any other party, whether pursuant to any fraudulent transfer, fraudulent conveyance, preference, substantive consolidation, avoidance, or any other legal or equitable theory or proceeding, under the Bankruptcy Code or any other similar United States, state of the United States or non-United States law (each of the events in clauses (a) through and including (j), an “Insolvency Event”);\n(iv) | the occurrence of (i) any Event of Default (as defined in the Equipment Financing as in effect on the date hereof) related to an Insolvency Event or any monetary Event of Default, (ii) any Default (as defined in the Equipment Financing as in effect on the date hereof), the effect of which is to cause, with the giving of notice or the passage of time, or both, if required, the Equipment Financing to become due or to be repurchased, prepaid, defeased or redeemed (automatically or otherwise), or an offer to repurchase, prepay, defease or redeem such Equipment Financing to be made, prior to its stated maturity, (iii) the full refinancing (excluding, for the avoidance of doubt, any repricings), payment and/or satisfaction of the Equipment Financing, (iv) the occurrence of the maturity date under, or other full termination of, the Equipment Financing, or (v) any modification, amendment, waiver, restatement or restructuring of the Equipment Financing that is material and adverse to the interests of the Landlord;\n(v) | the occurrence of any Event of Default (as defined in the SPV Lease) by SPV Tenant beyond any applicable notice or cure period, or the occurrence of any event, with the giving of notice or passage of time or both, would constitute an Event of Default thereunder, or any expiration or earlier termination (for any or no reason, including without limitation, rejection in connection with an Insolvency Event) of the SPV Lease;\n(vi) | the failure to timely provide the written notice required pursuant to Section 2(B) below;\n(vii) | Guarantor fails to comply with the covenants set forth under Section 12 of this Guaranty;\n(viii) | Guarantor fails to comply with the covenants set forth under Sections 2(E), 7, 9, 10 and 13(A)-(C) of this Guaranty and such failure continues for more than twenty (20) days after the earlier of (a) notice by Landlord to Guarantor of such breach, or (b) Guarantor first becoming aware of such breach; and\n(ix) | if the Guarantor shall seek to revoke, terminate or otherwise challenge or contest the validity of enforceability of this Guaranty.\nB. | Guarantor shall provide written notice to Landlord of the occurrence of any Springing Event within [***] days after the occurrence thereof, which notice shall contain a detailed explanation of such Springing Event along with copies of any relevant agreements or correspondence.\nC. | Guarantor agrees with Landlord that (i) any action, suit or proceeding of any kind or nature whatsoever (an “Action”) commenced by Landlord against Guarantor to collect Base Rent, Additional Rent and any other sums and charges due under the SPV Lease for any month or months shall not prejudice in any way Landlord’s rights to collect any such amounts due for any subsequent month or months throughout the Lease Term in any subsequent Action, (ii) Landlord may, at its option, without prior notice or demand, join Guarantor in any Action against SPV Tenant in connection with or based upon either or both of the SPV Lease and any of the Obligations, (iii) Landlord may seek and obtain recovery against Guarantor in an Action (to the extent related to or based upon either or both of the SPV Lease and any of the Obligations) against SPV Tenant or in any independent Action (to the extent related to or based upon either or both of the SPV Lease and any of the Obligations) against Guarantor without Landlord first asserting, prosecuting, or exhausting any remedy or claim against SPV Tenant or against any security of SPV Tenant held by Landlord under the SPV Lease, (iv) Landlord may (but shall not be required to) exercise its rights against each of Guarantor and SPV Tenant concurrently, and (v) Guarantor will be conclusively bound by a judgment entered in any Action (to the extent related to or based upon either or both of the SPV Lease and any of the Obligations) in favor of Landlord against SPV Tenant, as if Guarantor were a party to such Action, irrespective of whether or not Guarantor is entered as a party or participates in such Action.\nD. | Guarantor agrees that, in the event of the rejection or disaffirmance of the SPV Lease by SPV Tenant or SPV Tenant’s trustee in bankruptcy, pursuant to bankruptcy law or any other law affecting creditors’ rights, Guarantor will, if Landlord so requests, assume all obligations and liabilities of SPV Tenant under the SPV Lease, to the same extent as if Guarantor was a party to such document and there had been no such rejection or disaffirmance, and Guarantor will confirm such assumption, in writing, at the request of Landlord upon or after such rejection or disaffirmance. Guarantor, upon such assumption, shall have all rights of SPV Tenant under the SPV Lease to the fullest extent permitted by law.\nE. | Prior to the Springing Event Trigger Date, the SPV Tenant shall maintain at least one “independent manager” or “independent director” whose qualifications and authority are consistent with and comply with the terms of the governance documents of the SPV Tenant as in effect as of the date hereof.\n3. GUARANTOR’S OBLIGATIONS UNCONDITIONAL.\nA. | This Guaranty is an absolute and unconditional guaranty of payment and of performance, and not of collection, and shall be enforceable against Guarantor without the necessity of the commencement by Landlord of any Action against SPV Tenant, and without the necessity of any notice of nonpayment, nonperformance or nonobservance, or any notice of acceptance of this Guaranty, or of any other notice or demand to which Guarantor might otherwise be entitled, all of which Guarantor hereby expressly waives in advance. The obligations of Guarantor hereunder are independent of the obligations of SPV Tenant.\nB. | This Guaranty shall apply notwithstanding any extension or renewal of the SPV Lease or any renewal or extension of the Lease Term.\nC. | This Guaranty is a continuing guarantee and will remain in full force and effect notwithstanding, and the liability of Guarantor hereunder shall be absolute and unconditional irrespective of any or all of the following: (i) any renewals, extensions, modifications, alterations or amendments of the SPV Lease (regardless of whether Landlord or Guarantor consented to or had notice of same); (ii) (intentionally deleted); (iii) Landlord’s failure or delay to assert any claim or demand or to enforce any of its rights against SPV Tenant; (iv) any extension of time that may be granted by Landlord to SPV Tenant; (v) any assignment, disposition, conveyance, hypothecation, pledge, lien, encumbrance or transfer of all or any part of SPV Tenant’s interest under the SPV Lease (whether by SPV Tenant, by operation of law, or otherwise, and whether or not consented by Landlord); (vi) any subletting, concession, franchising, licensing or permitting of the Premises or any portion thereof (whether or not consented by Landlord); (vii) any changed or different use of the Premises (or any portion thereof), whether or not consented by Landlord; (viii) any other dealings or matters occurring between Landlord and SPV Tenant; (ix) the taking by Landlord of any additional guarantees, or the receipt by Landlord of any collateral, from SPV Tenant or any other persons or entities; (x) the release by Landlord of any other guarantor; (xi) Landlord’s release of any security provided under the SPV Lease; (xii) Landlord’s failure to perfect any Landlord’s lien or other lien or security interest available under any applicable statutes, ordinances, rules, regulations, codes, orders, requirements, directives, binding written interpretations and binding written policies, rulings, and decrees of all local, municipal, state and federal governments, departments, agencies, commissions, boards or political subdivisions (“Laws”); (xiii) any assumption by any person of any or all of SPV Tenant’s obligations under the SPV Lease, or SPV Tenant’s assignment of any or all of its rights and interests under the SPV Lease (whether or not consented by Landlord); (xiv) the power or authority or lack thereof of SPV Tenant to execute, acknowledge or deliver the SPV Lease; (xv) the existence, non-existence or lapse at any time of SPV Tenant as a legal entity or the existence, non-existence or termination of any corporate, ownership, business or other relationship between SPV Tenant and Guarantor; (xvi) any sale or assignment by Landlord of any or all of this Guaranty, the Lease, and/or the SPV Lease (including, but not limited to, any direct or collateral assignment by Landlord to any mortgagee); (xvii) the solvency or lack of solvency of SPV Tenant at any time or from time to time; (xviii) any setoff, defense, counterclaim, abatement, recoupment, reduction, change in law or any other event or circumstance which might otherwise constitute a legal or equitable discharge or defense of a guarantor, indemnitor or surety under the laws of the State of New York, the state in which the Premises is located or any other jurisdiction; (xix) any action, inaction or election of remedies by Landlord which results in any impairment or destruction of any subrogation, indemnity, reimbursement or contribution rights of Guarantor or of any rights of Guarantor to proceed against any other person for reimbursement; or (xx) any other cause, whether similar or dissimilar to any of the foregoing, that might constitute a legal or equitable discharge of Guarantor (whether or not Guarantor shall have knowledge or notice thereof). Without in any way limiting the generality of the foregoing, Guarantor specifically agrees that (A) if SPV Tenant’s obligations under the SPV Lease are modified or amended with the express written consent of Landlord, this Guaranty shall extend to such obligations as so amended or modified without notice to, consideration to, or the consent of, Guarantor, and (B) this Guaranty shall be applicable to any obligations of SPV Tenant arising in connection with an expiration or earlier termination (for any reason, including without limitation, rejection) of the SPV Lease, whether voluntary or otherwise. Guarantor hereby consents, prospectively, to Landlord’s taking or entering into any or all of the foregoing actions or omissions.\nD. | Guarantor hereby expressly agrees that the validity of this Guaranty and the obligations of Guarantor hereunder shall in no way be terminated, affected, diminished or impaired by reason of the assertion or the failure to assert by Landlord against SPV Tenant, of any of the rights or remedies reserved to Landlord pursuant to the provisions of the SPV Lease or by relief of SPV Tenant from any of SPV Tenant’s obligations under the SPV Lease or otherwise by (i) the release or discharge of SPV Tenant in any state or federal creditors’ proceedings, receivership, bankruptcy or other proceeding; (ii) the impairment, limitation or modification of the liability of SPV Tenant or the estate of SPV Tenant in bankruptcy, or resulting from the operation of any present or future provision of the United States Bankruptcy Code (11 U.S.C. § 101 et seq., as amended); or (iii) the rejection, disaffirmance or other termination of the SPV Lease in any such proceeding (i.e., any state or federal creditors’ proceedings, receivership, or bankruptcy proceedings). This Guaranty shall continue to be effective if at any time the payment of any amount due under the SPV Lease or this Guaranty is rescinded or must otherwise be returned by Landlord for any reason, including, without limitation, any Insolvency Event of SPV Tenant, Guarantor or otherwise, all as though such payment had not been made, and, in such event, Guarantor shall pay to Landlord an amount equal to any such payment that has been rescinded or returned.\n4. WAIVERS OF GUARANTOR.\nA. | Without limitation of the foregoing, Guarantor waives (i) notice of acceptance of this Guaranty, protest, demand and dishonor, presentment, and demands of any kind now or hereafter provided for by any statute or rule of law or equity, (ii) notice of any actions taken by Landlord or SPV Tenant under the SPV Lease or any other agreement or instrument relating thereto, (iii) notice of any and all defaults by SPV Tenant in the payment of Base Rent, Additional Rent or any other charges or amounts, or of any other defaults by SPV Tenant under the SPV Lease, (iv) all other notices, demands and protests, and all other formalities of every kind in connection with the enforcement of the Obligations, omission of or delay in which, but for the provisions of this Section 4, might constitute grounds for relieving Guarantor of its obligations hereunder, (v) any requirement that Landlord protect, secure, perfect, insure or proceed against any security interest or lien, or any property subject thereto, or exhaust any right or take any action against SPV Tenant or any other person or entity (including any additional guarantor or Guarantor) or against any collateral, (vi) the benefit of any statute of limitations affecting Guarantor’s liability under this Guaranty, and (vii) the right to revoke, amend, terminate, suspend or modify this Guaranty, in each case, other than in accordance with Section 11 of this Guaranty.\nB. | GUARANTOR AND LANDLORD HEREBY WAIVE TRIAL BY JURY IN ANY ACTION, PROCEEDING OR COUNTERCLAIM BROUGHT BY ANY PERSON OR ENTITY WITH RESPECT TO ANY MATTER WHATSOEVER ARISING OUT OF OR IN ANY WAY CONNECTED WITH THIS GUARANTY; GUARANTOR SHALL NOT IMPOSE ANY COUNTERCLAIM OR COUNTERCLAIMS OR CLAIMS FOR SET-OFF, RECOUPMENT OR DEDUCTION OF RENT IN ANY ACTION BROUGHT BY LANDLORD AGAINST GUARANTOR UNDER THIS GUARANTY, EXCEPT TO THE EXTENT ANY SUCH COUNTERCLAIM OR COUNTERCLAIMS OR CLAIMS FOR SET-OFF, RECOUPMENT OR DEDUCTION OF RENT IN ANY ACTION ARE MANDATORY PURSUANT TO LAWS. GUARANTOR HEREBY WAIVES, BOTH WITH RESPECT TO THE SPV LEASE AND WITH RESPECT TO THIS GUARANTY, ANY AND ALL RIGHTS WHICH ARE WAIVED BY SPV TENANT UNDER THE SPV LEASE, IN THE SAME MANNER AS IF ALL SUCH WAIVERS WERE FULLY RESTATED HEREIN. THE LIABILITY OF GUARANTOR UNDER THIS GUARANTY IS PRIMARY AND UNCONDITIONAL.\nC. | Guarantor expressly waives any and all rights to defenses arising by reason of (i) any “one-action” or “anti-deficiency” law or any other law that may prevent Landlord from bringing any action, including a claim for deficiency, against Guarantor before or after Landlord’s commencement or completion of any action against SPV Tenant; (ii) ANY ELECTION OF REMEDIES BY LANDLORD (INCLUDING, WITHOUT LIMITATION, ANY TERMINATION OF THE SPV LEASE) THAT DESTROYS OR OTHERWISE ADVERSELY AFFECTS GUARANTOR’S SUBROGATION RIGHTS OR GUARANTOR’S RIGHTS TO PROCEED AGAINST SPV TENANT FOR REIMBURSEMENT; (iii) any disability, insolvency, bankruptcy, lack of authority or power, death, insanity, minority, dissolution, or other defense of SPV Tenant, of Guarantor, of any other guarantor (or any other Guarantor), or of any other person or entity, or by reason of the cessation of SPV Tenant’s liability from any cause whatsoever; (iv) any right to claim discharge of any or all of the Obligations on the basis of unjustified impairment of any collateral for the Obligations; (v) any change in the relationship between Guarantor and SPV Tenant or any termination of such relationship; (vi) any irregularity, defect or unauthorized action by any or all of SPV Tenant, any other guarantor (or Guarantor) or surety, or any of their respective officers, directors or other agents in executing and delivering any instrument or agreements relating to the Obligations or in carrying out or attempting to carry out the terms of any such agreements; (vii) any assignment, endorsement or transfer, in whole or in part, of the Obligations, whether made with or without notice to or consent of Guarantor; (viii) the recovery from SPV Tenant or any other Person (including without limitation any other guarantor) becoming barred by any statute of limitations or being otherwise prevented; (ix) the benefits of any and all applicable statutes, laws, rules or regulations which may require the prior or concurrent joinder of any other party to any action on this Guaranty; (x) any release or other reduction of the Obligations arising as a result of the expansion, release, substitution, deletion, addition, or replacement (whether or not in accordance with the terms of the SPV Lease) of the Premises or any portion thereof; or (xi) any neglect, delay, omission, failure or refusal of Landlord to take or prosecute any action for the collection or enforcement of any of the Obligations or to foreclose or take or prosecute any action in connection with any lien or right of security (including perfection thereof) existing or to exist in connection with, or as security for, any of the Obligations, it being the intention hereof that Guarantor shall remain liable as a principal on the Obligations notwithstanding any act, omission or event that might, but for the provisions hereof, otherwise operate as a legal or equitable discharge of Guarantor. Guarantor hereby waives all defenses of a surety to which it may be entitled by statute or otherwise.\n5. SUBORDINATION AND SUBROGATION. Guarantor shall not be subrogated, and hereby subordinates and postpones any claim or right against SPV Tenant by way of subrogation or otherwise, to any of the rights of Landlord under the SPV Lease or otherwise, or in the Phase 2/4 Space (or any portion thereof), which may arise by any of the provisions of this Guaranty or by reason of the performance by Guarantor of any of its Obligations hereunder. Guarantor shall look solely to SPV Tenant for any recoupment of any payments made or costs or expenses incurred by Guarantor pursuant to this Guaranty. If any amount shall be paid to Guarantor on account of such subrogation rights or otherwise at any time when all of the Obligations shall not have been paid and performed in full, Guarantor shall hold in trust for the Landlord and shall immediately deliver the payment to Landlord for credit against the then outstanding balance of the Obligations, whether matured or unmatured.\n6. REPRESENTATIONS AND WARRANTIES OF GUARANTOR. Guarantor represents and warrants to the Landlord that, as of the date hereof and, except in respect of clause (E) below, as of the Spring Event Trigger Date:\nA. | Guarantor is a company formed under the laws of the State of Delaware; has all requisite power and authority to enter into and perform its obligations under this Guaranty; and this Guaranty is valid and binding upon and enforceable against Guarantor without the requirement of further action or condition.\nB. | The execution, delivery and performance by Guarantor of this Guaranty does not and will not (i) except as would not reasonably be expected to have a material adverse effect, contravene any Laws, any order, writ, injunction, decree applicable to Guarantor, if applicable, or any contractual restriction binding on or affecting Guarantor or any of its properties or assets (ii) contravene the organizational documents of Guarantor, or (iii) result in or require the creation of any lien, security interest or other charge or encumbrance upon or with respect to any of its properties or assets.\nC. | No approval, consent, exemption, authorization or other action by, or notice to, or filing with, any governmental authority is necessary or required in connection with the execution, delivery or performance by, or enforcement against, Guarantor of this Guaranty or any other instrument or agreement required hereunder, except (i) such as have been obtained or made and are in full force and effect, in each case, as of the date hereof and (ii) those approvals, consents, registrations, filings or other actions, the failure of which to obtain or make would not reasonably be expected to have a material adverse effect.\nD. | There is no action, suit or proceeding pending or, to Guarantor’s knowledge, threatened against or otherwise affecting Guarantor before any court or other governmental authority or any arbitrator that may materially adversely affect Guarantor’s ability to perform its obligations under this Guaranty.\nE. | Guarantor’s principal place of business is 290 W Mt Pleasant Ave, Suite 4100, Livingston, NJ 07039.\nF. | SPV Tenant is directly or indirectly owned and controlled by Guarantor.\nG. | Guarantor has derived or expects to derive financial and other advantages and benefits directly or indirectly, from Landlord and SPV Tenant entering into the SPV Lease and the payment and performance of the Obligations. Guarantor hereby acknowledges that Landlord will be relying upon Guarantor’s guarantee, representations, warranties and covenants contained herein.\nH. | Guarantor represents and warrants that, in its good faith judgment, the Obligations are subject to the occurrence of the Springing Events (rather than immediately from and after the execution and delivery hereof without the condition of the occurrence of the Springing Events) for the purposes of accommodating for the guidelines presented by the applicable Acceptable Ratings Agencies relating to the receipt of investment grade corporate or debt ratings.\n7. FINANCIAL STATEMENTS. (i) Within one hundred twenty (120) days after the end of each fiscal year of Guarantor, Guarantor shall provide complete financial statements of Guarantor audited by a nationally-recognized accounting firm, including a balance sheet, a profit and loss statement, a top-line gross receipts reports for such fiscal year of Guarantor and (ii) if requested in writing by Landlord, within forty-five (45) days after the end of each fiscal quarter of Guarantor, complete unaudited financial statements of the Guarantor including a balance sheet, a profit and loss statement, and a top-line gross receipts reports for such fiscal quarter of Guarantor (the “Financial Information”). Notwithstanding the foregoing, so long as Guarantor is a publicly-traded company and all of the Financial Information otherwise required to be provided by Guarantor to Landlord in accordance with this Section 7 is filed with the SEC and is publicly available, Guarantor shall not be required to deliver such Financial Information to Landlord.\nA. | Guarantor’s Financial Information shall be prepared in accordance with GAAP and shall be certified as true and correct by a financial officer of Guarantor’s business.\nB. | If Guarantor or its affiliate is a publicly-traded company, the Financial Information may be included in Guarantor’s required public filings with the SEC on an annual basis in satisfaction of the requirements of SEC Regulation S-X.\n8. NOTICES. Any consents, notices, demands, requests, approvals or other communications given under this Guaranty shall be in writing and shall be given as provided in the Original Lease, as follows or to such other addresses as either Landlord or Guarantor (as applicable) may designate by notice given to the other in accordance with the provisions of this Section 8:\nIf to Guarantor:\nCoreWeave, Inc.\n290 W Mt Pleasant Ave, Suite 4100\nLivingston, NJ 07039\nAttention: Legal\nEmail: [***]\n| If to Landlord:\nc/o Applied Digital Corporation\n3811 Turtle Creek Blvd, Suite 2100\nDallas, TX 75219\nAttention: Mark A. Chavez, General Counsel\nEmail: [***]\nwith a copy to:  | With a copy to:\nAllen Matkins Leck Gamble Mallory and\nNatsis LLP599 Lexington Avenue, 38th\nFloorNew York, NY 10022\nAttention: Alykhan Shivji\nEmail: ashivji@allenmatkins.com\n| Stutzman, Bromberg, Esserman & Plifka\n2323 Bryan Street, Suite 2200\nDallas, TX 75201\nAttn: Noah K. Hansford\nEmail: hansford@sbep-law.com\n9. CONSENT TO JURISDICTION. Guarantor hereby (a) consents and submits to the jurisdiction of the state and federal courts located in each of the State in which the Property is located and the State of New York, with respect to any dispute arising, directly or indirectly, out of this Guaranty, (b) waives any objections which the undersigned may have to the laying of venue in any such suit, action or proceeding in either such court, and (c) agrees to join Landlord in any petition for removal to either such court. The undersigned hereby acknowledges and agrees that Landlord may obtain personal jurisdiction and perfect service of process through SPV Tenant as the undersigned agent, or by any other means now or hereafter permitted by Laws.\n10. ESTOPPEL CERTIFICATE. Guarantor shall, from time to time within fifteen (15) days after receipt of Landlord’s request, execute, acknowledge and deliver to Landlord an estoppel certificate in the form attached hereto as Exhibit A. Such certificate may be relied upon by Landlord and any prospective purchaser, landlord or lender of all or a portion of the Building (or any portion thereof).\n11. TERMINATION. This Guaranty is effective as of the date hereof and shall continue in full force and effect, until all of the Obligations are fully and finally paid and performed and SPV Tenant has no further obligation under the SPV Lease. The Obligations shall not be considered fully and finally paid and performed unless and until all payments by SPV Tenant to Landlord are no longer subject to any right on the part of any person, including SPV Tenant, SPV Tenant as a debtor-in-possession, or any trustee in bankruptcy, to require Landlord to disgorge such payments or to seek to recoup all or any portion of such payments. Accordingly, this Guaranty shall continue to be effective or be reinstated, as applicable, if at any time the payment or performance of all or any portion of the Obligations is rescinded or reduced in amount or must otherwise be restored or returned by Landlord, whether as a “voidable preference” or “fraudulent conveyance,” or under any Laws, including the United States Bankruptcy Code or otherwise, all as though such payment or performance had not been made, and Guarantor will indemnify, defend, and hold Landlord and the Indemnified Parties harmless for, from and against, any and all liabilities incurred by Landlord in connection with such remission, rescission or restoration.\n12. LEASE L/C.\nA. Delivery and Amount of Lease L/C. On or prior to the date that is [***] after the date hereof, Guarantor shall, at Guarantor’s sole cost and expense, obtain and deliver to Landlord one Lease L/C to be issued for the benefit of Landlord, in an aggregate amount equal to [***] (the “Required L/C Amount”). Guarantor shall maintain the Lease L/C in the Required L/C Amount at all times during the Term.\nB. Draw Rights. Landlord is hereby authorized to draw on any Lease L/C, in whole or in part, at any time and from time to time, without notice to Guarantor, if any of the following occurs: (1) an Event of Default by Tenant (as defined in the Lease) beyond any applicable notice or cure period; (2) any Lease L/C is not renewed or replaced at least [***] days prior to its stated expiration date; (3) the issuer of any Lease L/C ceases to be an Acceptable Issuer and a replacement Lease L/C has not been obtained from an Acceptable Issuer within the earlier of (x) [***] days after such issuer ceases to be an Acceptable Issuer and (y) ten [***] days prior to the stated expiration date of such Lease L/C; (4) the issuer of any Lease L/C notifies the Landlord that it will not renew such Lease L/C and a replacement Lease L/C has not been obtained from an Acceptable Issuer on or prior to the date that is [***] days prior to the stated expiration date of such Lease L/C; or (5) the occurrence of any Insolvency Event with respect to Guarantor. Landlord shall solely apply the proceeds of any such draw to any Monetary Obligations due and unpaid under the Lease and/or to cure any default of Guarantor under the Lease. No draw on any Lease L/C shall prevent Landlord from exercising any other remedy available to Landlord under this Guaranty or under the Lease, at law, or in equity.\nC. Replenishment. If Landlord draws on any Lease L/C for any reason, Guarantor shall, within thirty (30) days after receipt of written notice from Landlord, deliver to Landlord a replacement Lease L/C or an amendment to the existing Lease L/C restoring the aggregate face amount of all Lease L/C to the Required L/C Amount.\nD. Replacement of Lease L/C. If at any time the issuer of any Lease L/C ceases to be an Acceptable Issuer, Guarantor shall, within thirty (30) days after receipt of written notice from Landlord (or, if earlier, within five (5) Business Days prior to the stated expiration date of such Lease L/C), deliver to Landlord a replacement Lease L/C issued by an Acceptable Issuer in the Required L/C Amount.\nE. Transfer and Assignment. In the event of any sale, assignment, or other transfer of Landlord’s interest in the Lease (and solely to the extent such sale, assignment or other transfer is permitted under the Lease), Landlord shall have the right to transfer or assign any Lease L/C to such transferee, and Guarantor shall cooperate with such transfer, including by delivering any replacement Lease L/C that may be required in connection therewith.\nF. Costs and Expenses. All reasonable, documented and invoiced costs and expenses incurred by Landlord in connection with any draw or transfer of a Lease L/C, including any reasonable, documented and invoiced costs of drawing, transfer, or enforcement, shall be paid by Guarantor within thirty (30) days after written demand.\n“Acceptable Issuer” shall mean a bank or trust company that (a) is chartered under the laws of the United States of America or a political subdivision thereof or is a United States branch of a foreign bank and (b) has a rating for its long-term unsecured and non-credit-enhanced debt obligations of at least (i) A- or higher by Standard & Poor’s, (ii) A- or higher by Fitch Ratings, or (iii) A3 or higher by Moody’s Investors Service. In the event an issuer’s credit rating is downgraded below any of the foregoing thresholds, such issuer shall immediately cease to be an Acceptable Issuer. It is agreed and understood that JPMorgan Chase Bank, N.A. (and its affiliates) shall be deemed an Acceptable Issuer.\n“Lease L/C” shall mean an irrevocable, unconditional, standby letter of credit issued by an Acceptable Issuer for the benefit of Landlord, in form and substance reasonably satisfactory to Landlord, which (a) permits partial and multiple draws, (b) provides for payment upon presentation of only the Lease L/C and a sight draft, (c) is transferable by Landlord without the consent of Guarantor or the issuer, (d) has an initial term of not less than one (1) year and contains an “evergreen” provision providing for automatic renewal for successive one (1) year periods unless the issuer provides Landlord with written notice of non-renewal prior to the then-current expiration date, and (e) is governed by the International Standby Practices (ISP98) or the Uniform Customs and Practice for Documentary Credits (UCP 600), or any successor rules thereto.\n13. MISCELLANEOUS.\nA. | Subject to the immediately succeeding sentence, the Landlord may not assign this Guaranty in whole or in part without the consent of the Guarantor. Guarantor agrees that Landlord may, without notice, assign this Guaranty in whole or in part to an assignee solely to the extent the Landlord has assigned the SPV Lease to such assignee in accordance with the terms of the SPV Lease. If Landlord disposes of its interest in the SPV Lease in accordance with the terms therein, “Landlord,” as used in this Guaranty, shall mean such Landlord’s permitted successors and assigns. Guarantor may not assign this Guaranty in whole or in part without the consent of Landlord, in Landlord’s sole and absolute discretion, and any attempted or purported assignment without such Landlord consent shall be deemed void ab initio.\nB. | If any legal action or proceeding is commenced to interpret or enforce the terms of, or obligations arising out of, this Guaranty, or to recover damages for the breach thereof, the party prevailing in any such action or proceedings shall be entitled to recover from the non-prevailing party all attorneys’ fees and reasonable costs and expenses incurred by the prevailing party. As used herein, “attorneys’ fees” shall mean the reasonable and documented out of pocket fees and expenses of counsel to the parties hereto, which may include printing, photocopying, duplicating and other expenses, air freight charges, and fees billed for law clerks, paralegals, librarians and others not admitted to the bar but performing services under the supervision of an attorney. The term “attorneys’ fees” shall also include, without limitation, all such fees and expenses incurred with respect to appeals, arbitrations and bankruptcy proceedings.\nC. | If any portion of this Guaranty shall be deemed invalid, unenforceable or illegal for any reason, such invalidity, unenforceability or illegality shall not affect the balance of this Guaranty, which shall remain in full force and effect to the maximum permitted extent.\nD. | The provisions, covenants and guaranties of this Guaranty shall be binding upon Guarantor and its heirs, successors, legal representatives and assigns (it being understood that Guarantor shall not have the right to assign its obligations under this Guaranty without the prior written consent of Landlord in Landlord’s sole and absolute discretion), and shall inure to the benefit of Landlord and its successors and assigns, and shall not be deemed waived or modified unless such waiver or modification is specifically set forth in writing, executed by Landlord or its successors and assigns, and delivered to Guarantor.\nE. | Whenever the words “include”, “includes”, or “including” are used in this Guaranty, they shall be deemed to be followed by the words “without limitation”, and, whenever the circumstances or the context requires, the singular shall be construed as the plural, the masculine shall be construed as the feminine and/or the neuter and vice versa. This Guaranty shall be interpreted and enforced without the aid of any canon, custom or rule of law requiring or suggesting construction against the party drafting or causing the drafting of the provision in question.\nF. | Each of the rights and remedies herein provided are cumulative and not exclusive of any rights or remedies provided by law or in the SPV Lease or this Guaranty.\nG. | The provisions of this Guaranty shall be governed by and interpreted solely in accordance with the internal laws of the State of New York, without giving effect to the principles of conflicts of law.\nH. | Time is of the essence with respect to all agreements and obligations of Guarantor contained in this Guaranty.\nI. | The Recitals set forth above are hereby incorporated by this reference and made a part of this Guaranty. Guarantor hereby represents and warrants that as of the date of this Guaranty the Recitals are true and correct.\nJ. | This Guaranty may not be amended except to the extent agreed to by Guarantor and Landlord in writing.\nK. | For the avoidance of doubt, that certain Assignment, Assumption Consent, dated as of the date hereof, by and among, the Landlord, SPV Tenant and Guarantor (the “Assignment of Lease”), including, without limitation, the release provided in this Section 15 of the Assignment of Lease, shall not impair, limit, modify, termination, eliminate or reduce the Obligation.\nSIGNATURE PAGE TO FOLLOW\nIN WITNESS WHEREOF, the undersigned has executed this Unconditional Springing Guaranty of Payment and Performance effective as of the date first written above.\nGUARANTOR:\nCoreWeave, Inc., a Delaware corporation\n/s/ Michael Intrator\nBy: | Michael Intrator\nName: | President and Chief Executive Officer\nSTATE OF            New York         )\nCOUNTY OF             New York              )\nI, the undersigned authority, a Notary Public in and for said County in said State, hereby certify that Michael Intrator, whose name as President & CEO of CW, Inc., a DE corp, is signed to the foregoing instrument, and who is known to me, acknowledged before me on this day that, being informed of the contents of said instrument, he, as such officer and with full authority, executed the same voluntarily for and as the act of said corporation, acting in its capacity as President & CEO of said limited liability company as aforesaid.\nGiven under my hand and official seal, this 25th day of March, 2026.\n/s/ Eashaa Parekh\nNotary Public\nAFFIX SEAL\nMy commission expires:\nACKNOWLEDGED AND AGREED as of the date set forth below:\nLANDLORD:\nAPLD ELN-02 LLC,\na Delaware limited liability company\nBy: | /s/ Saidal Mohmand\nName: | Saidal Mohmand\nTitle: | Chief Financial Officer",
+ "sections": [
+  {
+   "id": "s0000",
+   "number": null,
+   "heading": "Preamble",
+   "char_start": 0,
+   "char_end": 2637,
+   "article": null
+  },
+  {
+   "id": "s0001",
+   "number": "1",
+   "heading": "DEFINITIONS",
+   "char_start": 2637,
+   "char_end": 2779,
+   "article": null
+  },
+  {
+   "id": "s0002",
+   "number": "2",
+   "heading": "COVENANTS OF GUARANTOR",
+   "char_start": 2779,
+   "char_end": 14207,
+   "article": null
+  },
+  {
+   "id": "s0003",
+   "number": "3",
+   "heading": "GUARANTOR’S OBLIGATIONS UNCONDITIONAL",
+   "char_start": 14207,
+   "char_end": 20864,
+   "article": null
+  },
+  {
+   "id": "s0004",
+   "number": "4",
+   "heading": "WAIVERS OF GUARANTOR",
+   "char_start": 20864,
+   "char_end": 26232,
+   "article": null
+  },
+  {
+   "id": "s0005",
+   "number": "5",
+   "heading": "SUBORDINATION AND SUBROGATION",
+   "char_start": 26232,
+   "char_end": 27203,
+   "article": null
+  },
+  {
+   "id": "s0006",
+   "number": "6",
+   "heading": "REPRESENTATIONS AND WARRANTIES OF GUARANTOR",
+   "char_start": 27203,
+   "char_end": 30265,
+   "article": null
+  },
+  {
+   "id": "s0007",
+   "number": "7",
+   "heading": "FINANCIAL STATEMENTS",
+   "char_start": 30265,
+   "char_end": 31718,
+   "article": null
+  },
+  {
+   "id": "s0008",
+   "number": "8",
+   "heading": "NOTICES",
+   "char_start": 31718,
+   "char_end": 32695,
+   "article": null
+  },
+  {
+   "id": "s0009",
+   "number": "9",
+   "heading": "CONSENT TO JURISDICTION",
+   "char_start": 32695,
+   "char_end": 33440,
+   "article": null
+  },
+  {
+   "id": "s0010",
+   "number": "10",
+   "heading": "ESTOPPEL CERTIFICATE",
+   "char_start": 33440,
+   "char_end": 33834,
+   "article": null
+  },
+  {
+   "id": "s0011",
+   "number": "11",
+   "heading": "TERMINATION",
+   "char_start": 33834,
+   "char_end": 35153,
+   "article": null
+  },
+  {
+   "id": "s0012",
+   "number": "12",
+   "heading": "LEASE L/C",
+   "char_start": 35153,
+   "char_end": 40014,
+   "article": null
+  },
+  {
+   "id": "s0013",
+   "number": "13",
+   "heading": "MISCELLANEOUS",
+   "char_start": 40014,
+   "char_end": 45725,
+   "article": null
+  }
+ ],
+ "pages": [
+  {
+   "page": 1,
+   "char_start": 0,
+   "char_end": 2779
+  },
+  {
+   "page": 2,
+   "char_start": 2779,
+   "char_end": 5169
+  },
+  {
+   "page": 3,
+   "char_start": 5169,
+   "char_end": 9146
+  },
+  {
+   "page": 4,
+   "char_start": 9146,
+   "char_end": 11253
+  },
+  {
+   "page": 5,
+   "char_start": 11253,
+   "char_end": 14207
+  },
+  {
+   "page": 6,
+   "char_start": 14207,
+   "char_end": 19346
+  },
+  {
+   "page": 7,
+   "char_start": 19346,
+   "char_end": 26232
+  },
+  {
+   "page": 8,
+   "char_start": 26232,
+   "char_end": 30265
+  },
+  {
+   "page": 9,
+   "char_start": 30265,
+   "char_end": 33834
+  },
+  {
+   "page": 10,
+   "char_start": 33834,
+   "char_end": 37278
+  },
+  {
+   "page": 11,
+   "char_start": 37278,
+   "char_end": 40850
+  },
+  {
+   "page": 12,
+   "char_start": 40850,
+   "char_end": 44468
+  },
+  {
+   "page": 13,
+   "char_start": 44468,
+   "char_end": 45525
+  },
+  {
+   "page": 14,
+   "char_start": 45525,
+   "char_end": 45725
+  }
+ ],
+ "segments": [
+  {
+   "id": "p0001",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 0,
+   "char_end": 28
+  },
+  {
+   "id": "p0002",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 29,
+   "char_end": 41
+  },
+  {
+   "id": "p0003",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 42,
+   "char_end": 285
+  },
+  {
+   "id": "p0004",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 286,
+   "char_end": 345
+  },
+  {
+   "id": "p0005",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 346,
+   "char_end": 633
+  },
+  {
+   "id": "p0006",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 634,
+   "char_end": 649
+  },
+  {
+   "id": "p0007",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 650,
+   "char_end": 805
+  },
+  {
+   "id": "p0008",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 806,
+   "char_end": 1297
+  },
+  {
+   "id": "p0009",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 1298,
+   "char_end": 1700
+  },
+  {
+   "id": "p0010",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 1701,
+   "char_end": 2237
+  },
+  {
+   "id": "p0011",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 2238,
+   "char_end": 2398
+  },
+  {
+   "id": "p0012",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 2399,
+   "char_end": 2636
+  },
+  {
+   "id": "p0013",
+   "section_id": "s0001",
+   "page": 1,
+   "char_start": 2637,
+   "char_end": 2778
+  },
+  {
+   "id": "p0014",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2779,
+   "char_end": 2805
+  },
+  {
+   "id": "p0015",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2806,
+   "char_end": 4336
+  },
+  {
+   "id": "p0016",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 4337,
+   "char_end": 4413
+  },
+  {
+   "id": "p0017",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 4414,
+   "char_end": 5168
+  },
+  {
+   "id": "p0018",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 5169,
+   "char_end": 9145
+  },
+  {
+   "id": "p0019",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 9146,
+   "char_end": 10173
+  },
+  {
+   "id": "p0020",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 10174,
+   "char_end": 10604
+  },
+  {
+   "id": "p0021",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 10605,
+   "char_end": 10701
+  },
+  {
+   "id": "p0022",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 10702,
+   "char_end": 10799
+  },
+  {
+   "id": "p0023",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 10800,
+   "char_end": 11113
+  },
+  {
+   "id": "p0024",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 11114,
+   "char_end": 11252
+  },
+  {
+   "id": "p0025",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 11253,
+   "char_end": 11535
+  },
+  {
+   "id": "p0026",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 11536,
+   "char_end": 13193
+  },
+  {
+   "id": "p0027",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 13194,
+   "char_end": 13904
+  },
+  {
+   "id": "p0028",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 13905,
+   "char_end": 14206
+  },
+  {
+   "id": "p0029",
+   "section_id": "s0003",
+   "page": 6,
+   "char_start": 14207,
+   "char_end": 14248
+  },
+  {
+   "id": "p0030",
+   "section_id": "s0003",
+   "page": 6,
+   "char_start": 14249,
+   "char_end": 14857
+  },
+  {
+   "id": "p0031",
+   "section_id": "s0003",
+   "page": 6,
+   "char_start": 14858,
+   "char_end": 14993
+  },
+  {
+   "id": "p0032",
+   "section_id": "s0003",
+   "page": 6,
+   "char_start": 14994,
+   "char_end": 19345
+  },
+  {
+   "id": "p0033",
+   "section_id": "s0003",
+   "page": 7,
+   "char_start": 19346,
+   "char_end": 20863
+  },
+  {
+   "id": "p0034",
+   "section_id": "s0004",
+   "page": 7,
+   "char_start": 20864,
+   "char_end": 20888
+  },
+  {
+   "id": "p0035",
+   "section_id": "s0004",
+   "page": 7,
+   "char_start": 20889,
+   "char_end": 22315
+  },
+  {
+   "id": "p0036",
+   "section_id": "s0004",
+   "page": 7,
+   "char_start": 22316,
+   "char_end": 23204
+  },
+  {
+   "id": "p0037",
+   "section_id": "s0004",
+   "page": 7,
+   "char_start": 23205,
+   "char_end": 26231
+  },
+  {
+   "id": "p0038",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 26232,
+   "char_end": 27202
+  },
+  {
+   "id": "p0039",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 27203,
+   "char_end": 27409
+  },
+  {
+   "id": "p0040",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 27410,
+   "char_end": 27720
+  },
+  {
+   "id": "p0041",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 27721,
+   "char_end": 28317
+  },
+  {
+   "id": "p0042",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 28318,
+   "char_end": 28941
+  },
+  {
+   "id": "p0043",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 28942,
+   "char_end": 29247
+  },
+  {
+   "id": "p0044",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 29248,
+   "char_end": 29352
+  },
+  {
+   "id": "p0045",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 29353,
+   "char_end": 29429
+  },
+  {
+   "id": "p0046",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 29430,
+   "char_end": 29802
+  },
+  {
+   "id": "p0047",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 29803,
+   "char_end": 30264
+  },
+  {
+   "id": "p0048",
+   "section_id": "s0007",
+   "page": 9,
+   "char_start": 30265,
+   "char_end": 31308
+  },
+  {
+   "id": "p0049",
+   "section_id": "s0007",
+   "page": 9,
+   "char_start": 31309,
+   "char_end": 31480
+  },
+  {
+   "id": "p0050",
+   "section_id": "s0007",
+   "page": 9,
+   "char_start": 31481,
+   "char_end": 31717
+  },
+  {
+   "id": "p0051",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 31718,
+   "char_end": 32087
+  },
+  {
+   "id": "p0052",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32088,
+   "char_end": 32104
+  },
+  {
+   "id": "p0053",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32105,
+   "char_end": 32120
+  },
+  {
+   "id": "p0054",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32121,
+   "char_end": 32154
+  },
+  {
+   "id": "p0055",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32155,
+   "char_end": 32175
+  },
+  {
+   "id": "p0056",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32176,
+   "char_end": 32192
+  },
+  {
+   "id": "p0057",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32193,
+   "char_end": 32205
+  },
+  {
+   "id": "p0058",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32206,
+   "char_end": 32223
+  },
+  {
+   "id": "p0059",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32224,
+   "char_end": 32255
+  },
+  {
+   "id": "p0060",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32256,
+   "char_end": 32290
+  },
+  {
+   "id": "p0061",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32291,
+   "char_end": 32307
+  },
+  {
+   "id": "p0062",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32308,
+   "char_end": 32350
+  },
+  {
+   "id": "p0063",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32351,
+   "char_end": 32363
+  },
+  {
+   "id": "p0064",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32364,
+   "char_end": 32398
+  },
+  {
+   "id": "p0065",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32399,
+   "char_end": 32436
+  },
+  {
+   "id": "p0066",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32437,
+   "char_end": 32473
+  },
+  {
+   "id": "p0067",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32474,
+   "char_end": 32497
+  },
+  {
+   "id": "p0068",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32498,
+   "char_end": 32523
+  },
+  {
+   "id": "p0069",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32524,
+   "char_end": 32555
+  },
+  {
+   "id": "p0070",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32556,
+   "char_end": 32595
+  },
+  {
+   "id": "p0071",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32596,
+   "char_end": 32625
+  },
+  {
+   "id": "p0072",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32626,
+   "char_end": 32642
+  },
+  {
+   "id": "p0073",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32643,
+   "char_end": 32665
+  },
+  {
+   "id": "p0074",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 32666,
+   "char_end": 32694
+  },
+  {
+   "id": "p0075",
+   "section_id": "s0009",
+   "page": 9,
+   "char_start": 32695,
+   "char_end": 33439
+  },
+  {
+   "id": "p0076",
+   "section_id": "s0010",
+   "page": 9,
+   "char_start": 33440,
+   "char_end": 33833
+  },
+  {
+   "id": "p0077",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 33834,
+   "char_end": 35152
+  },
+  {
+   "id": "p0078",
+   "section_id": "s0012",
+   "page": 10,
+   "char_start": 35153,
+   "char_end": 35167
+  },
+  {
+   "id": "p0079",
+   "section_id": "s0012",
+   "page": 10,
+   "char_start": 35168,
+   "char_end": 35570
+  },
+  {
+   "id": "p0080",
+   "section_id": "s0012",
+   "page": 10,
+   "char_start": 35571,
+   "char_end": 36953
+  },
+  {
+   "id": "p0081",
+   "section_id": "s0012",
+   "page": 10,
+   "char_start": 36954,
+   "char_end": 37277
+  },
+  {
+   "id": "p0082",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 37278,
+   "char_end": 37677
+  },
+  {
+   "id": "p0083",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 37678,
+   "char_end": 38126
+  },
+  {
+   "id": "p0084",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 38127,
+   "char_end": 38452
+  },
+  {
+   "id": "p0085",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 38453,
+   "char_end": 39161
+  },
+  {
+   "id": "p0086",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 39162,
+   "char_end": 40013
+  },
+  {
+   "id": "p0087",
+   "section_id": "s0013",
+   "page": 11,
+   "char_start": 40014,
+   "char_end": 40032
+  },
+  {
+   "id": "p0088",
+   "section_id": "s0013",
+   "page": 11,
+   "char_start": 40033,
+   "char_end": 40849
+  },
+  {
+   "id": "p0089",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 40850,
+   "char_end": 41790
+  },
+  {
+   "id": "p0090",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 41791,
+   "char_end": 42065
+  },
+  {
+   "id": "p0091",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 42066,
+   "char_end": 42690
+  },
+  {
+   "id": "p0092",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 42691,
+   "char_end": 43255
+  },
+  {
+   "id": "p0093",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 43256,
+   "char_end": 43421
+  },
+  {
+   "id": "p0094",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 43422,
+   "char_end": 43626
+  },
+  {
+   "id": "p0095",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 43627,
+   "char_end": 43742
+  },
+  {
+   "id": "p0096",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 43743,
+   "char_end": 43965
+  },
+  {
+   "id": "p0097",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 43966,
+   "char_end": 44072
+  },
+  {
+   "id": "p0098",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 44073,
+   "char_end": 44442
+  },
+  {
+   "id": "p0099",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 44443,
+   "char_end": 44467
+  },
+  {
+   "id": "p0100",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44468,
+   "char_end": 44627
+  },
+  {
+   "id": "p0101",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44628,
+   "char_end": 44638
+  },
+  {
+   "id": "p0102",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44639,
+   "char_end": 44678
+  },
+  {
+   "id": "p0103",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44679,
+   "char_end": 44699
+  },
+  {
+   "id": "p0104",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44700,
+   "char_end": 44722
+  },
+  {
+   "id": "p0105",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44723,
+   "char_end": 44768
+  },
+  {
+   "id": "p0106",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44769,
+   "char_end": 44807
+  },
+  {
+   "id": "p0107",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44808,
+   "char_end": 44853
+  },
+  {
+   "id": "p0108",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 44854,
+   "char_end": 45389
+  },
+  {
+   "id": "p0109",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 45390,
+   "char_end": 45458
+  },
+  {
+   "id": "p0110",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 45459,
+   "char_end": 45476
+  },
+  {
+   "id": "p0111",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 45477,
+   "char_end": 45490
+  },
+  {
+   "id": "p0112",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 45491,
+   "char_end": 45501
+  },
+  {
+   "id": "p0113",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 45502,
+   "char_end": 45524
+  },
+  {
+   "id": "p0114",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 45525,
+   "char_end": 45580
+  },
+  {
+   "id": "p0115",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 45581,
+   "char_end": 45590
+  },
+  {
+   "id": "p0116",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 45591,
+   "char_end": 45607
+  },
+  {
+   "id": "p0117",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 45608,
+   "char_end": 45644
+  },
+  {
+   "id": "p0118",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 45645,
+   "char_end": 45669
+  },
+  {
+   "id": "p0119",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 45670,
+   "char_end": 45692
+  },
+  {
+   "id": "p0120",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 45693,
+   "char_end": 45725
+  }
+ ]
+}

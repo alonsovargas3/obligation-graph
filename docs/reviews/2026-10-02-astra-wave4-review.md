@@ -246,3 +246,66 @@ This is one blocker with two related manifestations of the same enforcement desi
 ### D) Verdict
 
 proceed-after-fixes
+
+
+## Round 3
+
+### A) R2-1 disposition and executed proof
+
+**R2-1: resolved.** Rev 2.1 withdraws the unsatisfiable authorizer rule. The five citation-bearing projections can enforce the required grounding and ownership predicates inside the schema, and the existing report/scoring queries can migrate to the static read allowlist.
+
+Tested main `c7cb665` against the real integration graph on SQLite 3.45.1. I backed up a read-only connection into `:memory:`, added the proposed site association table and the four exact, source-sliced pins, and created the five projections there. No repository implementation, tests, or real graph data changed. No model or external data calls were made.
+
+**Projection construction.** The prototype used these literal relational rules:
+
+- `visible_obligation_clause`: `visible_obligation.id = clause_ref.obligation_id`, with `grounded=1` and equal agreement IDs.
+- `visible_party_binding`: the cited ID from `visible_agreement_party` joined to `clause_ref.id`, with grounding and agreement equality, plus the party name by party ID.
+- `visible_event_binding`: `event.clause_ref_id = clause_ref.id`, with grounding and equality to the event agreement.
+- `visible_site_binding`: `agreement_site.clause_ref_id = clause_ref.id`, with grounding and equality to the association agreement, plus immutable site fields by site ID.
+- `visible_change_finding_ref`: three `UNION ALL` branches over `visible_change_finding`, each joining its named new/old/context ref by ID. New/context refs equal the change-order agreement; old refs belong to the run's chain and obey the existing self-versus-chain predicate. Every branch requires grounding.
+
+A plain query of `visible_obligation` returned all **525** obligations without an authorizer failure. Each projection executed successfully:
+
+| Projection | Rows | Duplicate owner/ref keys | Ungrounded or wrong-agreement refs |
+|---|---:|---:|---:|
+| visible_obligation_clause | 525 | 0 | 0 |
+| visible_party_binding | 4 | 0 | 0 |
+| visible_event_binding | 16 | 0 | 0 |
+| visible_site_binding | 4 | 0 | 0 |
+| visible_change_finding_ref | 56 | 0 | 0 |
+
+The last projection contains 28 new, 12 old, and 16 context rows. Ownership keys are obligation ID, event ID, `(agreement, party, role)`, `(agreement, site)`, and `(finding, side)` respectively; the ref ID completes each uniqueness key. The side is part of a finding-reference owner because old and new are distinct citation roles. The site table's `(agreement_id, site_id)` key and the existing binding/run-chain keys prevent multiplicative joins.
+
+**Ref 65 revocation.** Before revocation, `visible_party_binding` contained four rows. Setting only ref 65 to ungrounded removed exactly `(constantcontact-2011-ex1041, party 1, Digital 55 Middlesex, LLC, landlord, ref 65)`. No row was added; the tenant, guarantor, and other landlord bindings remained. Obligation 34 stayed visible with its own citation. Restoring ref 65 restored the original binding.
+
+**Negative evidence checks.** For each of the five projections, I separately revoked a real referenced ClauseRef inside a savepoint and asserted that its projected row disappeared. All five passed. I then tested cross-agreement corruption for each projection; all five excluded the corrupted reference. Existing citation triggers normally reject several such mutations before a view can see them, so I disabled those triggers only in the disposable memory database for this second set, isolating the view predicates. Each mutation was rolled back. Adding an ungrounded second citation to real obligation 34 left exactly its one grounded projected citation, without hiding the obligation or exposing the extra quote.
+
+**Static allowlist and reader migration.** I ran the actual current reader functions through a disposable connection adapter that rewrote their SQL to the projections and checked every executed `FROM`/`JOIN` identifier against Rev 2.1's allowlist. The migration required only these source and column substitutions:
+
+| Current reader dependency | Revised dependency |
+|---|---|
+| Obligation citation joins/lookups | visible_obligation_clause; use clause_ref_id instead of raw ref id and remove redundant grounded predicates |
+| Party-role lookup in pred_from_db | visible_party_binding |
+| Event-name lookup in pred_from_db | visible_event_binding; use event_id |
+| New/old/context finding refs | visible_change_finding_ref joined by finding_id and the explicit side |
+| Completed run data in report/scorer | fresh_change_run |
+| Chain and gate diagnostics | Existing allowlisted change_run_chain and gate_decision |
+
+All executed migrated queries passed the identifier allowlist. `pred_from_db` returned the CC base's 166 predictions. Full migrated reports for **both amendments in both modes** were equal to the current reports on the fresh graph. The migrated change scorer retained the existing results: 1A TP/FP/FN **8/2/2**, precision/recall **0.80/0.80**; 3A **4/0/3**, precision **1.00**, recall **4/7**. Thus citation projection does not require changing the measured findings or relaxing the static table rule.
+
+I also repeated the base-hash mutation. Both 3A modes disappeared from `fresh_change_run`, while the allowlisted `change_run_chain` still identified two stored runs for 3A. The public lookup can therefore classify this real case as stale instead of completed-empty, without reading `change_run` directly. Stale data is never recovered from raw tables to fill a report.
+
+### B) Blockers and known limitations
+
+**New blockers: none.** The previous real-query rejection is gone, evidence revocation and ownership tests pass, and the migration preserves the existing corpus results. No missed CLAUDE.md or Definition-of-done item was identified in this final scoped confirmation.
+
+**Known limitations:**
+
+- This is a disposable prototype and migration proof, not the B4 implementation or frozen suite. B4 must retain the exact by-ID, agreement, grounding, and side predicates, including association uniqueness; naming a view `visible_*` alone is not enforcement.
+- The static identifier allowlist is a source-structure check, not a SQL predicate prover. The projections and behavioral revocation tests provide the evidence guarantee. No authorizer exception should be reintroduced.
+- An empty `fresh_change_run` lookup alone does not distinguish absent from stale. The real paired-corpus stale case was demonstrated using allowlisted chain metadata. B4 should still freeze the complete missing/stale/optional-gated response matrix. If exact per-mode historical existence outside that paired case requires more metadata, expose only the needed status through a reviewed metadata projection rather than bypassing freshness to return a raw run.
+- Browser behavior, strict replay, generated README checks, and the user's Claude Desktop confirmation remain the already-planned implementation and acceptance work. This approval does not claim those have run.
+
+### C) Verdict
+
+agree-to-proceed

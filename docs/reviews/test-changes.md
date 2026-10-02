@@ -140,3 +140,23 @@ Red at freeze: 11 modules fail at collection on missing modules, and every wave 
 - **Fixtures:** real check responses in `tests/fixtures/api/change_v1/` (6 non-empty categories, allowlisted cache payloads).
 - **Contract addition:** `ChangeCorrection` and `ChangeVerifyResult.corrections`, with an empty default.
 - **Red result:** 2 failing (the two rev 2.3 rules), 6 controls passing, 1,120 others passing.
+
+## Wave 4 B4 (2026-10-02)
+
+**New frozen modules:**
+- `test_schema_v4`, `test_query`, `test_query_invariant`
+- `test_mcp_server`, `test_ui_server`, `test_ui_page`
+- `test_replay`, `test_sites`, `test_eval_score_visible`, `test_eval_all`, `test_eval_readme`
+
+**Helpers:** `graph_fixture.py`, `eval_workspace.py`.
+
+**Fixtures:** `tests/fixtures/graph/real_v4.db`, the wave 3 integration graph in schema v4 plus the four site pins. It is built by `build_fixture.py`, and its expected counts are in its README. The seven real TextDocs are alongside it.
+
+**Recorded responses:** 84 payloads committed under `eval/recorded/{extract,change}/`.
+
+**Adapted, intent kept:**
+- `test_schema_v2.py` and `test_schema_v3.py`: version 4.
+- `conftest.py`: an autouse `OG_WORKSPACE` per test.
+- `test_extract_cli.py`: recordings now live under `eval/recorded`.
+
+**Red result at freeze:** 1,164 passed; failures only in the wave 4 modules plus 2 adapted extract CLI cases, which wait on Task 33. Each fork showed satisfiability with throwaway implementations on a devbox scratch copy.

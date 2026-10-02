@@ -1,0 +1,3406 @@
+{
+ "doc_id": "mawson-2025-ex101",
+ "source_sha256": "d724e36d415d0eff0674fd4a0b6589c123446e81737b22346bd3fd7816428d3d",
+ "text": "EX-10.1 2 ea023566301ex10-1_mawson.htm AGREEMENT (REDACTED) BETWEEN MAWSON HOSTING LLC AND CANAAN INC\nExhibit 10.1\nMASTER COLOCATION AGREEMENT\nThis Master Colocation Agreement (the “Agreement”) is made on March 16, 2025 (“Effective Date”), by and between:\nMawson Hosting LLC, a limited liability company incorporated under the laws of the state of Delaware, the United States of America (“Host”); and,\na corporation incorporated under the laws of the State of Delaware, United States of America (“Client”).\nEach of the parties to this Agreement is referred herein individually as a “Party” and collectively as the “Parties” as the case may be.\nWHEREAS:\n(A) | Host is the operator of the Data Center Facility (as defined below) and provides Services (as defined below) at the Data Center Facility.\n(B) | Client intends to situate the Colocation Servers (as defined below) at the Data Center Facility and receive Services from Host in accordance with the terms and conditions of this Agreement.\nNOW, THEREFORE, in consideration of the premises and the mutual covenants set forth in this Agreement, the parties agas follows:\n1. | DEFINITIONS AND INTERPRETATIONS\n1.1. | In this Agreement, these expressions have the following meanings:\n“Affiliate” means, with respect to any Person, any other Person that directly or indirectly Controls, is Controlled by, or is under common Control with such Person”\nAll In Power Cost” means the sum of the following amounts:\n“All In Power Rate” means the All In Power Rate for a given Billing Period based on the average of the All-In Power Costs during hours power was consumed, as provided by the Host’s energy provider.\nMaster Colocation Agreement\n“Applicable Law” means any treaty, law, decree, order, regulation, decision, statute, ordinance, rule, directive, or code under local law, the law of any U. S. state or federal law (including securities laws and applicable securities exchanges rules), and which creates or purports to create any requirement or rule that may affect, restrict, prohibit or expressly allow the terms of this Agreement or any activity contemplated or carried out under this Agreement.\n“Auxiliary Load” means additional MDC Infrastructure other than ASIC miners that draws power including, fans, lights and network equipment, Auxiliary Load is captured in the Client metered load.\n“Bench Units” means spare, back up ASIC mining units provided by the Client to the Host for the purpose of removing and replacing inactive miners. A minimum par level of units must be maintained at all times.\n“BTC Revenue” means Bitcoin generated through cryptocurrency mining using ASICs.\n“Billing Period” means the period of approximately one (1) month for which Host issues invoices to Client for the Services provided by Host during such period, the determination of which shall follow the following principle: (a) the first Billing Period shall commence from the Initial Date through the last calendar day of the same month, and (b) each of the subsequent Billing Periods shall commence from the first calendar day of the month following the previous Billing Period through the last calendar day of such month.\n“Business Day” means a day (other than Saturday, Sunday or public holiday) on which banking institutions in the State where the Data Center Facility is located are open generally for business.\n“Client Default” means any Event of Default as set forth in Article 11 where Client is the defaulting Party.\n“Colocation Capacity” shall have the meaning ascribed to it in the applicable Service Order.\n“Colocation Quantity” means the agreed quantity of the Colocation Servers in accordance with the applicable Service Order, for which Host shall provide the Colocation Capacity, the details of which shall be initially set forth in the applicable Service Order.\n“Colocation Servers” means the ASIC servers and ancillary hardware equipment owned by Client or its designated third party(ies) and colocated at the Data Center Facility pursuant to this Agreement and an applicable Service Order.\n“Control” means, with respect to any Person, the power or authority, whether exercised or not, to direct the business, management and policies of such Person, directly or indirectly, whether through the ownership of voting securities, by contract or otherwise, provided that, in the case of a Person that is an entity, such power or authority shall conclusively be presumed to exist upon possession of beneficial ownership or power to direct the vote of more than fifty percent (50%) of the votes entitled to be cast at a meeting of the holders of the shares or other equity interests or registered capital of such Person or power to control the composition of a majority of the board of directors or similar governing body of such Person. The terms “Controlled” and “Controlling” have meanings correlative to the foregoing.\n2 | P a g e\nMaster Colocation Agreement\n“Cost of Revenue” means the total cost of All In Power Cost and Operations Service Fee times the power consumed within a Billing Period.\n“CSP” means Host’s curtailment service provider.\n“Curtailment Program” means Host’s energy demand response program whereby Host can reduce its power use during certain times and be compensated for doing so by Host’s CSP, generating revenue.\n“Curtailment Event Period” means a period of time occurring within the Billing Period in which the Host is generating revenue from its CSP through the Host’s energy demand response program/ There can be several Curtailment Event Periods that can occur within a Billing Period.\n“Curtailment Program Revenue” means revenue earned by participating in the Host’s Curtailment Program.\n“Data Center Facility” means the data center facility operated by Host, details of which shall be submitted to Client in the form set forth in EXHIBIT A of APPENDIX I hereto, where Host provides the Services to Client pursuant to the applicable Service Order(s).\n“Day” shall mean, unless otherwise specified, a calendar day inclusive of weekends, holidays, Business Days and non-Business Days.\n“Delayed Compensation” means the corresponding amount payable by either Party as compensation for its delayed performance in accordance with Articles 3.6(b), 3.6(c) and 3.6(d).\n“End-Period Meter Reading” means the meter reading of the Power Consumption Meter taken at 23:59 (UTC) on the last day of the applicable Billing Period.\n“Effective Date” means the date of this Agreement.\n“Forecasted Revenue per Rack” means the revenue based on a profitability calculator, such as NiceHash, to be agreed upon by Client and Host.\n“Force Majeure” means in respect of either Party, any event or occurrence whatsoever beyond the reasonable control of that Party, which delays, prevents or hinders that Party from performing any obligation imposed upon that Party under this Agreement, except payment, insurance, and indemnity obligations of Client under this Agreement, including to the extent such event or occurrence shall delay, prevent or hinder such Party from performing such obligation, war (declared or undeclared), terrorist activities, acts of sabotage, blockade, fire, lightning, acts of god, national strikes, riots, insurrections, civil commotions, quarantine restrictions, epidemics and pandemics, earthquakes, landslides, avalanches, floods, telecommunications or utilities outages, hurricanes, explosions, and legal, regulatory and administrative or similar action or delays to take actions of any governmental authority.\n3 | P a g e\nMaster Colocation Agreement\n“Gross Revenue” means all BTC revenue received to Mining Pool within Foundry, generated from operating Colocation Servers.\n“Gross Profit” means Gross Revenue less Cost of Revenue.\n“Host Equipment” means all equipment at the Data Center Facility that is owned by the Host including but not limited to modular data centers, transformers, breakers, switches, pads, fans, heat deflectors, CCTV, fences and other security related items, racking, cabling, servers, tools, vehicles and other property and equipment, but does not include the Colocation Servers or the Inventory Assets.\n“Index Rate” means the Power Reimbursement fee is calculated based on the All In Power Rate that Host is invoiced by their power provider as set out in the Service Order, and as further set forth in the Service Order.\n“Information Memorandum” means the document captioned as such and attached to the Service Order as Exhibit A.\n“Initial Date” means the date on which the Colocation Servers under the Service Order, or the first batch of Colocation Servers if there are more than one batch under the Service Order, are powered-on for normal Colocation and operation.\n“Inventory Assets” means any asset stored or kept by Client at the Data Center Facility other than the Colocation Servers, but which is reasonably necessary to operate or maintain the Colocation Servers. Inventory Assets which may include, without limitation, servers or hardware equipment that are damaged, defective, malfunctioning or not operating, servers or hardware equipment that are returned for maintenance and repair, servers or hardware equipment that are backup to the Colocation Servers, the spare parts and components for the maintenance and repair of the Colocation Servers, and the packaging materials for the Colocation Servers.\n“kWh” means kilowatt hours of power.\n“LMP” means Locational Marginal Pricing.\n“Lost Gross Revenue per Rack” means revenue that would have been earned by a miner within a single rack space that was lost due to the rack space being vacant. Lost Gross Revenue per Miner is calculated based on a profitability calculator, such as NiceHash, to be agreed upon by Client and Host.\n4 | P a g e\nMaster Colocation Agreement\n“Low Power Mode” means a special operation mode unique to the specific Colocation Server in which such Colocation Server consumes less electrical power than its Rated Power.\n“Minimum Strike Price” means the lowest strike price that Client can instruct Host to implement under Article 5, and as further set out in the Service Order.\n“MDC Infrastructure” means the equipment utilized by the Host to operate the Colocation Servers, including without limitation the exhaust fans, switches, lights, and CCTV.\n“Miner Redirection” means the authority Host has to divert all BTC Revenue from Mining Pool to Host’s Wallet, in order to resolve Client unpaid balances.\n“Minimum Power Commitment” means the commitment of power consumption of Host pursuant to the applicable Power Purchase Agreement, the failure to utilize electrical power under which, or the failure to make payment of which regardless of the actual utilization, will constitute a breach of contract under such Power Purchase Agreement. The specific amount of the Minimum Power Commitment shall be set forth in the applicable Information Memorandum of Data Center Facility.\n“Mining Pool” means the location for which all BTC Revenue generated from operating Colocation Servers are directed for the purpose of this Agreement, except when Miner Redirection is implemented.\n“Monitoring Software” means the software designated by the Parties to monitor the operation of the Colocation Servers, which shall be mutually agreed between the Parties in the applicable Service Order.\n“Monthly Theoretical Fee” means Sum of Rated Power of Each Colocation Server Powered-On (MW) × 24 hours × 31 days × Operations Service Fee ($/MWh as defined in applicable Service Order).\n“Net Benefit Price” means the minimum power price permitted as a strike price as prescribed by PJM on a monthly basis. Host will provide the Net Benefit Price to the Client on the last day or each month for the following month.\n“Net Profit” or “Net Profit to Client” means the Gross Profit to Client less Operations Service Fee as agreed upon by the Host and associated sales and use taxes, as well as repair out of warranty, excluding shipping costs, insurance costs and taxes that are owed by the Client within the Service Order. Net Profit and Net Profit to Client will also be used for the purpose of determining Tier I and Tier II.\n5 | P a g e\nMaster Colocation Agreement\n“Online Status” means the status of a Colocation Server that is powered-on with constant supply of electrical power, has stable connection with network and is accessible via the Monitoring Software where the status tag “Online” is indicated for such Colocation Server.\n“Online Status Ratio” means a fraction where the numerator is the sum of the actual length of time measured in hours of each Co-location Server in Online Status during the applicable Billing Period, and the denominator is the product of the Co-location Quantity of Co-location Servers and the theoretical length of time measured in hours of each Co-location Server in Online Status during the applicable Billing Period (“Theoretical Online Hours”). Theoretical Online Hours will exclude scheduled maintenance mutually agreed by the Parties in writing or which the Host reasonably believes is required to maintain the performance and security of the Data Center Facility or part thereof, any period during which Host is required to curtail power use by government or any competent authority, downtime caused by Force Majeure Events, downtime caused by Client, downtime due to Client’s request to voluntary power off the Co-location Servers, downtime caused by defects in Client’s Co-location Servers, and downtime caused by inappropriate act or omission in relation to the operation of the Co-location Servers by Client Personnel. The Online Status Ratio shall finally be determined by the data as illustrated on the Monitoring Software, except that if there is a technical failure (including, but not limited to, technical failure of the Monitoring Software and/or the Co-location Servers, or offline of the Next Unit of Computing, etc.) that prevents from reading certain data, the aforementioned numerator and denominator shall be adjusted accordingly to subtract such time during which the relevant data cannot be read due to such technical failure, unless otherwise agreed by the Parties. For the avoidance of doubt, calculation of Online Status Ratio shall not be adjusted for any technical failures under Article 6.13.\n“Operations Service Fee” means a base MW / hr rate charged to Client to cover basic Colocation hosting services as set forth in the Service Order.\n“Permitted Disputed Items” has the meaning ascribed to such term in Article 3.6(b)(iii).\n“Person” means any individual, corporation, partnership, limited partnership, proprietorship, association, limited liability company, firm, trust, estate or other enterprise or entity (whether or not having separate legal personality).\n“PJM” is an acronym for Pennsylvania-New Jersey-Maryland Interconnection, an independent system operator (ISO) and regional transmission organization (RTO) that manages the electric grid which services the Data Center Facility.\n“Power Consumption” means the amount of electrical power consumed in connection with the operation of the Colocation Servers during the applicable Billing Period, which shall be determined by subtracting the End-Period Meter Reading of the Billing Period immediately preceding the relevant Billing Period from the End-Period Meter Reading of the relevant Billing Period, the unit of which shall be kWh.\n6 | P a g e\nMaster Colocation Agreement\n“Power Consumption Meter” means the monitoring device installed by Host at the Data Center Facility for monitoring the electrical power consumed by Client in the operation of its Colocation Servers and MDC Infrastructure, located as set forth in the Information Memorandum.\n“Power Prepayment” means the estimated Power Reimbursement for the 2 forward months. The Power Prepayment will be calculated based on forward power curve price as provided by the PJM and will include all adders and taxes equaling the All In Power Cost.\n“Power Purchase Agreement” means the power purchase agreement, or other similar agreement for procurement of electrical power for the Data Center Facility, entered into between Host, or its Affiliate, and the relevant power supplier of the Data Center Facility.\n“Power Reimbursement” means the all-inclusive power purchase fee to be paid by Client for power used in connection with the Colocation Servers and associated MDC Infrastructure, which has been invoiced to Host under the Power Purchase Agreement, and then passed through to Client under this Agreement, charged as a percentage of total power usage at the Data Center Facility.\n“Profit Share” and means an agreed percentage of Gross Profit and/or any relevant Gross Revenue or Cost of Revenue items that are being proportionally split between Host and Client as defined in the Service Order and Term Sheet.\n“Primary Admin” means the Party which has primary access to the Mining Pool Subaccount on Foundry (i.e. the main account holder)\n“Quarter” means each of the three-month periods ending on March 31, June 30, September 30 and December 31.\n“Ramp Down Period” means an agreed period for which Colocation Servers are removed from rack, packed and made ready for shipment.\n“Ramp Up Period” means an agreed period for which the Colocation Servers are placed on rack, connected to power and data.\n“Rated Power” means the amount of the rated electrical power stated on the factory label of the applicable Colocation Server.\n“Reconciliation Statement” means the statement issued by Host to Client every Billing Period for reconciliation between the Parties, which shall set out details including but not limited to Power Consumption, the Online Status Ratio, Power Reimbursement fees, Operations Service Fees chargeable, any occurrence of interruption or suspension of any Service during such Billing Period, the form of which is set out in APPENDIX II hereto. Host may satisfy the requirements of the Reconciliation Statement in more than one document.\n7 | P a g e\nMaster Colocation Agreement\n“Relevant Jurisdiction” means the State of Delaware of the United States of America.\n“Service” means the Colocation service(s) provided by Host to Client pursuant to this Agreement subject to the actual service(s) agreed between the Parties in the applicable Service Order. For the avoidance of doubt, the Parties agree and acknowledge that the Service does not include any maintenance of Colocation Servers.\n“Service Order(s)” means the Service Order(s) executed by the Parties in the form set out in APPENDIX I hereto, as amended from time to time in accordance with this Agreement.\n“Shipment Date” or “Shipment Date Schedule” means the date or dates on which the Colocation Servers under the Service Order, or the first batch of Colocation Servers if there are more than one batch under the Service Order, have been delivered to a common carrier for shipment by the Client.\n“Strike Price Calculator” means the calculating tool used by Host to determine the adopted Strike Price which determined the highest Gross Profit from mining BTC or CSP Earnings. Host and Client may change this calculating tool to written mutual agreement.\n“Subaccount” for a mining pool is a subsidiary account created under a main account that allows Host and Client to manage and organize their cryptocurrency mining activities within a Mining Pool platform.\n“Tier I” or “Tier 1” means                                                                                                                                                                                                                                                                               .\n“Tier II” or “Tier 2” means                                                                                                                                                                                                                                                                             .\n“Wallet” means a digital tool to store, manage, and interact with cryptocurrencies.\n1.2. | In this Agreement, unless otherwise specified:\n(i) | words importing the singular include the plural and vice versa where the context so requires;\n(ii) | the headings in this Agreement are for convenience only and shall not be taken into consideration in the interpretation or construction of this Agreement;\n(iii) | references to Articles and Appendix(es) are references to the articles and appendix(es) of this Agreement;\n(iv) | references to days, dates and times are to the days, dates and times of the Relevant Jurisdiction, unless otherwise indicated;\n8 | P a g e\nMaster Colocation Agreement\n(v) | any reference to a code, law, statute, statutory provision, statutory instrument, order, regulation or other instrument of similar effect shall include any re-enactment or amendment thereof for the time being in force;\n(vi) | the attached Exhibits, Appendices, Schedules, and Addenda referenced or attached hereto shall form part of this Agreement and shall have effect as if set out in full in the body of this Agreement, and any reference to this Agreement includes such attachments;\n(vii) | understanding and interpretation of this Agreement shall be based on the purpose of this Agreement and the original meaning of the context and prevailing understanding and practice in the industry, and provisions of this Agreement and relevant Appendix(es) shall be understood and interpreted as a whole; and\n(viii) | “$”, “US$”, “US dollar”, “US dollars”, “dollar” and “dollars” denote lawful currency of the United States of America.\n2. | SCOPE OF SERVICES\nSubject to the terms and conditions of this Agreement, Host shall provide to Client, and Client shall receive from Host, the Services agreed in each of the applicable Service Orders.\n3. | PROFIT SHARE, OPERATIONS SERVICE FEE AND PAYMENTS\n3.1. | Profit Share Calculation is total BTC Revenue generated from operating Colocation Servers less Cost of Revenue. Profit Share to Client includes actual Power Consumption charges incurred and used by Client to operate its Colocation Servers. Host is not a power provider company but contracts with the power provider company to facilitate the supply of power, in part, to Client’s Colocation Servers to allow Client to operate its Colocation Servers. The actual costs of power, including applicable sales and use taxes and fees charged by the Power Provider, for power consumed by Client under this Agreement are passed on directly from the Power Provider to Client pursuant to Article 3.\nAs a requirement for base operational services maintained by Host, Host’s Operations Service Fees are a function of Client’s Power Consumption as measured by the Power Consumption Meter. The Operations Service Fee charged is in addition to and separate from the actual provision and billing of Power Consumption to Client. The Operations Service Fee including applicable sales and use taxes and fees will be proportionally split based on Profit Share.\n3.2. | Profit Share percentages for each Billing Period shall be calculated as defined in each of the applicable Service Orders.\n3.3. | Miner Management Systems (“MMS”) Access. If Client utilizes MMS in addition to the MMS being provided by the Host, Host will administer Client’s MMS on Host’s infrastructure.\n9 | P a g e\nMaster Colocation Agreement\n3.4.\n3.5. | Other Fees. Other fees set forth in the applicable Service Order shall be paid in accordance with such Service Order. Fees charged on a pay-per-use basis and not set out in the Service Order may only be incurred after prior written approval of Client.\n3.6. | If such services are provided, they will be indicated in the applicable Service Order and invoiced and itemized separately. Client shall be responsible for any and all sales or use taxes which may be imposed on such services, based on the Client’s percentage split of Gross Profit if applicable.\n3.7. | Delay in Performance.\n(a) | Delayed Compensation.\n(b) | Delay in Delivery of Colocation Servers. Client will deliver the Colocation Servers, including the respective batch of Colocation Servers, to Host, FOB destination, Host’s Data Center Facility. Except as otherwise agreed by both Parties, in the event that Client fails to ship the respective batch of Colocation Servers before or within ten (10) calendar days of each batch shipment date in the Shipment Date Schedule as set forth in paragraph 2.2 of the applicable Service Order,\n(i) | Host shall be entitled to payment from the Client for the corresponding Delayed Compensation in accordance with the corresponding number of hours and number of Colocation Servers delayed and any other compensation, expenses, fees, charges, or other sums which may be due Host by Client; and\n(ii) | if Client fails to remedy such delay within thirty (30) calendar days, Host shall be entitled to terminate this Agreement by notice with immediate effect.\n(iii) | Host will invoice the Client directly to recover the Delayed Compensation discussed here in Article 3.6. Client shall unconditionally remit to Host all Delayed Compensation within seven (7) Business Days upon the earlier of (i) the delivery of Colocation Servers, or (ii) from the termination of this Agreement, unless otherwise stipulated in the Agreement.\n10 | P a g e\nMaster Colocation Agreement\nAll Colocation Servers shall be properly prepared for safe and lawful shipment by Client, shall be shipped FOB to the Host Data Center Facility via the common carrier mutually agreed upon by the Parties, and shall be accompanied by appropriate transportation and other agreed upon documentation. Client shall make all arrangements for shipping per the agreed upon carrier.\nClient will be responsible for Delayed Compensation due to Delay in shipment of the Colocation Servers, unless the Client can document that the delay occurs not through the fault of Client or occurs due to factors outside of the Client’s control, being delays caused by the common carrier or Force Majeure.\nClient must have a reasonable basis demonstrating that the Colocation Servers have been handed over to the shipping carrier and that there are factors outside of their control affecting delays. Failure to maintain records or systems to show proof of the above can still result in the Delayed Compensation.\nRisk of loss or damage to the Colocation Servers shall remain solely with Client until delivered FOB to the Data Center Facility. Client shall be responsible for all costs and expenses associated with shipping the Client Assets, including but not limited to freight, insurance, taxes, customs, and duties. In the event that any Colocation Servers are lost, damaged, or delayed during shipping, Client shall promptly replace the affected Client Assets at its own expense.\n(c) | Delay in Power-On of Colocation Servers.\n(i) | Except as otherwise agreed by both Parties, Host shall, to the satisfaction of Client, connect (1) the Data Center Facility to electrical power, and (2) enable the Data Center Facility to reach its standard operational conditions for the respective batch of Colocation Servers within twenty (20) calendar days of delivery of the relevant batch to Host (“Installation Period”). The Installation Period will be extended day-for-day when weather conditions at the Data Center Facility do not allow for installation to occur.\n(ii) | In the event that either of the conditions set forth in Article 3.6(c)(i) fails to be satisfied on time, Host shall be liable to pay to Client the corresponding Delayed Compensation in accordance with the corresponding number of hours and number of Colocation Servers delayed.\n11 | P a g e\nMaster Colocation Agreement\n(iii) | In the event that either of the conditions set forth in Article 3.6(c)(i) fails to be satisfied for more than thirty (30) calendar days, Client shall be entitled to terminate this Agreement by notice with immediate effect. Host shall unconditionally remit to Client all Delayed Compensation within seven (7) Business Days upon the eartlier of (i) satisfaction of the conditions set forth in Article 3.6(c)(i), or (ii) from the termination of this Agreement, unless otherwise stipulated in the Agreement.\n3.8. | Power Reimbursement. Prepayments of Power Reimbursement fees shall be made by Client to Host throughout the Term of the Agreement as follows:\n(a) | Prepayment. Client shall pay a prepayment to Host (the “Prepayment”) fifteen (15) Business Days prior to the estimated power-on date for each batch of Colocation Servers as calculated and set forth in the applicable Service Order. Host shall maintain the Prepayment at the level required in the Service Order during the Term of the Agreement at all times and shall immediately make payments to Host to increase the Prepayment to the required amount if the amount of the Prepayment falls below the required amount.\n(b) | Return of Prepayment. Host may use a Prepayment to only prepay or pay power costs incurred by the Client as required under the Power Purchase Agreement, or to offset the finally determined Power Reimbursement of the corresponding batch of Colocation Servers for the first Billing Period and the subsequent Billing Periods (if there is any Balance) in accordance with Article 3.7. If there is any unused Prepayment at the expiration or termination of this Agreement, Host shall unconditionally return such unused Prepayment in full to Client within seven (7) Business Days from the termination or expiration of this Agreement, or once Host has received a payment, set-off, credit or other value from its power supplier (whichever is later), regardless of whether any disputes have occurred during the Term of this Agreement unless outstanding invoices for Power Reimbursement are unsettled.\n3.9. | Mining Pool, Invoice, Payment and Settlement Mechanism.\n(a) | Mining Pool. Client will agree to use a designated Mining Pool within Foundry and assign Host and Client to a Subaccount, with the Client being the Primary Admin and Owner and Host user(s) assigned to the Subaccount also as Owner. Client will provide Host with Owner access to the Subaccount(s) to enable Host to monitor performance of the Colocation Servers, Profit Share percentages, and set up auto-withdrawals of BTC Revenue as agreed upon in the Service Order. Client will be the Primary Admin on the Account, but Client and Host will both be assigned Owner roles to the Subaccount and abide by the Service Order or any subsequent amendments to the Service Order.\n12 | P a g e\nMaster Colocation Agreement\n(b) | Invoice. Host shall issue the invoice of Cost of Revenue, Operations Service Fee, Power Prepayment, credit for Curtailment Program Revenue and any other fees or adjustments for the previous Billing Period to Client within five (5) Business Days from the end of such Billing Period, with (i) the Reconciliation Statement for such Billing Period; and (ii) the supporting documents for the Power Consumption for the Billing Period (including, but not limited to, photos of the Power Consumption Meter showing the Power Consumption at the end of such Billing Period, and the rate of power for the period. During the Index Rate Periods a breakdown of hourly power costs incurred will be provided as support by Host.\n(c) | Revision Against Objection and Payment. Client shall be entitled to raise to Host any objection to an invoice (including its attachments) issued by Host in accordance with this Article by written notice to Host within seven (7) days upon receipt of such invoice. Host shall provide Client with reasonable information and assistance to Client for Client to understand how the invoice amounts were calculated. If the Client continues to object to any part of the invoice after 14 days, then senior executives from each party shall meet and negotiate in good faith to resolve the issue. If after 14 days the senior executives are unable to resolve the issue, then such an objection shall be treated as a dispute under article 18.5. Any undisputed amounts, or pass through costs (including without limitation, Power Reimbursement), must be paid in full despite any objection or disputes. Client cannot object to an invoice more than seven (7) days after receipt of the relevant invoice.\n(d) | Settlement Mechanism. Invoices are due ten (10) days from the date of issue. Host shall apply any remaining Prepayments already paid to Services Provider to each invoice and shall in each invoice charge Prepayments for the following two Billing Periods (if applicable), as well as charging the Power Reimbursement and any other Fees. If the invoice shows an amount owing to Client (i.e. a credit), Host may, before remitting any credit to Client, first deduct from the credit any amounts currently due and payable to Host (including unpaid invoices). If there is a credit outstanding to Client after these deductions are made, then Host will remit a credit to Client within fifteen (15) days of the date of issue of the invoice.\n(e) | Payment terms. All sums due and payable by Client which are not timely paid in accordance with Paragraph 3, shall be subject to interest at 1.5% per month or the maximum amount permitted by law (whichever is lower), computed from the original due date until paid. In the event that an attorney be employed or expenses be incurred to compel payment for any sums due the Host under this Agreement or to enforce any rights or remedies of Host in accordance therewith, Client shall pay all such attorney’s fees, costs, and expenses incurred by Host including, without limitation, attorneys’ fees, costs and expenses incurred in appellate proceedings or in any action or participation in, or in connection with, any case or proceeding under the United States Bankruptcy Code or any successor thereto.\n13 | P a g e\nMaster Colocation Agreement\n3.10. | Confirmation of Colocation Servers Security. Notwithstanding the foregoing, Host shall issue a Confirmation of Colocation Servers’ Security (in the form as attached in APPENDIX III hereto) of providing Colocation Servers’ latest information and the current business operation of Host within not more than five (5) Business Days before the due date of each of Client’s payments hereunder, otherwise Client is entitled to postpone any payments until such confirmation is provided.\n3.11. | Payment Method of Operations Service Fee. All payment of Operations Service Fees pursuant to this Agreement, including any remittance or refund of Operations Service Fees, shall be made in accordance with paragraph 3.1 of the applicable Service Order.\n3.12. | Suspension. Host may suspend the provision of Services under this Agreement if any amount due and payable under this Agreement has not been paid when due and payable; provided that, prior to any such suspension Host will provide Client with written notice of suspension and an opportunity to cure at least five days prior to any such suspension. Host must within three (3) Business Days reinstate the Services once all outstanding fees have been paid in cleared funds. If a suspension lasts longer than 30 days, the Host may terminate this Agreement.\n3.13. | Increased Cost. If there are any increases, changes in, or introduction or changes to the administration of, any fees taxes, levies, tariffs, utility cost increase, governmental fees or charges with respect to the provision of Services or the operation of the Data Center Facility, Host shall have the right to pass through any such amounts to Client proportionally based on the Client’s Profit Share percentage where applicable.\n3.14. | Set-off. Each Party may set-off and deduct any amounts payable under this Agreement to the other Party against any amounts owing by the other Party to the first Party pursuant to this Agreement, including any credits owed by one Party to the other.\n3.15.                                     | .\n14 | P a g e\nMaster Colocation Agreement\n4. | REPRESENTATIONS AND WARRANTIES\n4.1. | Each of the Parties hereby makes the following representations and warranties to the other Party:\n(a) | It has the full power and authority to own its assets and carry on its businesses.\n(b) | The obligations expressed to be assumed by it under this Agreement are legal, valid, binding and enforceable obligations.\n(c) | It has the power to enter into, perform and deliver, and has taken all necessary action to authorize its entry into, performance and delivery of, this Agreement and the transactions contemplated by this Agreement.\n(d) | The entry into and performance by it of, and the transactions contemplated by, this Agreement do not and will not conflict with: (i) any Applicable Law; (ii) its constitutional documents; or (iii) any agreement or instrument binding upon it or any of its assets.\n(e) | All authorizations required or desirable: (i) to enable it to lawfully enter into, exercise its rights under and comply with its obligations under this Agreement; (ii) to ensure that those obligations are legal, valid, binding and enforceable; and (iii) to make this Agreement admissible in evidence in its jurisdiction of organization, have been, or will have been by the time, obtained or effected and are, or will by the appropriate time be, in full force and effect.\n(f) | It is not aware of any circumstances which are likely to lead to: (i) any authorization obtained or effected not remaining in full force and effect; (ii) any authorization not being obtained, renewed or effected when required or desirable; or (iii) any authorization being subject to a condition or requirement which it does not reasonably expect to satisfy or the compliance with which has or could reasonably be expected to have a material adverse effect.\n15 | P a g e\nMaster Colocation Agreement\n4.2. | Host hereby makes the following representations and warranties to Client:\n(a) | The Services shall meet the specifications as stipulated herein, including but not limited to provisions of Article 6.\n(b) | Host represents and warrants that the entry into and performance by it off, and the transactions contemplated by, this Agreement does not conflict with the lease agreement between itself and the relevant landlord in connection with the Data Center Facility. The Host further represents and warrants that this Agreement is permitted under the use of the related premises. Client shall not in any event be liable for any obligations to the landlord of the Data Center Facility (the “Landlord”), including but not limited to rental or any other fees payable by the Host to the Landlord.\n(c) | Other than as expressly stated otherwise in this Agreement, nothing in this Agreement transfers any rights, title and interest in the Colocation Servers shall remain absolutely with Client or the owner of the Colocation Servers, and the Colocation Servers shall be identifiable and separate from the Host’s own assets. Client must affix unique identifiers to all assets prior to delivery. For the avoidance of doubt, any claim over the Host in an event of default relating to the Host shall exclude the Colocation Servers.\n4.3. | Client hereby makes the following representations and warranties to Host:\n(a) | Client must use the Colocation Servers at the Data Center Facility solely for cryptocurrency mining operations.\n(b) | Client must secure and comply with all licenses as are required to operate any software and firmware installed by or accessed on the Colocation Servers.\n5. | VOLUNTARY POWER-OFF AND LOW POWER MODE\n5.1. | Client shall be entitled to voluntarily instruct Host to power off any or all of the Colocation Servers in Client’s sole discretion or to instruct the Host to have the Colocation Servers operate in Low Power Mode to reduce the Colocation Servers’ power consumption. In order for the Host to execute this, Client will provide a minimum of 48 hours’ notice of a planned material change in power load.\n5.2. | Any Power-off Server may remain on rack at the Data Center Facility for a period of fourteen (14) calendar days (exclusive of the first day on which such Power-off Server is powered off, the “Voluntary Power-off Period”), during which period Client shall be entitled to re-power on such Colocation Server in its sole discretion with 2 hours’ notice to Host. At the expiration of the Voluntary Power-off Period, the Parties shall negotiate in good faith to mitigate losses to the utmost extent. If the Voluntary Power-off Period exceeds 30 consecutive days, Host may terminate this Agreement.\n16 | P a g e\nMaster Colocation Agreement\n5.3. | Client’s right to operate in Low Power Mode is subject to the limits set out in the Service Order.\n5.4. | When Client voluntarily powers-off, and Host receives payments from its CSP for participating in the Curtailment Programs:\na) | If provided for in an applicable Service Order, Client may receive a specific percentage of the revenue Host receives from the CSP net of all fees, commissions, and other charges for the reduction of power utilized by the Colocation Servers and the MDC Infrastructure at the time of curtailment (“Client Curtailment Revenue”).\nb) | Client acknowledges and agrees that the Host is required to curtail for up to 250 hours annually for the purpose of transmission and distribution charge cost avoidance, occurring at varying amounts per month as determined by the CSP, and Client acknowledges and agrees that neither Host nor Client will receive revenue for such curtailment periods.\nc) | Revenue earned from the CSP from Client electing to curtail will be applied as a credit to the monthly invoice in the month that Host receives the Curtailment Program Revenue, commonly this occurs 60 days from the curtailment event. Curtailment Program Revenue will be split via Profit Share percentages between the Host and Client as agreed upon in the Service Order.\nd) | If Client Curtailment Program Revenue exceeds the total amount of the invoice for any individual month, then that excess will be split according to the Profit Share percentages between the Parties, and Client’s share of that excess amount shall be carried over as a credit to subsequent month(s).\n5.5. | Host need not comply with any voluntary power-off or curtailment instructions (including low power mode) where (i) Host is specifically prohibited from doing so under all Applicable Laws, including the customer baseline load requirements as set out in section 3.3A.2 of the PJM Manual; (ii) such instruction(s) is ambiguous, inconsistent, contradictory, impossible, or impractical to follow, (iii) such instruction would create material risks to safety of persons at, or physical preservation of, the Data Center Facility or other assets such as transformers, switchgear, fuses, or breakers, or other assets or property at the Data Center Facility, or (iv) such instruction would impose a material extra cost on Host. In such cases, Host shall provide written notice to Client specifying the reason(s) it has not complied with such instruction and the parties shall promptly and in good faith negotiate amendment(s) to the instruction. Once agreed, Host will promptly implement the instruction(s).\n5.6. | Client shall not, as part of providing Host an instruction under this Article 5, provide a strike price equal to or less than the Minimum Strike Price, unless otherwise agreed by the parties in writing.\n17 | P a g e\nMaster Colocation Agreement\n6. | OPERATION ENVIRONMENT OF DATA CENTER FACILITY\n6.1. | Conditions of the Data Center Facility. No later than the Initial Date and at all times up to and until the termination of this Agreement, Host shall provide Client with sufficient server rooms or containers, server positions, racks, power load and facilities, broadband network and network facilities, heat dissipation facilities, sand, rain and snow-proofing facilities, security monitoring and other equipment reasonably required for the normal operation of the Colocation Servers of the reasonable commercial standard, satisfying at least the following requirements:\n(a) | The power load provided by Host shall satisfy the requirements of this Agreement, the Service Orders and standard operational conditions. In the event that the power load is insufficient for any reason (including but not limited to damage to power supply equipment, insufficient supply from the power supplier, or policy changes at the location of the Data Center Facility) for a period of 14 days or more, Client may provide written notice to Host to remedy the issue. If Host fails to remedy the issue within 14 days, Client shall be entitled to proportionately reduce the Colocation Quantity of the Colocation Servers at its sole discretion, and Host shall (i) reasonably cooperate with Client to move the de-racked Colocation Servers due to insufficient power load designated by Client out of the server room. If Client reduces the Colocation Quantity under this Article, Client may only then increase the Colocation Quantity with the written consent of Host; and\n(b) | There shall be sufficient forklifts, lift trucks and other related machinery and equipment to provide timely racking and de-racking services for the Colocation Servers.\n(c) | THE ABOVE NOT WITHSTANDING, HOST MAKES NO WARRANTIES OR GUARANTEES RELATED TO THE AVAILABILITY OF THE SERVICES OR THE OPERATING TEMPERATURE OF THE DATA CENTER FACILITY. THE SERVICES AND THE DATA CENTER FACILITY PROVIDED BY HOST ARE PROVIDED “AS IS.” HOST DOES NOT PROVIDE MECHANICAL COOLING OR BACKUP POWER AND THE DATA CENTER FACILITY IS SUBJECT TO SWINGS IN LOCAL WEATHER, FLOODING, CLIMATE, TEMPERATURE, WIND, HUMIDITY, ETC. INTERNET ACCESS IS NOT REDUNDANT OR PROTECTED AND IS NOT GUARANTEED AT ALL TIMES.\n6.2. | Hazardous Conditions. If, in the reasonable discretion of Host, its employees, or its agents, any hazardous conditions arise on, from, or affecting the Data Center Facility, Host is hereby authorized to suspend service under this Agreement for the affected site without subjecting Host to any liability. In the event of an emergency, Host may rearrange, remove, or relocate Colocation Servers, Client Equipment, and Host Equipment without any liability to Host. For the avoidance of doubt, Host shall not be liable or responsible for any obligations under this Agreement during such period of suspended service.\n18 | P a g e\nMaster Colocation Agreement\n6.3. | Intermittent Outages. Client acknowledges that Host may curtail the Colocation Servers, Client Equipment, and Host Equipment upon the occurrence and continuation of a Force Majeure event, during outages for maintenance purposes, in the event Host identifies a hazardous condition, or if Host determines that it is in the best interest of, and more economical for, all Parties to the Agreement to sell power to the grid. Host agrees to provide written notice to Client of any of the foregoing events, as specified in this Agreement.\n6.4. | Outage Notifications. Host shall provide written notice of any suspension of Service to Client within a reasonable time, but shall endeavor to provide such notice within 24 hours of such suspension.\n6.5. | Exclusive Server Room. Host shall provide exclusive containers or server room(s) for the operation of the Colocation Servers, which shall be physically separated from containers or server rooms at the Data Center Facility for use by other customers of Host. No server and/or other hardware equipment other than the Colocation Servers may be allowed in such exclusive containers or server room(s) unless with prior written approval of Client. Host shall take necessary measures satisfactory to Client to separate the Colocation Servers from other servers and/or hardware equipment, including but not limited to labeling the Colocation Servers. Besides, Host shall provide room, network and power supply for the Monitoring Software, separate from the Colocation Servers.\n6.6. | Standard Colocation Environment. Host shall maintain the standard Colocation environment for the Colocation Servers in accordance with the conditions set forth in the applicable Service Order and the Information Memorandum.\n6.7. | Safety and Security. Server Provider shall take standard industry efforts to ensure safety and security of the Data Center Facility and the Colocation Servers against any safety accidents such as damage, loss or fire outbreak, etc. or any faults caused by dust ingress, water ingress or snow ingress, etc., including maintaining Host Equipment to a reasonable standard.\n6.8. | Compliance with Applicable Law. Host shall ensure that the operation of the Data Center Facility, the individuals of Host and provision of Services is at all times in compliance with Applicable Laws and that any and all applicable approvals, certificates, orders, authorizations, permits, qualifications and consents required for the operation of the Data Center Facility and provision of Services have been obtained no later than the Initial Date and are not revoked, cancelled or expired (unless properly renewed on or prior to such expiration) up to and until the termination of this Agreement. The Parties recognize that it is Host’s sole and exclusive responsibility to maintain a safe and healthy work environment at the Data Center Facility that is free from recognized hazards and fully complies with the Applicable Laws, including without limitation, the federal Occupational Safety and Health Act (“OSHA”, if applicable), as well as any similar state or local laws. Accordingly, Host promises and hereby covenants to maintain a safe and healthy work environment at the work places including but not limited to the Data Center Facility and the necessary onsite production facilities including office rooms, maintenance rooms, canteen, and toilets, that is free from recognized hazards and fully compliant with OSHA (if applicable), and any similar state or local laws, to ensure the safety of Client Personal (as defined below) during their work. Besides, Host shall organize necessary safety training and safety drills for Client Personal at least as regularly as its own personnel.\n19 | P a g e\nMaster Colocation Agreement\n6.9. | Access by Client Personnel. Client may appoint one individual (“Client Personnel”) that are pre-approved and registered with the Host to carry out inspections of the Colocation Servers onsite at the Data Center Facility during regular business hours. Host may revoke its approval for any Client Personnel who fails to comply with the Host’s reasonable directions, policies or procedures, has violated Applicable Laws, or unreasonably interferes with Host’s business or operations at the Data Center Facility, or works in an unsafe manner.\n6.10. | Responsibility for Client Personnel. Client Personnel will remain the sole responsibility of Client and will not be deemed to be employees or contractors of Host. Client shall remain responsible for any acts or omissions of Client Personnel while they are at the Data Center Facility. Client will be responsible to ensure that all required employment benefits are provided to employees, including but not limited to, retirement plans, health insurance, vacation time-off, sick pay, personal leave, pay, and that all necessary insurances are maintained.\n6.11. | Covenant Against Liens. Client has no authority or power to cause or permit any lien or encumbrance of any kind whatsoever, whether created by act of Client, operation of law or otherwise, to attach to or be placed upon Host Equipment, the Data Center Facility and/or any other real property owned or controlled by Host (collectively the “Host’s Property”), and any and all liens and encumbrances created by Client shall attach to Client’s interests only. Host shall have the right at all times to post and keep posted on the Host’s Property any notice which it deems necessary for protection from such liens. Client shall not cause or permit any lien of mechanics or materialmen or others to be placed against the Host’s Property and/or the Facility with respect to work or Services claimed to have been performed for or materials claimed to have been furnished to Client or the Host’s Property, provided, however, in case of any such lien attaching or notice of any lien, Client shall cause it to be immediately released and removed of record (by payment, statutory bond or other lawful means). If any such lien is not released and removed (by payment, statutory bond or other lawful means) within ten (10) days after written notice of such lien is delivered to Client, then Host may, at its option, take all reasonable actions necessary to release and remove such lien, without any duty to investigate the validity thereof, and all sums, costs and expenses, including reasonable attorneys’ fees and costs, incurred by Host in connection with such lien shall be immediately be due and payable by Client.\n6.12. | Host Directions. Client must ensure that and will instruct Client Personnel to follow any reasonable directions of Host, including but not limited to, all of Host’s safety, workplace, policies, and laws. Client must ensure that and will instruct Client Personnel to not access, use or interfere with the Data Center Facility, Host Equipment or Host’s Property unless directed to by Host.\n20 | P a g e\nMaster Colocation Agreement\n6.13. | Online Status Ratio.\nUnless otherwise specified in an applicable Service Order:\n6.14. | Installation and Accuracy of Power Consumption Meter. Host shall install Power Consumption Meter(s) at the Data Center Facility to monitor the electrical power consumed in the operation of the Colocation Servers and MDC Infrastructure, and shall cooperate with Client to check and calibrate the accuracy of the Power Consumption Meter(s) regularly or occasionally, but no more than once during any 12 month period, in accordance with Client’s request and instructions, to ensure the constant accuracy of the Power Consumption Meter(s). Power Consumption Meter shall be located as set out in the Information Memorandum.\n6.15. | Inventory Audit. Client shall be entitled to conduct inventory audits of the Colocation Servers at its own cost, and Host shall provide assistance and convenience accordingly, however Host is not required to incur any costs and may seek reimbursement from Client for any costs incurred during such an inventory audit. If the result of the inventory audit does not match the information as stipulated in the applicable Service Order, Host shall reasonably assist Client to discover the reasons. Client shall take all reasonable steps to ensure that an inventory audit does not adversely affect the Host’s business or operations.\n21 | P a g e\nMaster Colocation Agreement\n6.16. | Maintenance. If provided for in an applicable Service Order, Host may provide routine technical support services, such as diagnosis, maintenance and repair of the Colocation Servers (such as replacement of fans and power cord replacement), subject to the Parties agreeing the relevant fees and charges. Client shall be responsible for their portion of the costs of replacement parts to be installed in or used with the Colocation Servers in connection with any routine maintenance or repairs required to service the Colocation Servers. Whether or not itemized in an applicable invoice, Client will be responsible for their portion of the sales, use, and other Taxes which may be imposed by a relevant taxing authority\n7. | INSURANCE\n7.1. | In the event of any damage or loss of the Colocation Servers and upon request of Client, Host shall provide Client and/or the owner of the Colocation Servers (as applicable) with documents and information in support of the insurance claim made to the insurance company, as requested by Client. Client shall reimburse Host’s reasonable costs and expenses actually expended on third parties for the preparation or delivery of such documents and information, if such costs and expenses are material, and Host shall notify Client of those costs and expenses prior to incurring them.\n7.2. | Client shall obtain and maintain all relevant insurance policy or coverage that a prudent owner of the Colocation Servers would obtain. Host is not required to maintain an insurance policy or coverage for the Colocation Servers or the Inventory Assets.\n8. | TITLE AND OWNERSHIP\n8.1. | Ownership of Colocation Servers. Host acknowledges and agrees that the Colocation Servers and Inventory Assets are assets of Client or any third party designated by Client (as applicable) (collectively, the “Owner of Colocation Servers”) and the Owner of Colocation Servers shall solely have the proprietary interest in the Colocation Servers unless such interest is transferred to Host under Section 12.4(b)(ii). The Owner of the Colocation Servers shall not be affected by any factors, including but not limited to Host’s operating conditions, financial conditions or any disputes or lawsuits against its shareholders or any third parties. In no event shall Host’s creditors, shareholders or other third parties be entitled to file disputes regarding the ownership of the Owner of Colocation Servers. Without prejudice to the foregoing, in the event that any such dispute occurs, Host shall provide the Owner of Colocation Servers with all reasonable assistance in proving the Owner of Colocation Servers’ proprietary interest in the Colocation Servers.\n22 | P a g e\nMaster Colocation Agreement\n8.2. | Ownership Host Equipment. Client acknowledges and agrees that all Host Equipment are assets of Host or any third party designated by Host (as applicable) and Host or such third parties shall solely have the proprietary interest in the Host Equipment.\n9. | INDEMNIFICATION AND LIMITATION OF LIABILITY\n9.1. | Each Party (the “Indemnifier”) shall indemnify, defend and hold the other Party (the “Indemnitee”) along with the Indemnitee’s Affiliates, officers, directors, agents, and employees, from and against any third-party action, claim, suit, proceeding, demand, investigation, or charge alleging any costs, losses, liabilities, damages, fines, judgments, fees, or expenses (including reasonable attorneys’ fees and court costs) to the extent directly caused by:\ni. | any failure by Indemnifier to comply with Applicable Law in connection with this Agreement;\nii. | any liability or damage incurred by reason of any negligent act or omission of such Party or its officers, directors, agents, and employees.\n9.2. | Subject to other provisions of this Article 9, each Indemnifier hereby agrees to indemnify, defend and hold harmless the Indemnitee and its respective Affiliates, officers, directors, agents and employees from and against any and all losses, liabilities, damages, liens, claims, obligations, judgments, penalties, deficiencies, costs and expenses (including reasonable attorneys’ fees and court costs) (“Loss”) to the extent resulting from or arising out of any negligence or breach or omission of performance by Indemnifier of any of the representations, covenants or other terms in this Agreement.\n9.3. | Any Party claiming to be an Indemnitee shall promptly notify the Indemnifier in writing of the potential Loss, and the breach, act or omission which lead to the Loss, and shall use reasonable efforts, including cooperating with the Indemnifier, to mitigate the Loss. The Indemnifier shall not be liable for Losses to the extent they can be attributed to the acts or omissions of the Party claiming to be the Indemnitee.\nIn addition, and subject to other provisions of this Article 9, if any Colocation Server is damaged or lost due to reasons solely attributable to Host, Host hereby agrees to indemnify, defend and hold harmless Client and its respective Affiliates, officers, directors, agents and employees from and against any damage or loss of a Colocation Server, based on the fair market value of such Colocation Server.\n9.4. | OTHER THAN THOSE EXPRESSLY SET FORTH IN THIS AGREEMENT, HOST DISCLAIMS ANY AND ALL EXPRESS WARRANTIES AND ALL IMPLIED WARRANTIES, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT IN TITLE, AND ANY WARRANTIES ARISING FROM A COURSE OF DEALING, USAGE, OR TRADE PRACTICE.\n23 | P a g e\nMaster Colocation Agreement\n9.5. | IN NO EVENT WILL EITHER PARTY BE LIABLE TO THE OTHER PARTY FOR LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF USE, CONSEQUENTIAL, INCIDENTAL, PUNITIVE, EXEMPLARY, OR INDIRECT DAMAGES, WHETHER BY STATUTE, IN TORT OR CONTRACT, OR OTHERWISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. HOST WILL NOT BE LIABLE TO CLIENT FOR ANY LOSSES INCURRED BY CLIENT TO THE EXTENT CAUSED BY THE USE OF CLIENT’S PREFERRED MONITORING SOFTWARE.\n9.6. | TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL HOST’S LIABILITY (WHETHER BY STATUTE, IN TORT OR CONTRACT, OR OTHERWISE) TO THE CLIENT, OTHER THAN THE LIABILITY FOR THE PAYMENT OF DELAYED COMPENSATION OR FEES, EXCEED THE FEES PAID TO HOST DURING THE TWELVE MONTH PERIOD PRIOR TO THE EVENT THAT RESULTED IN THE LIABILITY (NOT INCLUDING ANY REIMBURSEMENTS FOR POWER).\n9.7. | THE PARTIES HEREBY WAIVE ANY CLAIM THAT THESE EXCLUSIONS DEPRIVE THEM OF AN ADEQUATE REMEDY OR CAUSE THIS AGREEMENT TO FAIL ITS ESSENTIAL PURPOSE.\n10. | FORCE MAJEURE\n10.1. | A Party shall not be considered to be in default or breach of this Agreement and shall be excused from performance or liability for Loss to the other Party, except for the payment, insurance, and indemnity obligations of Client to Host, if and to the extent that the performance of any obligation of such Party under this Agreement (other than an obligation to make payment) is prevented, frustrated, hindered or delayed as a consequence of an event of Force Majeure, provided that:\n(a) | such Party claiming to benefit under this Article 10.1 (the “Affected Party”) shall promptly and in any event no later than 3 days from the occurrence of such event of Force Majeure, give the other Party (the “Non-Affected Party”) a written notice (which may be via email) setting out details of such event of Force Majeure; and\n(b) | the Affected Party shall take all commercially reasonable measures to mitigate the impact of such event of Force Majeure and shall resume normal performance of this Agreement promptly after the removal of such event of Force Majeure, unless it is impracticable or unnecessary to resume the performance of this Agreement.\n10.2. | If the normal performance of this Agreement cannot be resumed within thirty (30) calendar days from the occurrence of such event of Force Majeure, either Party shall be entitled to terminate this Agreement with immediate effect without any liability for breach of contract.\n24 | P a g e\nMaster Colocation Agreement\n11. | DEFAULT\n11.1. | The following events shall be “Events of Default”:\n11.1.1. | Failure to timely deliver Client Equipment to Host Facilities as indicated on the relevant Service Order;\n11.1.2. | Failure by Client to pay any undisputed amount due hereunder when due;\n11.1.3. | Failure of Client or Host, as applicable, to perform any other material obligation pursuant to this Agreement and such failure continues uncured for thirty (30) Days after receipt by the defaulting Party of written notice of such failure; provided, that so long as a defaulting Party has initiated and is diligently attempting to effect a cure (provided such obligation is curable), the defaulting Party’s cure period shall extend for an additional thirty (30) days;\n11.1.4. | Any representation or warranty made by Host or the Client, as applicable, under this Agreement shall have been false or inaccurate in any material respect when made or becomes false or inaccurate in any material respect, and such falsity or inaccuracy continues uncured for thirty (30) Days after receipt by the defaulting Party of written notice of such falsity or inaccuracy; provided that so long as a defaulting Party has initiated and is diligently attempting to effect a cure (provided such representation or warranty is curable), the defaulting Party’s cure period shall extend for an additional thirty (30) days.\n11.2. | If Client has failed to pay any amounts due and payable to Host, then Host may reconfigure, point and/or redirect some or all of the Client Equipment and use Client Equipment to generate cash and shall apply the proceeds (including mining revenue, less all costs (including power, adders and tariffs), taxes and fees, and any losses incurred during exchange and exchange fees) to the amounts owed to Host until such time as the outstanding debt of Client is paid in full. If Host reconfigures, points and/or redirects some or all of Client Equipment, Host will report to Client on a weekly basis the proceeds it gains.\n11.3. | In the case of an Event of Default which is not timely cured as set forth in this Agreement, the non-defaulting Party may terminate this Agreement without prejudice to any claim to damages.\n25 | P a g e\nMaster Colocation Agreement\n12. | TERM AND TERMINATION\n12.1. | Term. This Agreement shall have a term effective from the Effective Date hereof and expiring on the third (3rd) anniversary of the Initial Date (the “Initial Term” and together with the Holdover Period the “Term”). Client may request to extend the Term beyond the Initial Term by providing Host with 75 days’ notice prior to the end of the Initial Term (“Holdover Period”). Host may elect to approve or reject the request to extend the Term to the Holdover Period for any reason and must provide their approval or rejection of such a request within 15 days. The Holdover Period, if approved by Host, will be one month with automatic monthly renewals. Client or Host may terminate the Holdover Period with no less than 60 days’ notice to the other Party. The terms herein applicable to the Initial Term will apply to the Holdover Period.\n12.2. | Host reserves the right to change the Operations Service Fees upon renewal. Host will notify Client of the proposed new Operations Service Fees no later than 75 days before the end of the Initial Period or relevant Holdover Period.\n12.3. | Termination. This Agreement may be terminated prior to the expiration of the Term:\n(a) | Upon mutual agreement in writing of the Parties;\n(b) | Host may terminate this Agreement immediately and without further notice if Client fails to pay any sum invoiced by Host when such payment is due and such failure remains uncured for a period of ten (10) calendar days;\n(c)\n(1)\n(2)\n(d) | Upon a Party giving a written notice to the other Party to terminate pursuant to the Force Majeure provisions of Article 10.2;\n(e) | Upon either Party giving written notice to the other Party (defaulting Party) of a material Event of Default as set forth in Article 11, Event of Default continues uncured for thirty (30) calendar days after receipt by the defaulting Party of written notice of such failure; provided, that so long as a defaulting Party has initiated and is diligently attempting to effect a cure (provided such obligation is curable), the defaulting Party’s cure period shall extend for an additional thirty (30) calendar days(in the aggregate the “Remediation Period”); however, if such Event of Default cannot be cured or is not cured during the Remediation Period, the non-defaulting party may terminate this Agreement;\n(f) | Should a Party undergo a change of Control, either Party has the right to terminate this Agreement by giving the other Party 30-days written notice of termination.\n26 | P a g e\nMaster Colocation Agreement\n12.4. | Effects of Termination. Upon termination of this Agreement:\n(a) | Host. Provided Client is not in Default of any of its obligations under this Agreement, Host shall:\n(i) | pay any and all amounts owing to Client including any Delayed Compensation under Article 3 or Monthly Theoretical Fee under Article 12;\n(ii) | subject to Articles 6.6 and 6.7, provide access to Client Personnel to the Data Center Facility and any reasonable assistance required by such Client Personnel to remove the Colocation Servers and Inventory Assets;\n(iii) | if due to the Host decision to terminate, pay miner shipping and taxes to a domestic location designated by the Client\n(iv) | issue final invoices; and\n(v) | return all Confidential Information of Client to Client and delete all electronic copies thereof from its systems.\n(b) | Client. Client shall:\n(i) | pay all finally determined invoice amounts outstanding;\n(ii) | promptly remove all the Colocation Servers and Inventory Assets from the Data Center Facilities at its own risk and cost unless it is a result of the Host’s fault or default. Upon de-racking and packaging, Host may charge storage costs for any Colocation Servers which have not been removed by Client within 10 Business Days of Host giving Client written notice that Host has commenced the de-racking of the Colocation Servers. Any Colocation Servers or Inventory Assets not removed within thirty (30) days of the termination date of a relevant service order or this Agreement will be deemed ‘abandoned’ (“Abandoned Assets”), and title to the Abandoned Assets will then automatically transfer to Host. If Host elects to dispose of Abandoned Assets, it may do so at Client’s cost, and Client shall pay the cost upon receipt of a relevant invoice from Host; and\n(iii) | return all Confidential Information of Host to Host and delete all electronic copies thereof from its systems.\n27 | P a g e\nMaster Colocation Agreement\n12.5. | Survival.\n(a) | Neither the expiration nor the termination of this Agreement will release either of the Parties from any obligation or liability that accrued prior to such expiration or termination.\n(b) | The provisions of this Agreement requiring performance or fulfillment after the expiration or termination of this Agreement will survive the expiration or termination of this Agreement including, but not limited to, Article 8 through Article 18 and such other provisions as are necessary for the interpretation therefor and any other provisions hereof, the nature and intent of which is to survive termination or expiration of this Agreement.\n13. | CONFIDENTIALITY\n13.1. | From the Effective Date of this Agreement and for two (2) years following the expiration of the Term or the earlier termination pursuant to Article 12, each Party hereby agrees that it will, and will cause its Affiliates and its and their respective directors, officers, employees, professional advisors, agents and other Persons acting on their behalf (including the Client Personnel) (collectively, “Representatives”) to hold, in strict confidence the terms and conditions of this Agreement, all exhibits and schedules attached hereto and the Service Order(s), including their existence, and all non-public records, books, contracts, instruments, computer data and other data and information, whether in written, verbal, graphic, electronic or any other form, provided by any other Party and its Representatives (except to the extent that such information has been (a) already in such Party’s possession prior to the disclosure or obtained by such Party from a source other than any other Party or its Representatives, provided that, to such Party’s knowledge, such source is not prohibited from disclosing such information to such Party or its Representatives by a contractual, legal or fiduciary obligation to any other Party or its Representatives, (b) in the public domain through no breach of the confidentiality obligations under this Agreement by such Party, or (c) independently developed by such Party or on its behalf without reference to any such non-public information) (the “Confidential Information”).\n13.2. | Notwithstanding the foregoing, each Party may disclose the Confidential Information (i) to its Affiliates and its and their respective Representatives so long as such persons are subject to appropriate nondisclosure obligations, (ii) as required by Applicable Law or requests or requirements from any controlling governmental authority or other applicable judicial or governmental order, or (iii) in connection with any enforcement of, or dispute with respect to or arising out of, this Agreement, or (iv) with the prior written consent of the other Party.\n13.3. | The content of this Agreement and any information disclosed hereunder by the other Party in the course of negotiating or performing this Agreement is Confidential Information under this Agreement and shall only be used in accordance with this Agreement.\n28 | P a g e\nMaster Colocation Agreement\n14. | Securities Law Compliance.\n14.1. | Each Party hereby acknowledges that it understands that: (a) Confidential Information exchanged by the Parties and their respective Affiliates to this Agreement may contain or constitute material non-public information concerning the other Party and its Affiliates; and (b) trading in Mawson’s securities while in possession of material nonpublic information or communicating that information to any other person who trades in such securities could subject that Party to liability under the U.S. federal and state securities laws, and the rules and regulations promulgated thereunder, including Section 10(b) of the Exchange Act and Rule 10b-5 promulgated thereunder. Each Party agrees that it and its Affiliates will not trade in Mawson’s securities while in possession of material nonpublic information or at all until such Party and such Affiliates can do so in compliance with all applicable laws and without breach of this Agreement.\n15. | INJUNCTIVE RELIEF\n15.1. | The Parties acknowledge that a breach or threatened breach of this Agreement shall cause serious and irreparable harm to the non-breaching Party for which monetary damages alone would not be a sufficient remedy. Accordingly, the Parties agree that in the event of a breach or threatened breach, the non-breaching Party shall be entitled to injunctive relief and specific performance in addition to any other remedy available to such Party in equity or at law without the necessity of obtaining any form of bond or undertaking whatsoever, and the breaching Party hereby waives any claim or defense that damages may be adequate or ascertainable or otherwise preclude injunctive relief.\n16. | NOTICES\n16.1. | All notices, requirements, requests, claims, and other communications in relation to this Agreement shall be in writing, and shall be given or made by delivery in person, by an internationally recognized overnight courier service, by registered or certified mail (postage prepaid, return receipt requested) or electronic mail to the respective Parties at the addresses specified below or at such other address for a Party as may be specified in a notice given in accordance with this Article. Any such notice or other communication shall be deemed to have been given and received on the day on which it was delivered or transmitted (or, if such day is not a Business Day, on the next following Business Day).\n29 | P a g e\nMaster Colocation Agreement\n16.2. | The following are the initial contact information of each Party:\nIf to Host:\nAddress:  | 950 Railroad Ave, Midland, PA 15059\nAttn:\nEmail:  | _____________________________________________,\ncopies to:  | notices@mawsoninc.com,\nand to:  | legal@mawsoninc.com\nIf to Client:\nAddress:\nAttn:\nEmail:\nThe Parties may rely on this contact information for all notices. However, a Party may change its contact information by submitting any changes in writing to the other Party, but such contact information shall remain valid unless and until such changes are made and received by the other Party.\n17. | ANTI-COMMERCIAL BRIBERY, ANTI-MONEY LAUNDERING\n17.1. | Client shall not, and shall procure its directors, officers, employees, consultants, agents and other representatives (collectively with Client, the “Client Associates”) not to, directly or indirectly engage in any activity of commercial bribery, i.e. providing any unjustified interests in any form including but not limited to cash, cheque, credit card gifts, negotiable securities (including bonds and stocks), physical objects (including all kinds of high-end household goods, luxury consumer goods, handicrafts and collections, as well as housing, vehicles and other commodities), entertainment coupon, membership card, currency or rebate in the form of goods, kickback, non-property interests such as schooling, honor, special treatment, and employment for relatives and friends, traveling, entertaining and personal service etc. in order to obtain any immediate or future business opportunity with Host or otherwise, whether under this Agreement or any other business or governmental relationship.\n17.2. | If any of Client Associates commits any act or omission in contravention of Article 17, Host shall be entitled to terminate this Agreement and any other existing business cooperation with Client and claim for damages against Client.\n17.3. | Promptly following any request therefor, Client shall provide information and documentation reasonably requested by Host for purposes of compliance with applicable “know your customer” requirements and anti-money-laundering rules and regulations, including, without limitation, the USA PATRIOT Act of 2001.\n30 | P a g e\nMaster Colocation Agreement\n18. | GENERAL\n18.1. | Entire Agreement and Amendment. This Agreement, together with all Services Orders, appendixes, schedules, annexes and exhibits, constitute the full and entire understating and agreement between the Parties, and supersede all other agreements between or among any of the Parties with respect to the subject matters hereof and thereof. This Agreement may only be amended with the written consent of both Parties or otherwise as mutually agreed by both Parties.\n18.2. | Assignment.\n(a) | Host may freely assign or transfer any of its rights, benefits or obligations under this Agreement in whole or in part to its Affiliates without Client’s consent.\n(b) | This Agreement shall inure to the benefit of and be binding upon the parties hereto and their respective successors and permitted assigns.\n18.3. | Non-Solicitation. Each Party agrees that from the date of this Agreement until the first (1st) year anniversary of the expiration of the Term or the earlier termination pursuant to Article 12.3, unless mutually agreed by both Parties, neither Party shall (1) directly or indirectly, solicit, recruit, encourage or induce employees or consultants of the other Party to (i) terminate such person’s employment or consulting relationship or (ii) become employed or engaged as an employee, officer, director, member, manager, partner or any other type of the soliciting Party or any other third party; or (2) use any Confidential Information, directly or indirectly, to solicit customers or suppliers of the other Party or otherwise divert or attempt to divert business away from the other Party, nor will the employee encourage or assist others to do the same.\n18.4. | Governing Law. This Agreement shall be solely governed by and construed in accordance with the laws of the Relevant Jurisdiction, without regard to principles of conflict of laws.\n18.5. | Dispute Resolution. Without prejudice to any other remedies available to the Parties, in the event that a Party disputes a matter arising in connection with this Agreement that Party shall notify the other Parties as soon as reasonably practicable with details of the dispute and all of the Parties shall meet within ten (10) Business Days of receipt of such notice in order to try and resolve the dispute in good faith. All disputes arising under this Agreement which cannot be resolved amicably by the parties shall be submitted to arbitration in the Relevant Jurisdiction before a single arbitrator of the American Arbitration Association (“AAA”). The arbitrator shall be selected by application of the rules of the AAA, or by mutual agreement of the parties. Nothing contained herein shall prevent the Party from seeking or obtaining an injunction in a court of the Relevant Jurisdiction. The decision of the arbitrator shall be final and binding on the parties, and judgment on the award rendered by the arbitrator may be entered in any court having jurisdiction thereof. Each party shall bear its own costs and expenses in connection with the arbitration, and the parties shall equally share the arbitrator’s fees and the administrative fees of the arbitration. Notwithstanding the foregoing, either party may seek preliminary injunctive relief from a court of competent jurisdiction in order to prevent immediate and irreparable harm, pending the resolution of the arbitration. The prevailing Party shall be entitled to recovery of its legal fees and costs incurred. EACH PARTY HEREBY IRREVOCABLY AND UNCONDITIONALLY WAIVES ANY AND ALL RIGHT TO TRIAL BY JURY IN ANY ACTION, SUIT, PROCEEDING OR COUNTERCLAIM ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE TRANSACTIONS CONTEMPLATED HEREBY, WHETHER BASED ON CONTRACT, TORT OR ANY OTHER THEORY.\n31 | P a g e\nMaster Colocation Agreement\n18.6. | Severability. In case any provision of the Agreement shall be invalid, illegal or unenforceable, the validity, legality and enforceability of the remaining provisions shall not in any way be affected or impaired thereby. If, however, any provision of this Agreement shall be invalid, illegal or unenforceable under any Applicable Law in any jurisdiction, it shall, as to such jurisdiction, be deemed modified to conform to the minimum requirements of such Applicable Law, or, if for any reason it is not deemed so modified, it shall be invalid, illegal or unenforceable only to the extent of such invalidity, illegality or limitation on enforceability without affecting the remaining provisions of this Agreement, or the validity, legality or enforceability of such provision in any other jurisdiction.\n18.7. | Counterparts This Agreement may be executed in two or more counterparts, each of which shall be deemed an original, but all of which together shall constitute one and the same instrument but shall not take effect until each Party has executed at least one counterpart. Facsimile, e-mailed copies of signatures, and electronic signatures shall be deemed to be originals for purposes of the effectiveness of this Agreement.\nIN WITNESS WHEREOF, the undersigned have executed this Agreement effective on the date first written above once all Parties have properly affixed their signatures hereto.\nSigned for and on behalf of Host:  | Mawson Hosting LLC\nSignature: S/\nName:\nTitle:\nSigned for and on behalf of Client:\nSignature:\nName:\nTitle:\n32 | P a g e\nMaster Colocation Agreement\n33 | P a g e",
+ "sections": [
+  {
+   "id": "s0000",
+   "number": null,
+   "heading": "Preamble",
+   "char_start": 0,
+   "char_end": 1122,
+   "article": null
+  },
+  {
+   "id": "s0001",
+   "number": "1",
+   "heading": "DEFINITIONS AND INTERPRETATIONS",
+   "char_start": 1122,
+   "char_end": 1159,
+   "article": null
+  },
+  {
+   "id": "s0002",
+   "number": "1.1",
+   "heading": "In this Agreement, these expressions have the following meanings:",
+   "char_start": 1159,
+   "char_end": 19959,
+   "article": null
+  },
+  {
+   "id": "s0003",
+   "number": "1.2",
+   "heading": "In this Agreement, unless otherwise specified:",
+   "char_start": 19959,
+   "char_end": 21500,
+   "article": null
+  },
+  {
+   "id": "s0004",
+   "number": "2",
+   "heading": "SCOPE OF SERVICES",
+   "char_start": 21500,
+   "char_end": 21706,
+   "article": null
+  },
+  {
+   "id": "s0005",
+   "number": "3",
+   "heading": "PROFIT SHARE, OPERATIONS SERVICE FEE AND PAYMENTS",
+   "char_start": 21706,
+   "char_end": 21761,
+   "article": null
+  },
+  {
+   "id": "s0006",
+   "number": "3.1",
+   "heading": "Profit Share Calculation is total BTC Revenue generated from operating Colocatio",
+   "char_start": 21761,
+   "char_end": 22907,
+   "article": null
+  },
+  {
+   "id": "s0007",
+   "number": "3.2",
+   "heading": "Profit Share percentages for each Billing Period shall be calculated as defined",
+   "char_start": 22907,
+   "char_end": 23036,
+   "article": null
+  },
+  {
+   "id": "s0008",
+   "number": "3.3",
+   "heading": "Miner Management Systems (“MMS”) Access",
+   "char_start": 23036,
+   "char_end": 23263,
+   "article": null
+  },
+  {
+   "id": "s0009",
+   "number": "3.5",
+   "heading": "Other Fees",
+   "char_start": 23263,
+   "char_end": 23522,
+   "article": null
+  },
+  {
+   "id": "s0010",
+   "number": "3.6",
+   "heading": "If such services are provided, they will be indicated in the applicable Service",
+   "char_start": 23522,
+   "char_end": 23825,
+   "article": null
+  },
+  {
+   "id": "s0011",
+   "number": "3.7",
+   "heading": "Delay in Performance",
+   "char_start": 23825,
+   "char_end": 28104,
+   "article": null
+  },
+  {
+   "id": "s0012",
+   "number": "3.8",
+   "heading": "Power Reimbursement",
+   "char_start": 28104,
+   "char_end": 29669,
+   "article": null
+  },
+  {
+   "id": "s0013",
+   "number": "3.9",
+   "heading": "Mining Pool, Invoice, Payment and Settlement Mechanism",
+   "char_start": 29669,
+   "char_end": 33732,
+   "article": null
+  },
+  {
+   "id": "s0014",
+   "number": "3.10",
+   "heading": "Confirmation of Colocation Servers Security",
+   "char_start": 33732,
+   "char_end": 34219,
+   "article": null
+  },
+  {
+   "id": "s0015",
+   "number": "3.11",
+   "heading": "Payment Method of Operations Service Fee",
+   "char_start": 34219,
+   "char_end": 34479,
+   "article": null
+  },
+  {
+   "id": "s0016",
+   "number": "3.12",
+   "heading": "Suspension",
+   "char_start": 34479,
+   "char_end": 35038,
+   "article": null
+  },
+  {
+   "id": "s0017",
+   "number": "3.13",
+   "heading": "Increased Cost",
+   "char_start": 35038,
+   "char_end": 35476,
+   "article": null
+  },
+  {
+   "id": "s0018",
+   "number": "3.14",
+   "heading": "Set-off",
+   "char_start": 35476,
+   "char_end": 35820,
+   "article": null
+  },
+  {
+   "id": "s0019",
+   "number": "4",
+   "heading": "REPRESENTATIONS AND WARRANTIES",
+   "char_start": 35820,
+   "char_end": 35856,
+   "article": null
+  },
+  {
+   "id": "s0020",
+   "number": "4.1",
+   "heading": "Each of the Parties hereby makes the following representations and warranties to",
+   "char_start": 35856,
+   "char_end": 37649,
+   "article": null
+  },
+  {
+   "id": "s0021",
+   "number": "4.2",
+   "heading": "Host hereby makes the following representations and warranties to Client:",
+   "char_start": 37649,
+   "char_end": 38974,
+   "article": null
+  },
+  {
+   "id": "s0022",
+   "number": "4.3",
+   "heading": "Client hereby makes the following representations and warranties to Host:",
+   "char_start": 38974,
+   "char_end": 39332,
+   "article": null
+  },
+  {
+   "id": "s0023",
+   "number": "5",
+   "heading": "VOLUNTARY POWER-OFF AND LOW POWER MODE",
+   "char_start": 39332,
+   "char_end": 39376,
+   "article": null
+  },
+  {
+   "id": "s0024",
+   "number": "5.1",
+   "heading": "Client shall be entitled to voluntarily instruct Host to power off any or all of",
+   "char_start": 39376,
+   "char_end": 39782,
+   "article": null
+  },
+  {
+   "id": "s0025",
+   "number": "5.2",
+   "heading": "Any Power-off Server may remain on rack at the Data Center Facility for a period",
+   "char_start": 39782,
+   "char_end": 40422,
+   "article": null
+  },
+  {
+   "id": "s0026",
+   "number": "5.3",
+   "heading": "Client’s right to operate in Low Power Mode is subject to the limits set out in",
+   "char_start": 40422,
+   "char_end": 40528,
+   "article": null
+  },
+  {
+   "id": "s0027",
+   "number": "5.4",
+   "heading": "When Client voluntarily powers-off, and Host receives payments from its CSP for",
+   "char_start": 40528,
+   "char_end": 42020,
+   "article": null
+  },
+  {
+   "id": "s0028",
+   "number": "5.5",
+   "heading": "Host need not comply with any voluntary power-off or curtailment instructions (i",
+   "char_start": 42020,
+   "char_end": 43025,
+   "article": null
+  },
+  {
+   "id": "s0029",
+   "number": "5.6",
+   "heading": "Client shall not, as part of providing Host an instruction under this Article 5,",
+   "char_start": 43025,
+   "char_end": 43276,
+   "article": null
+  },
+  {
+   "id": "s0030",
+   "number": "6",
+   "heading": "OPERATION ENVIRONMENT OF DATA CENTER FACILITY",
+   "char_start": 43276,
+   "char_end": 43327,
+   "article": null
+  },
+  {
+   "id": "s0031",
+   "number": "6.1",
+   "heading": "Conditions of the Data Center Facility",
+   "char_start": 43327,
+   "char_end": 45570,
+   "article": null
+  },
+  {
+   "id": "s0032",
+   "number": "6.2",
+   "heading": "Hazardous Conditions",
+   "char_start": 45570,
+   "char_end": 46230,
+   "article": null
+  },
+  {
+   "id": "s0033",
+   "number": "6.3",
+   "heading": "Intermittent Outages",
+   "char_start": 46230,
+   "char_end": 46769,
+   "article": null
+  },
+  {
+   "id": "s0034",
+   "number": "6.4",
+   "heading": "Outage Notifications",
+   "char_start": 46769,
+   "char_end": 46975,
+   "article": null
+  },
+  {
+   "id": "s0035",
+   "number": "6.5",
+   "heading": "Exclusive Server Room",
+   "char_start": 46975,
+   "char_end": 47751,
+   "article": null
+  },
+  {
+   "id": "s0036",
+   "number": "6.6",
+   "heading": "Standard Colocation Environment",
+   "char_start": 47751,
+   "char_end": 47982,
+   "article": null
+  },
+  {
+   "id": "s0037",
+   "number": "6.7",
+   "heading": "Safety and Security",
+   "char_start": 47982,
+   "char_end": 48359,
+   "article": null
+  },
+  {
+   "id": "s0038",
+   "number": "6.8",
+   "heading": "Compliance with Applicable Law",
+   "char_start": 48359,
+   "char_end": 50000,
+   "article": null
+  },
+  {
+   "id": "s0039",
+   "number": "6.9",
+   "heading": "Access by Client Personnel",
+   "char_start": 50000,
+   "char_end": 50546,
+   "article": null
+  },
+  {
+   "id": "s0040",
+   "number": "6.10",
+   "heading": "Responsibility for Client Personnel",
+   "char_start": 50546,
+   "char_end": 51107,
+   "article": null
+  },
+  {
+   "id": "s0041",
+   "number": "6.11",
+   "heading": "Covenant Against Liens",
+   "char_start": 51107,
+   "char_end": 52721,
+   "article": null
+  },
+  {
+   "id": "s0042",
+   "number": "6.12",
+   "heading": "Host Directions",
+   "char_start": 52721,
+   "char_end": 53158,
+   "article": null
+  },
+  {
+   "id": "s0043",
+   "number": "6.13",
+   "heading": "Online Status Ratio",
+   "char_start": 53158,
+   "char_end": 53246,
+   "article": null
+  },
+  {
+   "id": "s0044",
+   "number": "6.14",
+   "heading": "Installation and Accuracy of Power Consumption Meter",
+   "char_start": 53246,
+   "char_end": 53873,
+   "article": null
+  },
+  {
+   "id": "s0045",
+   "number": "6.15",
+   "heading": "Inventory Audit",
+   "char_start": 53873,
+   "char_end": 54550,
+   "article": null
+  },
+  {
+   "id": "s0046",
+   "number": "6.16",
+   "heading": "Maintenance",
+   "char_start": 54550,
+   "char_end": 55276,
+   "article": null
+  },
+  {
+   "id": "s0047",
+   "number": "7",
+   "heading": "INSURANCE",
+   "char_start": 55276,
+   "char_end": 55291,
+   "article": null
+  },
+  {
+   "id": "s0048",
+   "number": "7.1",
+   "heading": "In the event of any damage or loss of the Colocation Servers and upon request of",
+   "char_start": 55291,
+   "char_end": 55877,
+   "article": null
+  },
+  {
+   "id": "s0049",
+   "number": "7.2",
+   "heading": "Client shall obtain and maintain all relevant insurance policy or coverage that",
+   "char_start": 55877,
+   "char_end": 56137,
+   "article": null
+  },
+  {
+   "id": "s0050",
+   "number": "8",
+   "heading": "TITLE AND OWNERSHIP",
+   "char_start": 56137,
+   "char_end": 56162,
+   "article": null
+  },
+  {
+   "id": "s0051",
+   "number": "8.1",
+   "heading": "Ownership of Colocation Servers",
+   "char_start": 56162,
+   "char_end": 57266,
+   "article": null
+  },
+  {
+   "id": "s0052",
+   "number": "8.2",
+   "heading": "Ownership Host Equipment",
+   "char_start": 57266,
+   "char_end": 57524,
+   "article": null
+  },
+  {
+   "id": "s0053",
+   "number": "9",
+   "heading": "INDEMNIFICATION AND LIMITATION OF LIABILITY",
+   "char_start": 57524,
+   "char_end": 57573,
+   "article": null
+  },
+  {
+   "id": "s0054",
+   "number": "9.1",
+   "heading": "Each Party (the “Indemnifier”) shall indemnify, defend and hold the other Party",
+   "char_start": 57573,
+   "char_end": 58281,
+   "article": null
+  },
+  {
+   "id": "s0055",
+   "number": "9.2",
+   "heading": "Subject to other provisions of this Article 9, each Indemnifier hereby agrees to",
+   "char_start": 58281,
+   "char_end": 58888,
+   "article": null
+  },
+  {
+   "id": "s0056",
+   "number": "9.3",
+   "heading": "Any Party claiming to be an Indemnitee shall promptly notify the Indemnifier in",
+   "char_start": 58888,
+   "char_end": 59723,
+   "article": null
+  },
+  {
+   "id": "s0057",
+   "number": "9.4",
+   "heading": "OTHER THAN THOSE EXPRESSLY SET FORTH IN THIS AGREEMENT, HOST DISCLAIMS ANY AND A",
+   "char_start": 59723,
+   "char_end": 60101,
+   "article": null
+  },
+  {
+   "id": "s0058",
+   "number": "9.5",
+   "heading": "IN NO EVENT WILL EITHER PARTY BE LIABLE TO THE OTHER PARTY FOR LOSS OF REVENUE,",
+   "char_start": 60101,
+   "char_end": 60537,
+   "article": null
+  },
+  {
+   "id": "s0059",
+   "number": "9.6",
+   "heading": "TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL HOST’S LIAB",
+   "char_start": 60537,
+   "char_end": 60931,
+   "article": null
+  },
+  {
+   "id": "s0060",
+   "number": "9.7",
+   "heading": "THE PARTIES HEREBY WAIVE ANY CLAIM THAT THESE EXCLUSIONS DEPRIVE THEM OF AN ADEQ",
+   "char_start": 60931,
+   "char_end": 61085,
+   "article": null
+  },
+  {
+   "id": "s0061",
+   "number": "10",
+   "heading": "FORCE MAJEURE",
+   "char_start": 61085,
+   "char_end": 61105,
+   "article": null
+  },
+  {
+   "id": "s0062",
+   "number": "10.1",
+   "heading": "A Party shall not be considered to be in default or breach of this Agreement and",
+   "char_start": 61105,
+   "char_end": 62258,
+   "article": null
+  },
+  {
+   "id": "s0063",
+   "number": "10.2",
+   "heading": "If the normal performance of this Agreement cannot be resumed within thirty (30)",
+   "char_start": 62258,
+   "char_end": 62581,
+   "article": null
+  },
+  {
+   "id": "s0064",
+   "number": "11",
+   "heading": "DEFAULT",
+   "char_start": 62581,
+   "char_end": 62595,
+   "article": null
+  },
+  {
+   "id": "s0065",
+   "number": "11.1",
+   "heading": "The following events shall be “Events of Default”:",
+   "char_start": 62595,
+   "char_end": 62654,
+   "article": null
+  },
+  {
+   "id": "s0066",
+   "number": "11.1.1",
+   "heading": "Failure to timely deliver Client Equipment to Host Facilities as indicated on th",
+   "char_start": 62654,
+   "char_end": 62770,
+   "article": null
+  },
+  {
+   "id": "s0067",
+   "number": "11.1.2",
+   "heading": "Failure by Client to pay any undisputed amount due hereunder when due;",
+   "char_start": 62770,
+   "char_end": 62851,
+   "article": null
+  },
+  {
+   "id": "s0068",
+   "number": "11.1.3",
+   "heading": "Failure of Client or Host, as applicable, to perform any other material obligati",
+   "char_start": 62851,
+   "char_end": 63328,
+   "article": null
+  },
+  {
+   "id": "s0069",
+   "number": "11.1.4",
+   "heading": "Any representation or warranty made by Host or the Client, as applicable, under",
+   "char_start": 63328,
+   "char_end": 63959,
+   "article": null
+  },
+  {
+   "id": "s0070",
+   "number": "11.2",
+   "heading": "If Client has failed to pay any amounts due and payable to Host, then Host may r",
+   "char_start": 63959,
+   "char_end": 64586,
+   "article": null
+  },
+  {
+   "id": "s0071",
+   "number": "11.3",
+   "heading": "In the case of an Event of Default which is not timely cured as set forth in thi",
+   "char_start": 64586,
+   "char_end": 64825,
+   "article": null
+  },
+  {
+   "id": "s0072",
+   "number": "12",
+   "heading": "TERM AND TERMINATION",
+   "char_start": 64825,
+   "char_end": 64852,
+   "article": null
+  },
+  {
+   "id": "s0073",
+   "number": "12.1",
+   "heading": "Term",
+   "char_start": 64852,
+   "char_end": 65697,
+   "article": null
+  },
+  {
+   "id": "s0074",
+   "number": "12.2",
+   "heading": "Host reserves the right to change the Operations Service Fees upon renewal",
+   "char_start": 65697,
+   "char_end": 65937,
+   "article": null
+  },
+  {
+   "id": "s0075",
+   "number": "12.3",
+   "heading": "Termination",
+   "char_start": 65937,
+   "char_end": 67377,
+   "article": null
+  },
+  {
+   "id": "s0076",
+   "number": "12.4",
+   "heading": "Effects of Termination",
+   "char_start": 67377,
+   "char_end": 69313,
+   "article": null
+  },
+  {
+   "id": "s0077",
+   "number": "12.5",
+   "heading": "Survival",
+   "char_start": 69313,
+   "char_end": 69969,
+   "article": null
+  },
+  {
+   "id": "s0078",
+   "number": "13",
+   "heading": "CONFIDENTIALITY",
+   "char_start": 69969,
+   "char_end": 69991,
+   "article": null
+  },
+  {
+   "id": "s0079",
+   "number": "13.1",
+   "heading": "From the Effective Date of this Agreement and for two (2) years following the ex",
+   "char_start": 69991,
+   "char_end": 71517,
+   "article": null
+  },
+  {
+   "id": "s0080",
+   "number": "13.2",
+   "heading": "Notwithstanding the foregoing, each Party may disclose the Confidential Informat",
+   "char_start": 71517,
+   "char_end": 72082,
+   "article": null
+  },
+  {
+   "id": "s0081",
+   "number": "13.3",
+   "heading": "The content of this Agreement and any information disclosed hereunder by the oth",
+   "char_start": 72082,
+   "char_end": 72385,
+   "article": null
+  },
+  {
+   "id": "s0082",
+   "number": "14",
+   "heading": "Securities Law Compliance",
+   "char_start": 72385,
+   "char_end": 72418,
+   "article": null
+  },
+  {
+   "id": "s0083",
+   "number": "14.1",
+   "heading": "Each Party hereby acknowledges that it understands that: (a) Confidential Inform",
+   "char_start": 72418,
+   "char_end": 73365,
+   "article": null
+  },
+  {
+   "id": "s0084",
+   "number": "15",
+   "heading": "INJUNCTIVE RELIEF",
+   "char_start": 73365,
+   "char_end": 73389,
+   "article": null
+  },
+  {
+   "id": "s0085",
+   "number": "15.1",
+   "heading": "The Parties acknowledge that a breach or threatened breach of this Agreement sha",
+   "char_start": 73389,
+   "char_end": 74081,
+   "article": null
+  },
+  {
+   "id": "s0086",
+   "number": "16",
+   "heading": "NOTICES",
+   "char_start": 74081,
+   "char_end": 74095,
+   "article": null
+  },
+  {
+   "id": "s0087",
+   "number": "16.1",
+   "heading": "All notices, requirements, requests, claims, and other communications in relatio",
+   "char_start": 74095,
+   "char_end": 74853,
+   "article": null
+  },
+  {
+   "id": "s0088",
+   "number": "16.2",
+   "heading": "The following are the initial contact information of each Party:",
+   "char_start": 74853,
+   "char_end": 75448,
+   "article": null
+  },
+  {
+   "id": "s0089",
+   "number": "17",
+   "heading": "ANTI-COMMERCIAL BRIBERY, ANTI-MONEY LAUNDERING",
+   "char_start": 75448,
+   "char_end": 75501,
+   "article": null
+  },
+  {
+   "id": "s0090",
+   "number": "17.1",
+   "heading": "Client shall not, and shall procure its directors, officers, employees, consulta",
+   "char_start": 75501,
+   "char_end": 76514,
+   "article": null
+  },
+  {
+   "id": "s0091",
+   "number": "17.2",
+   "heading": "If any of Client Associates commits any act or omission in contravention of Arti",
+   "char_start": 76514,
+   "char_end": 76755,
+   "article": null
+  },
+  {
+   "id": "s0092",
+   "number": "17.3",
+   "heading": "Promptly following any request therefor, Client shall provide information and do",
+   "char_start": 76755,
+   "char_end": 77111,
+   "article": null
+  },
+  {
+   "id": "s0093",
+   "number": "18",
+   "heading": "GENERAL",
+   "char_start": 77111,
+   "char_end": 77125,
+   "article": null
+  },
+  {
+   "id": "s0094",
+   "number": "18.1",
+   "heading": "Entire Agreement and Amendment",
+   "char_start": 77125,
+   "char_end": 77592,
+   "article": null
+  },
+  {
+   "id": "s0095",
+   "number": "18.2",
+   "heading": "Assignment",
+   "char_start": 77592,
+   "char_end": 77926,
+   "article": null
+  },
+  {
+   "id": "s0096",
+   "number": "18.3",
+   "heading": "Non-Solicitation",
+   "char_start": 77926,
+   "char_end": 78791,
+   "article": null
+  },
+  {
+   "id": "s0097",
+   "number": "18.4",
+   "heading": "Governing Law",
+   "char_start": 78791,
+   "char_end": 78979,
+   "article": null
+  },
+  {
+   "id": "s0098",
+   "number": "18.5",
+   "heading": "Dispute Resolution",
+   "char_start": 78979,
+   "char_end": 80881,
+   "article": null
+  },
+  {
+   "id": "s0099",
+   "number": "18.6",
+   "heading": "Severability",
+   "char_start": 80881,
+   "char_end": 81692,
+   "article": null
+  },
+  {
+   "id": "s0100",
+   "number": "18.7",
+   "heading": "Counterparts This Agreement may be executed in two or more counterparts, each of",
+   "char_start": 81692,
+   "char_end": 82489,
+   "article": null
+  }
+ ],
+ "pages": [
+  {
+   "page": 1,
+   "char_start": 0,
+   "char_end": 1654
+  },
+  {
+   "page": 2,
+   "char_start": 1654,
+   "char_end": 4880
+  },
+  {
+   "page": 3,
+   "char_start": 4880,
+   "char_end": 7499
+  },
+  {
+   "page": 4,
+   "char_start": 7499,
+   "char_end": 9703
+  },
+  {
+   "page": 5,
+   "char_start": 9703,
+   "char_end": 12097
+  },
+  {
+   "page": 6,
+   "char_start": 12097,
+   "char_end": 15334
+  },
+  {
+   "page": 7,
+   "char_start": 15334,
+   "char_end": 17911
+  },
+  {
+   "page": 8,
+   "char_start": 17911,
+   "char_end": 20536
+  },
+  {
+   "page": 9,
+   "char_start": 20536,
+   "char_end": 23230
+  },
+  {
+   "page": 10,
+   "char_start": 23230,
+   "char_end": 25207
+  },
+  {
+   "page": 11,
+   "char_start": 25207,
+   "char_end": 27564
+  },
+  {
+   "page": 12,
+   "char_start": 27564,
+   "char_end": 30420
+  },
+  {
+   "page": 13,
+   "char_start": 30420,
+   "char_end": 33704
+  },
+  {
+   "page": 14,
+   "char_start": 33704,
+   "char_end": 35792
+  },
+  {
+   "page": 15,
+   "char_start": 35792,
+   "char_end": 37621
+  },
+  {
+   "page": 16,
+   "char_start": 37621,
+   "char_end": 40394
+  },
+  {
+   "page": 17,
+   "char_start": 40394,
+   "char_end": 43248
+  },
+  {
+   "page": 18,
+   "char_start": 43248,
+   "char_end": 46202
+  },
+  {
+   "page": 19,
+   "char_start": 46202,
+   "char_end": 49972
+  },
+  {
+   "page": 20,
+   "char_start": 49972,
+   "char_end": 53130
+  },
+  {
+   "page": 21,
+   "char_start": 53130,
+   "char_end": 54522
+  },
+  {
+   "page": 22,
+   "char_start": 54522,
+   "char_end": 57238
+  },
+  {
+   "page": 23,
+   "char_start": 57238,
+   "char_end": 60073
+  },
+  {
+   "page": 24,
+   "char_start": 60073,
+   "char_end": 62553
+  },
+  {
+   "page": 25,
+   "char_start": 62553,
+   "char_end": 64797
+  },
+  {
+   "page": 26,
+   "char_start": 64797,
+   "char_end": 67349
+  },
+  {
+   "page": 27,
+   "char_start": 67349,
+   "char_end": 69285
+  },
+  {
+   "page": 28,
+   "char_start": 69285,
+   "char_end": 72357
+  },
+  {
+   "page": 29,
+   "char_start": 72357,
+   "char_end": 74825
+  },
+  {
+   "page": 30,
+   "char_start": 74825,
+   "char_end": 77083
+  },
+  {
+   "page": 31,
+   "char_start": 77083,
+   "char_end": 80853
+  },
+  {
+   "page": 32,
+   "char_start": 80853,
+   "char_end": 82449
+  },
+  {
+   "page": 33,
+   "char_start": 82449,
+   "char_end": 82489
+  }
+ ],
+ "segments": [
+  {
+   "id": "p0001",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 0,
+   "char_end": 101
+  },
+  {
+   "id": "p0002",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 102,
+   "char_end": 114
+  },
+  {
+   "id": "p0003",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 115,
+   "char_end": 142
+  },
+  {
+   "id": "p0004",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 143,
+   "char_end": 255
+  },
+  {
+   "id": "p0005",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 256,
+   "char_end": 401
+  },
+  {
+   "id": "p0006",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 402,
+   "char_end": 506
+  },
+  {
+   "id": "p0007",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 507,
+   "char_end": 643
+  },
+  {
+   "id": "p0008",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 644,
+   "char_end": 652
+  },
+  {
+   "id": "p0009",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 653,
+   "char_end": 796
+  },
+  {
+   "id": "p0010",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 797,
+   "char_end": 992
+  },
+  {
+   "id": "p0011",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 993,
+   "char_end": 1121
+  },
+  {
+   "id": "p0012",
+   "section_id": "s0001",
+   "page": 1,
+   "char_start": 1122,
+   "char_end": 1158
+  },
+  {
+   "id": "p0013",
+   "section_id": "s0002",
+   "page": 1,
+   "char_start": 1159,
+   "char_end": 1231
+  },
+  {
+   "id": "p0014",
+   "section_id": "s0002",
+   "page": 1,
+   "char_start": 1232,
+   "char_end": 1396
+  },
+  {
+   "id": "p0015",
+   "section_id": "s0002",
+   "page": 1,
+   "char_start": 1397,
+   "char_end": 1455
+  },
+  {
+   "id": "p0016",
+   "section_id": "s0002",
+   "page": 1,
+   "char_start": 1456,
+   "char_end": 1653
+  },
+  {
+   "id": "p0017",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 1654,
+   "char_end": 1681
+  },
+  {
+   "id": "p0018",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 1682,
+   "char_end": 2146
+  },
+  {
+   "id": "p0019",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2147,
+   "char_end": 2341
+  },
+  {
+   "id": "p0020",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2342,
+   "char_end": 2550
+  },
+  {
+   "id": "p0021",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2551,
+   "char_end": 2631
+  },
+  {
+   "id": "p0022",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2632,
+   "char_end": 3157
+  },
+  {
+   "id": "p0023",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 3158,
+   "char_end": 3350
+  },
+  {
+   "id": "p0024",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 3351,
+   "char_end": 3459
+  },
+  {
+   "id": "p0025",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 3460,
+   "char_end": 3552
+  },
+  {
+   "id": "p0026",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 3553,
+   "char_end": 3812
+  },
+  {
+   "id": "p0027",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 3813,
+   "char_end": 4042
+  },
+  {
+   "id": "p0028",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 4043,
+   "char_end": 4867
+  },
+  {
+   "id": "p0029",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 4868,
+   "char_end": 4879
+  },
+  {
+   "id": "p0030",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 4880,
+   "char_end": 4907
+  },
+  {
+   "id": "p0031",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 4908,
+   "char_end": 5044
+  },
+  {
+   "id": "p0032",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 5045,
+   "char_end": 5093
+  },
+  {
+   "id": "p0033",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 5094,
+   "char_end": 5285
+  },
+  {
+   "id": "p0034",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 5286,
+   "char_end": 5562
+  },
+  {
+   "id": "p0035",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 5563,
+   "char_end": 5665
+  },
+  {
+   "id": "p0036",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 5666,
+   "char_end": 5928
+  },
+  {
+   "id": "p0037",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 5929,
+   "char_end": 6059
+  },
+  {
+   "id": "p0038",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 6060,
+   "char_end": 6236
+  },
+  {
+   "id": "p0039",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 6237,
+   "char_end": 6389
+  },
+  {
+   "id": "p0040",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 6390,
+   "char_end": 6440
+  },
+  {
+   "id": "p0041",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 6441,
+   "char_end": 6581
+  },
+  {
+   "id": "p0042",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 6582,
+   "char_end": 7486
+  },
+  {
+   "id": "p0043",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 7487,
+   "char_end": 7498
+  },
+  {
+   "id": "p0044",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 7499,
+   "char_end": 7526
+  },
+  {
+   "id": "p0045",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 7527,
+   "char_end": 7649
+  },
+  {
+   "id": "p0046",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 7650,
+   "char_end": 7706
+  },
+  {
+   "id": "p0047",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 7707,
+   "char_end": 8104
+  },
+  {
+   "id": "p0048",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 8105,
+   "char_end": 8322
+  },
+  {
+   "id": "p0049",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 8323,
+   "char_end": 8432
+  },
+  {
+   "id": "p0050",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 8433,
+   "char_end": 8670
+  },
+  {
+   "id": "p0051",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 8671,
+   "char_end": 9316
+  },
+  {
+   "id": "p0052",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 9317,
+   "char_end": 9353
+  },
+  {
+   "id": "p0053",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 9354,
+   "char_end": 9394
+  },
+  {
+   "id": "p0054",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 9395,
+   "char_end": 9690
+  },
+  {
+   "id": "p0055",
+   "section_id": "s0002",
+   "page": 4,
+   "char_start": 9691,
+   "char_end": 9702
+  },
+  {
+   "id": "p0056",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 9703,
+   "char_end": 9730
+  },
+  {
+   "id": "p0057",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 9731,
+   "char_end": 9904
+  },
+  {
+   "id": "p0058",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 9905,
+   "char_end": 10062
+  },
+  {
+   "id": "p0059",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 10063,
+   "char_end": 10234
+  },
+  {
+   "id": "p0060",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 10235,
+   "char_end": 10388
+  },
+  {
+   "id": "p0061",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 10389,
+   "char_end": 10860
+  },
+  {
+   "id": "p0062",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 10861,
+   "char_end": 11057
+  },
+  {
+   "id": "p0063",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 11058,
+   "char_end": 11260
+  },
+  {
+   "id": "p0064",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 11261,
+   "char_end": 11447
+  },
+  {
+   "id": "p0065",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 11448,
+   "char_end": 11675
+  },
+  {
+   "id": "p0066",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 11676,
+   "char_end": 12084
+  },
+  {
+   "id": "p0067",
+   "section_id": "s0002",
+   "page": 5,
+   "char_start": 12085,
+   "char_end": 12096
+  },
+  {
+   "id": "p0068",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 12097,
+   "char_end": 12124
+  },
+  {
+   "id": "p0069",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 12125,
+   "char_end": 12393
+  },
+  {
+   "id": "p0070",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 12394,
+   "char_end": 14218
+  },
+  {
+   "id": "p0071",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 14219,
+   "char_end": 14365
+  },
+  {
+   "id": "p0072",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 14366,
+   "char_end": 14454
+  },
+  {
+   "id": "p0073",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 14455,
+   "char_end": 14690
+  },
+  {
+   "id": "p0074",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 14691,
+   "char_end": 14918
+  },
+  {
+   "id": "p0075",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 14919,
+   "char_end": 15321
+  },
+  {
+   "id": "p0076",
+   "section_id": "s0002",
+   "page": 6,
+   "char_start": 15322,
+   "char_end": 15333
+  },
+  {
+   "id": "p0077",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 15334,
+   "char_end": 15361
+  },
+  {
+   "id": "p0078",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 15362,
+   "char_end": 15635
+  },
+  {
+   "id": "p0079",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 15636,
+   "char_end": 15888
+  },
+  {
+   "id": "p0080",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 15889,
+   "char_end": 16150
+  },
+  {
+   "id": "p0081",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 16151,
+   "char_end": 16526
+  },
+  {
+   "id": "p0082",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 16527,
+   "char_end": 16755
+  },
+  {
+   "id": "p0083",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 16756,
+   "char_end": 16884
+  },
+  {
+   "id": "p0084",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 16885,
+   "char_end": 16991
+  },
+  {
+   "id": "p0085",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 16992,
+   "char_end": 17121
+  },
+  {
+   "id": "p0086",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 17122,
+   "char_end": 17243
+  },
+  {
+   "id": "p0087",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 17244,
+   "char_end": 17369
+  },
+  {
+   "id": "p0088",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 17370,
+   "char_end": 17898
+  },
+  {
+   "id": "p0089",
+   "section_id": "s0002",
+   "page": 7,
+   "char_start": 17899,
+   "char_end": 17910
+  },
+  {
+   "id": "p0090",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 17911,
+   "char_end": 17938
+  },
+  {
+   "id": "p0091",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 17939,
+   "char_end": 18023
+  },
+  {
+   "id": "p0092",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 18024,
+   "char_end": 18347
+  },
+  {
+   "id": "p0093",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 18348,
+   "char_end": 18523
+  },
+  {
+   "id": "p0094",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 18524,
+   "char_end": 18815
+  },
+  {
+   "id": "p0095",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 18816,
+   "char_end": 19072
+  },
+  {
+   "id": "p0096",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 19073,
+   "char_end": 19277
+  },
+  {
+   "id": "p0097",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 19278,
+   "char_end": 19576
+  },
+  {
+   "id": "p0098",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 19577,
+   "char_end": 19874
+  },
+  {
+   "id": "p0099",
+   "section_id": "s0002",
+   "page": 8,
+   "char_start": 19875,
+   "char_end": 19958
+  },
+  {
+   "id": "p0100",
+   "section_id": "s0003",
+   "page": 8,
+   "char_start": 19959,
+   "char_end": 20012
+  },
+  {
+   "id": "p0101",
+   "section_id": "s0003",
+   "page": 8,
+   "char_start": 20013,
+   "char_end": 20112
+  },
+  {
+   "id": "p0102",
+   "section_id": "s0003",
+   "page": 8,
+   "char_start": 20113,
+   "char_end": 20274
+  },
+  {
+   "id": "p0103",
+   "section_id": "s0003",
+   "page": 8,
+   "char_start": 20275,
+   "char_end": 20389
+  },
+  {
+   "id": "p0104",
+   "section_id": "s0003",
+   "page": 8,
+   "char_start": 20390,
+   "char_end": 20523
+  },
+  {
+   "id": "p0105",
+   "section_id": "s0003",
+   "page": 8,
+   "char_start": 20524,
+   "char_end": 20535
+  },
+  {
+   "id": "p0106",
+   "section_id": "s0003",
+   "page": 9,
+   "char_start": 20536,
+   "char_end": 20563
+  },
+  {
+   "id": "p0107",
+   "section_id": "s0003",
+   "page": 9,
+   "char_start": 20564,
+   "char_end": 20788
+  },
+  {
+   "id": "p0108",
+   "section_id": "s0003",
+   "page": 9,
+   "char_start": 20789,
+   "char_end": 21055
+  },
+  {
+   "id": "p0109",
+   "section_id": "s0003",
+   "page": 9,
+   "char_start": 21056,
+   "char_end": 21372
+  },
+  {
+   "id": "p0110",
+   "section_id": "s0003",
+   "page": 9,
+   "char_start": 21373,
+   "char_end": 21499
+  },
+  {
+   "id": "p0111",
+   "section_id": "s0004",
+   "page": 9,
+   "char_start": 21500,
+   "char_end": 21522
+  },
+  {
+   "id": "p0112",
+   "section_id": "s0004",
+   "page": 9,
+   "char_start": 21523,
+   "char_end": 21705
+  },
+  {
+   "id": "p0113",
+   "section_id": "s0005",
+   "page": 9,
+   "char_start": 21706,
+   "char_end": 21760
+  },
+  {
+   "id": "p0114",
+   "section_id": "s0006",
+   "page": 9,
+   "char_start": 21761,
+   "char_end": 22454
+  },
+  {
+   "id": "p0115",
+   "section_id": "s0006",
+   "page": 9,
+   "char_start": 22455,
+   "char_end": 22906
+  },
+  {
+   "id": "p0116",
+   "section_id": "s0007",
+   "page": 9,
+   "char_start": 22907,
+   "char_end": 23035
+  },
+  {
+   "id": "p0117",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 23036,
+   "char_end": 23217
+  },
+  {
+   "id": "p0118",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 23218,
+   "char_end": 23229
+  },
+  {
+   "id": "p0119",
+   "section_id": "s0008",
+   "page": 10,
+   "char_start": 23230,
+   "char_end": 23257
+  },
+  {
+   "id": "p0120",
+   "section_id": "s0008",
+   "page": 10,
+   "char_start": 23258,
+   "char_end": 23262
+  },
+  {
+   "id": "p0121",
+   "section_id": "s0009",
+   "page": 10,
+   "char_start": 23263,
+   "char_end": 23521
+  },
+  {
+   "id": "p0122",
+   "section_id": "s0010",
+   "page": 10,
+   "char_start": 23522,
+   "char_end": 23824
+  },
+  {
+   "id": "p0123",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 23825,
+   "char_end": 23853
+  },
+  {
+   "id": "p0124",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 23854,
+   "char_end": 23881
+  },
+  {
+   "id": "p0125",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 23882,
+   "char_end": 24368
+  },
+  {
+   "id": "p0126",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 24369,
+   "char_end": 24665
+  },
+  {
+   "id": "p0127",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 24666,
+   "char_end": 24827
+  },
+  {
+   "id": "p0128",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 24828,
+   "char_end": 25193
+  },
+  {
+   "id": "p0129",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 25194,
+   "char_end": 25206
+  },
+  {
+   "id": "p0130",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 25207,
+   "char_end": 25234
+  },
+  {
+   "id": "p0131",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 25235,
+   "char_end": 25607
+  },
+  {
+   "id": "p0132",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 25608,
+   "char_end": 25914
+  },
+  {
+   "id": "p0133",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 25915,
+   "char_end": 26220
+  },
+  {
+   "id": "p0134",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 26221,
+   "char_end": 26691
+  },
+  {
+   "id": "p0135",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 26692,
+   "char_end": 26738
+  },
+  {
+   "id": "p0136",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 26739,
+   "char_end": 27266
+  },
+  {
+   "id": "p0137",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 27267,
+   "char_end": 27550
+  },
+  {
+   "id": "p0138",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 27551,
+   "char_end": 27563
+  },
+  {
+   "id": "p0139",
+   "section_id": "s0011",
+   "page": 12,
+   "char_start": 27564,
+   "char_end": 27591
+  },
+  {
+   "id": "p0140",
+   "section_id": "s0011",
+   "page": 12,
+   "char_start": 27592,
+   "char_end": 28103
+  },
+  {
+   "id": "p0141",
+   "section_id": "s0012",
+   "page": 12,
+   "char_start": 28104,
+   "char_end": 28252
+  },
+  {
+   "id": "p0142",
+   "section_id": "s0012",
+   "page": 12,
+   "char_start": 28253,
+   "char_end": 28772
+  },
+  {
+   "id": "p0143",
+   "section_id": "s0012",
+   "page": 12,
+   "char_start": 28773,
+   "char_end": 29668
+  },
+  {
+   "id": "p0144",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 29669,
+   "char_end": 29731
+  },
+  {
+   "id": "p0145",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 29732,
+   "char_end": 30406
+  },
+  {
+   "id": "p0146",
+   "section_id": "s0013",
+   "page": 12,
+   "char_start": 30407,
+   "char_end": 30419
+  },
+  {
+   "id": "p0147",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 30420,
+   "char_end": 30447
+  },
+  {
+   "id": "p0148",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 30448,
+   "char_end": 31164
+  },
+  {
+   "id": "p0149",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 31165,
+   "char_end": 32153
+  },
+  {
+   "id": "p0150",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 32154,
+   "char_end": 32888
+  },
+  {
+   "id": "p0151",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 32889,
+   "char_end": 33690
+  },
+  {
+   "id": "p0152",
+   "section_id": "s0013",
+   "page": 13,
+   "char_start": 33691,
+   "char_end": 33703
+  },
+  {
+   "id": "p0153",
+   "section_id": "s0013",
+   "page": 14,
+   "char_start": 33704,
+   "char_end": 33731
+  },
+  {
+   "id": "p0154",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 33732,
+   "char_end": 34218
+  },
+  {
+   "id": "p0155",
+   "section_id": "s0015",
+   "page": 14,
+   "char_start": 34219,
+   "char_end": 34478
+  },
+  {
+   "id": "p0156",
+   "section_id": "s0016",
+   "page": 14,
+   "char_start": 34479,
+   "char_end": 35037
+  },
+  {
+   "id": "p0157",
+   "section_id": "s0017",
+   "page": 14,
+   "char_start": 35038,
+   "char_end": 35475
+  },
+  {
+   "id": "p0158",
+   "section_id": "s0018",
+   "page": 14,
+   "char_start": 35476,
+   "char_end": 35732
+  },
+  {
+   "id": "p0159",
+   "section_id": "s0018",
+   "page": 14,
+   "char_start": 35733,
+   "char_end": 35778
+  },
+  {
+   "id": "p0160",
+   "section_id": "s0018",
+   "page": 14,
+   "char_start": 35779,
+   "char_end": 35791
+  },
+  {
+   "id": "p0161",
+   "section_id": "s0018",
+   "page": 15,
+   "char_start": 35792,
+   "char_end": 35819
+  },
+  {
+   "id": "p0162",
+   "section_id": "s0019",
+   "page": 15,
+   "char_start": 35820,
+   "char_end": 35855
+  },
+  {
+   "id": "p0163",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 35856,
+   "char_end": 35960
+  },
+  {
+   "id": "p0164",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 35961,
+   "char_end": 36049
+  },
+  {
+   "id": "p0165",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 36050,
+   "char_end": 36177
+  },
+  {
+   "id": "p0166",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 36178,
+   "char_end": 36397
+  },
+  {
+   "id": "p0167",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 36398,
+   "char_end": 36666
+  },
+  {
+   "id": "p0168",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 36667,
+   "char_end": 37143
+  },
+  {
+   "id": "p0169",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 37144,
+   "char_end": 37607
+  },
+  {
+   "id": "p0170",
+   "section_id": "s0020",
+   "page": 15,
+   "char_start": 37608,
+   "char_end": 37620
+  },
+  {
+   "id": "p0171",
+   "section_id": "s0020",
+   "page": 16,
+   "char_start": 37621,
+   "char_end": 37648
+  },
+  {
+   "id": "p0172",
+   "section_id": "s0021",
+   "page": 16,
+   "char_start": 37649,
+   "char_end": 37729
+  },
+  {
+   "id": "p0173",
+   "section_id": "s0021",
+   "page": 16,
+   "char_start": 37730,
+   "char_end": 37854
+  },
+  {
+   "id": "p0174",
+   "section_id": "s0021",
+   "page": 16,
+   "char_start": 37855,
+   "char_end": 38444
+  },
+  {
+   "id": "p0175",
+   "section_id": "s0021",
+   "page": 16,
+   "char_start": 38445,
+   "char_end": 38973
+  },
+  {
+   "id": "p0176",
+   "section_id": "s0022",
+   "page": 16,
+   "char_start": 38974,
+   "char_end": 39054
+  },
+  {
+   "id": "p0177",
+   "section_id": "s0022",
+   "page": 16,
+   "char_start": 39055,
+   "char_end": 39172
+  },
+  {
+   "id": "p0178",
+   "section_id": "s0022",
+   "page": 16,
+   "char_start": 39173,
+   "char_end": 39331
+  },
+  {
+   "id": "p0179",
+   "section_id": "s0023",
+   "page": 16,
+   "char_start": 39332,
+   "char_end": 39375
+  },
+  {
+   "id": "p0180",
+   "section_id": "s0024",
+   "page": 16,
+   "char_start": 39376,
+   "char_end": 39781
+  },
+  {
+   "id": "p0181",
+   "section_id": "s0025",
+   "page": 16,
+   "char_start": 39782,
+   "char_end": 40380
+  },
+  {
+   "id": "p0182",
+   "section_id": "s0025",
+   "page": 16,
+   "char_start": 40381,
+   "char_end": 40393
+  },
+  {
+   "id": "p0183",
+   "section_id": "s0025",
+   "page": 17,
+   "char_start": 40394,
+   "char_end": 40421
+  },
+  {
+   "id": "p0184",
+   "section_id": "s0026",
+   "page": 17,
+   "char_start": 40422,
+   "char_end": 40527
+  },
+  {
+   "id": "p0185",
+   "section_id": "s0027",
+   "page": 17,
+   "char_start": 40528,
+   "char_end": 40657
+  },
+  {
+   "id": "p0186",
+   "section_id": "s0027",
+   "page": 17,
+   "char_start": 40658,
+   "char_end": 40989
+  },
+  {
+   "id": "p0187",
+   "section_id": "s0027",
+   "page": 17,
+   "char_start": 40990,
+   "char_end": 41343
+  },
+  {
+   "id": "p0188",
+   "section_id": "s0027",
+   "page": 17,
+   "char_start": 41344,
+   "char_end": 41717
+  },
+  {
+   "id": "p0189",
+   "section_id": "s0027",
+   "page": 17,
+   "char_start": 41718,
+   "char_end": 42019
+  },
+  {
+   "id": "p0190",
+   "section_id": "s0028",
+   "page": 17,
+   "char_start": 42020,
+   "char_end": 43024
+  },
+  {
+   "id": "p0191",
+   "section_id": "s0029",
+   "page": 17,
+   "char_start": 43025,
+   "char_end": 43234
+  },
+  {
+   "id": "p0192",
+   "section_id": "s0029",
+   "page": 17,
+   "char_start": 43235,
+   "char_end": 43247
+  },
+  {
+   "id": "p0193",
+   "section_id": "s0029",
+   "page": 18,
+   "char_start": 43248,
+   "char_end": 43275
+  },
+  {
+   "id": "p0194",
+   "section_id": "s0030",
+   "page": 18,
+   "char_start": 43276,
+   "char_end": 43326
+  },
+  {
+   "id": "p0195",
+   "section_id": "s0031",
+   "page": 18,
+   "char_start": 43327,
+   "char_end": 43904
+  },
+  {
+   "id": "p0196",
+   "section_id": "s0031",
+   "page": 18,
+   "char_start": 43905,
+   "char_end": 44878
+  },
+  {
+   "id": "p0197",
+   "section_id": "s0031",
+   "page": 18,
+   "char_start": 44879,
+   "char_end": 45053
+  },
+  {
+   "id": "p0198",
+   "section_id": "s0031",
+   "page": 18,
+   "char_start": 45054,
+   "char_end": 45569
+  },
+  {
+   "id": "p0199",
+   "section_id": "s0032",
+   "page": 18,
+   "char_start": 45570,
+   "char_end": 46188
+  },
+  {
+   "id": "p0200",
+   "section_id": "s0032",
+   "page": 18,
+   "char_start": 46189,
+   "char_end": 46201
+  },
+  {
+   "id": "p0201",
+   "section_id": "s0032",
+   "page": 19,
+   "char_start": 46202,
+   "char_end": 46229
+  },
+  {
+   "id": "p0202",
+   "section_id": "s0033",
+   "page": 19,
+   "char_start": 46230,
+   "char_end": 46768
+  },
+  {
+   "id": "p0203",
+   "section_id": "s0034",
+   "page": 19,
+   "char_start": 46769,
+   "char_end": 46974
+  },
+  {
+   "id": "p0204",
+   "section_id": "s0035",
+   "page": 19,
+   "char_start": 46975,
+   "char_end": 47750
+  },
+  {
+   "id": "p0205",
+   "section_id": "s0036",
+   "page": 19,
+   "char_start": 47751,
+   "char_end": 47981
+  },
+  {
+   "id": "p0206",
+   "section_id": "s0037",
+   "page": 19,
+   "char_start": 47982,
+   "char_end": 48358
+  },
+  {
+   "id": "p0207",
+   "section_id": "s0038",
+   "page": 19,
+   "char_start": 48359,
+   "char_end": 49958
+  },
+  {
+   "id": "p0208",
+   "section_id": "s0038",
+   "page": 19,
+   "char_start": 49959,
+   "char_end": 49971
+  },
+  {
+   "id": "p0209",
+   "section_id": "s0038",
+   "page": 20,
+   "char_start": 49972,
+   "char_end": 49999
+  },
+  {
+   "id": "p0210",
+   "section_id": "s0039",
+   "page": 20,
+   "char_start": 50000,
+   "char_end": 50545
+  },
+  {
+   "id": "p0211",
+   "section_id": "s0040",
+   "page": 20,
+   "char_start": 50546,
+   "char_end": 51106
+  },
+  {
+   "id": "p0212",
+   "section_id": "s0041",
+   "page": 20,
+   "char_start": 51107,
+   "char_end": 52720
+  },
+  {
+   "id": "p0213",
+   "section_id": "s0042",
+   "page": 20,
+   "char_start": 52721,
+   "char_end": 53116
+  },
+  {
+   "id": "p0214",
+   "section_id": "s0042",
+   "page": 20,
+   "char_start": 53117,
+   "char_end": 53129
+  },
+  {
+   "id": "p0215",
+   "section_id": "s0042",
+   "page": 21,
+   "char_start": 53130,
+   "char_end": 53157
+  },
+  {
+   "id": "p0216",
+   "section_id": "s0043",
+   "page": 21,
+   "char_start": 53158,
+   "char_end": 53186
+  },
+  {
+   "id": "p0217",
+   "section_id": "s0043",
+   "page": 21,
+   "char_start": 53187,
+   "char_end": 53245
+  },
+  {
+   "id": "p0218",
+   "section_id": "s0044",
+   "page": 21,
+   "char_start": 53246,
+   "char_end": 53872
+  },
+  {
+   "id": "p0219",
+   "section_id": "s0045",
+   "page": 21,
+   "char_start": 53873,
+   "char_end": 54508
+  },
+  {
+   "id": "p0220",
+   "section_id": "s0045",
+   "page": 21,
+   "char_start": 54509,
+   "char_end": 54521
+  },
+  {
+   "id": "p0221",
+   "section_id": "s0045",
+   "page": 22,
+   "char_start": 54522,
+   "char_end": 54549
+  },
+  {
+   "id": "p0222",
+   "section_id": "s0046",
+   "page": 22,
+   "char_start": 54550,
+   "char_end": 55275
+  },
+  {
+   "id": "p0223",
+   "section_id": "s0047",
+   "page": 22,
+   "char_start": 55276,
+   "char_end": 55290
+  },
+  {
+   "id": "p0224",
+   "section_id": "s0048",
+   "page": 22,
+   "char_start": 55291,
+   "char_end": 55876
+  },
+  {
+   "id": "p0225",
+   "section_id": "s0049",
+   "page": 22,
+   "char_start": 55877,
+   "char_end": 56136
+  },
+  {
+   "id": "p0226",
+   "section_id": "s0050",
+   "page": 22,
+   "char_start": 56137,
+   "char_end": 56161
+  },
+  {
+   "id": "p0227",
+   "section_id": "s0051",
+   "page": 22,
+   "char_start": 56162,
+   "char_end": 57224
+  },
+  {
+   "id": "p0228",
+   "section_id": "s0051",
+   "page": 22,
+   "char_start": 57225,
+   "char_end": 57237
+  },
+  {
+   "id": "p0229",
+   "section_id": "s0051",
+   "page": 23,
+   "char_start": 57238,
+   "char_end": 57265
+  },
+  {
+   "id": "p0230",
+   "section_id": "s0052",
+   "page": 23,
+   "char_start": 57266,
+   "char_end": 57523
+  },
+  {
+   "id": "p0231",
+   "section_id": "s0053",
+   "page": 23,
+   "char_start": 57524,
+   "char_end": 57572
+  },
+  {
+   "id": "p0232",
+   "section_id": "s0054",
+   "page": 23,
+   "char_start": 57573,
+   "char_end": 58036
+  },
+  {
+   "id": "p0233",
+   "section_id": "s0054",
+   "page": 23,
+   "char_start": 58037,
+   "char_end": 58133
+  },
+  {
+   "id": "p0234",
+   "section_id": "s0054",
+   "page": 23,
+   "char_start": 58134,
+   "char_end": 58280
+  },
+  {
+   "id": "p0235",
+   "section_id": "s0055",
+   "page": 23,
+   "char_start": 58281,
+   "char_end": 58887
+  },
+  {
+   "id": "p0236",
+   "section_id": "s0056",
+   "page": 23,
+   "char_start": 58888,
+   "char_end": 59314
+  },
+  {
+   "id": "p0237",
+   "section_id": "s0056",
+   "page": 23,
+   "char_start": 59315,
+   "char_end": 59722
+  },
+  {
+   "id": "p0238",
+   "section_id": "s0057",
+   "page": 23,
+   "char_start": 59723,
+   "char_end": 60059
+  },
+  {
+   "id": "p0239",
+   "section_id": "s0057",
+   "page": 23,
+   "char_start": 60060,
+   "char_end": 60072
+  },
+  {
+   "id": "p0240",
+   "section_id": "s0057",
+   "page": 24,
+   "char_start": 60073,
+   "char_end": 60100
+  },
+  {
+   "id": "p0241",
+   "section_id": "s0058",
+   "page": 24,
+   "char_start": 60101,
+   "char_end": 60536
+  },
+  {
+   "id": "p0242",
+   "section_id": "s0059",
+   "page": 24,
+   "char_start": 60537,
+   "char_end": 60930
+  },
+  {
+   "id": "p0243",
+   "section_id": "s0060",
+   "page": 24,
+   "char_start": 60931,
+   "char_end": 61084
+  },
+  {
+   "id": "p0244",
+   "section_id": "s0061",
+   "page": 24,
+   "char_start": 61085,
+   "char_end": 61104
+  },
+  {
+   "id": "p0245",
+   "section_id": "s0062",
+   "page": 24,
+   "char_start": 61105,
+   "char_end": 61595
+  },
+  {
+   "id": "p0246",
+   "section_id": "s0062",
+   "page": 24,
+   "char_start": 61596,
+   "char_end": 61930
+  },
+  {
+   "id": "p0247",
+   "section_id": "s0062",
+   "page": 24,
+   "char_start": 61931,
+   "char_end": 62257
+  },
+  {
+   "id": "p0248",
+   "section_id": "s0063",
+   "page": 24,
+   "char_start": 62258,
+   "char_end": 62539
+  },
+  {
+   "id": "p0249",
+   "section_id": "s0063",
+   "page": 24,
+   "char_start": 62540,
+   "char_end": 62552
+  },
+  {
+   "id": "p0250",
+   "section_id": "s0063",
+   "page": 25,
+   "char_start": 62553,
+   "char_end": 62580
+  },
+  {
+   "id": "p0251",
+   "section_id": "s0064",
+   "page": 25,
+   "char_start": 62581,
+   "char_end": 62594
+  },
+  {
+   "id": "p0252",
+   "section_id": "s0065",
+   "page": 25,
+   "char_start": 62595,
+   "char_end": 62653
+  },
+  {
+   "id": "p0253",
+   "section_id": "s0066",
+   "page": 25,
+   "char_start": 62654,
+   "char_end": 62769
+  },
+  {
+   "id": "p0254",
+   "section_id": "s0067",
+   "page": 25,
+   "char_start": 62770,
+   "char_end": 62850
+  },
+  {
+   "id": "p0255",
+   "section_id": "s0068",
+   "page": 25,
+   "char_start": 62851,
+   "char_end": 63327
+  },
+  {
+   "id": "p0256",
+   "section_id": "s0069",
+   "page": 25,
+   "char_start": 63328,
+   "char_end": 63958
+  },
+  {
+   "id": "p0257",
+   "section_id": "s0070",
+   "page": 25,
+   "char_start": 63959,
+   "char_end": 64585
+  },
+  {
+   "id": "p0258",
+   "section_id": "s0071",
+   "page": 25,
+   "char_start": 64586,
+   "char_end": 64783
+  },
+  {
+   "id": "p0259",
+   "section_id": "s0071",
+   "page": 25,
+   "char_start": 64784,
+   "char_end": 64796
+  },
+  {
+   "id": "p0260",
+   "section_id": "s0071",
+   "page": 26,
+   "char_start": 64797,
+   "char_end": 64824
+  },
+  {
+   "id": "p0261",
+   "section_id": "s0072",
+   "page": 26,
+   "char_start": 64825,
+   "char_end": 64851
+  },
+  {
+   "id": "p0262",
+   "section_id": "s0073",
+   "page": 26,
+   "char_start": 64852,
+   "char_end": 65696
+  },
+  {
+   "id": "p0263",
+   "section_id": "s0074",
+   "page": 26,
+   "char_start": 65697,
+   "char_end": 65936
+  },
+  {
+   "id": "p0264",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 65937,
+   "char_end": 66027
+  },
+  {
+   "id": "p0265",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 66028,
+   "char_end": 66082
+  },
+  {
+   "id": "p0266",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 66083,
+   "char_end": 66307
+  },
+  {
+   "id": "p0267",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 66308,
+   "char_end": 66311
+  },
+  {
+   "id": "p0268",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 66312,
+   "char_end": 66315
+  },
+  {
+   "id": "p0269",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 66316,
+   "char_end": 66319
+  },
+  {
+   "id": "p0270",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 66320,
+   "char_end": 66452
+  },
+  {
+   "id": "p0271",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 66453,
+   "char_end": 67165
+  },
+  {
+   "id": "p0272",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 67166,
+   "char_end": 67335
+  },
+  {
+   "id": "p0273",
+   "section_id": "s0075",
+   "page": 26,
+   "char_start": 67336,
+   "char_end": 67348
+  },
+  {
+   "id": "p0274",
+   "section_id": "s0075",
+   "page": 27,
+   "char_start": 67349,
+   "char_end": 67376
+  },
+  {
+   "id": "p0275",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 67377,
+   "char_end": 67444
+  },
+  {
+   "id": "p0276",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 67445,
+   "char_end": 67550
+  },
+  {
+   "id": "p0277",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 67551,
+   "char_end": 67692
+  },
+  {
+   "id": "p0278",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 67693,
+   "char_end": 67914
+  },
+  {
+   "id": "p0279",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 67915,
+   "char_end": 68041
+  },
+  {
+   "id": "p0280",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 68042,
+   "char_end": 68074
+  },
+  {
+   "id": "p0281",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 68075,
+   "char_end": 68195
+  },
+  {
+   "id": "p0282",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 68196,
+   "char_end": 68223
+  },
+  {
+   "id": "p0283",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 68224,
+   "char_end": 68285
+  },
+  {
+   "id": "p0284",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 68286,
+   "char_end": 69152
+  },
+  {
+   "id": "p0285",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 69153,
+   "char_end": 69271
+  },
+  {
+   "id": "p0286",
+   "section_id": "s0076",
+   "page": 27,
+   "char_start": 69272,
+   "char_end": 69284
+  },
+  {
+   "id": "p0287",
+   "section_id": "s0076",
+   "page": 28,
+   "char_start": 69285,
+   "char_end": 69312
+  },
+  {
+   "id": "p0288",
+   "section_id": "s0077",
+   "page": 28,
+   "char_start": 69313,
+   "char_end": 69330
+  },
+  {
+   "id": "p0289",
+   "section_id": "s0077",
+   "page": 28,
+   "char_start": 69331,
+   "char_end": 69519
+  },
+  {
+   "id": "p0290",
+   "section_id": "s0077",
+   "page": 28,
+   "char_start": 69520,
+   "char_end": 69968
+  },
+  {
+   "id": "p0291",
+   "section_id": "s0078",
+   "page": 28,
+   "char_start": 69969,
+   "char_end": 69990
+  },
+  {
+   "id": "p0292",
+   "section_id": "s0079",
+   "page": 28,
+   "char_start": 69991,
+   "char_end": 71516
+  },
+  {
+   "id": "p0293",
+   "section_id": "s0080",
+   "page": 28,
+   "char_start": 71517,
+   "char_end": 72081
+  },
+  {
+   "id": "p0294",
+   "section_id": "s0081",
+   "page": 28,
+   "char_start": 72082,
+   "char_end": 72343
+  },
+  {
+   "id": "p0295",
+   "section_id": "s0081",
+   "page": 28,
+   "char_start": 72344,
+   "char_end": 72356
+  },
+  {
+   "id": "p0296",
+   "section_id": "s0081",
+   "page": 29,
+   "char_start": 72357,
+   "char_end": 72384
+  },
+  {
+   "id": "p0297",
+   "section_id": "s0082",
+   "page": 29,
+   "char_start": 72385,
+   "char_end": 72417
+  },
+  {
+   "id": "p0298",
+   "section_id": "s0083",
+   "page": 29,
+   "char_start": 72418,
+   "char_end": 73364
+  },
+  {
+   "id": "p0299",
+   "section_id": "s0084",
+   "page": 29,
+   "char_start": 73365,
+   "char_end": 73388
+  },
+  {
+   "id": "p0300",
+   "section_id": "s0085",
+   "page": 29,
+   "char_start": 73389,
+   "char_end": 74080
+  },
+  {
+   "id": "p0301",
+   "section_id": "s0086",
+   "page": 29,
+   "char_start": 74081,
+   "char_end": 74094
+  },
+  {
+   "id": "p0302",
+   "section_id": "s0087",
+   "page": 29,
+   "char_start": 74095,
+   "char_end": 74811
+  },
+  {
+   "id": "p0303",
+   "section_id": "s0087",
+   "page": 29,
+   "char_start": 74812,
+   "char_end": 74824
+  },
+  {
+   "id": "p0304",
+   "section_id": "s0087",
+   "page": 30,
+   "char_start": 74825,
+   "char_end": 74852
+  },
+  {
+   "id": "p0305",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 74853,
+   "char_end": 74925
+  },
+  {
+   "id": "p0306",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 74926,
+   "char_end": 74937
+  },
+  {
+   "id": "p0307",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 74938,
+   "char_end": 74985
+  },
+  {
+   "id": "p0308",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 74986,
+   "char_end": 74991
+  },
+  {
+   "id": "p0309",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 74992,
+   "char_end": 75048
+  },
+  {
+   "id": "p0310",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 75049,
+   "char_end": 75085
+  },
+  {
+   "id": "p0311",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 75086,
+   "char_end": 75116
+  },
+  {
+   "id": "p0312",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 75117,
+   "char_end": 75130
+  },
+  {
+   "id": "p0313",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 75131,
+   "char_end": 75139
+  },
+  {
+   "id": "p0314",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 75140,
+   "char_end": 75145
+  },
+  {
+   "id": "p0315",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 75146,
+   "char_end": 75152
+  },
+  {
+   "id": "p0316",
+   "section_id": "s0088",
+   "page": 30,
+   "char_start": 75153,
+   "char_end": 75447
+  },
+  {
+   "id": "p0317",
+   "section_id": "s0089",
+   "page": 30,
+   "char_start": 75448,
+   "char_end": 75500
+  },
+  {
+   "id": "p0318",
+   "section_id": "s0090",
+   "page": 30,
+   "char_start": 75501,
+   "char_end": 76513
+  },
+  {
+   "id": "p0319",
+   "section_id": "s0091",
+   "page": 30,
+   "char_start": 76514,
+   "char_end": 76754
+  },
+  {
+   "id": "p0320",
+   "section_id": "s0092",
+   "page": 30,
+   "char_start": 76755,
+   "char_end": 77069
+  },
+  {
+   "id": "p0321",
+   "section_id": "s0092",
+   "page": 30,
+   "char_start": 77070,
+   "char_end": 77082
+  },
+  {
+   "id": "p0322",
+   "section_id": "s0092",
+   "page": 31,
+   "char_start": 77083,
+   "char_end": 77110
+  },
+  {
+   "id": "p0323",
+   "section_id": "s0093",
+   "page": 31,
+   "char_start": 77111,
+   "char_end": 77124
+  },
+  {
+   "id": "p0324",
+   "section_id": "s0094",
+   "page": 31,
+   "char_start": 77125,
+   "char_end": 77591
+  },
+  {
+   "id": "p0325",
+   "section_id": "s0095",
+   "page": 31,
+   "char_start": 77592,
+   "char_end": 77611
+  },
+  {
+   "id": "p0326",
+   "section_id": "s0095",
+   "page": 31,
+   "char_start": 77612,
+   "char_end": 77780
+  },
+  {
+   "id": "p0327",
+   "section_id": "s0095",
+   "page": 31,
+   "char_start": 77781,
+   "char_end": 77925
+  },
+  {
+   "id": "p0328",
+   "section_id": "s0096",
+   "page": 31,
+   "char_start": 77926,
+   "char_end": 78790
+  },
+  {
+   "id": "p0329",
+   "section_id": "s0097",
+   "page": 31,
+   "char_start": 78791,
+   "char_end": 78978
+  },
+  {
+   "id": "p0330",
+   "section_id": "s0098",
+   "page": 31,
+   "char_start": 78979,
+   "char_end": 80839
+  },
+  {
+   "id": "p0331",
+   "section_id": "s0098",
+   "page": 31,
+   "char_start": 80840,
+   "char_end": 80852
+  },
+  {
+   "id": "p0332",
+   "section_id": "s0098",
+   "page": 32,
+   "char_start": 80853,
+   "char_end": 80880
+  },
+  {
+   "id": "p0333",
+   "section_id": "s0099",
+   "page": 32,
+   "char_start": 80881,
+   "char_end": 81691
+  },
+  {
+   "id": "p0334",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 81692,
+   "char_end": 82121
+  },
+  {
+   "id": "p0335",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82122,
+   "char_end": 82292
+  },
+  {
+   "id": "p0336",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82293,
+   "char_end": 82348
+  },
+  {
+   "id": "p0337",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82349,
+   "char_end": 82362
+  },
+  {
+   "id": "p0338",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82363,
+   "char_end": 82368
+  },
+  {
+   "id": "p0339",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82369,
+   "char_end": 82375
+  },
+  {
+   "id": "p0340",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82376,
+   "char_end": 82411
+  },
+  {
+   "id": "p0341",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82412,
+   "char_end": 82422
+  },
+  {
+   "id": "p0342",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82423,
+   "char_end": 82428
+  },
+  {
+   "id": "p0343",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82429,
+   "char_end": 82435
+  },
+  {
+   "id": "p0344",
+   "section_id": "s0100",
+   "page": 32,
+   "char_start": 82436,
+   "char_end": 82448
+  },
+  {
+   "id": "p0345",
+   "section_id": "s0100",
+   "page": 33,
+   "char_start": 82449,
+   "char_end": 82476
+  },
+  {
+   "id": "p0346",
+   "section_id": "s0100",
+   "page": 33,
+   "char_start": 82477,
+   "char_end": 82489
+  }
+ ]
+}

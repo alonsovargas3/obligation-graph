@@ -452,3 +452,50 @@ Enforcement moves into the schema.
 The authorizer is not used.
 
 **Ownership:** `report.py` (Task 30) and the scorers (Task 34) migrate to the projections, so no wave 4 reader joins `clause_ref` directly.
+
+## Rev 2.2 (B4 freeze decisions, coordinator)
+
+These decisions are pinned by the frozen tests. Where the plan text differs, the tests win.
+
+### Workspace and replay
+
+- **`og.paths.workspace()` resolution order:**
+  1. `OG_WORKSPACE`, if set.
+  2. The current directory, if it holds `data/sources.yaml`.
+  3. The repo root.
+- **Test isolation:** an autouse fixture in `tests/conftest.py` sets `OG_WORKSPACE` to each test's tmp dir and clears `OG_REPLAY`.
+- **Strict replay:** a miss raises `og.replay.ReplayMiss`. The cascade must re-raise it rather than fail open, and the CLIs exit 4.
+
+### Query API
+
+- **Paging:** `limit` must be in 1..500 and `offset` must be at least 0. Anything else raises `ValueError`; values are not clamped.
+- **`party=`:** matches the payee (`owed_to`), by role word or by name. Tool and UI copy say so.
+- **`superseded_by[].clause`:** the superseding obligation's own clause, from `visible_obligation_clause`.
+- **`load_change_report`:**
+  - still raises `ValueError` for a missing run;
+  - returns `{"error": "stale_change_run"}` for a stale run;
+  - returns `{"error": "missing_textdoc"}` when a TextDoc is missing.
+
+### MCP and UI
+
+- **MCP result shapes:**
+  - `list_agreements` returns `{"agreements": [...]}`.
+  - A missing or older db is reported in the tool's JSON as `{"error", "message"}`.
+  - The MCP server opens a read-only connection (`mode=ro`) and checks `user_version` itself; it never calls `connect()`.
+- **UI entry point:** `og.ui.__main__` exports `HOST = "127.0.0.1"` and `port()` (`OG_UI_PORT`, default 8765).
+
+### Gate latency
+
+- `GateDecision.latency_ms` is the sum of per-sample call latencies, whether live or recorded.
+- A run's `recorded_latency_ms` sums the check outcomes plus the classifier gate latencies.
+
+### Ownership (adds to Rev 2)
+
+| Task | Additional files |
+|---|---|
+| 33 | `og/gates/cascade.py` (re-raise `ReplayMiss`); `og/extract/client.py`, `og/change/client.py` (strict miss, lazy client); `og/extract/__main__.py`, `og/change/__main__.py` (`GateCache` wiring, exit 4, recorded vs incremental cost and latency) |
+| 34 | `og/eval/__main__.py` (integrity count via `visible_obligation_clause`) |
+
+### C9 manifest builder
+
+The coordinator maps change and gate fingerprints to their change order from `change_run.fingerprints_json` and the run logs.

@@ -1,0 +1,1 @@
+{"attempts": [{"cache_read_tokens": 2389, "cache_write_tokens": 0, "input_tokens": 4515, "model": "claude-sonnet-5-5", "output_tokens": 208, "refused": false}], "chunk_id": "c0003", "doc_id": "constantcontact-2011-ex1041", "items": [], "prompt_version": "extract_v1@6de99191"}

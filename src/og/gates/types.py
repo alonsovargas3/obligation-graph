@@ -65,6 +65,7 @@ class GateDecision:
     cost_usd: float | None
     error: str | None  # one of ERROR_CODES or an exception class name
     run_check: bool
+    cache_hit: bool = False  # wave 4: replayed from eval/recorded/gate (no call, recorded cost)
 
 
 class DecisionGate(Protocol):

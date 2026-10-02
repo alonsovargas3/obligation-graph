@@ -1,0 +1,1 @@
+{"attempts": [{"cache_read_tokens": 100491, "cache_write_tokens": 0, "input_tokens": 66, "model": "claude-sonnet-5-5", "output_tokens": 10, "refused": false}], "category": "guarantee", "findings": [], "latency_ms": 2259, "prompt_version": "change_v1@5f7648de", "request_fingerprint": "ab195dddcb8810d544bf701352ac52b96ceb516a24fb8e5b6f92c4a4401f5d88"}

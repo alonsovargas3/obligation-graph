@@ -1,0 +1,1269 @@
+{
+ "doc_id": "terawulf-2025-ex10-1",
+ "source_sha256": "ba13a3e43b70e39aeb8d4811083d008a422905bb9bb17d4bb6071c1c36095a6b",
+ "text": "EX-10.1 3 tm2523008d2_ex10-1.htm EXHIBIT 10.1\nExhibit 10.1\nFORM OF RECOGNITION AGREEMENT\nTHIS RECOGNITION AGREEMENT (this “Agreement”) is made and entered into as of this 13th day of August, 2025 (being the latest of the parties’ dates of execution; the “Effective Date”), by and among Akela Data LLC, a Delaware limited liability company (“Akela”), Fluidstack USA I Inc., a Delaware corporation (“Fluidstack”), and Google LLC, a Delaware limited liability company (“Google”).\nRECITALS\nA.            Somerset Operating Company, LLC (“Somerset”), is the owner of certain real property located in the Town of Somerset, County of Niagara, New York, consisting of approximately 621 acres (collectively, the “Somerset Property”).\nB.            Terawulf Brookings LLC (“Brookings”) is the tenant of Somerset under that certain Lease Agreement dated August 13, 2025, between Somerset and Brookings (as amended and restated from time to time, the “Brookings Lease”), pursuant to which Somerset leases approximately 43.5 acres of the Somerset Property to Brookings (the “Brookings Property”).\nC.            Akela Data LLC (“Akela”) is the subtenant of Brookings under that certain Sublease Agreement dated August 13, 2025, between Brookings and Akela (as amended and restated from time to time, the “Akela Sublease”), pursuant to which Brookings leases approximately 43.5 acres of the Brookings Property to Akela (as depicted in Exhibit A attached hereto and made a part hereof, the “Akela Property”).\nD.            Fluidstack is the sub-subtenant of Akela under that certain Datacenter Lease dated August 13, 2025 (attached hereto as Exhibit B, as amended and restated from time to time, the “Fluidstack Lease”), pursuant to which Akela leases certain premises contained on the Akela Property to Fluidstack (as more particularly described in the Fluidstack Lease, the “Fluidstack Premises”).\nE.            Somerset, Brookings, Akela and Fluidstack are parties to a Recognition and Non-Disturbance Agreement dated August 13, 2025 (the “Overlandlord Recognition Agreement”), pursuant to which Somerset, Brookings, Akela and Fluidstack make certain commitments to one another regarding the Fluidstack Lease, the Akela Sublease, and the Brookings Lease.\nF.            Google wishes to obtain from Akela certain assurances that Google will have the option to assume the Fluidstack Lease and that, in such event, the enforcement of Akela’s rights against Fluidstack shall affect Google to the least extent possible.\nG.            Akela is willing to provide such assurances to Google upon and subject to the terms and conditions of this Agreement.\nAGREEMENT\nNOW, THEREFORE, which are hereby acknowledged, the parties hereto do mutually agree as follows:\n1.            Definitions. Capitalized terms not otherwise defined herein shall have the meaning given to such terms in the Fluidstack Lease, as the context may require.\n2.             Confirmation Regarding Fluidstack Lease; Google Property.\na.            Akela acknowledges, agrees and represents to the other parties on the Effective Date (a) that the Fluidstack Lease is legal, valid and binding against Akela and Fluidstack, and in full force and effect, and (b) to the knowledge of Akela, on the date hereof, there are no events that do presently, or which may, with the passage of time, the giving of notice, or the expiration of a period of grace, constitute a breach or default by either party under the Fluidstack Lease. Fluidstack acknowledges, agrees and represents to the other parties on the Effective Date (a) that the Fluidstack Lease is legal, valid and binding against Akela and Fluidstack, and in full force and effect, and (b) to the knowledge of Fluidstack, on the date hereof, there are no events that do presently, or which may, with the passage of time, the giving of notice, or the expiration of a period of grace, constitute a breach or default by either party under the Fluidstack Lease.\nb.            Akela and Fluidstack acknowledge and agree that if Tenant's Personal Property under the Fluidstack Lease includes any Google Property (as defined below) and such Google Property is lost or damaged while in the Tenant Space, then Google will be a third party beneficiary of the provisions of the Fluidstack Lease that relate to Akela’s obligations with respect to such loss or damage of such Google Property, subject to the rights and limitations with respect to such obligations as set forth in the Fluidstack Lease.  “Google Property” means equipment or property owned by Google (or its affiliate) that is located in the Tenant Space as shown by reasonable documentary evidence provided by Google.\nc.             If there is any Google Property remaining in the Tenant Space upon expiration or termination of the Fluidstack Lease, (i) Akela will provide Google access to the Tenant Space and the Google Property in accordance with, and subject to, the holdover provisions in the Fluidstack Lease applicable to Tenant Property to allow Google to remove the Google Property from the Tenant Space, (ii) the Term of the Fluidstack Lease will be automatically extended for a Transition Period as described therein (the length of such period to be defined by Google, but not to exceed 120 days), and (iii) Google agrees to pay all Rent for the Transition Period; provided that, in the event such termination (or deemed termination) is the result of an Event of Default by Fluidstack under the Fluidstack Lease, or if any Colocation Agreement (as defined in the Fluidstack Lease) is then in effect (including pursuant to any holdover or transition period described in such Colocation Agreement), Fluidstack shall pay all such Rent. Notwithstanding the foregoing, Akela agrees that no Rent will be payable for the Transition Period if termination of the Fluidstack Lease is pursuant to Google’s election (or deemed election) of the Google Rejection Option as described below.  For the avoidance of doubt, this Section 2(c) will not be applicable in connection with the execution of the Novation Agreement pursuant to the Google Assumption Option as described below.\nd             Fluidstack acknowledges and agrees that it is responsible to Google for the protection of any Google Property in the Tenant Space and if any such Google Property is lost or damaged by the acts or omissions of Fluidstack’s Personnel (as defined below), Fluidstack will reimburse Google for the replacement cost of such Google Property lost or damaged. For the avoidance of doubt, Fluidstack shall have no liability to Google for any damage or loss to any Google Property in the Tenant Space to the extent such damage or loss was caused by the acts or omissions of Google’s or any third party’s Personnel. “Personnel” means all employees and agents of a party and its subcontractors and agents.\n-2-\ne.            Whereas Fluidstack (or its affiliate) is a party to a certain Site Access Agreement with certain Colocation Parties executed on or around the Effective Date of this Agreement (“Access Agreement”), in the event that the ownership of any equipment thereunder is transferred by sale to Google thus becoming Google Property, Fluidstack will grant (or will cause its affiliate to grant) to Google access to the Tenant Space and such equipment for a period of four (4) months from the date of Google's purchase of the equipment, to allow Google to remove the equipment from the Tenant Space.  During such period, Fluidstack will not deem the equipment to be abandoned, notwithstanding anything to the contrary in any Colocation Agreement underlying the Access Agreement. For the avoidance of doubt, the parties acknowledge and agree that (i) Fluidstack’s rights and obligations with respect to Tenant Property are governed by the Fluidstack Lease, and this Section 4(e) does not affect the terms of the Fluidstack Lease with respect thereto and (ii) neither Google nor Akela is a party to or subject to the terms of the Access Agreement.\n3.            Right to Cure Default.\na.            Akela will not seek to terminate the Fluidstack Lease by reason of any act or omission that constitutes (or would over time constitute) a default by Fluidstack under such Fluidstack Lease, until Akela shall have given written notice of such act or omission to Google (as required under the Fluidstack Lease, Item 3 of the Basic Lease Information); and Google shall have the right, but not the obligation, to remedy such act or omission on Fluidstack’s behalf, subject to the time periods in Section 15.1 (Events of Default By Tenant) of the Fluidstack Lease, except with respect to any failure or refusal by Tenant to timely pay any Rent or any other payments or charges required to be paid thereunder, it shall not constitute an Event of Default by Tenant under Section 15.1.1 of the Fluidstack Lease if Google gives written notice to Akela of its intent to remedy such failure or refusal no later than the fifteenth (15th) day after Google’s receipt of the default notice and thereafter pays such Rent or other payments or charges properly due and owing no later than the thirtieth (30th) day after receipt of a correct, itemized invoice from Akela. Akela agrees that it will accept such performance by Google of any covenant, condition or agreement to be performed by Fluidstack under the Fluidstack Lease with the same force and effect as though performed by Fluidstack. The provisions of this Section 3 shall not be construed as obligating Google to cure any breach or default by Fluidstack under the Fluidstack Lease. Except as provided in this Section 3 and Section 4, below, nothing in this Agreement is intended to suspend or otherwise limit Akela’s ability to exercise any other rights and remedies that Akela may have against Fluidstack as a result of such breach or default. Any invoices submitted under this Agreement must be submitted through Google’s vendor management system.\nb.            Akela represents and warrants that the Overlandlord Recognition Agreement contains terms that (i) prevent termination of the Brookings Lease and Akela Sublease by any party thereto without prior written notice to Fluidstack, (ii) give Fluidstack, among other things, non-disturbance protection (on the terms of the FluidStack Lease) in the event of any tenant’s default under such Brookings Lease and/or Akela Sublease, and (iii) give Fluidstack the right, but not the obligation, to cure the relevant tenant’s default under such Brookings Lease and/or Akela Sublease. Akela further represents and warrants that it owns all right, title and interest in and to the Building free and clear of all liens, encumbrances and defects, other than the Security Documents as described in the Fluidstack Lease.\n4.            Google Options Related to FS Event of Default.\na.            FS Default Trigger. In the event that (i) Fluidstack has become subject to an Insolvency Event or (ii) an Event of Default under Section 15.1.1 of the Fluidstack Lease has occurred (the occurrence of (i) or (ii), the “FS Default Trigger”), Akela will immediately provide Google written notice (the “Google Default Notice”) that the FS Default Trigger has occurred. An “Insolvency Event” is the occurrence of an event identified in Section 15.1.3 of the Fluidstack Lease. Thereupon, Google will have a period of 30 days after receipt of the Google Default Notice (“Verification Period”) to verify that the requirements of the FS Default Trigger have been met. Akela and Fluidstack will timely cooperate with reasonable requests by Google for information and documentation regarding the FS Default Trigger.\n-3-\nWithin the Verification Period, Google will have the option to elect, by written notice of the same to Akela (the “Google Election Notice”) to either: (i) allow the Fluidstack Lease to be terminated by Landlord (the “Google Rejection Option”); or (ii) pay all Rent under the Fluidstack Lease that is then, currently, properly due and owing by Fluidstack to Akela and assume the Fluidstack Lease as the Tenant thereunder (the “Google Assumption Option”); provided that, the Google Rejection Option will only be available if: (a) the FS Default Trigger occurs after the first six (6) years of the initial term of the Fluidstack Lease; or (b) the Premises (as defined under the Fluidstack Lease) have equipment installed which when in operation are capable of consuming less than 50% of the Baseline Capacity and for the avoidance of doubt, if the Google Rejection Option is not available (such condition, the “Assumption Only Condition”), then the Google Assumption Option must be elected by Google. “Baseline Capacity” means [•] MW of electrical power during the first 5 years of the initial term of the Fluidstack Lease as contemplated in this Agreement. Notwithstanding the foregoing, if an FS Default Trigger has occurred only under clause (ii) of such definition, but no Insolvency Event has occurred (such event an “FS Payment Default Trigger”), then Google will have the option (the “Deferral Option”) to elect during the Verification Period, by written notice to Akela, to neither elect the Google Rejection Option or the Google Assumption Option, and instead defer such election until the Deferral Option End Date (as defined in Section 4(e)). If the Deferral Option is elected then, during the period from the written election of the Deferral Option until the Deferral Option End Date (such period, the “Deferral Period”), (i) the Verification Period will be deemed to toll hereunder and (ii) Section 4(e) will apply. For the avoidance of doubt, if Google has neither provided the Google Election Notice or elected the Deferral Option by written notice on or before the end of the Verification Period, Google will be deemed to have elected the Google Rejection Option (or, in the case of the Assumption Only Condition, Google will be deemed to have elected the Google Assumption Option).\nb.            Google Rejection Option. If Google elects (or is deemed to have elected) the Google Rejection Option, Akela will be deemed, upon such election, to have immediately terminated the Fluidstack Lease. Within forty-five (45) days after the end of the Verification Period that results in Google having elected the Google Rejection Option, Akela will send notice to Fluidstack and Google confirming Akela’s termination of the Fluidstack Lease, together with a correct invoice for Google in the amount of the FS Termination Fee (as defined below) (the “Akela Termination Notice”), provided, that the failure or delay of such notice will have no effect upon whether or when Akela’s termination has occurred. Google will, within 15 days after the receipt of the Akela Termination Notice (including the associated invoice), pay Akela a termination fee (the “FS Termination Fee”). The amount of the FS Termination Fee will be an amount determined by Akela and memorialized in the Akela Termination Notice not to exceed the amount applicable to the date of termination according to the schedule of FS Termination Fee (the “Schedule of FS Termination Fee”) attached to this Agreement as Exhibit C.\n-4-\nThe payment of the FS Termination Fee will be made by Google directly into the Designated FS Termination Fee Account pursuant to the terms of the Google Financial Support Agreement. Upon the payment of the FS Termination Fee by Google, (a) Akela releases and discharges Fluidstack from all liabilities and obligations under the Fluidstack Lease; (b) Google will have no further liabilities or obligations related to the Fluidstack Lease; (c) Google will be provided an equity interest position in Akela equal to the quotient derived from (i) the amount of the FS Termination Fee paid by Google divided by (ii) the total cost to develop the Akela Property and construct the Building and all other improvements consisting of and/or otherwise supporting the Fluidstack Premises on the Akela Property (including all land development costs, the costs to construct the Building, the costs of all of Akela’s equipment and infrastructure supporting the Fluidstack Premises and all financing costs related thereto) (such quotient, the “Google Equity Interest”); and (d) upon Google’s receipt of the Google Equity Interest, this Agreement will be deemed to have terminated. The “Google Financial Support Agreement” shall mean an agreement entered into between Google, Akela and Akela’s financing sources (or agent on behalf of such sources) which provides that if the FS Termination Fee shall become due and payable hereunder, then Google shall be required to make such payment directly to the Designated FS Termination Fee Account in accordance with such agreement. The payment of the FS Termination Fee in accordance with the Google Financial Support Agreement will satisfy Google’s obligation to pay the FS Termination Fee hereunder. The “Designated FS Termination Fee Account” means the account identified in the Google Financial Support Agreement for the payment of the FS Termination Fee. Google agrees to enter into the Google Financial Support Agreement upon the written request of Akela in connection with the incurrence of Akela’s financing arrangements.\nc.            Google Assumption Option.\n(1)            If Google elects the Google Assumption Option (or is deemed to elect the Google Assumption Option) in accordance with this Agreement, (i) Google, Akela, and Fluidstack must (within fifteen (15) days after Google’s provision of the Google Election Notice to Akela) execute a novation agreement which includes the early termination provision as described in Section 1.1(c)(i) (Google’s Early Lease Termination Right) of Exhibit D and is otherwise substantially on the form attached hereto as Exhibit D (the “Novation Agreement”), whereby Google replaces Fluidstack as the “Tenant,” and assumes all Novated Obligations of Fluidstack under the Fluidstack Lease; (ii) Google shall be liable for all Rent under the Fluidstack Lease, as it becomes due, regardless of when (or if) the Novation Agreement is executed and delivered; and (iii) Google must pay all Rent that is then, currently, properly due and owing by Fluidstack to Akela under the Fluidstack Lease within fifteen (15) days after the receipt of a correct, itemized invoice for such Rent from Akela. If the Novation Agreement is not executed by Google, Akela, and Fluidstack within the above-mentioned 15-day period, the parties will thereupon be deemed to have executed the Novation Agreement upon the expiration of the 15-day period and Google will have the right to terminate the Lease early as described under Section 1.1(c)(i) (Google’s Early Lease Termination Right) of Exhibit D. The “Novated Obligations” means all (x) then-unperformed obligations of Tenant to pay Rent due and owing to Landlord under the Fluidstack Lease that arose before the date of the Novation Agreement; (y) obligations of Tenant under the Fluidstack Lease that arise on or after the date of the Novation Agreement, and specifically excluding any obligations that are not related to payment arose before the date of the Novation Agreement.\n-5-\n(2)            Once the Novation Agreement is executed by Google, Fluidstack and Akela, the novated Fluidstack Lease and all appurtenances thereto shall come into effect as an agreement between Akela and Google, and Akela shall be bound to Google under all of the provisions of the Fluidstack Lease for the balance of the term thereof (including any extensions or renewals thereof which may be effected in accordance with any options contained in the Fluidstack Lease) with Google as the “Tenant” under the Fluidstack Lease from and after the date of the Novation Agreement. In such event, Google shall attorn to Akela as its landlord under the Fluidstack Lease, such attornment to be effective and self-operative, without the execution of any further instruments on the part of either of the parties hereto, upon and from and after the date of the Novation Agreement. If Google elects the Google Assumption Option (or is deemed to elect the Google Assumption Option), upon the execution (or deemed execution) by all parties of the Novation Agreement and Google’s satisfaction of its obligation under clause (iii) of Section 4(c)(1) of this Agreement, this Agreement shall terminate.\n(3)            Customer Retention Incentives. Upon the effective date of the Novation Agreement (or the date such Novation Agreement is deemed to be executed) and if any Fluidstack Strategic Customer has property remaining in the Tenant Space at such time, Google will offer such Fluidstack Strategic Customer(s) a transition period equal to the shorter of: (i) 12 months or (ii) the remainder of the initial term of the Lease to access and use the Tenant Space subject to such Fluidstack Strategic Customer entering into a Transition Period Access for Potential Google Customers Agreement with Google detailing the rent fees and other terms and conditions of such access and usage (the “Transition Period Access for Potential Google Customers”). Google will offer such Fluidstack Strategic Customer commercially reasonable rent and other economic terms and conditions (provided however that Google will not charge such Fluidstack Strategic Customer for such access to the Tenant Space to the extent that Google is already receiving rent for such Tenant Space from a third-party) and other terms and conditions for such Transition Period Access for Potential Google Customers, which will include: (i) a commitment that Google will not permit mechanic’s or other liens to be placed upon such Fluidstack Strategic Customer’s equipment, (ii) a commitment that Google will be liable for loss or damage to such Fluidstack Strategic Customer’s equipment caused by the acts or omissions of Google’s Personnel, provided that such Fluidstack Strategic Customer will be liable to loss or damage to the Tenant Space caused by the acts or omissions of such Fluidstack Strategic Customer’s Personnel, (iii) a commitment that such Fluidstack Strategic Customer’s Personnel will have access as necessary to remove such Fluidstack Strategic Customer’s equipment from the Tenant Space upon reasonable notice to Google, and (iv) a commitment that such Fluidstack Strategic Customer will provide the reasonable opportunity (at Google’s option) for representatives of Google to be present at all times and such Fluidstack Strategic Customer will comply with the reasonable policies (including any security policy) and instructions of Google and/or any Google Personnel in place at the Tenant Space at the time of such access. While Google and such Fluidstack Strategic Customer are negotiating such terms and conditions for the Transition Period Access for Potential Google Customers such period of negotiation not to exceed 1 month, Google will provide, if requested, such access as necessary to remove such Fluidstack Strategic Customer’s property from the Tenant Space during such period subject to such Fluidstack Strategic Customer entering into an agreement with Google that includes subsections (i) through (iv) above. “Fluidstack Strategic Customer” means each customer of Fluidstack that had entered into a legal agreement with Fluidstack for Fluidstack to provide colocation and managed services and such services require at least 200 megawatts (MW) of electrical power or the holder of title to the property (as shown by reasonable documentary evidence) if title is not held by such customer. Akela, and Fluidstack, and Google acknowledge and agree that any such Fluidstack Strategic Customer will be a third party beneficiary of this Section 4(c)(3) with respect to Google’s obligations under this Section 4(c)(3).\nd.            Google Assumption Option Without FS Default Trigger. In the event that (i) there is an Event of Default by Fluidstack under the Fluidstack Lease without the occurrence of a FS Default Trigger and (ii) Akela intends to terminate the Fluidstack Lease on the basis of such Event of Default, Akela will provide Google with written notice of such Event of Default and such intention at least thirty (30) days prior to Akela’s planned termination of the Fluidstack Lease. Google and Fluidstack agree that Akela’s obligation to provide such notice shall not represent evidence of or otherwise result in (by implication or otherwise) any waiver of any of Akela’s rights against Fluidstack under the Fluidstack Lease with regard to such Event of Default. Google will then have the option (but not the obligation), by written notice of the same to Akela within thirty (30) days after such written notice from Akela, to elect the Google Assumption Option. If Google elects the Google Assumption Option in accordance with this Section 4(d), the parties will follow all requirements in this Agreement related to Google Assumption Option as if Google had elected the Google Assumption Option under Section 4(c) of this Agreement.\n-6-\ne.            Google Deferral Option. In the event that Google has elected the Deferral Option, then Google agrees to pay to Akela (i) all Rent under the Fluidstack Lease that is due and owing that Fluidstack has not paid as of the date of such election and (ii) subject to Akela’s ongoing compliance with its obligations in this clause (e), all additional Rent that becomes due and owing during the Deferral Period that Fluidstack does not pay (all such amounts not paid by Fluidstack under clause (i) and (ii), the “Unpaid FS Amounts”). Akela may retain and utilize the funds paid by Google in respect of the Unpaid FS Amount to the full extent as if such amounts had been paid to Akela as Rent under the Fluidstack Lease, and such amounts will be owned by Akela free and clear of any claims from Google or Fluidstack and shall not be subject to any offset or counterclaim. For the avoidance of doubt, the foregoing sentence is not intended to limit any remedies Google or Fluidstack may have against Akela under the Fluidstack Lease. Akela agrees to use commercially reasonable efforts to pursue Fluidstack for the payment in full of any Unpaid FS Amounts, including through litigation, until the Unpaid FS Amounts are paid in full, and Google agrees to cooperate in good faith with Akela in respect thereof (including assigning any subrogation or similar rights of Google to Akela in furtherance thereof). Any amounts recovered from Fluidstack in respect of the Unpaid FS Amounts shall be paid to Google in reimbursement of the amounts paid by Google to Akela. The Deferral Period shall end on the date of the earliest to occur (such date, the “Deferral Option End Date”) of (i) the occurrence of an FS Default Trigger pursuant to clause (i) of such definition, (ii) the date Google fails to pay to Akela any amounts required by this clause (e) and (iii) the date Google elects by written notice to end the Deferral Period. On the Deferral Option End Date, the Verification Period will cease to toll and will begin to run again in accordance with Section 4(a) from the date of the election of the Deferral Option as if the Deferral Period had not occurred (and, for the avoidance of doubt, at the end of such Verification Period Google will be obligated to elect the Google Assumption Option or, if applicable, the Google Rejection Option). If on or prior to the Deferral Option End Date, Fluidstack has paid in full all Unpaid FS Amounts, and an FS Default Trigger is not otherwise in effect, then the FS Default Trigger that was caused by Unpaid FS Amounts will be deemed to have been cured and this Agreement will continue in full force and effect in accordance with its terms.\n5.             Notices. Any notice which may or shall be given under the provisions of this Agreement shall be in writing and may be delivered by (i) hand delivery or personal service, (ii) a reputable overnight courier service which provides evidence of delivery, or (iii) e-mail (so long as a confirming copy is forwarded by a reputable overnight courier service within twenty-four (24) hours thereafter), at the physical and email addresses specified below, or at such other addresses as any party may have theretofore specified by written notice delivered in accordance herewith. Such address may be changed from time to time by any party by giving notice as provided herein. Notice shall be deemed given, (a) if delivered by hand or personal service, when delivered, (b) if sent by a reputable overnight courier service, on the Business Day immediately following the Business Day on which it was sent, or (c) the date the e-mail is transmitted. If notice is delivered by email after 4:30pm (receiver’s time) on a business day or at any time on a non-business day, the deemed date of the notice will be the business day following the date the email is sent.\nTo Akela:\nAkela Data LLC\n7725 Lake Road\nBarker, New York 14012\nAttention: Chief Legal Officer\nE-mail: legal@terawulf.com\nWith a copy to:\nAkela Data LLC\n9 Federal Street\nEaston, MD 21601\nAttention:  Chief Legal Officer\nE-mail: legal@terawulf.com\n-7-\nAnd, with a copy to:\nStutzman, Bromberg, Esserman & Plifka\n2323 Bryan Street, Suite 2200\nDallas, Texas 75201-2689\nAttn: Noah K. Hansford\nEmail: hansford@sbep-law.com\nTo Fluidstack:\nFluidstack USA I Inc.\nc/o Fluidstack Ltd.\nThomas House, Office 4.16\n84 Eccleston Square\nLondon, SW1V 1PX\nContact Name:  Katherine Ollerhead\nEmail: legal@fluidstack.io\nAnd, with a copy to:\nCooley LLP\n11950 Freedom Drive\nSuite 1400\nReston, Virginia 20190\nContact Name:  Michelle G. Schulman\nEmail: mschulman@cooley.com\nTo Google:\nGoogle LLC\nATTN: Legal Department\n1600 Amphitheatre Parkway\nMountain View, CA 94043\nlegal-notices@google.com\nfluidstack-notices@google.com\nAny party may change the address or email address by written notice to the other parties clearly stating such party’s intent to change the address or email address for all purposes of this Agreement, which new address or email address shall be effective thirty (30) days after receipt. Notice shall be deemed given when received or when receipt is refused.\n6.            Successors and Assigns. No party may assign this Agreement without the prior written consent of the other parties, which will not be unreasonably withheld or delayed. This Agreement shall be binding upon and inure to the benefit of the parties hereto, their respective personal representatives, successors and permitted assigns. No party’s obligations under this Agreement will be affected by (i) any permitted assignment of any person’s rights or obligations under the Fluidstack Lease, or (ii) any amendment, modification, forbearance or waiver of any person’s rights or obligations under the Fluidstack Lease at any time or from time to time, and all such obligations under this Agreement shall remain in full force and effect notwithstanding any such assignment, amendment, modification, forbearance or waiver. If Akela assigns the Fluidstack Lease to a person that is not a Qualified Data Center Operator (as defined in the Fluidstack Lease) and, in connection with such assignment, the Fluidstack Lease is terminated, then this Agreement shall be terminated.\n-8-\n7.             Conflict. In the event of a conflict or inconsistency between this Agreement and the Fluidstack Lease, this Agreement shall control. In that connection, to the extent any terms in this Agreement affect any provisions under the Fluidstack Lease, it will be deemed to be an amendment thereof.\n8.             Governing law; Jurisdiction. This Agreement shall be exclusively governed by, and construed in accordance with, the laws of the State of New York. In addition, the parties hereby submit to the local jurisdiction of the State of New York; and that such jurisdiction shall be exclusive as it relates to actions between the parties. In that connection, each party agrees that any action by the other against such party shall be instituted exclusively in the state courts of the State of New York. TO THE FULLEST EXTENT PERMITTED BY LAW, EACH PARTY HERETO EXPRESSLY WAIVES ITS RIGHT TO TRIAL BY JURY IN ANY TRIAL HELD AS A RESULT OF A CLAIM ARISING OUT OF, IN CONNECTION WITH, OR IN ANY MANNER RELATED TO THIS AGREEMENT.\n9.             Counterparts; Delivery by E-mail. This Agreement may be executed simultaneously in two or more counterparts each of which shall be deemed an original, but all of which shall constitute one and the same Agreement. Akela, Fluidstack and Google agree that the delivery of an executed copy of this Agreement by electronic means (including DocuSign, or similar, and including delivery of an executed pdf by e-mail) shall be legal and binding and shall have the same full force and effect as if an original executed copy of this Agreement had been delivered.\n10.            Confidentiality.\na. | “Confidential Information” means (i) the existence, terms, and provisions of this Agreement, and (ii) information that one party or an Affiliate of a party discloses to the other party under this Agreement, and that is marked as confidential or would normally be considered confidential information under the circumstances. Confidential Information does not include information that is independently developed by the recipient, is rightfully given to the recipient by a third party without confidentiality obligations, or becomes public through no fault of the recipient.\n-9-\nb. | Each party agrees that it shall not disclose another party’s Confidential Information, except to its employees, Affiliates, agents, professional advisors, and third-party contractors) who need to know such Confidential Information and who have the legal or contractual obligation to keep it confidential, without first obtaining the prior written consent of the other party. Notwithstanding the foregoing sentence, each party shall have the right to disclose any such information to the extent required, but only to the extent required (i) for valid business and accounting purposes (“Business Disclosures”), and/or (ii) if, following consultation with counsel, such party reasonably believes such disclosure is (A) legally required or advisable under any applicable securities or other laws regarding public disclosure of business information and/or (B) otherwise required by applicable law, rule or regulation or any court ruling (including by deposition, interrogatory, request for documents, subpoena, civil investigative demand or similar process) (“Legal Disclosures”). For the avoidance of doubt:\ni. | with respect to Legal Disclosures, (a) such Legal Disclosures shall be limited to the information legally required or advisable, per the advice of counsel, to be disclosed pursuant to this Section 10, and all other terms and provisions of the Agreement shall be excluded from the disclosure or, to the extent legally permissible, appropriately redacted, and (b) the disclosing party shall, prior to making such disclosures (1) promptly notify the other party in writing, to the extent legally permissible, and (2) if timely requested by the other party, use reasonable efforts and reasonably cooperate with the other party, at the other party’s sole cost and expense, to obtain confidential treatment of such applicable Legal Disclosure; and\nii. | in the case of Business Disclosures, (a) the disclosing party shall provide seven (7) business days’ prior written notice that such a disclosure is about to occur; (b) the disclosing party shall limit the disclosure to the information that is reasonably needed to be disclosed in the particular circumstances; and (c) the disclosing party shall limit the disclosure to the parties and persons (including actual or prospective purchasers, lenders, financing sources and partners and their affiliates) who need to know such Business Disclosures and who have the legal or contractual obligation to keep it confidential.\n11.            Limitation of Liability.\na.             IN THIS SECTION 11, “LIABILITY” MEANS ANY LIABILITY, WHETHER UNDER CONTRACT, TORT, OR OTHERWISE, INCLUDING FOR NEGLIGENCE.\ni. NEITHER PARTY WILL HAVE ANY LIABILITY ARISING OUT OF OR RELATING TO THIS AGREEMENT TO ANY OTHER PARTY FOR:\nA.            LOST PROFITS (WHETHER DIRECT OR INDIRECT);\nB.         INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL LOSSES (WHETHER OR NOT FORESEEABLE OR CONTEMPLATED BY THE PARTIES AT THE EFFECTIVE DATE); OR\n-10-\nC.            EXEMPLARY OR PUNITIVE DAMAGES; AND\nii. IF GOOGLE ELECTS (OR IS DEEMED TO HAVE ELECTED) THE GOOGLE REJECTION OPTION, GOOGLE'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATING TO THIS AGREEMENT IS LIMITED TO THE AMOUNT OF THE FS TERMINATION FEE. IF GOOGLE ELECTS (OR IS DEEMED TO HAVE ELECTED) THE GOOGLE ASSUMPTION OPTION, GOOGLE’S LIABILITY WILL BE GOVERNED BY THE NOVATION AGREEMENT AND UNDERLYING LEASE LIABILITIES.\n12.            Termination and Survival.\na.     In the event that Akela breaches a Material Akela Representation hereunder, Google may terminate this Agreement upon 10 business days prior notice to Akela, if such breach of such Material Akela Representation is not cured within such 10 business day period. A “Material Akela Representation” means a representation and warranty made by Akela hereunder the breach of which has had or would reasonably be expected to have a material adverse effect on Google.\nb      This Agreement will automatically terminate upon the earliest to occur of (i) expiration of the Fluidstack Lease in accordance with its terms, (ii) in the event of a termination of the Fluidstack Lease in accordance with its terms that includes an FS Default Trigger, (1) if Google elects (or is deemed to have elected) the Google Rejection Option, the payment of the FS Termination Fee in accordance with this Agreement or (2) if Google elects (or is deemed to have elected) the Google Assumption Option, the execution of the Novation Agreement and (iii) in the event of a termination of the Fluidstack Lease in accordance with its terms that does not include an FS Default Trigger, (1) if Google elects the Google Assumption Option, the execution of the Novation Agreement or (2) if Google does not elect the Google Assumption Agreement, the expiration of the thirty (30) day notice period referred to in Section 4(d).\nb.            The following Sections and provisions will survive the termination of this Agreement: Sections 1, 2(b), 2(c), 2(d), 2(e), 4(c)(1), Exhibit D-1, 5, 6, 7, 8, 9, 10, 11, 12, 13, and 14.\n13.            Miscellaneous. A determination that any provision of this Agreement is unenforceable or invalid shall not affect the enforceability or validity of any other provision, and a determination that the application of any provision of this Agreement in any particular circumstances is unenforceable or invalid shall not affect the enforceability or validity of such provision as it may apply to other circumstances. This Agreement may only be amended by a written document signed by Akela, Fluidstack and Google.\n14. Taxes.\na. “Tax(es)” means all government-imposed tax obligations (including sales and use taxes, value-added taxes, and withholdings), except those based on net income, net worth, asset value, property value, import or export of goods (including duties and tariffs), or employment.\n-11-\nb. Tax Responsibility. Each party shall be solely responsible for the payment of all corporate income taxes, franchise taxes, and any other taxes measured by or based on net income that are imposed on it by any governmental authority. This includes all taxes arising from the party's income, revenue, or profits derived from this agreement. Taxes do not include any tariffs.\nc. Withholding Taxes. The parties agree to cooperate to minimize the withholding of taxes where legally permissible, including by providing any necessary documentation (e.g., tax residency certificates). If the parties determine that a withholding tax applies to any of the transactions contemplated in this agreement, the parties agree to negotiate in good faith as to how such withholding taxes will be addressed between the parties.\nd. Value-Added Tax (VAT) and Sales Taxes. Any value-added tax (VAT), sales tax, goods and services tax (GST), or similar consumption taxes, if applicable, shall be added to the agreed-upon fees and paid by the receiving party, unless otherwise specified in the agreement's pricing section. The paying party will provide a valid tax invoice that meets all legal requirements.\n[SIGNATURES APPEAR ON NEXT PAGE]\n-12-\nIN WITNESS WHEREOF, this Agreement has been duly executed by Akela, Fluidstack and Google on the respective dates set forth below to be effective as of the latest of such dates.\nAkela:\nAKELA DATA LLC,\na Delaware limited liability company\nBy:  | /s/ Nazar Khan\nName:  | Nazar Khan\nTitle:  | Chief Technology Officer\n- Signature Page to Recognition Agreement -\nFluidstack:\nFLUIDSTACK USA I INC.,\na Delaware corporation\nBy:  | /s/ Zach Alexander\nName:  | Zach Alexander\nTitle:  | Authorized Signatory\n- Signature Page to Recognition Agreement -\nGoogle:\nGOOGLE LLC,\na Delaware limited liability company\nBy:  | /s/ Philipp Schindler\nName:  |  Philipp Schindler\nTitle:  | Authorized Signatory\n- Signature Page to Recognition Agreement -\nEXHIBIT A\nTHE AKELA PROPERTY\n-16-\nEXHIBIT B\nTHE FLUIDSTACK LEASE\n-17-\nEXHIBIT C\nSCHEDULE OF FS TERMINATION FEE\n-18-\nEXHIBIT D\nFORM OF NOVATION AGREEMENT\n-19-",
+ "sections": [
+  {
+   "id": "s0000",
+   "number": null,
+   "heading": "Preamble",
+   "char_start": 0,
+   "char_end": 2740,
+   "article": null
+  },
+  {
+   "id": "s0001",
+   "number": "1",
+   "heading": "Definitions",
+   "char_start": 2740,
+   "char_end": 2910,
+   "article": null
+  },
+  {
+   "id": "s0002",
+   "number": "2",
+   "heading": "Confirmation Regarding Fluidstack Lease; Google Property",
+   "char_start": 2910,
+   "char_end": 7985,
+   "article": null
+  },
+  {
+   "id": "s0003",
+   "number": "3",
+   "heading": "Right to Cure Default",
+   "char_start": 7985,
+   "char_end": 10742,
+   "article": null
+  },
+  {
+   "id": "s0004",
+   "number": "4",
+   "heading": "Google Options Related to FS Event of Default",
+   "char_start": 10742,
+   "char_end": 27625,
+   "article": null
+  },
+  {
+   "id": "s0005",
+   "number": "5",
+   "heading": "Notices",
+   "char_start": 27625,
+   "char_end": 30041,
+   "article": null
+  },
+  {
+   "id": "s0006",
+   "number": "6",
+   "heading": "Successors and Assigns",
+   "char_start": 30041,
+   "char_end": 31124,
+   "article": null
+  },
+  {
+   "id": "s0007",
+   "number": "7",
+   "heading": "Conflict",
+   "char_start": 31124,
+   "char_end": 31430,
+   "article": null
+  },
+  {
+   "id": "s0008",
+   "number": "8",
+   "heading": "Governing law; Jurisdiction",
+   "char_start": 31430,
+   "char_end": 32162,
+   "article": null
+  },
+  {
+   "id": "s0009",
+   "number": "9",
+   "heading": "Counterparts; Delivery by E-mail",
+   "char_start": 32162,
+   "char_end": 32730,
+   "article": null
+  },
+  {
+   "id": "s0010",
+   "number": "10",
+   "heading": "Confidentiality",
+   "char_start": 32730,
+   "char_end": 35822,
+   "article": null
+  },
+  {
+   "id": "s0011",
+   "number": "11",
+   "heading": "Limitation of Liability",
+   "char_start": 35822,
+   "char_end": 36760,
+   "article": null
+  },
+  {
+   "id": "s0012",
+   "number": "12",
+   "heading": "Termination and Survival",
+   "char_start": 36760,
+   "char_end": 38391,
+   "article": null
+  },
+  {
+   "id": "s0013",
+   "number": "13",
+   "heading": "Miscellaneous",
+   "char_start": 38391,
+   "char_end": 38913,
+   "article": null
+  },
+  {
+   "id": "s0014",
+   "number": "14",
+   "heading": "Taxes",
+   "char_start": 38913,
+   "char_end": 41316,
+   "article": null
+  }
+ ],
+ "pages": [
+  {
+   "page": 1,
+   "char_start": 0,
+   "char_end": 2910
+  },
+  {
+   "page": 2,
+   "char_start": 2910,
+   "char_end": 6839
+  },
+  {
+   "page": 3,
+   "char_start": 6839,
+   "char_end": 11626
+  },
+  {
+   "page": 4,
+   "char_start": 11626,
+   "char_end": 15124
+  },
+  {
+   "page": 5,
+   "char_start": 15124,
+   "char_end": 19115
+  },
+  {
+   "page": 6,
+   "char_start": 19115,
+   "char_end": 24940
+  },
+  {
+   "page": 7,
+   "char_start": 24940,
+   "char_end": 29036
+  },
+  {
+   "page": 8,
+   "char_start": 29036,
+   "char_end": 31124
+  },
+  {
+   "page": 9,
+   "char_start": 31124,
+   "char_end": 33343
+  },
+  {
+   "page": 10,
+   "char_start": 33343,
+   "char_end": 36324
+  },
+  {
+   "page": 11,
+   "char_start": 36324,
+   "char_end": 39204
+  },
+  {
+   "page": 12,
+   "char_start": 39204,
+   "char_end": 40428
+  },
+  {
+   "page": 13,
+   "char_start": 40428,
+   "char_end": 40787
+  },
+  {
+   "page": 14,
+   "char_start": 40787,
+   "char_end": 40970
+  },
+  {
+   "page": 15,
+   "char_start": 40970,
+   "char_end": 41159
+  },
+  {
+   "page": 16,
+   "char_start": 41159,
+   "char_end": 41193
+  },
+  {
+   "page": 17,
+   "char_start": 41193,
+   "char_end": 41229
+  },
+  {
+   "page": 18,
+   "char_start": 41229,
+   "char_end": 41275
+  },
+  {
+   "page": 19,
+   "char_start": 41275,
+   "char_end": 41316
+  }
+ ],
+ "segments": [
+  {
+   "id": "p0001",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 0,
+   "char_end": 45
+  },
+  {
+   "id": "p0002",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 46,
+   "char_end": 58
+  },
+  {
+   "id": "p0003",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 59,
+   "char_end": 88
+  },
+  {
+   "id": "p0004",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 89,
+   "char_end": 476
+  },
+  {
+   "id": "p0005",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 477,
+   "char_end": 485
+  },
+  {
+   "id": "p0006",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 486,
+   "char_end": 724
+  },
+  {
+   "id": "p0007",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 725,
+   "char_end": 1083
+  },
+  {
+   "id": "p0008",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 1084,
+   "char_end": 1492
+  },
+  {
+   "id": "p0009",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 1493,
+   "char_end": 1883
+  },
+  {
+   "id": "p0010",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 1884,
+   "char_end": 2241
+  },
+  {
+   "id": "p0011",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 2242,
+   "char_end": 2501
+  },
+  {
+   "id": "p0012",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 2502,
+   "char_end": 2633
+  },
+  {
+   "id": "p0013",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 2634,
+   "char_end": 2643
+  },
+  {
+   "id": "p0014",
+   "section_id": "s0000",
+   "page": 1,
+   "char_start": 2644,
+   "char_end": 2739
+  },
+  {
+   "id": "p0015",
+   "section_id": "s0001",
+   "page": 1,
+   "char_start": 2740,
+   "char_end": 2909
+  },
+  {
+   "id": "p0016",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2910,
+   "char_end": 2982
+  },
+  {
+   "id": "p0017",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 2983,
+   "char_end": 3954
+  },
+  {
+   "id": "p0018",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 3955,
+   "char_end": 4667
+  },
+  {
+   "id": "p0019",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 4668,
+   "char_end": 6127
+  },
+  {
+   "id": "p0020",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 6128,
+   "char_end": 6834
+  },
+  {
+   "id": "p0021",
+   "section_id": "s0002",
+   "page": 2,
+   "char_start": 6835,
+   "char_end": 6838
+  },
+  {
+   "id": "p0022",
+   "section_id": "s0002",
+   "page": 3,
+   "char_start": 6839,
+   "char_end": 7984
+  },
+  {
+   "id": "p0023",
+   "section_id": "s0003",
+   "page": 3,
+   "char_start": 7985,
+   "char_end": 8021
+  },
+  {
+   "id": "p0024",
+   "section_id": "s0003",
+   "page": 3,
+   "char_start": 8022,
+   "char_end": 9927
+  },
+  {
+   "id": "p0025",
+   "section_id": "s0003",
+   "page": 3,
+   "char_start": 9928,
+   "char_end": 10741
+  },
+  {
+   "id": "p0026",
+   "section_id": "s0004",
+   "page": 3,
+   "char_start": 10742,
+   "char_end": 10802
+  },
+  {
+   "id": "p0027",
+   "section_id": "s0004",
+   "page": 3,
+   "char_start": 10803,
+   "char_end": 11621
+  },
+  {
+   "id": "p0028",
+   "section_id": "s0004",
+   "page": 3,
+   "char_start": 11622,
+   "char_end": 11625
+  },
+  {
+   "id": "p0029",
+   "section_id": "s0004",
+   "page": 4,
+   "char_start": 11626,
+   "char_end": 13921
+  },
+  {
+   "id": "p0030",
+   "section_id": "s0004",
+   "page": 4,
+   "char_start": 13922,
+   "char_end": 15119
+  },
+  {
+   "id": "p0031",
+   "section_id": "s0004",
+   "page": 4,
+   "char_start": 15120,
+   "char_end": 15123
+  },
+  {
+   "id": "p0032",
+   "section_id": "s0004",
+   "page": 5,
+   "char_start": 15124,
+   "char_end": 17178
+  },
+  {
+   "id": "p0033",
+   "section_id": "s0004",
+   "page": 5,
+   "char_start": 17179,
+   "char_end": 17218
+  },
+  {
+   "id": "p0034",
+   "section_id": "s0004",
+   "page": 5,
+   "char_start": 17219,
+   "char_end": 19110
+  },
+  {
+   "id": "p0035",
+   "section_id": "s0004",
+   "page": 5,
+   "char_start": 19111,
+   "char_end": 19114
+  },
+  {
+   "id": "p0036",
+   "section_id": "s0004",
+   "page": 6,
+   "char_start": 19115,
+   "char_end": 20298
+  },
+  {
+   "id": "p0037",
+   "section_id": "s0004",
+   "page": 6,
+   "char_start": 20299,
+   "char_end": 23705
+  },
+  {
+   "id": "p0038",
+   "section_id": "s0004",
+   "page": 6,
+   "char_start": 23706,
+   "char_end": 24935
+  },
+  {
+   "id": "p0039",
+   "section_id": "s0004",
+   "page": 6,
+   "char_start": 24936,
+   "char_end": 24939
+  },
+  {
+   "id": "p0040",
+   "section_id": "s0004",
+   "page": 7,
+   "char_start": 24940,
+   "char_end": 27624
+  },
+  {
+   "id": "p0041",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 27625,
+   "char_end": 28786
+  },
+  {
+   "id": "p0042",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28787,
+   "char_end": 28796
+  },
+  {
+   "id": "p0043",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28797,
+   "char_end": 28811
+  },
+  {
+   "id": "p0044",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28812,
+   "char_end": 28826
+  },
+  {
+   "id": "p0045",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28827,
+   "char_end": 28849
+  },
+  {
+   "id": "p0046",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28850,
+   "char_end": 28880
+  },
+  {
+   "id": "p0047",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28881,
+   "char_end": 28907
+  },
+  {
+   "id": "p0048",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28908,
+   "char_end": 28923
+  },
+  {
+   "id": "p0049",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28924,
+   "char_end": 28938
+  },
+  {
+   "id": "p0050",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28939,
+   "char_end": 28955
+  },
+  {
+   "id": "p0051",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28956,
+   "char_end": 28972
+  },
+  {
+   "id": "p0052",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 28973,
+   "char_end": 29004
+  },
+  {
+   "id": "p0053",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 29005,
+   "char_end": 29031
+  },
+  {
+   "id": "p0054",
+   "section_id": "s0005",
+   "page": 7,
+   "char_start": 29032,
+   "char_end": 29035
+  },
+  {
+   "id": "p0055",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29036,
+   "char_end": 29056
+  },
+  {
+   "id": "p0056",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29057,
+   "char_end": 29094
+  },
+  {
+   "id": "p0057",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29095,
+   "char_end": 29124
+  },
+  {
+   "id": "p0058",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29125,
+   "char_end": 29149
+  },
+  {
+   "id": "p0059",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29150,
+   "char_end": 29172
+  },
+  {
+   "id": "p0060",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29173,
+   "char_end": 29201
+  },
+  {
+   "id": "p0061",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29202,
+   "char_end": 29216
+  },
+  {
+   "id": "p0062",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29217,
+   "char_end": 29238
+  },
+  {
+   "id": "p0063",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29239,
+   "char_end": 29258
+  },
+  {
+   "id": "p0064",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29259,
+   "char_end": 29284
+  },
+  {
+   "id": "p0065",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29285,
+   "char_end": 29304
+  },
+  {
+   "id": "p0066",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29305,
+   "char_end": 29321
+  },
+  {
+   "id": "p0067",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29322,
+   "char_end": 29356
+  },
+  {
+   "id": "p0068",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29357,
+   "char_end": 29383
+  },
+  {
+   "id": "p0069",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29384,
+   "char_end": 29404
+  },
+  {
+   "id": "p0070",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29405,
+   "char_end": 29415
+  },
+  {
+   "id": "p0071",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29416,
+   "char_end": 29435
+  },
+  {
+   "id": "p0072",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29436,
+   "char_end": 29446
+  },
+  {
+   "id": "p0073",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29447,
+   "char_end": 29469
+  },
+  {
+   "id": "p0074",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29470,
+   "char_end": 29505
+  },
+  {
+   "id": "p0075",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29506,
+   "char_end": 29533
+  },
+  {
+   "id": "p0076",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29534,
+   "char_end": 29544
+  },
+  {
+   "id": "p0077",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29545,
+   "char_end": 29555
+  },
+  {
+   "id": "p0078",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29556,
+   "char_end": 29578
+  },
+  {
+   "id": "p0079",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29579,
+   "char_end": 29604
+  },
+  {
+   "id": "p0080",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29605,
+   "char_end": 29628
+  },
+  {
+   "id": "p0081",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29629,
+   "char_end": 29653
+  },
+  {
+   "id": "p0082",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29654,
+   "char_end": 29683
+  },
+  {
+   "id": "p0083",
+   "section_id": "s0005",
+   "page": 8,
+   "char_start": 29684,
+   "char_end": 30040
+  },
+  {
+   "id": "p0084",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 30041,
+   "char_end": 31119
+  },
+  {
+   "id": "p0085",
+   "section_id": "s0006",
+   "page": 8,
+   "char_start": 31120,
+   "char_end": 31123
+  },
+  {
+   "id": "p0086",
+   "section_id": "s0007",
+   "page": 9,
+   "char_start": 31124,
+   "char_end": 31429
+  },
+  {
+   "id": "p0087",
+   "section_id": "s0008",
+   "page": 9,
+   "char_start": 31430,
+   "char_end": 32161
+  },
+  {
+   "id": "p0088",
+   "section_id": "s0009",
+   "page": 9,
+   "char_start": 32162,
+   "char_end": 32729
+  },
+  {
+   "id": "p0089",
+   "section_id": "s0010",
+   "page": 9,
+   "char_start": 32730,
+   "char_end": 32761
+  },
+  {
+   "id": "p0090",
+   "section_id": "s0010",
+   "page": 9,
+   "char_start": 32762,
+   "char_end": 33338
+  },
+  {
+   "id": "p0091",
+   "section_id": "s0010",
+   "page": 9,
+   "char_start": 33339,
+   "char_end": 33342
+  },
+  {
+   "id": "p0092",
+   "section_id": "s0010",
+   "page": 10,
+   "char_start": 33343,
+   "char_end": 34451
+  },
+  {
+   "id": "p0093",
+   "section_id": "s0010",
+   "page": 10,
+   "char_start": 34452,
+   "char_end": 35198
+  },
+  {
+   "id": "p0094",
+   "section_id": "s0010",
+   "page": 10,
+   "char_start": 35199,
+   "char_end": 35821
+  },
+  {
+   "id": "p0095",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 35822,
+   "char_end": 35861
+  },
+  {
+   "id": "p0096",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 35862,
+   "char_end": 35999
+  },
+  {
+   "id": "p0097",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 36000,
+   "char_end": 36109
+  },
+  {
+   "id": "p0098",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 36110,
+   "char_end": 36166
+  },
+  {
+   "id": "p0099",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 36167,
+   "char_end": 36318
+  },
+  {
+   "id": "p0100",
+   "section_id": "s0011",
+   "page": 10,
+   "char_start": 36319,
+   "char_end": 36323
+  },
+  {
+   "id": "p0101",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 36324,
+   "char_end": 36372
+  },
+  {
+   "id": "p0102",
+   "section_id": "s0011",
+   "page": 11,
+   "char_start": 36373,
+   "char_end": 36759
+  },
+  {
+   "id": "p0103",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 36760,
+   "char_end": 36800
+  },
+  {
+   "id": "p0104",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 36801,
+   "char_end": 37265
+  },
+  {
+   "id": "p0105",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 37266,
+   "char_end": 38193
+  },
+  {
+   "id": "p0106",
+   "section_id": "s0012",
+   "page": 11,
+   "char_start": 38194,
+   "char_end": 38390
+  },
+  {
+   "id": "p0107",
+   "section_id": "s0013",
+   "page": 11,
+   "char_start": 38391,
+   "char_end": 38912
+  },
+  {
+   "id": "p0108",
+   "section_id": "s0014",
+   "page": 11,
+   "char_start": 38913,
+   "char_end": 38923
+  },
+  {
+   "id": "p0109",
+   "section_id": "s0014",
+   "page": 11,
+   "char_start": 38924,
+   "char_end": 39198
+  },
+  {
+   "id": "p0110",
+   "section_id": "s0014",
+   "page": 11,
+   "char_start": 39199,
+   "char_end": 39203
+  },
+  {
+   "id": "p0111",
+   "section_id": "s0014",
+   "page": 12,
+   "char_start": 39204,
+   "char_end": 39578
+  },
+  {
+   "id": "p0112",
+   "section_id": "s0014",
+   "page": 12,
+   "char_start": 39579,
+   "char_end": 40014
+  },
+  {
+   "id": "p0113",
+   "section_id": "s0014",
+   "page": 12,
+   "char_start": 40015,
+   "char_end": 40389
+  },
+  {
+   "id": "p0114",
+   "section_id": "s0014",
+   "page": 12,
+   "char_start": 40390,
+   "char_end": 40422
+  },
+  {
+   "id": "p0115",
+   "section_id": "s0014",
+   "page": 12,
+   "char_start": 40423,
+   "char_end": 40427
+  },
+  {
+   "id": "p0116",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40428,
+   "char_end": 40605
+  },
+  {
+   "id": "p0117",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40606,
+   "char_end": 40612
+  },
+  {
+   "id": "p0118",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40613,
+   "char_end": 40628
+  },
+  {
+   "id": "p0119",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40629,
+   "char_end": 40665
+  },
+  {
+   "id": "p0120",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40666,
+   "char_end": 40687
+  },
+  {
+   "id": "p0121",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40688,
+   "char_end": 40707
+  },
+  {
+   "id": "p0122",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40708,
+   "char_end": 40742
+  },
+  {
+   "id": "p0123",
+   "section_id": "s0014",
+   "page": 13,
+   "char_start": 40743,
+   "char_end": 40786
+  },
+  {
+   "id": "p0124",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 40787,
+   "char_end": 40798
+  },
+  {
+   "id": "p0125",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 40799,
+   "char_end": 40821
+  },
+  {
+   "id": "p0126",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 40822,
+   "char_end": 40844
+  },
+  {
+   "id": "p0127",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 40845,
+   "char_end": 40870
+  },
+  {
+   "id": "p0128",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 40871,
+   "char_end": 40894
+  },
+  {
+   "id": "p0129",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 40895,
+   "char_end": 40925
+  },
+  {
+   "id": "p0130",
+   "section_id": "s0014",
+   "page": 14,
+   "char_start": 40926,
+   "char_end": 40969
+  },
+  {
+   "id": "p0131",
+   "section_id": "s0014",
+   "page": 15,
+   "char_start": 40970,
+   "char_end": 40977
+  },
+  {
+   "id": "p0132",
+   "section_id": "s0014",
+   "page": 15,
+   "char_start": 40978,
+   "char_end": 40989
+  },
+  {
+   "id": "p0133",
+   "section_id": "s0014",
+   "page": 15,
+   "char_start": 40990,
+   "char_end": 41026
+  },
+  {
+   "id": "p0134",
+   "section_id": "s0014",
+   "page": 15,
+   "char_start": 41027,
+   "char_end": 41055
+  },
+  {
+   "id": "p0135",
+   "section_id": "s0014",
+   "page": 15,
+   "char_start": 41056,
+   "char_end": 41083
+  },
+  {
+   "id": "p0136",
+   "section_id": "s0014",
+   "page": 15,
+   "char_start": 41084,
+   "char_end": 41114
+  },
+  {
+   "id": "p0137",
+   "section_id": "s0014",
+   "page": 15,
+   "char_start": 41115,
+   "char_end": 41158
+  },
+  {
+   "id": "p0138",
+   "section_id": "s0014",
+   "page": 16,
+   "char_start": 41159,
+   "char_end": 41168
+  },
+  {
+   "id": "p0139",
+   "section_id": "s0014",
+   "page": 16,
+   "char_start": 41169,
+   "char_end": 41187
+  },
+  {
+   "id": "p0140",
+   "section_id": "s0014",
+   "page": 16,
+   "char_start": 41188,
+   "char_end": 41192
+  },
+  {
+   "id": "p0141",
+   "section_id": "s0014",
+   "page": 17,
+   "char_start": 41193,
+   "char_end": 41202
+  },
+  {
+   "id": "p0142",
+   "section_id": "s0014",
+   "page": 17,
+   "char_start": 41203,
+   "char_end": 41223
+  },
+  {
+   "id": "p0143",
+   "section_id": "s0014",
+   "page": 17,
+   "char_start": 41224,
+   "char_end": 41228
+  },
+  {
+   "id": "p0144",
+   "section_id": "s0014",
+   "page": 18,
+   "char_start": 41229,
+   "char_end": 41238
+  },
+  {
+   "id": "p0145",
+   "section_id": "s0014",
+   "page": 18,
+   "char_start": 41239,
+   "char_end": 41269
+  },
+  {
+   "id": "p0146",
+   "section_id": "s0014",
+   "page": 18,
+   "char_start": 41270,
+   "char_end": 41274
+  },
+  {
+   "id": "p0147",
+   "section_id": "s0014",
+   "page": 19,
+   "char_start": 41275,
+   "char_end": 41284
+  },
+  {
+   "id": "p0148",
+   "section_id": "s0014",
+   "page": 19,
+   "char_start": 41285,
+   "char_end": 41311
+  },
+  {
+   "id": "p0149",
+   "section_id": "s0014",
+   "page": 19,
+   "char_start": 41312,
+   "char_end": 41316
+  }
+ ]
+}
