@@ -374,3 +374,177 @@ If the spend crosses $1.10, the run stops incomplete, and the coordinator report
 - **`guarantees` and `triggers` edges.** The corpus has no counterpart agreements: the Applied Digital guaranty's lease, the TeraWulf recognition agreement's lease, and 2A are not filed in it. These edges would be empty or invented. Revisit in wave 4 if a counterpart is added to the corpus.
 - **Section-level gate units** (more gate labels per amendment). Revisit only if the budget allows.
 - **The MCP server, the UI, aggregate `make eval`, and the README.** These are wave 4.
+
+---
+
+## Rev 2 (Astra wave-3 round 1: 6 blockers, 6 should-fixes, all accepted)
+
+Rev 2 overrides rev 1 wherever they conflict. Review: `docs/reviews/2026-10-02-astra-wave3-review.md`.
+
+### R1. Target resolution (W3-1)
+
+- **Alias table:** a frozen `prompts/change_aliases_v1.yaml` lists per-chain document aliases.
+  - Base: `Lease`, `Original Lease`, `Datacenter Lease`.
+  - 1A: `1A`, `First Amendment`.
+  - **Unresolved** (named but not in the corpus): `2A`, `Second Amendment`, `OS Rider`, `Office Space Rider`.
+  - `TKD Lease` is composite (base + 1A + 2A) and treated as unresolved for target purposes.
+- **Explicit target references** are recognized in `new_quote` by a closed pattern: `(Section|Article|Item|Exhibit|Table) <id>( of| to)( Exhibit <id>)?( of| to)? (the )?<alias>`. `target_label` must equal the matched text, copied.
+  - If the alias is unresolved, the old side must be None, with `old_origin = "unresolved"`. A grounded base or 1A quote is dropped with `target_not_in_corpus`. Frozen real negative: 3A `p0013` with a base old side.
+  - If the alias resolves and the reference is a numbered `Section`/`Article`, the old segment's section number must equal that number or start with it followed by `.`. Otherwise drop with `target_section_mismatch`.
+  - `Item`/`Exhibit`/`Table` targets resolve to the document only. The finding records `target_resolution = "document"`.
+- **`conflict` becomes `potential_conflict`.** It is reported as "model-proposed, needs review". It needs a grounded old quote in a resolved chain document and never produces edges. The report states that the chain is incomplete when any alias is unresolved.
+
+### R2. No self or same-obligation edges (W3-2)
+
+- `old_origin` is one of `chain | self | unresolved` and is stored explicitly in `change_finding.old_origin`. For `self`, `old_clause_ref.agreement_id` is the change order.
+- An edge requires all of the following:
+  - `kind = supersedes` and `old_origin = chain`;
+  - a resolved target (section-level or document-level);
+  - an old agreement strictly earlier in the chain snapshot;
+  - exactly one overlapping visible obligation on each side, of the same type, with distinct IDs.
+- The DB enforces `CHECK (obligation_id <> superseded_obligation_id)`. `visible_supersedes` and the inlined lifecycle condition both repeat the earlier-document predicate. Frozen real negative: 3A `p0012` self-supersession of obligation 519.
+
+### R3. Values bound to their subject (W3-3)
+
+- **`shifted_date`:**
+  - Each of `old_quote` and `new_quote` contains exactly one date token, which is the value.
+  - Each quote contains at least one word from a shared date-role class:
+    - `END` = `surrender*`, `expir*`, `terminat*`, `end`, `ending`, `through`, `until`, `no later than`
+    - `START` = `commenc*`, `begin*`, `start*`
+    - `DELIVERY` = `deliver*`, `complet*`, `install*`
+    - `PAYMENT` = `pay*`, `due`
+  - Otherwise drop with `date_role_mismatch`.
+  - For `old_origin = self`, the old quote must also contain a prior-state cue: `currently`, `scheduled`, `heretofore`, `previously`, `presently`, `existing`, `original`, `originally`, `prior`. Otherwise drop with `old_state_cue_missing`.
+  - Frozen real cases from 3A `p0011`:
+    - positive: old 2018-06-30, new 2020-06-30, +731 days;
+    - negatives: the reversed pair, and the July 1, 2018 commencement pairing.
+- **`price_change`:** in rev 2 `old_value` must be null (a price added or restated, with no delta). The only prior rates for the corpus's changed rents are in 2A, so there are none to compare. Cross-document deltas need subject binding that this corpus cannot exercise, and are a documented limitation.
+  - Each new amount may carry an optional grounded `context` ref (`context_segment_id`, `context_quote`, same document) for its row period or heading.
+  - Frozen real cases:
+    - positive: 3A `p0018` `$35,596.80/month` with context `p0017`;
+    - negative: any old value, such as base `p0455` `$33,428.11`.
+- `target_label` is required only for `supersedes` with `old_origin = unresolved`.
+
+### R4. Chain snapshot contract (W3-4)
+
+- **Frozen `ChainSnapshot` type:**
+  - An ordered tuple of `ChainMember(agreement_id, role, source_sha256, textdoc_sha256, extraction_run_id)`, including the change order.
+  - Built by Task 19, which requires `extraction_run.textdoc_sha256` to equal the canonical hash of the loaded TextDoc for every member. Otherwise exit 2 with "re-run make extract".
+- **The writer** runs inside `BEGIN IMMEDIATE`:
+  - It re-reads the vector from the DB and compares it to the snapshot.
+  - It re-checks every copied span against its TextDoc text before setting `grounded = 1`.
+  - On any mismatch it raises `SnapshotChanged`. Nothing is written, and the previous run stays.
+- **Schema:**
+  - `change_run.chain_size` is stored.
+  - The visible views require `count(change_run_chain rows) = chain_size` and every row's `extraction_run_id` and `textdoc_sha256` to equal current values.
+- **Deletion order in `_delete_snapshot`:**
+  - It first deletes dependent change edges, gate decisions, findings, and the clause refs those findings own, which are referenced only by `change_finding`. Then it deletes runs.
+  - It never deletes extraction-owned refs on behalf of a change run.
+  - The wave 2 cross-document event guard stays as is.
+
+### R5. Cascade boundary and policy (W3-5)
+
+- The skip policy is a frozen constant `GATE_POLICY = {"samples": 3, "skip": "unanimous_false"}`. `OG_GATE_SAMPLES` is removed.
+- `run_cascade` validates exactly the six unique categories. It catches any exception from either tier (decision `error = <class name>`, `run_check = True`) and validates each decision object.
+- A skip requires `samples == (False, False, False)` (exactly three literal bools), `error is None`, and `tier == "classifier"`.
+- A run is complete only if every one of the six categories is either a valid skip or an `ok` check. Frozen tests cover zero, one, or two samples, a missing category, a duplicate category, a raising rules tier, a raising backend, and a malformed decision.
+
+### R6. Hard budget by reservation (W3-6)
+
+- **`og.budget.Budget(limit_usd)` (contract):** one shared object, passed to `Checker` and `HaikuGate`, consulted before every client call.
+- **`reserve(model, input_chars, max_tokens)`:**
+  - Reserves the worst case: input tokens are estimated as `ceil(input_chars / 3)` at the uncached input price, plus `max_tokens` at the output price.
+  - If the reservation exceeds what remains, it raises `BudgetExhausted` before the call.
+  - `settle(attempts)` replaces the reservation with the priced actual usage.
+- An unknown model price makes the budget sticky-exhausted for the rest of the invocation.
+- Usage is captured from `message.usage` before status rejection, so refused and truncated responses are charged (fixes the wave 2 limitation for change and gate calls).
+- `BudgetExhausted` makes the outcome `budget_stop`, so the run is incomplete and the old snapshot is kept. The stop is sticky across documents and modes in one invocation.
+- **Cost controls:** check `max_tokens` is 4096 (from 8192). C7's `OG_BUDGET_USD` is $1.10 minus the actual C0 spend.
+
+### R7. Paired runs (W3-7)
+
+- `--mode both` makes one paired evaluation with a `pair_id`. The gated run replays the ungated run's in-memory outcomes, even with `--no-cache`. `--mode gated` alone requires a stored ungated outcome with an identical fingerprint, or exits 2.
+- The check fingerprint hashes the full effective request: the system text, the schema, the category definition text, the model, effort, `max_tokens`, and the chain snapshot vector.
+- `change_run` stores `pair_id`, `fingerprints_json`, `question_set_sha256`, and `baseline_run_id` (gated).
+- The scorer refuses unmatched pairs. Replacing an ungated run deletes its paired gated run.
+- **Reporting** keeps these figures separate:
+  - Actual incremental spend.
+  - Counterfactual recorded check cost.
+  - Summed original check latencies.
+  - Gate overhead (cost and latency).
+  - Replay wall time, labeled "replay comparison, not two independently timed live pipelines".
+
+### R8. Honest gate metrics (W3-8)
+
+- **Reported metrics:**
+  - Baseline-relative category recall.
+  - Reference-label recall.
+  - Finding-retention recall.
+  - The list of disagreements.
+- **Skips** are named `zero_baseline_skip`. Only those also negative in the adjudicated reference are `confirmed_safe_skip`.
+- **Haiku** is reported on its observed subset, with coverage, and its recall is null when there are no positives.
+- **C7b (optional, only if at least $0.25 of budget remains):** a standalone all-12 Haiku baseline, 36 samples.
+- **Clopper-Pearson:** one-sided 95%, with positive category cases as the denominator, showing the miss count and the binomial assumption.
+- **Disclosures:** two related documents, model-drafted and adjudicated labels, user spot-check, no held-out calibration. ADR-003's calibration sentence is explicitly superseded by the pre-registered policy.
+
+### R9. Finding unit and matcher (W3-9)
+
+- **Unit:** one finding per (kind, changed clause target). One amendment paragraph that renames 4 suites is one `supersedes` finding when it carries one target reference.
+- **Match:** same kind, the same new segment (segment identity), and the same old side:
+  - `chain`: same document and the same old segment.
+  - `self`: same segment.
+  - `unresolved`: normalized `target_label` equality (casefold, whitespace collapse, quote normalization).
+- Maximum-cardinality matching uses a change-specific candidate-edge builder (the wave 2 matcher core, with no type/IoU adapter).
+- Value, delta, target, and currency accuracy are reported separately with coverage.
+- **Cross-category dedupe** for the combined report keeps a `categories` set. Gate scoring uses per-category provenance.
+
+### R10. Rules details (W3-10)
+
+- **Lexicons and section types:** frozen exactly as in the review's table, using `fee`/`fees` and not `fee*`.
+- **Signature exclusion:** from the segment that starts with `IN WITNESS WHEREOF` up to, but not including, the next segment that starts with `EXHIBIT`, or to the end of the document. This excludes 1A `p0062`-`p0084` and 3A `p0043`-`p0057`.
+- **Prefix wildcards** match at a word start up to the word's end.
+- **Evidence** is deduplicated by (rule, char_start).
+- **Duplicate base section numbers** union their obligation types.
+- **The 1A `p0035` test** expects `section_ref:8.3.1->other` and `9.1.1->{other, notice}` hits for `parties_or_sites`/`dates`/`termination` per the mapping, never an SLA hit.
+
+### R11. Demo criteria (W3-11)
+
+- A grounded clause-level `supersedes` finding counts as the demo supersession, including one with an unresolved target that shows the missing document honestly (3A `p0013`, 1A `p0017`).
+- Zero obligation edges is an acceptable outcome.
+- The report labels `new_obligations` as "visible amendment obligations without a resolved supersession edge".
+- No skip, edge, or lifecycle change is forced.
+
+### R12. Frozen interfaces and topology (W3-12)
+
+**B3 freezes:**
+- Typed `ChangeRunInfo`, `ChainSnapshot`/`ChainMember`, `GateLogRecord`, `ChangeRunLogRecord`, and the `ChangeReport` TypedDict.
+- The drop-reason and error-code enums.
+- `Budget`.
+- Exact signatures for:
+  - `verify_findings(snapshot_docs, category, items)`
+  - `write_change_run(con, *, info, snapshot, docs, findings, decisions, mode)`
+  - `run_cascade(questions, change_order, context, rules, classifier)`
+  - `build_gate_context(con, base_agreement_id)` (Task 19)
+  - `load_change_report(con, change_order_id, mode)`
+
+**Ownership:**
+- Task 19 owns chain and context building.
+- Task 20 owns `src/og/eval/__main__.py`.
+- The coordinator adapts `tests/test_schema.py` and `tests/test_schema_v2.py` for v3 in B3.
+
+**Acceptance and freeze checks:**
+- Each worker's acceptance is its own test modules plus all wave 1 and 2 tests.
+- The full suite runs at the integration checkpoint.
+- C7 and C8 wait for Task 20 and the frozen reference set.
+- Base SHAs go in the dispatch log, and freeze hashes are checked at dispatch, mid-flight, and return.
+
+### Budget table (rev 2)
+
+| Step | Calls | Estimate |
+|------|-------|---------:|
+| C0 probes | 2 | $0.01 |
+| Ungated checks: 12, about 60k input tokens each, two cold prefixes plus 10 cache reads, about 2k output tokens each | 12 Sonnet | $0.67 |
+| Gated replay | 0 | $0.00 |
+| Cascade Haiku: at most 3 categories × 3 samples (rules misses) | ≤9 Haiku | $0.04 |
+| C7b standalone Haiku baseline (optional) | 36 Haiku | $0.16 |
+| **Total** | | **$0.72 to $0.88**, hard cap $1.10 by reservation |
