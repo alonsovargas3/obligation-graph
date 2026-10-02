@@ -34,6 +34,7 @@ from og.extract.types import (
     WriteStats,
 )
 from og.textdoc import TextDoc
+from og.timing import CitedAnchor, DefinedDate, TimingSpan, defined_dates, parse, resolve
 
 # Deterministic defined-term patterns: "Term" means, (the "Term"), ("Term").
 # Curly quotes; the span covers the quotes, the returned term does not.
@@ -152,11 +153,11 @@ def write_snapshot(
         _delete_snapshot(con, agreement_id, source_id=source["id"])
         run_row_id = _insert_run(con, run, source_id=source["id"])
         party_rows = _write_parties(con, agreement_id, result.parties)
-        event_rows = _write_events(con, agreement_id, result.events)
+        event_rows, anchor_candidates = _write_events(con, agreement_id, doc, result.events)
         n_terms = _write_defined_terms(con, agreement_id, doc)
         if site_pin is not None:
             _write_site_pin(con, agreement_id, site_pin)
-        unresolved_parties, unresolved_anchors = _write_obligations(
+        unresolved_parties, unresolved_anchors, written = _write_obligations(
             con,
             agreement_id,
             base_agreement_id=agreement.get("base_agreement_id"),
@@ -164,6 +165,14 @@ def write_snapshot(
             obligations=result.obligations,
             party_rows=party_rows,
             event_rows=event_rows,
+        )
+        _write_obligation_timing(
+            con,
+            agreement_id,
+            doc=doc,
+            written=written,
+            base_agreement_id=agreement.get("base_agreement_id"),
+            anchors=anchor_candidates,
         )
         con.execute("COMMIT")
     except BaseException:
@@ -207,6 +216,13 @@ def _check_preconditions(
             raise WriteRefused("span_mismatch")
     dependents = con.execute(
         "SELECT count(*) FROM obligation o JOIN event e ON e.id = o.anchor_event_id"
+        " WHERE e.agreement_id = ? AND o.agreement_id <> ?",
+        (agreement_id, agreement_id),
+    ).fetchone()[0]
+    # Wave 5 (plan rev 2 W5-10): a timing anchor is a dependency like a legacy one.
+    dependents += con.execute(
+        "SELECT count(*) FROM obligation_timing t JOIN obligation o ON o.id = t.obligation_id"
+        " JOIN event e ON e.id = t.anchor_event_id"
         " WHERE e.agreement_id = ? AND o.agreement_id <> ?",
         (agreement_id, agreement_id),
     ).fetchone()[0]
@@ -299,6 +315,16 @@ def delete_change_runs(con: sqlite3.Connection, run_row_ids: Iterable[int]) -> N
 
 def _delete_snapshot(con: sqlite3.Connection, agreement_id: str, *, source_id: str) -> None:
     """Children before parents; party rows themselves are never deleted."""
+    # Wave 5 (plan rev 2 W5-10): timing rows go first, before the obligations and
+    # trigger refs they point at; the refs themselves (obligation_id NULL, owned only
+    # by obligation_timing) are swept by the clause_ref delete at the end of this
+    # snapshot replacement. Re-extracting an agreement whose events anchor another
+    # agreement's timing rows is refused outright in _check_preconditions.
+    con.execute(
+        "DELETE FROM obligation_timing WHERE obligation_id IN"
+        " (SELECT id FROM obligation WHERE agreement_id = ?)",
+        (agreement_id,),
+    )
     # Site bindings go before the clause refs they cite (W4-9), so a
     # re-extraction with a changed or removed pin replaces the binding.
     con.execute("DELETE FROM agreement_site WHERE agreement_id = ?", (agreement_id,))
@@ -410,18 +436,67 @@ def _write_parties(
 
 
 def _write_events(
-    con: sqlite3.Connection, agreement_id: str, events: list[VerifiedEvent]
-) -> list[tuple[int, str]]:
-    """Returns (event_row_id, name) rows of this agreement's events."""
+    con: sqlite3.Connection,
+    agreement_id: str,
+    doc: TextDoc,
+    events: list[VerifiedEvent],
+) -> tuple[list[tuple[int, str]], list[CitedAnchor]]:
+    """Defined-date events merged with model events (plan rev 2 W5-8), then written.
+
+    A dated deterministic candidate replaces an undated model event of the same
+    normalized name and cites its full accepted declaration, never the old
+    name-only evidence; equal dates collapse into one event; conflicting dates
+    (among candidates, or against a dated model event) leave one dateless event
+    per name. Model events with no deterministic candidate keep their own rows.
+
+    Returns the agreement's (event_row_id, name) rows and the anchor candidates
+    (every deterministic candidate plus every unmerged model event) for
+    og.timing.resolve.
+    """
+    groups: dict[str, list[DefinedDate]] = {}
+    for candidate in defined_dates(doc):
+        groups.setdefault(_norm(candidate.name), []).append(candidate)
+    conflicted: set[str] = set()
+    for key, candidates in groups.items():
+        if len({c.date for c in candidates}) > 1:
+            conflicted.add(key)
     rows: list[tuple[int, str]] = []
+    anchors: list[CitedAnchor] = []
     for e in events:
-        ref = _evidence_ref(con, agreement_id, e.evidence)
-        cur = con.execute(
-            "INSERT INTO event(agreement_id, name, date, clause_ref_id) VALUES(?, ?, ?, ?)",
-            (agreement_id, e.name, e.date, ref),
+        key = _norm(e.name)
+        candidates = groups.get(key)
+        if candidates is None:
+            ref = _evidence_ref(con, agreement_id, e.evidence)
+            event_id = con.execute(
+                "INSERT INTO event(agreement_id, name, date, clause_ref_id) VALUES(?, ?, ?, ?)",
+                (agreement_id, e.name, e.date, ref),
+            ).lastrowid
+            rows.append((event_id, e.name))
+            anchors.append(CitedAnchor(event_id, agreement_id, e.name, e.date, ref))
+        elif e.date is not None and e.date not in {c.date for c in candidates}:
+            conflicted.add(key)  # a dated model event that disputes the declarations
+    for key, candidates in groups.items():
+        first = candidates[0]
+        evidence = first.evidence
+        section = doc.section_for(evidence.char_start)
+        ref = _insert_ref(
+            con,
+            agreement_id,
+            section=section.number if section else None,
+            page=doc.page_for(evidence.char_start),
+            char_start=evidence.char_start,
+            char_end=evidence.char_end,
+            span_text=evidence.span_text,
         )
-        rows.append((cur.lastrowid, e.name))
-    return rows
+        date = None if key in conflicted else first.date
+        event_id = con.execute(
+            "INSERT INTO event(agreement_id, name, date, clause_ref_id) VALUES(?, ?, ?, ?)",
+            (agreement_id, first.name, date, ref),
+        ).lastrowid
+        rows.append((event_id, first.name))
+        for candidate in candidates:
+            anchors.append(CitedAnchor(event_id, agreement_id, candidate.name, candidate.date, ref))
+    return rows, anchors
 
 
 def _write_defined_terms(con: sqlite3.Connection, agreement_id: str, doc: TextDoc) -> int:
@@ -495,7 +570,9 @@ def _write_obligations(
     obligations: list[VerifiedObligation],
     party_rows: list[tuple[int, str, str]],
     event_rows: list[tuple[int, str]],
-) -> tuple[int, int]:
+) -> tuple[int, int, list[tuple[int, VerifiedObligation]]]:
+    """Returns (unresolved_parties, unresolved_anchors, written rows) where written
+    pairs each new obligation row id with its verified obligation, for timing."""
     base_event_rows: list[tuple[int, str]] = []
     if base_agreement_id is not None:
         base_event_rows = con.execute(
@@ -503,6 +580,7 @@ def _write_obligations(
         ).fetchall()
     unresolved_parties = 0
     unresolved_anchors = 0
+    written: list[tuple[int, VerifiedObligation]] = []
     for o in obligations:
         owed_by = _resolve_party(o.owed_by, party_rows)
         owed_to = _resolve_party(o.owed_to, party_rows)
@@ -532,5 +610,99 @@ def _write_obligations(
                 run_row_id,
             ),
         )
+        written.append((cur.lastrowid, o))
         _evidence_ref(con, agreement_id, o.evidence, obligation_id=cur.lastrowid)
-    return unresolved_parties, unresolved_anchors
+    return unresolved_parties, unresolved_anchors, written
+
+
+def _timing_anchors(
+    con: sqlite3.Connection,
+    agreement_id: str,
+    *,
+    base_agreement_id: str | None,
+    own: list[CitedAnchor],
+) -> list[CitedAnchor]:
+    """Every cited anchor candidate of this agreement and its recorded base.
+
+    Base candidates come from events already in the graph with a grounded
+    same-agreement citation (the visible_event_binding predicate); the writer
+    never invents a date an event's own citation does not state.
+    """
+    anchors = list(own)
+    if base_agreement_id is None:
+        return anchors
+    rows = con.execute(
+        "SELECT e.id, e.agreement_id, e.name, e.date, e.clause_ref_id FROM event e"
+        " JOIN clause_ref c ON c.id = e.clause_ref_id AND c.grounded = 1"
+        " AND c.agreement_id = e.agreement_id WHERE e.agreement_id = ?",
+        (base_agreement_id,),
+    ).fetchall()
+    return [*anchors, *(CitedAnchor(*row) for row in rows)]
+
+
+def _insert_timing_trigger_ref(
+    con: sqlite3.Connection, agreement_id: str, doc: TextDoc, span: TimingSpan
+) -> int:
+    """A grounded ref owned only by obligation_timing (obligation_id NULL).
+
+    The span must be an exact TextDoc slice; a classifier that returns anything
+    else fails the write (rolled back), never the invariant.
+    """
+    if doc.text[span.char_start : span.char_end] != span.span_text:
+        raise ValueError("timing_span_mismatch")
+    section = doc.section_for(span.char_start)
+    return _insert_ref(
+        con,
+        agreement_id,
+        section=section.number if section else None,
+        page=doc.page_for(span.char_start),
+        char_start=span.char_start,
+        char_end=span.char_end,
+        span_text=span.span_text,
+    )
+
+
+def _write_obligation_timing(
+    con: sqlite3.Connection,
+    agreement_id: str,
+    *,
+    doc: TextDoc,
+    written: list[tuple[int, VerifiedObligation]],
+    base_agreement_id: str | None,
+    anchors: list[CitedAnchor],
+) -> None:
+    """One obligation_timing row per obligation, inside the snapshot transaction.
+
+    Plan rev 2 W5-3/W5-7/W5-10: every verified obligation is classified with
+    og.timing (deterministic, no model); a classifier exception rolls back the
+    whole write and never omits or downgrades a row. The trigger ClauseRef is
+    owned by obligation_timing alone, so the original extraction evidence
+    (visible_obligation_clause, pred_from_db) is unchanged.
+    """
+    candidates = _timing_anchors(
+        con, agreement_id, base_agreement_id=base_agreement_id, own=anchors
+    )
+    for obligation_id, o in written:
+        timing = resolve(parse(doc, o.evidence), candidates, legacy_due=o.due_date)
+        trigger_ref = (
+            _insert_timing_trigger_ref(con, agreement_id, doc, timing.trigger)
+            if timing.trigger is not None
+            else None
+        )
+        con.execute(
+            "INSERT INTO obligation_timing(obligation_id, kind, trigger_kind,"
+            " trigger_clause_ref_id, relation, offset_days, offset_unit, anchor_event_id,"
+            " bound_date, reason) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                obligation_id,
+                timing.kind,
+                timing.trigger_kind,
+                trigger_ref,
+                timing.relation,
+                timing.offset_days,
+                timing.offset_unit,
+                timing.anchor_event_id,
+                timing.bound_date,
+                timing.reason,
+            ),
+        )
