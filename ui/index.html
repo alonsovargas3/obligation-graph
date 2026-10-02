@@ -214,9 +214,8 @@
         <table id="obligations-table">
           <thead>
             <tr>
-              <th>Agreement</th><th>Type</th><th>Status</th><th>Owed by</th>
-              <th>Owed to</th><th>Amount</th><th>Due</th><th id="col-timing">Timing</th>
-              <th>Obligation</th>
+              <th>Agreement</th><th>Obligation</th><th id="col-timing">Due / timing</th>
+              <th>Type</th><th>Status</th><th>Owed by</th><th>Owed to</th><th>Amount</th>
             </tr>
           </thead>
           <tbody id="obligations-body"></tbody>
@@ -371,6 +370,11 @@ function renderRows(payload) {
     var row = document.createElement("tr");
     row.dataset.id = String(ob.id);
     row.appendChild(el("td", null, ob.agreement_id));
+    row.appendChild(el("td", "desc", ob.description));
+    var timingCell = el("td");
+    timingCell.appendChild(timingBadge(ob));
+    timingCell.appendChild(el("div", "num", dueCell(ob) || "pending"));
+    row.appendChild(timingCell);
     row.appendChild(el("td", null, ob.type));
     var statusCell = el("td");
     statusCell.appendChild(el("span", null, ob.status));
@@ -379,11 +383,6 @@ function renderRows(payload) {
     row.appendChild(el("td", null, partyName(ob.owed_by) || "unresolved"));
     row.appendChild(el("td", null, partyName(ob.owed_to) || "unresolved"));
     row.appendChild(el("td", "num", ob.amount ? (ob.amount + (ob.currency ? " " + ob.currency : "")) : ""));
-    row.appendChild(el("td", "num", dueCell(ob) || "pending"));
-    var timingCell = el("td");
-    timingCell.appendChild(timingBadge(ob));
-    row.appendChild(timingCell);
-    row.appendChild(el("td", "desc", ob.description));
     row.addEventListener("click", function () { selectRow(ob, row); });
     body.appendChild(row);
   });
