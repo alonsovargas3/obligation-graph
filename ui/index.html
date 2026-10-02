@@ -455,7 +455,8 @@ function loadAgreements() {
       option.value = role;
       partySelect.appendChild(option);
     });
-    out.agreements.forEach(function (ag) {
+    var agreements = Array.isArray(out) ? out : (out.agreements || []);
+    agreements.forEach(function (ag) {
       state.agreements[ag.id] = ag.title || ag.id;
       var option = el("option", null, ag.id);
       option.value = ag.id;
