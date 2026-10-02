@@ -124,9 +124,16 @@ def _attempt(model: object, usage: object) -> Attempt:
 
 def _attempts(message: object) -> list[Attempt]:
     usage = getattr(message, "usage", None)
+    message_model = getattr(message, "model", None)
     iterations = getattr(usage, "iterations", None) if usage is not None else None
     if iterations:
-        attempts = [_attempt(getattr(entry, "model", None), entry) for entry in iterations]
+        # usage.iterations is present even without a fallback, and each
+        # iteration's model is null when no fallback ran; such an attempt
+        # reports the message-level model.
+        attempts = []
+        for entry in iterations:
+            model = getattr(entry, "model", None)
+            attempts.append(_attempt(model if model is not None else message_model, entry))
         # Every attempt but the last was superseded by a fallback; only a final
         # attempt can end in the response we are parsing.
         return [
