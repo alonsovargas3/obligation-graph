@@ -2,11 +2,13 @@
 
 The model proposes RawItems; verify() decides what may be stored. Every stored
 field is either the copied source slice or proven present in it by a field
-rule (plan task 8 with the rev 2.1 details and the rev 2.2/2.4/2.5 overrides:
+rule (plan task 8 with the rev 2.1 details and the rev 2.2/2.4/2.5/2.6 overrides:
 token-bounded money and day counts, deadline-conflict pairing, the rev 2.4
-declaration grammar for event dates and party roles, and the rev 2.5
-source-sentence governing words, whole-name fields, and finite descriptors).
-Anything that fails is dropped or nulled with a FieldCorrection, never inferred.
+declaration grammar for event dates and party roles, the rev 2.5
+source-sentence governing words, whole-name fields, and finite descriptors,
+and the rev 2.6 whole entity-name fields, production (a) field requirement,
+and the `shall mean and refer to` connector). Anything that fails is dropped
+or nulled with a FieldCorrection, never inferred.
 """
 
 from __future__ import annotations
@@ -227,7 +229,11 @@ def _day_candidates(quote: str) -> list[int]:
 
 # ------------------------------------------- rev 2.4 declaration grammar (R4-1)
 
-_CONNECTORS = r"(?:each\s+means|each\s+mean|shall\s+mean|shall\s+be|means|mean|is)"
+# R6-3: the real corpus also uses `shall mean and refer to` (Carbonite).
+_CONNECTORS = (
+    r"(?:shall\s+mean\s+and\s+refer\s+to"
+    r"|each\s+means|each\s+mean|shall\s+mean|shall\s+be|means|mean|is)"
+)
 _DATE_FORM = (
     r"\b(?:(?:" + _MONTH_ALT + r")\.?\s+\d{1,2},?\s+\d{4}"
     r"|\d{1,2}\s+(?:" + _MONTH_ALT + r")\.?,?\s+\d{4}"
@@ -324,6 +330,34 @@ _RE_TOKEN = re.compile(r"[^\s,;:()]+|[,;:()]")
 _RE_SEP_TOK = re.compile(r"[,;:()]")
 _RE_BOUND_TOK = re.compile(r"(?i)between|by|and|with|from|to|designates?|appoints?")
 
+# R6-1: a claimed party name must be a whole entity-name field. Tokens start
+# with an uppercase letter or a digit; lowercase tokens are only the particles
+# listed. One corporate suffix after a comma is part of the name, never a
+# declaration boundary.
+_CORP_SUFFIX = r"(?:INC\.|Inc\.|LLC|L\.L\.C\.|L\.P\.|LP|LTD\.|Ltd\.|CORP\.|Corp\.|CO\.|Co\.|N\.A\.)"
+_NAME_TOKEN = r"(?:[A-Z0-9][\w.&'’\-]*|of|de|la|du|van|von|&)"
+_RE_FIELD_AT = re.compile(
+    r"\s*(" + _NAME_TOKEN + r"(?:\s+" + _NAME_TOKEN + r")*(?:\s*,\s*" + _CORP_SUFFIX + r")?)"
+)
+_RE_CORP_SUFFIX_AT = re.compile(_CORP_SUFFIX + r"(?![A-Za-z0-9])")
+_RE_COMMA_END = re.compile(r",\s*\Z")
+
+
+def _name_eq(a: str, b: str) -> bool:
+    """Case- and space-normalized equality of two names (R6-1)."""
+    fa, _ = _fold(a, ci=True)
+    fb, _ = _fold(b, ci=True)
+    return fa == fb
+
+
+def _boundary_ok(prefix: str, sent: str, rel_start: int) -> bool:
+    """R5-2 boundary check, excluding commas that introduce a corporate suffix."""
+    if not prefix.strip():
+        return True
+    if not _RE_NAME_BOUNDARY.search(prefix):
+        return False
+    return not (_RE_COMMA_END.search(prefix) and _RE_CORP_SUFFIX_AT.match(sent, rel_start))
+
 
 def _wb_occurrences(quote: str, name: str) -> list[tuple[int, int]]:
     """Occurrences of the name with word boundaries on both sides (R4-2)."""
@@ -336,9 +370,9 @@ def _wb_occurrences(quote: str, name: str) -> list[tuple[int, int]]:
     return out
 
 
-def _rule_a(quote: str, occ: tuple[int, int]) -> str | None:
-    """(a) A role word immediately precedes the name, itself well introduced."""
-    start, end = occ
+def _rule_a(quote: str, occ: tuple[int, int], claimed: str) -> str | None:
+    """(a) A role word immediately precedes an entity-name field (R6-2)."""
+    start, _end = occ
     prefix = quote[:start]
     m = _RE_ROLE_BEFORE.search(prefix)
     if m is None:
@@ -346,16 +380,24 @@ def _rule_a(quote: str, occ: tuple[int, int]) -> str | None:
     head = prefix[: m.start()]
     if head.strip() and not _RE_A_HEAD.search(head):
         return None
-    rest = quote[end:]
+    field = _RE_FIELD_AT.match(quote, m.end())
+    if field is None or not _name_eq(field.group(1), claimed):
+        return None
+    rest = quote[field.end() :]
     if rest.strip() and not _RE_A_TAIL.match(rest):
         return None
     return m.group(1).lower()
 
 
-def _rule_b(quote: str, occ: tuple[int, int], sent: str, rel_start: int) -> str | None:
-    """(b) A role construction directly follows the name (R5-2 boundary, R5-3 gap)."""
+def _rule_b(
+    quote: str, occ: tuple[int, int], sent: str, rel_start: int, claimed: str
+) -> str | None:
+    """(b) A role construction follows a whole entity-name field (R6-1)."""
     prefix = sent[:rel_start]
-    if prefix.strip() and not _RE_NAME_BOUNDARY.search(prefix):
+    if not _boundary_ok(prefix, sent, rel_start):
+        return None
+    field = _RE_FIELD_AT.match(quote, occ[0])
+    if field is None or not _name_eq(field.group(1), claimed):
         return None
     end = occ[1]
     for m in _RE_CONSTR_B.finditer(quote):
@@ -420,8 +462,8 @@ def _party_bound_roles(quote: str, name: str, seg_text: str, base: int) -> set[s
         rel_start, rel_end = seg_start - s_start, occ[1] + base - s_start
         if _suffix_veto(sent, rel_start, rel_end):
             continue
-        a = _rule_a(quote, occ)
-        b = _rule_b(quote, occ, sent, rel_start)
+        a = _rule_a(quote, occ, name)
+        b = _rule_b(quote, occ, sent, rel_start, name)
         if a is not None and b is not None:
             if a == b:
                 roles.add(a)
