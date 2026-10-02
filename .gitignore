@@ -1,5 +1,5 @@
-data/raw/
-data/text/
+data/raw
+data/text
 data/graph.db
 logs/
 .env
