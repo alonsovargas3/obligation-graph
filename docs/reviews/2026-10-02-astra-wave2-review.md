@@ -552,3 +552,109 @@ Evidence: `/tmp/astra-wave2-r5.xml`, `/tmp/astra-wave2-r5.txt`, `/tmp/astra_w2_r
 ### D) Verdict
 
 proceed-after-fixes
+
+
+## Round 6
+
+### A) Round-5 disposition under the stop rule
+
+1. **R5-1: resolved.** The original full-quote negative event, clipped negative event, semicolon condition, and negative party counterexamples all fail safely using the containing source sentence; the `unless` control still fails safely.
+2. **R5-2: resolved.** The original `Holdings LLC` suffix claim is dropped, the adjacent-character control remains dropped, and the full `Silver Cloud Holdings LLC` positive still binds. This disposition concerns the specified examples; the real-corpus counterexample below is separately within the stop rule.
+3. **R5-3: resolved.** The original `non-tenant company appointing Beta Inc.` descriptor cannot assign Tenant to Alpha. The frozen descriptor positives remain green.
+
+### B) Disposable proof and full suite
+
+Pulled `cdab0ad`. Refreshed the disposable copy at `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/og-astra-wave2-r6-jz2b8hb5`, using the current merged implementations and the disposable verifier/extraction entry point. Updated the verifier to Rev 2.5 source-sentence checks, name-start boundaries, and finite descriptors. All 48 tracked tests, fixtures, prompts, dependency files, and pinned contract/schema files selected for comparison match their `cdab0ad` Git objects byte-for-byte. No repository source or test file was edited.
+
+`uv sync --locked` succeeded with CPython 3.12.11. The final full run of `uv run --locked pytest -o addopts="" -q -p no:cacheprovider`, with additional JUnit output for counts, returned **694 passed, 0 failed, 2 skipped**.
+
+| Test file under `tests/` | Passed | Failed | Skipped |
+|---|---:|---:|---:|
+| `test_eval_cli.py` | 7 | 0 | 0 |
+| `test_eval_gold.py` | 16 | 0 | 0 |
+| `test_eval_score.py` | 13 | 0 | 0 |
+| `test_extract_cache.py` | 11 | 0 | 0 |
+| `test_extract_chunk.py` | 14 | 0 | 0 |
+| `test_extract_cli.py` | 8 | 0 | 0 |
+| `test_extract_parse.py` | 35 | 0 | 0 |
+| `test_extract_replay.py` | 10 | 0 | 0 |
+| `test_extract_request.py` | 9 | 0 | 0 |
+| `test_fetch.py` | 23 | 0 | 0 |
+| `test_fetch_recorded.py` | 1 | 0 | 0 |
+| `test_ground.py` | 265 | 0 | 2 |
+| `test_ingest.py` | 23 | 0 | 0 |
+| `test_ingest_toc.py` | 10 | 0 | 0 |
+| `test_markers.py` | 17 | 0 | 0 |
+| `test_pipeline_regressions.py` | 5 | 0 | 0 |
+| `test_pipeline_regressions_r3.py` | 4 | 0 | 0 |
+| `test_pipeline_regressions_r4.py` | 5 | 0 | 0 |
+| `test_pipeline_regressions_r5.py` | 6 | 0 | 0 |
+| `test_schema.py` | 41 | 0 | 0 |
+| `test_schema_v2.py` | 9 | 0 | 0 |
+| `test_textdoc.py` | 19 | 0 | 0 |
+| `test_verify.py` | 125 | 0 | 0 |
+| `test_writer.py` | 18 | 0 | 0 |
+| **Total** | **694** | **0** | **2** |
+
+**Failure classification:** the initial run had 692 passes, 2 failures, and 2 skips. Both failures were **impl-wrong**, not test-wrong: `test_verify.py::test_r4_role_word_inside_a_company_name_is_not_a_role_prefix` and `test_pipeline_regressions_r4.py::test_truncated_company_name_never_becomes_the_payer`. Applying the new boundary check before detecting a conflicting suffix role accidentally removed Rev 2.4's conflict safeguard. Keeping that safeguard before narrowing the suffix acceptance fixes both, consistent with Rev 2.5's explicit "can only make the grammar smaller" rule. No test changes were needed. The two final skips are the existing single-character-quote property cases in `test_ground.py`.
+
+Also reran the original six unsafe R5 probes and three controls through verification, the writer, and visible views. All six unsafe cases now fail safely: three event-date claims become null and their dependent deadlines remain pending; three party claims are dropped and their dependent payer stays null. The `unless` and adjacent-character negative controls remain safe; the full-name positive remains a visible tenant and payer.
+
+Evidence: `/tmp/astra-wave2-r6-final.xml`, `/tmp/astra-wave2-r6-final.txt`, `/tmp/astra-wave2-r6-r5-probes.txt`, and `/tmp/astra_w2_r5_probes.py`. The initial failure output is `/tmp/astra-wave2-r6.txt`.
+
+### C) Real-corpus check
+
+Executed the copied Rev 2.5 date/role helper functions **on devbox** through `ssh devbox`, using Python on stdin and `PYTHONDONTWRITEBYTECODE=1`. Read all seven `~/Dev/og-integration/data/text/*.json` files; wrote nothing on the devbox. The scan visited **4,279 source-segment sentences**, using the same sentence boundaries as the disposable verifier. Candidate discovery covered quoted defined terms followed by a supported connector and a later date, and both party-declaration productions.
+
+**Counting unit:** a distinct proposed name/date or name/role binding within a source sentence, not an independently annotated legal declaration. For role-after-name sites, discovery tries the possible name fields at the grammar's allowed boundaries, including internal commas and the optional descriptor boundary; for role-before-name sites, it tries the following field through the first allowed delimiter. This intentionally exposes ambiguous fields and ordinary clauses that the grammar accepts as declarations. Repeated identical candidates within a sentence are deduplicated. These are binding-check counts, not Claude extraction counts, precision, recall, or README performance numbers.
+
+| Filing | Sentences scanned | Event binds | Event rejects | Party binds | Party rejects |
+|---|---:|---:|---:|---:|---:|
+| `applieddigital-2026-ex101` | 174 | 0 | 0 | 39 | 46 |
+| `carbonite-2014-ex1024` | 1711 | 0 | 1 | 153 | 310 |
+| `constantcontact-2011-ex1041` | 1412 | 0 | 1 | 152 | 286 |
+| `constantcontact-2012-ex101` | 150 | 0 | 0 | 9 | 26 |
+| `endurance-2017-ex106` | 70 | 0 | 0 | 5 | 26 |
+| `mawson-2025-ex101` | 502 | 0 | 0 | 5 | 11 |
+| `terawulf-2025-ex10-1` | 260 | 0 | 0 | 1 | 13 |
+| **Total** | **4,279** | **0** | **2** | **364** | **718** |
+
+Overall: **364 candidate bindings accepted, 720 rejected**, across 679 candidate-containing sentences. The two rejected date candidates are Carbonite's `“Early Access Date” shall mean and refer to February 1, 2014.` and Constant Contact 2011's `“Previous Agreement” shall mean and refer to ... dated July 19, 2007 ...` (whitespace normalized here, latter excerpt abbreviated). Neither satisfies the closed connector/date rule. Zero date bindings in this census is not a claim that the filings contain no dates or no events.
+
+The accepted candidates contain wrong bindings on real text. Confirmed the following through `verify -> write_snapshot -> visible_agreement_party`, using the unchanged full Applied Digital TextDoc downloaded read-only, real source/textdoc hashes, and isolated temporary databases. The database setup uses test metadata helpers; the source text, segments, grounding, verifier, schema, writer, and visible view are exercised without modification. No VerifiedParty was forged. These are potential verifier admissions for proposed extraction items, not claims that Claude actually emitted those items.
+
+1. **R6-1, blocker: Internal corporate commas and descriptor boundaries still admit incomplete party fields in the real guaranty.**
+
+   **Location:** plan Rev 2.5 R5-2 and R5-3, role-after-name production; `applieddigital-2026-ex101`, segment `p0005`, characters `[346, 633)`.
+
+   **Real source quote:**
+
+   > THIS UNCONDITIONAL SPRINGING GUARANTY OF PAYMENT AND PERFORMANCE (this “Guaranty”) is made as of March 30, 2026 by COREWEAVE, INC., a Delaware corporation (“Guarantor”), to APLD ELN-02 LLC, a Delaware limited liability company (“Landlord”), and is acknowledged and agreed to by Landlord.
+
+   **Problem and execution:** proposed party `INC.` with role `guarantor` produces visible row `("INC.", "guarantor")`, with no drop. Proposed `a Delaware corporation` likewise becomes a visible guarantor. These are a corporate suffix and a descriptor, respectively, not the declared entity `COREWEAVE, INC.`. Both begin immediately after a comma, and both satisfy the remaining written grammar. Correct full-name controls `COREWEAVE, INC.` / guarantor and `APLD ELN-02 LLC` / landlord also remain visible.
+
+   **Concrete fix:** For this supported declaration form, parse the entire entity field from its introducing boundary, consuming the corporate suffix comma as part of the name and the finite descriptor as a separate field. Compare the claimed name with that complete parsed name; neither an internal comma nor the start of a descriptor may independently restart the field. Conservatively reject ambiguous fields. Freeze these two exact corpus negatives together with the two complete-name controls.
+
+2. **R6-2, blocker: The role-before-name production treats an ordinary operative clause as a party declaration in the real guaranty.**
+
+   **Location:** plan Rev 2.4 party production (a), retained by Rev 2.5; `applieddigital-2026-ex101`, segment `p0032`, sentence starting at character `19216`.
+
+   **Real source quote:**
+
+   > Guarantor hereby consents, prospectively, to Landlord’s taking or entering into any or all of the foregoing actions or omissions.
+
+   **Problem and execution:** proposed party `hereby consents` with role `guarantor` passes verification and produces visible row `("hereby consents", "guarantor")`, with no drop. The role precedes the proposed name at quote start, the comma is an allowed field terminator, and the full source sentence contains no listed governing word. The words describe an action, not a named guarantor. The scan's large accepted count includes this class of ordinary role-subject sentences; it cannot be interpreted as 364 correct declarations.
+
+   **Concrete fix:** Restrict production (a) to a supported entity-name field rather than arbitrary text up to a delimiter. For this wave, accept a complete corporate-name form actually supported by the corpus, or disable the ambiguous role-before-name form and leave its unsupported parties unresolved. Add this exact source sentence as a negative through the visible view and retain existing full corporate-name positives. Rejecting additional unsupported names is permissible lost recall under the stop rule.
+
+These are **two real-corpus blockers**, not new synthetic phrasings. No wrong event-date binding was observed in the enumerated corpus candidates. The quote-existence invariant still holds for the wrong party rows; the failure is the semantic identity assigned to a quoted substring.
+
+Corpus evidence: `/tmp/astra_r6_corpus_scan.py` and `/tmp/astra-r6-corpus-scan.json` contain the executed scanner, per-file SHA-256 values, and every candidate with source sentence and decision. The Applied Digital JSON SHA-256 is `f1285c90592014b7b5c7734de703527f5185e9acfd93098484da769fb9e631ec`. End-to-end witnesses are in `/tmp/astra_r6_real_probe.py`, `/tmp/astra-r6-real-probe.txt`, and `/var/folders/b3/sgt3znvd3fs663smcfz_2y_c0000gn/T/astra-r6-real-corpus-8m7obh9_/`.
+
+### D) Known limitations (not blockers)
+
+No new purely synthetic adversarial phrasings were introduced in this round. Unsupported declaration layouts, source-sentence segmentation heuristics, and conservative rejection from unrelated governing words may lose recall and are not blockers. Preserve the agreed ADR-008/README disclosure: date/role binding is a conservative heuristic over a closed grammar; semantic correctness is measured by eval, not proven, while quote-existence remains deterministically enforced. This final review requests only the two demonstrated real-corpus corrections above, not another open-ended synthetic review cycle.
+
+### E) Verdict
+
+proceed-after-fixes

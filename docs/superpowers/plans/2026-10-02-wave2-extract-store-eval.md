@@ -555,3 +555,16 @@ These rules add to Rev 2.4 and can only make the grammar smaller.
 - Further synthetic adversarial phrasings become documented known limitations in ADR-008 and the README, unless the phrasing occurs in the corpus.
 - The disclosure wording: date/role binding is a conservative heuristic over a closed grammar; semantic correctness of extracted terms is measured by eval, not proven.
 - The quote-existence invariant (every stored term points to a verbatim source span) is unaffected and remains enforced deterministically.
+
+## Rev 2.6 (Astra wave-2 round 6: 2 real-corpus blockers and one real-corpus connector)
+
+This is the final rule revision under the stop rule. All three changes come from real filings.
+
+- **R6-1, whole entity-name fields.**
+  - A claimed party name (both productions) must be an entity-name field: whitespace-separated tokens, each starting with an uppercase letter or a digit. Lowercase tokens are allowed only from `of`, `de`, `la`, `du`, `van`, `von`, `&`.
+  - It may also carry one corporate suffix after a comma: `, INC.`, `, Inc.`, `, LLC`, `, L.L.C.`, `, L.P.`, `, LP`, `, LTD.`, `, Ltd.`, `, CORP.`, `, Corp.`, `, CO.`, `, Co.`, `, N.A.`.
+  - The comma before such a suffix is part of the name, never a declaration boundary. So `INC.` and the descriptor `a Delaware corporation` are not names.
+  - In production (b) the field runs from its declaration boundary up to the finite descriptor (R5-3) or the role construction. The claimed name must equal that whole field (case- and space-normalized).
+- **R6-2, production (a) requires an entity-name field.** The text after the role word, up to the (a) tail delimiter, must be an entity-name field per R6-1 and must equal the claimed name. `Guarantor hereby consents, …` binds nothing.
+- **R6-3, connector `shall mean and refer to`.** Added to the R4-1 connectors because the real corpus uses it (Carbonite: `“Early Access Date” shall mean and refer to February 1, 2014.`). The grammar otherwise stays closed.
+- **Frozen tests:** `tests/test_verify.py` (`test_r6_*`) and `tests/test_pipeline_regressions_r6.py`. Both use the exact real source sentences.

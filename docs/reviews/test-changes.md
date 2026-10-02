@@ -95,3 +95,14 @@ Added to `tests/test_verify.py` (own R5 fixture doc):
 New `tests/test_pipeline_regressions_r5.py`:
 - `test_governed_event_date_never_schedules_a_deadline` (3)
 - `test_unsupported_declaration_never_creates_a_visible_tenant` (3)
+
+## 2026-10-02: rev 2.6 (Astra wave-2 round 6, real corpus), additions only
+
+Added to `tests/test_verify.py` (own R6 fixture doc of exact real sentences from applieddigital-2026-ex101 p0005/p0032 and carbonite-2014-ex1024):
+- `test_r6_partial_fields_and_operative_clauses_bind_nothing` (4)
+- `test_r6_complete_corporate_fields_bind` (2)
+- `test_r6_shall_mean_and_refer_to_is_a_connector`
+
+New `tests/test_pipeline_regressions_r6.py`:
+- `test_partial_field_or_clause_never_becomes_a_visible_party` (3)
+- `test_complete_corporate_names_are_visible`

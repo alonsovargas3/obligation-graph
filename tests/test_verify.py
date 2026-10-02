@@ -1106,3 +1106,89 @@ def test_r5_unsupported_party_declarations_bind_nothing(seg_key, name, role, spa
 def test_r5_whole_name_and_finite_descriptor_bind(seg_key, name, role):
     res = verify(R5_DOC, [r5_party(seg_key, name, role)])
     assert [(p.name, p.role) for p in res.parties] == [(name, role)]
+
+
+# --- Rev 2.6 (Astra wave-2 round 6): real-corpus fixes (Applied Digital guaranty, Carbonite) ----
+
+R6 = [
+    (
+        None,
+        "Preamble",
+        [
+            (
+                "guaranty",
+                "THIS UNCONDITIONAL SPRINGING GUARANTY OF PAYMENT AND PERFORMANCE (this"
+                " “Guaranty”) is made as of March 30, 2026 by COREWEAVE, INC., a Delaware"
+                " corporation (“Guarantor”), to APLD ELN-02 LLC, a Delaware limited liability"
+                " company (“Landlord”), and is acknowledged and agreed to by Landlord.",
+            ),
+            (
+                "consents",
+                "Guarantor hereby consents, prospectively, to Landlord’s taking or entering into"
+                " any or all of the foregoing actions or omissions.",
+            ),
+        ],
+    ),
+    (
+        "1",
+        "Definitions",
+        [
+            (
+                "refer_to",
+                "“Early Access Date” shall mean and refer to February 1, 2014.",
+            ),
+        ],
+    ),
+]
+R6_DOC, R6_IDS = build(R6)
+R6_LINE = {k: line for _, _, rows in R6 for k, line in rows}
+
+
+def r6_party(seg_key, name, role):
+    return raw(
+        span=R6_LINE[seg_key],
+        segment_id=R6_IDS[seg_key],
+        kind="party",
+        type=None,
+        name=name,
+        role=role,
+        status=None,
+    )
+
+
+@pytest.mark.parametrize(
+    "seg_key,name,role",
+    [
+        ("guaranty", "INC.", "guarantor"),
+        ("guaranty", "a Delaware corporation", "guarantor"),
+        ("guaranty", "a Delaware limited liability company", "landlord"),
+        ("consents", "hereby consents", "guarantor"),
+    ],
+)
+def test_r6_partial_fields_and_operative_clauses_bind_nothing(seg_key, name, role):
+    res = verify(R6_DOC, [r6_party(seg_key, name, role)])
+    assert res.parties == []
+    assert [d.reason for d in res.drops] == ["role_not_bound_to_name"]
+
+
+@pytest.mark.parametrize(
+    "name,role",
+    [("COREWEAVE, INC.", "guarantor"), ("APLD ELN-02 LLC", "landlord")],
+)
+def test_r6_complete_corporate_fields_bind(name, role):
+    res = verify(R6_DOC, [r6_party("guaranty", name, role)])
+    assert [(p.name, p.role) for p in res.parties] == [(name, role)]
+
+
+def test_r6_shall_mean_and_refer_to_is_a_connector():
+    item = raw(
+        span=R6_LINE["refer_to"],
+        segment_id=R6_IDS["refer_to"],
+        kind="event",
+        type=None,
+        name="Early Access Date",
+        date="2014-02-01",
+        status="active",
+    )
+    res = verify(R6_DOC, [item])
+    assert [e.date for e in res.events] == ["2014-02-01"]
