@@ -5,7 +5,9 @@ Every stored span is a copied slice of a chain document (located like
 extraction evidence, via og.ground), every date or money value is a token of
 its cited quote, and every explicit target reference is resolved against the
 frozen alias table (prompts/change_aliases_v1.yaml) under the rev 2 R1-R3,
-rev 2.1 R2-1/R2-2, and rev 2.2 rules. Raw output is diagnostics only.
+rev 2.1 R2-1/R2-2, rev 2.2, and rev 2.3 R3-1/R3-2 rules (a price value may be
+written with its units; a stray price target label is discarded and recorded
+as a ChangeCorrection, never stored). Raw output is diagnostics only.
 
 Pre-registered stop rule: the supersession-cue list and the target grammar are
 closed. A phrasing that occurs in none of the chain documents is a documented
@@ -15,7 +17,7 @@ limitation, not a blocker.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date as _date
 from decimal import Decimal
 from pathlib import Path
@@ -25,6 +27,7 @@ import yaml
 from og.change.types import (
     FINDING_KINDS,
     ChainDoc,
+    ChangeCorrection,
     ChangeDrop,
     ChangeVerifyResult,
     CitedSpan,
@@ -273,6 +276,26 @@ def _parse_money(value: str | None) -> Decimal | None:
     return Decimal(t)
 
 
+def _claim_amount(value: str | None) -> Decimal | None:
+    """The claimed price amount (rev 2.3 R3-1).
+
+    The schema asks for the value "exactly as written in new_quote", so a
+    claim is accepted when it is a plain decimal, as before, or when it
+    carries exactly one money token of the wave 2 grammar (e.g.
+    "$41,496.00/month"). Two or more money tokens are ambiguous; the amount
+    must still equal a money token of the cited quote, and the stored value
+    stays the plain decimal string.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return None
+    tokens = _money_candidates(value)
+    if len(tokens) == 1:
+        return tokens[0]
+    if tokens:
+        return None
+    return _parse_money(value)
+
+
 # ---------------------------------------------------------------- date roles
 
 
@@ -442,18 +465,20 @@ def _verify_one(
     docs: dict[str, ChainDoc],
     cfg: _AliasConfig,
     category: str,
-) -> Finding | ChangeDrop:
+) -> tuple[Finding | ChangeDrop, ChangeCorrection | None]:
+    """One raw finding: the kept Finding or the drop, plus a field correction."""
+
     def drop(reason: str) -> ChangeDrop:
         return ChangeDrop(raw=raw, category=category, reason=reason)
 
     if raw.kind not in FINDING_KINDS:
-        return drop("unknown_kind")
+        return drop("unknown_kind"), None
 
     # 1. The new side grounds in the change order.
     new_evidence, reason = _locate(co.doc, raw.new_segment_id, raw.new_quote)
     if new_evidence is None:
         assert reason is not None
-        return drop(reason)
+        return drop(reason), None
     new_span = CitedSpan(co.agreement_id, new_evidence)
     new_text = new_evidence.span_text
 
@@ -463,13 +488,13 @@ def _verify_one(
         and raw.old_doc != "self"
         and (raw.old_doc not in docs or docs[raw.old_doc].role == "change_order")
     ):
-        return drop("old_doc_not_in_chain")
+        return drop("old_doc_not_in_chain"), None
     old_present = raw.old_doc is not None
     if old_present:
         if raw.old_quote is None or raw.old_segment_id is None:
-            return drop("old_side_incomplete")
+            return drop("old_side_incomplete"), None
     elif raw.old_quote is not None or raw.old_segment_id is not None or raw.old_value is not None:
-        return drop("old_side_incomplete")
+        return drop("old_side_incomplete"), None
     old_evidence: Evidence | None = None
     old_span: CitedSpan | None = None
     old_doc_id: str | None = None
@@ -480,25 +505,40 @@ def _verify_one(
         old_evidence, reason = _locate(docs[old_doc_id].doc, raw.old_segment_id, raw.old_quote)
         if old_evidence is None:
             assert reason is not None
-            return drop(reason)
+            return drop(reason), None
         old_span = CitedSpan(old_doc_id, old_evidence)
         old_origin = "self" if raw.old_doc == "self" else "chain"
 
-    # 3. Target label and explicit-reference resolution.
+    # 3. Target label and explicit-reference resolution. Rev 2.3 R3-2: a
+    #    price finding never stores a target label (rev 2.2); a stray one is
+    #    discarded and recorded as a ChangeCorrection, never a drop. For
+    #    supersedes and potential_conflict the label is the target, so the
+    #    strict drop stays.
+    correction: ChangeCorrection | None = None
+    stage_raw = raw
+    if raw.kind == "price_change" and raw.target_label is not None:
+        if normalize_ws(raw.target_label) not in normalize_ws(new_text):
+            correction = ChangeCorrection(
+                raw=raw,
+                category=category,
+                field="target_label",
+                reason="target_label_not_in_quote",
+            )
+        stage_raw = replace(raw, target_label=None)
     label, resolution, reason = _target_stage(
-        raw, new_text, old_present, old_doc_id, old_evidence, cfg, docs
+        stage_raw, new_text, old_present, old_doc_id, old_evidence, cfg, docs
     )
     if reason is not None:
-        return drop(reason)
+        return drop(reason), None
 
     # 4. Kind rules.
     old_text = old_evidence.span_text if old_evidence is not None else ""
 
     if raw.kind == "supersedes":
         if not _RE_CUE.search(new_text):
-            return drop("no_supersession_cue")
+            return drop("no_supersession_cue"), None
         if raw.old_value is not None or raw.new_value is not None:
-            return drop("values_forbidden")
+            return drop("values_forbidden"), None
         return Finding(
             kind=raw.kind,
             category=category,
@@ -512,23 +552,23 @@ def _verify_one(
             delta=None,
             currency=None,
             context=None,
-        )
+        ), correction
 
     if raw.kind == "shifted_date":
         if not old_present:
-            return drop("old_side_required")
+            return drop("old_side_required"), None
         assert old_doc_id is not None and old_evidence is not None
         new_dates = _find_dates(new_text)
         old_dates = _find_dates(old_text)
         if len(new_dates) != 1 or len(old_dates) != 1:
-            return drop("date_token_count")
+            return drop("date_token_count"), None
         if _iso(raw.new_value) != new_dates[0][0]:
-            return drop("new_value_not_in_quote")
+            return drop("new_value_not_in_quote"), None
         if _iso(raw.old_value) != old_dates[0][0]:
-            return drop("old_value_not_in_quote")
+            return drop("old_value_not_in_quote"), None
         new_iso, old_iso = new_dates[0][0], old_dates[0][0]
         if new_iso == old_iso:
-            return drop("dates_equal")
+            return drop("dates_equal"), None
         new_role = _quote_role(co.doc, new_evidence, new_iso)
         old_role = _quote_role(docs[old_doc_id].doc, old_evidence, old_iso)
 
@@ -546,12 +586,12 @@ def _verify_one(
         if not role_inside(co.doc, new_evidence, new_role) or not role_inside(
             docs[old_doc_id].doc, old_evidence, old_role
         ):
-            return drop("date_role_outside_quote")
+            return drop("date_role_outside_quote"), None
         assert new_role is not None and old_role is not None
         if new_role[0] != old_role[0]:
-            return drop("date_role_mismatch")
+            return drop("date_role_mismatch"), None
         if raw.old_doc == "self" and not _RE_PRIOR_STATE.search(old_text):
-            return drop("old_state_cue_missing")
+            return drop("old_state_cue_missing"), None
         delta = (_date.fromisoformat(new_iso) - _date.fromisoformat(old_iso)).days
         return Finding(
             kind=raw.kind,
@@ -566,26 +606,26 @@ def _verify_one(
             delta=str(delta),
             currency=None,
             context=None,
-        )
+        ), correction
 
     if raw.kind == "price_change":
         candidates = _money_candidates(new_text)
-        claimed = _parse_money(raw.new_value)
+        claimed = _claim_amount(raw.new_value)
         if claimed is None or not any(c == claimed for c in candidates):
-            return drop("new_value_not_in_quote")
+            return drop("new_value_not_in_quote"), None
         if raw.old_value is not None:
-            return drop("old_value_forbidden")
+            return drop("old_value_forbidden"), None
         if old_present:
-            return drop("old_side_forbidden")
+            return drop("old_side_forbidden"), None
         context: CitedSpan | None = None
         if raw.context_quote is not None or raw.context_segment_id is not None:
             if raw.context_quote is None or raw.context_segment_id is None:
-                return drop("context_not_found")
+                return drop("context_not_found"), None
             context_evidence, ctx_reason = _locate(
                 co.doc, raw.context_segment_id, raw.context_quote
             )
             if context_evidence is None or ctx_reason is not None:
-                return drop("context_not_found")
+                return drop("context_not_found"), None
             context = CitedSpan(co.agreement_id, context_evidence)
         stored = next(c for c in candidates if c == claimed)
         return Finding(
@@ -601,15 +641,15 @@ def _verify_one(
             delta=None,
             currency="USD" if "$" in new_text else None,
             context=context,
-        )
+        ), correction
 
     # potential_conflict
     if not old_present:
-        return drop("old_side_required")
+        return drop("old_side_required"), None
     if raw.old_doc == "self":
-        return drop("old_side_forbidden")
+        return drop("old_side_forbidden"), None
     if raw.old_value is not None or raw.new_value is not None:
-        return drop("values_forbidden")
+        return drop("values_forbidden"), None
     return Finding(
         kind=raw.kind,
         category=category,
@@ -623,7 +663,7 @@ def _verify_one(
         delta=None,
         currency=None,
         context=None,
-    )
+    ), correction
 
 
 def verify_findings(
@@ -647,9 +687,10 @@ def verify_findings(
 
     findings: list[Finding] = []
     drops: list[ChangeDrop] = []
+    corrections: list[ChangeCorrection] = []
     seen: set[tuple] = set()
     for raw in items:
-        result = _verify_one(raw, co, docs, cfg, category)
+        result, correction = _verify_one(raw, co, docs, cfg, category)
         if isinstance(result, ChangeDrop):
             drops.append(result)
             continue
@@ -659,4 +700,6 @@ def verify_findings(
         else:
             seen.add(key)
             findings.append(result)
-    return ChangeVerifyResult(findings=findings, drops=drops)
+            if correction is not None:  # a correction applies only to a kept finding
+                corrections.append(correction)
+    return ChangeVerifyResult(findings=findings, drops=drops, corrections=corrections)
