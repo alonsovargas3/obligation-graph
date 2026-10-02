@@ -157,3 +157,32 @@ def test_consecutive_articles_and_uppercase_title():
 def test_uppercase_numbered_clause_is_not_an_article_title():
     html = "<p>ARTICLE 3</p><p>3.1 RENT.</p><p>Body text.</p>"
     assert _sections(html) == [("3", "", None), ("3.1", "RENT", None)]
+
+
+def test_single_level_numbered_clauses():
+    html = (
+        "<p>AGREEMENT</p><p>1. Definitions. Terms mean things.</p><p>Body.</p>"
+        "<p>2.Suite 409 Extension Term.</p><p>14. Taxes.</p>"
+    )
+    assert _sections(html) == [
+        (None, "Preamble", None),
+        ("1", "Definitions", None),
+        ("2", "Suite 409 Extension Term", None),
+        ("14", "Taxes", None),
+    ]
+
+
+def test_number_like_lines_are_not_clauses():
+    html = (
+        "<p>Intro.</p><p>(1) If Google elects.</p><p>2025. Tenant shall pay.</p>"
+        "<p>3. and then lower.</p><p>1.25 | $100.00</p><p>4.5 million dollars</p>"
+    )
+    assert _sections(html) == [(None, "Preamble", None)]
+
+
+def test_clause_number_in_its_own_table_cell():
+    html = (
+        "<table><tr><td>1.1</td><td>In this Agreement, words mean things.</td></tr>"
+        "<tr><td>1.25</td><td>$100.00</td></tr></table>"
+    )
+    assert _sections(html) == [("1.1", "In this Agreement, words mean things", None)]

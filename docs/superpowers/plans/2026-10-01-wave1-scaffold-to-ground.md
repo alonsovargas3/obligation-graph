@@ -417,7 +417,8 @@ def connect(path: str | Path = "data/graph.db") -> sqlite3.Connection:
   - If the heading is empty and the next line is ≤ 80 chars, has no lowercase letters, **and does not itself match any of the three section patterns**, heading = next line. That line stays inside this section. Otherwise the heading stays `""` and the next line starts its own section.
   - `article` = heading, or `None` when the heading is `""`.
 - `Section` line: `^(?:Section|SECTION)\s+(\d+(?:\.\d+)*)\.?\s+(.*)$`.
-- Numbered clause: `^(\d+(?:\.\d+)+)\.?\s+(\S.*)$`. At least one dot; a bare `1.` is not a section in this wave. If the real corpus needs it, report it; don't add it.
+- Numbered clause (rev 4): `^(\d+(?:\.\d+)+)\.?\s*(?:\|\s*)?([A-Z\u201c"].*)$`. The text after the number (and an optional table-cell ` | `) must start with a capital letter or an opening quote, so `1.25 | $100.00` and `4.5 million` stay body text.
+- Single-level clause (rev 4, added after the corpus smoke): `^(\d{1,3})\.\s*(?:\|\s*)?([A-Z\u201c"].*)$`. Covers `1. Definitions.`, `1.Suite 409 ...`, and `14. Taxes.`. It does not match `(1) ...`, `2025. ...` (four digits), or `3. and ...` (lowercase).
 - For Section and numbered lines:
   - heading = group 2 up to the first `". "` or a trailing `"."`, capped at 80 chars, stripped.
   - `article` = the most recent ARTICLE's `article` value (None if there is none, or if that ARTICLE's heading is empty).
