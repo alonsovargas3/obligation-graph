@@ -1,0 +1,71 @@
+CONTEXT (do not extract)
+[ctx p0001] EX-10.1 2 d354815dex101.htm FIRST AMENDMENT TO DATACENTER LEASE
+[ctx p0002] EXHIBIT 10.1
+[ctx p0003] FIRST AMENDMENT TO DATACENTER LEASE
+[ctx p0004] THIS FIRST AMENDMENT TO DATACENTER LEASE (this “Amendment”) is made and entered into as of (but not necessarily on) the latest date of execution shown on the signature page hereto (the “1A Effective Date”), by and between DIGITAL 55 MIDDLESEX, LLC, a Delaware limited liability company (“Landlord”), and CONSTANT CONTACT, INC., a Delaware corporation (“Tenant”).
+[ctx p0005] W I T N E S S E T H:
+[ctx p0006] WHEREAS, Landlord and Tenant have heretofore entered into that certain Datacenter Lease dated January 1, 2011 (the “Lease”), covering (i) certain pathway rights (the “Pathway”) and (ii) four (4) separately demised spaces, consisting, collectively, of approximately 5,600 square feet of caged area (collectively, the “Original Premises”), in that certain building (the “Building”) located at 55 Middlesex Turnpike, Bedford, Massachusetts;
+[ctx p0007] WHEREAS, each capitalized term or phrase used in this Amendment shall have the same meaning as the meaning ascribed to such term or phrase in the Lease unless expressly otherwise defined in this Amendment;
+[ctx p0008] WHEREAS, Landlord and Tenant desire to modify the terms of the Lease in accordance with the terms and conditions herein provided.
+[ctx p0009] NOW, THEREFORE, for and in consideration of good and valuable consideration paid by each party hereto to the other, the receipt and sufficiency of which are hereby mutually acknowledged, Landlord and Tenant hereby agree as follows:
+[p0054] 8. Miscellaneous.
+[p0055] A. In the event that the terms of the Lease conflict or are inconsistent with those of this Amendment, the terms of this Amendment shall govern.
+[p0056] B. The Lease is hereby amended as and where necessary, even though not specifically referred to herein, in order to give effect to the terms of this Amendment. Except as amended by this Amendment, the terms of the Lease shall remain in full force and effect.
+[p0057] C. Submission of this Amendment for examination does not constitute an offer, right of first refusal, reservation of, or option for any premises in the Building. This Amendment shall become effective only upon execution and delivery by both Landlord and Tenant.
+[p0058] -4-
+[p0059] D. This Amendment may be executed simultaneously in two or more counterparts each of which shall be deemed an original, but all of which shall constitute one and the same Amendment. Landlord and Tenant agree that the delivery of an executed copy of this Amendment by facsimile or e-mail shall be legal and binding and shall have the same full force and effect as if an original executed copy of this Amendment had been delivered.
+[p0060] [Signature Page Follows]
+[p0061] -5-
+[p0062] IN WITNESS WHEREOF, Landlord and Tenant have caused this Amendment to be executed on the respective dates set forth below, to be effective as of the 1A Effective Date.
+[p0063] LANDLORD:
+[p0064] DIGITAL 55 MIDDLESEX, LLC,
+[p0065] a Delaware limited liability company
+[p0066] By:   Digital Realty Trust, L.P.,
+[p0067] a Maryland limited partnership,
+[p0068] its sole Member and Manager
+[p0069] By:   Digital Realty Trust, Inc.,
+[p0070] a Maryland corporation,
+[p0071] its General Partner
+[p0072] By:
+[p0073] /s/ Robert W. Holmes
+[p0074] Name:   Robert W. Holmes
+[p0075] Its:   Vice President
+[p0076] Date: May 11, 2012
+[p0077] TENANT:
+[p0078] CONSTANT CONTACT, INC.
+[p0079] a Delaware corporation
+[p0080] By:
+[p0081] /s/ John Walsh
+[p0082] Name:   John Walsh
+[p0083] Title:   Senior Vice President, Engineering and Operations
+[p0084] Date:   May 10, 2012
+[p0085] EXHIBIT “A-1”
+[p0086] DEPICTION OF ORIGINAL SUITE 418A
+[p0087] AND
+[p0088] SUITE 418A EXPANSION SPACE
+[p0089] EXHIBIT “A-1-A”
+[p0090] REVISED DEPICTION OF THE SUITES,
+[p0091] THE WEST POP ROOM, THE EAST POP ROOM
+[p0092] AND THE DATACENTER CONNECTION AREA
+[p0093] EXHIBIT “E-1”
+[p0094] LANDLORD’S SUITE 418A INSTALLATIONS
+[p0095] Landlord shall cause:
+[p0096] •
+[p0097] The removal of the Existing Suite 418A Cage Walls (as depicted on Exhibit “A-1”)
+[p0098] •
+[p0099] The installation of a cage wall (the “Suite 418A Expansion Space Cage Wall”) substantially in the layout set forth on Exhibit “A-1”
+[p0100] •
+[p0101] The installation of an electrical meter to monitor power consumption in the Suite 418A Expansion Space
+[p0102] The foregoing three (3) items are referred to herein as “Landlord’s Suite 418A Installations”.
+[p0103] EXHIBIT “F-1”
+[p0104] TABLE A-1
+[p0105] 1.   Electricity Consumption Threshold:    Suite 405: 50 total kW (the “ECT-Suite 405”)
+[p0106] Suite 407: 180 total kW (the “ECT-Suite 407”)
+[p0107] Suite 409: 180 total kW (the “ECT-Suite 409”)
+[p0108] Suite 418A: 380 total kW (the “ECT-Suite 418A”)
+[p0109] 2.    Target Battery Capacity:    Six (6) minutes.
+[p0110] 3.    Back-Up Power Specifications:    Six (6) 2 MW shared paralleled Building generators in an N+1 configuration supply back-up power for the Premises.
+[p0111] 4.    HVAC Specifications.
+[p0112] (a)    Target Temperature Range:    Average temperature of the Premises, measured at the return air vents in the Premises, between 68 degrees Fahrenheit and 78 degrees Fahrenheit.
+[p0113] (b)    Target Humidity Range:    Average relative humidity of the Premises, measured at the return air vents in the Premises, between 35% and 55%.
+[p0114] [Emphasis added to show the changes to this Table.]

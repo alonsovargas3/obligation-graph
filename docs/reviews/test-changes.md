@@ -75,3 +75,11 @@ New `tests/test_pipeline_regressions_r4.py`, which runs the five round-4 counter
 ## 2026-10-02: contract change, output schema nullable enums (C1)
 
 `prompts/extract_v1.schema.json`: the live API (C1 recording, request `req_011CfcoE6JDYyxuTmKFM3BGT`) rejects `{"type": ["string","null"], "enum": [..., null]}` with "Enum value 'payment' does not match declared type". Nullable enums (`type`, `status`, `role`) are now `{"anyOf": [{"type": "string", "enum": [...]}, {"type": "null"}]}`. A live probe with the new form succeeded. No test assertion changed; `prompt_version` changes because the schema bytes changed. The parser's local validation is unchanged: it already accepts null for these fields.
+
+## 2026-10-02: C1 recorded fixtures and replay test (additions only)
+
+Added `tests/fixtures/api/extract_v1/` (3 real responses and their chunk texts, recorded with `prompt_version` extract_v1@6de99191) and `tests/test_extract_replay.py`:
+- `test_fixtures_present`
+- `test_recorded_response_parses` (3)
+- `test_attempt_model_falls_back_to_message_model` (3): red against the merged Task 7 client. The live API returns `usage.iterations[].model = null` when no fallback ran, so the attempt model must fall back to `message.model`.
+- `test_recorded_quotes_come_from_their_cited_line` (3)

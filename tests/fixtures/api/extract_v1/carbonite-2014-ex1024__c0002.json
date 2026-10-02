@@ -1,0 +1,46 @@
+{
+ "id": "msg_011CfcoJSxnxBxN2NJsV7g4E",
+ "container": null,
+ "content": [
+  {
+   "text": "{\"items\":[{\"span_text\":\"“Early Access Date” shall mean and refer to February 1, 2014.\",\"segment_id\":\"p0391\",\"kind\":\"event\",\"type\":null,\"owed_by\":null,\"owed_to\":null,\"description\":\"Defined date from which Tenant's early access period to the Premises begins.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":\"Early Access Date\",\"date\":\"2014-02-01\",\"role\":null},{\"span_text\":\"“Continuous Outage Termination Notice” shall mean and refer to written notice from Tenant to Landlord, delivered within five (5) business days after the occurrence of a Continuous Outage, that Tenant thereby terminates this Lease.\",\"segment_id\":\"p0379\",\"kind\":\"obligation\",\"type\":\"termination_right\",\"owed_by\":\"Tenant\",\"owed_to\":\"Landlord\",\"description\":\"Tenant may terminate the Lease by written notice to Landlord delivered within five business days after a Continuous Outage.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":\"Continuous Outage\",\"offset_days\":null,\"trigger\":\"after the occurrence of a Continuous Outage\",\"status\":\"active\",\"name\":null,\"date\":null,\"role\":null},{\"span_text\":\"“Commencement Date Notice” shall mean and refer to a notice from Landlord to Tenant, substantially in the form attached hereto as Exhibit “H”, which shall (a) memorialize Landlord’s delivery of the Tenant Space to Tenant, and (b) confirm the actual Commencement Date.\",\"segment_id\":\"p0369\",\"kind\":\"obligation\",\"type\":\"notice\",\"owed_by\":\"Landlord\",\"owed_to\":\"Tenant\",\"description\":\"Landlord gives Tenant a notice recording delivery of the Tenant Space and confirming the actual Commencement Date.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":null,\"date\":null,\"role\":null}]}",
+   "type": "text"
+  }
+ ],
+ "diagnostics": null,
+ "model": "claude-sonnet-5-5",
+ "role": "assistant",
+ "stop_details": null,
+ "stop_reason": "end_turn",
+ "stop_sequence": null,
+ "type": "message",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 2389,
+  "inference_geo": "global",
+  "input_tokens": 5200,
+  "iterations": [
+   {
+    "cache_creation": {
+     "ephemeral_1h_input_tokens": 0,
+     "ephemeral_5m_input_tokens": 0
+    },
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 2389,
+    "input_tokens": 5200,
+    "model": null,
+    "output_tokens": 699,
+    "type": "message"
+   }
+  ],
+  "output_tokens": 699,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "service_tier": "standard"
+ }
+}

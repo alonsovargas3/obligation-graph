@@ -1,0 +1,46 @@
+{
+ "id": "msg_011CfcoJ5M2vPL8BULGAjbtX",
+ "container": null,
+ "content": [
+  {
+   "text": "{\"items\":[{\"span_text\":\"Landlord shall cause:\",\"segment_id\":\"p0095\",\"kind\":\"obligation\",\"type\":\"delivery\",\"owed_by\":\"Landlord\",\"owed_to\":\"Tenant\",\"description\":\"Landlord must cause the Suite 418A installations listed in this exhibit to be carried out: removal of existing cage walls, installation of a new cage wall, and installation of an electrical meter.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":null,\"date\":null,\"role\":null},{\"span_text\":\"This Amendment shall become effective only upon execution and delivery by both Landlord and Tenant.\",\"segment_id\":\"p0057\",\"kind\":\"event\",\"type\":null,\"owed_by\":null,\"owed_to\":null,\"description\":\"The Amendment takes effect only once both Landlord and Tenant have executed and delivered it.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":\"Amendment effectiveness\",\"date\":null,\"role\":null},{\"span_text\":\"DIGITAL 55 MIDDLESEX, LLC,\",\"segment_id\":\"p0064\",\"kind\":\"party\",\"type\":null,\"owed_by\":null,\"owed_to\":null,\"description\":\"Landlord party signing the Amendment.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":\"DIGITAL 55 MIDDLESEX, LLC\",\"date\":null,\"role\":\"landlord\"},{\"span_text\":\"CONSTANT CONTACT, INC.\",\"segment_id\":\"p0078\",\"kind\":\"party\",\"type\":null,\"owed_by\":null,\"owed_to\":null,\"description\":\"Tenant party signing the Amendment.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":\"CONSTANT CONTACT, INC.\",\"date\":null,\"role\":\"tenant\"}]}",
+   "type": "text"
+  }
+ ],
+ "diagnostics": null,
+ "model": "claude-sonnet-5-5",
+ "role": "assistant",
+ "stop_details": null,
+ "stop_reason": "end_turn",
+ "stop_sequence": null,
+ "type": "message",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 2389,
+  "inference_geo": "global",
+  "input_tokens": 2438,
+  "iterations": [
+   {
+    "cache_creation": {
+     "ephemeral_1h_input_tokens": 0,
+     "ephemeral_5m_input_tokens": 0
+    },
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 2389,
+    "input_tokens": 2438,
+    "model": null,
+    "output_tokens": 707,
+    "type": "message"
+   }
+  ],
+  "output_tokens": 707,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "service_tier": "standard"
+ }
+}

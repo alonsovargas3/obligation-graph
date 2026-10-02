@@ -1,0 +1,46 @@
+{
+ "id": "msg_011CfcoHQ2QHebuhtSgUZTvr",
+ "container": null,
+ "content": [
+  {
+   "text": "{\"items\":[{\"span_text\":\"by and between DIGITAL 55 MIDDLESEX, LLC, a Delaware limited liability company (“Landlord”), and CONSTANT CONTACT, INC., a Delaware corporation (“Tenant”).\",\"segment_id\":\"p0004\",\"kind\":\"party\",\"type\":null,\"owed_by\":null,\"owed_to\":null,\"description\":\"Digital 55 Middlesex, LLC is the Landlord under the amendment.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":\"DIGITAL 55 MIDDLESEX, LLC\",\"date\":null,\"role\":\"landlord\"},{\"span_text\":\"by and between DIGITAL 55 MIDDLESEX, LLC, a Delaware limited liability company (“Landlord”), and CONSTANT CONTACT, INC., a Delaware corporation (“Tenant”).\",\"segment_id\":\"p0004\",\"kind\":\"party\",\"type\":null,\"owed_by\":null,\"owed_to\":null,\"description\":\"Constant Contact, Inc. is the Tenant under the amendment.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":\"CONSTANT CONTACT, INC.\",\"date\":null,\"role\":\"tenant\"},{\"span_text\":\"Effective as of June 1, 2012 (the “1A Expansion Date”, Original Suite 418A is hereby expanded\",\"segment_id\":\"p0014\",\"kind\":\"event\",\"type\":null,\"owed_by\":null,\"owed_to\":null,\"description\":\"Date on which Suite 418A is expanded to include the expansion space.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":\"1A Expansion Date\",\"date\":\"2012-06-01\",\"role\":null},{\"span_text\":\"Landlord hereby agrees to cause the completion of Landlord’s Suite 418A Installations (as defined on Exhibit “E-1”, attached hereto) on or before the 1A Expansion Date.\",\"segment_id\":\"p0035\",\"kind\":\"obligation\",\"type\":\"delivery\",\"owed_by\":\"Landlord\",\"owed_to\":\"Tenant\",\"description\":\"Landlord must cause completion of Landlord's Suite 418A Installations on or before the 1A Expansion Date.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":\"1A Expansion Date\",\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":null,\"date\":null,\"role\":null},{\"span_text\":\"Tenant hereby agrees to pay the following amounts to Landlord as additional Base Rent in connection with the lease of the Suite 418A Expansion Space\",\"segment_id\":\"p0039\",\"kind\":\"obligation\",\"type\":\"payment\",\"owed_by\":\"Tenant\",\"owed_to\":\"Landlord\",\"description\":\"Tenant must pay additional Base Rent for the Suite 418A Expansion Space per the schedule, effective from the 1A Expansion Date.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":\"1A Expansion Date\",\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":null,\"date\":null,\"role\":null},{\"span_text\":\"Tenant shall indemnify and hold Landlord harmless from and against any and all claims, losses, costs or expenses (including attorneys’ fees and expenses) by any broker, agent or other person claiming a commission or other form of compensation by virtue of having dealt with Tenant with regard to the transaction contemplated by this Amendment.\",\"segment_id\":\"p0052\",\"kind\":\"obligation\",\"type\":\"other\",\"owed_by\":\"Tenant\",\"owed_to\":\"Landlord\",\"description\":\"Tenant must indemnify and hold Landlord harmless against broker commission claims arising from dealings with Tenant regarding this Amendment.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":null,\"date\":null,\"role\":null},{\"span_text\":\"each party agrees that the terms and provisions of this Amendment are confidential and constitute proprietary information of the parties and shall be governed by Section 17.19 of the Lease as though the terms hereof were originally part of the Lease.\",\"segment_id\":\"p0053\",\"kind\":\"obligation\",\"type\":\"other\",\"owed_by\":\"Landlord\",\"owed_to\":\"Tenant\",\"description\":\"Each party must keep the terms of this Amendment confidential under the Lease's confidentiality provision.\",\"amount\":null,\"currency\":null,\"due_date\":null,\"anchor_event\":null,\"offset_days\":null,\"trigger\":null,\"status\":\"active\",\"name\":null,\"date\":null,\"role\":null}]}",
+   "type": "text"
+  }
+ ],
+ "diagnostics": null,
+ "model": "claude-sonnet-5-5",
+ "role": "assistant",
+ "stop_details": null,
+ "stop_reason": "end_turn",
+ "stop_sequence": null,
+ "type": "message",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 2389,
+  "inference_geo": "global",
+  "input_tokens": 3927,
+  "iterations": [
+   {
+    "cache_creation": {
+     "ephemeral_1h_input_tokens": 0,
+     "ephemeral_5m_input_tokens": 0
+    },
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 2389,
+    "input_tokens": 3927,
+    "model": null,
+    "output_tokens": 1618,
+    "type": "message"
+   }
+  ],
+  "output_tokens": 1618,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "service_tier": "standard"
+ }
+}

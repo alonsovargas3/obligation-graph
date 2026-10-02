@@ -1,0 +1,53 @@
+[p0001] EX-10.1 2 d354815dex101.htm FIRST AMENDMENT TO DATACENTER LEASE
+[p0002] EXHIBIT 10.1
+[p0003] FIRST AMENDMENT TO DATACENTER LEASE
+[p0004] THIS FIRST AMENDMENT TO DATACENTER LEASE (this “Amendment”) is made and entered into as of (but not necessarily on) the latest date of execution shown on the signature page hereto (the “1A Effective Date”), by and between DIGITAL 55 MIDDLESEX, LLC, a Delaware limited liability company (“Landlord”), and CONSTANT CONTACT, INC., a Delaware corporation (“Tenant”).
+[p0005] W I T N E S S E T H:
+[p0006] WHEREAS, Landlord and Tenant have heretofore entered into that certain Datacenter Lease dated January 1, 2011 (the “Lease”), covering (i) certain pathway rights (the “Pathway”) and (ii) four (4) separately demised spaces, consisting, collectively, of approximately 5,600 square feet of caged area (collectively, the “Original Premises”), in that certain building (the “Building”) located at 55 Middlesex Turnpike, Bedford, Massachusetts;
+[p0007] WHEREAS, each capitalized term or phrase used in this Amendment shall have the same meaning as the meaning ascribed to such term or phrase in the Lease unless expressly otherwise defined in this Amendment;
+[p0008] WHEREAS, Landlord and Tenant desire to modify the terms of the Lease in accordance with the terms and conditions herein provided.
+[p0009] NOW, THEREFORE, for and in consideration of good and valuable consideration paid by each party hereto to the other, the receipt and sufficiency of which are hereby mutually acknowledged, Landlord and Tenant hereby agree as follows:
+[p0010] 1. Naming Conventions.
+[p0011] A. Landlord and Tenant hereby acknowledge and agree that prior to the 1A Effective Date, Landlord has caused (i) Suite 1.14A in the Building to be renumbered to Suite 418A, (ii) Suite 1.5 in the Building to be renumbered to Suite 405, (iii) Suite 1.5.1 in the Building to be renumbered to Suite 407, and (iv) Suite 1.5.2 to be renumbered to Suite 409.
+[p0012] B. Accordingly, effective as of, and from and after, the 1A Effective Date, (i) all references in the Lease to “Suite 1.14A” are hereby deemed to be references to “Suite 418A”, (ii) all references in the Lease to “Suite 1.5” are hereby deemed to be references to “Suite 405”, (iii) all references in the Lease to “Suite 1.5.1” are hereby deemed to be references to “Suite 407”, and (iv) all references in the Lease to “Suite 1.5.2” are hereby deemed to be references to “Suite 409”. Suite 418A, as it exists on the 1A Effective Date, is also referred to in this Amendment as “Original Suite 418A”.
+[p0013] 2. Premises.
+[p0014] A. Additional Premises. Effective as of June 1, 2012 (the “1A Expansion Date”, Original Suite 418A is hereby expanded to include approximately 1,225 square feet of caged area approximately as shown on Exhibit “A-1”, attached hereto (the “Suite 418A Expansion Space”).
+[p0015] B. Amended Premises. Accordingly, effective as of, and from and after, the 1A Expansion Date:
+[p0016] (i) Suite 418A is hereby deemed to consist of Original Suite 418A together with the Suite 418A Expansion Space;
+[p0017] (ii) Exhibit “A” to the Lease is hereby deleted in its entirety and replaced by Exhibit “A-1-A”, attached hereto;
+[p0018] (iii) all references in the Lease to Exhibit “A” are hereby deemed to be references to Exhibit “A-1-A”; and
+[p0019] (iv) Item 7 of the Basic Lease Information to the Lease is hereby amended and restated in its entirety as follows:
+[p0020] 7.      Premises/Pathways:
+[p0021] (a)    Premises:
+[p0022] Landlord and Tenant acknowledge and agree that commencing on the Commencement Date, the Premises shall consist of the following four (4) separately demised spaces:
+[p0023] a.      Approximately 600 square feet of area in the Building, known as Suite 405, caged as set forth on Exhibit “A-1-A” (“Suite 405”).
+[p0024] b.      Approximately 1800 square feet of area in the Building, known as Suite 407, caged as set forth on Exhibit “A-1-A” (“Suite 407”).
+[p0025] c.      Approximately 2000 square feet of area in the Building, known as Suite 409, caged as set forth on Exhibit “A-1-A” (“Suite 409”).
+[p0026] d.      Approximately 1200 square feet of area in the Building, known as Suite 418A, caged as set forth on Exhibit “A-1-A” (“Suite 418A”).
+[p0027] As of June 1, 2012 (the “1A Expansion Date”), Suite 418A shall be deemed to have been expanded to 2,425 square feet of area in the Building, caged as set froth on Exhibit “A-1-A”.
+[p0028] -2-
+[p0029] As of the Suite 405 Surrender Date, Suite 405 shall be deemed to have been removed from the Premises. From and after the Suite 405 Surrender Date, throughout the balance of the Term of this Lease, the Premises shall consist of Suite 407, Suite 409 and Suite 418A, collectively comprising approximately 6,225 square feet of area in the Building. From and after the Suite 405 Surrender Date, no Base Rent shall become due or payable with respect to Suite 405 and all future calculations of Ancillary Utility Costs, Generator Fuel Usage or any costs to Tenant under this Lease based on a proportionate share or allocation of leased space or usage shall reflect that Suite 405 shall be deemed to have been removed from the Premises.
+[p0030] Each of Suite 405, Suite 407, Suite 409 and Suite 418A may be referred to herein, individually, as a “Suite”.
+[p0031] (b)    Pathways:
+[p0032] As described on Exhibit “C”.
+[p0033] [Emphasis added to show the changes to Item 7.]
+[p0034] C. Landlord’s Suite 418A Installations.
+[p0035] (i) Subject to Landlord’s completion of Landlord’s Suite 418A Installations (as defined on Exhibit “E-1”, attached hereto), Tenant hereby accepts the Suite 418A Expansion Space in its “AS IS, WHERE IS” condition on the 1A Expansion Date, without the benefit of a warranty of suitability or fitness for Tenant’s intended use. Landlord hereby agrees to cause the completion of Landlord’s Suite 418A Installations (as defined on Exhibit “E-1”, attached hereto) on or before the 1A Expansion Date. The foregoing notwithstanding, Landlord and Tenant acknowledge and agree that Landlord’s completion of Landlord’s Suite 418A Installations is not a condition precedent to any obligation of Tenant to pay Rent, nor is such completion a condition precedent to the occurrence of the 1A Expansion Date. Additionally, provided that Landlord is working diligently using commercially reasonable efforts after the 1A Expansion Date to complete the installation of Landlord’s Suite 418A Installations, Landlord shall not be in default of its obligation to complete Landlord’s Suite 418A Installations. For the avoidance of doubt, Landlord’s Suite 418A Installations are hereby deemed to be included in the definition of “Landlord’s Installations” for the purposes of Section 8.3.1 and 9.1.1 of the Lease.
+[p0036] (ii) Accordingly, effective as of, and from and after, the 1A Effective Date, the Original Lease is hereby amended to include Exhibit “E-1” attached hereto.
+[p0037] 3. Service Levels. Effective as of, and from and after, the 1A Expansion Date, (a) Table A of Exhibit “F” to the Original Lease is hereby replaced by Table A-1 as set forth on Exhibit “F-1”, attached hereto and incorporated herein, and (b) all references in the Lease to Table A of Exhibit “F” are hereby deemed to mean and refer to Table A-1 of Exhibit “F-1”.
+[p0038] -3-
+[p0039] 4. Base Rent. Effective as of the 1A Expansion Date, Tenant hereby agrees to pay the following amounts to Landlord as additional Base Rent in connection with the lease of the Suite 418A Expansion Space (the “Suite 418A Expansion Space Base Rent”):
+[p0040] Period   Suite 418A Expansion  Space Base Rent
+[p0041] June 1, 2012 – January 31, 2013 (months 18 – 25 of the Term)
+[p0042] $0.00/month
+[p0043] February 1, 2013 – December 31, 2013 (months 26 – 36 of the Term)
+[p0044] $41,496.00/month
+[p0045] January 1, 2014 – December 31, 2014 (months 37 – 48 of the Term)
+[p0046] $42,741.00/month
+[p0047] January 1, 2015 – December 31, 2015 (months 49 – 60 of the Term)
+[p0048] $44,023.00/month
+[p0049] January 1, 2016 – December 31, 2016 (months 61 – 72 of the Term)
+[p0050] $45,344.00/month
+[p0051] 5. Tenant Estoppel. Tenant hereby (a) acknowledges, to the best of Tenant’s knowledge, that Landlord is not in default under the Lease as of the date this Amendment is executed by Tenant, and (b) confirms, to the best of Tenant’s knowledge, that, as of the date this Amendment is executed by Tenant, Landlord has no outstanding obligations with respect to the Tenant Space that would, with the passage of time, the giving of notice, or both, result in Landlord being in default under the Lease.
+[p0052] 6. Commissions. Tenant represents that it has dealt with no broker, agent or other person in connection with this Amendment, and that no broker, agent or other person brought about this Amendment. Tenant shall indemnify and hold Landlord harmless from and against any and all claims, losses, costs or expenses (including attorneys’ fees and expenses) by any broker, agent or other person claiming a commission or other form of compensation by virtue of having dealt with Tenant with regard to the transaction contemplated by this Amendment. The provisions of this paragraph shall survive the expiration of the Term of the Lease or any renewal or extension thereof.
+[p0053] 7. Confidentiality. Notwithstanding anything to the contrary contained in the Lease, each party agrees that the terms and provisions of this Amendment are confidential and constitute proprietary information of the parties and shall be governed by Section 17.19 of the Lease as though the terms hereof were originally part of the Lease.

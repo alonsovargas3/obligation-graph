@@ -1,0 +1,182 @@
+CONTEXT (do not extract)
+[ctx p0001] EX-10.24 3 d650354dex1024.htm EX-10.24
+[ctx p0002] Exhibit 10.24
+[ctx p0003] 2121 SOUTH PRICE ROAD
+[ctx p0004] CHANDLER, ARIZONA
+[ctx p0005] TURN KEY DATACENTER LEASE
+[ctx p0006] Between
+[ctx p0007] DIGITAL 2121 SOUTH PRICE, LLC
+[ctx p0008] a Delaware limited liability company
+[ctx p0009] as Landlord
+[ctx p0010] and
+[ctx p0011] CARBONITE, INC., a Delaware corporation
+[ctx p0012] as Tenant
+[ctx p0013] Dated
+[ctx p0014] December 31, 2013
+[ctx p0015] TABLE OF CONTENTS
+[ctx p0016] Page
+[ctx p0017] 1.
+[ctx p0018] LEASE OF TENANT SPACE
+[ctx p0019] 21
+[ctx p0020] 1.1
+[ctx p0021] Tenant Space
+[ctx p0022] 21
+[ctx p0023] 1.2
+[ctx p0024] Condition of Tenant Space
+[ctx p0025] 21
+[ctx p0026] 1.3
+[ctx p0027] Interconnections; Datacenter Connection Area
+[ctx p0028] 21
+[ctx p0029] 1.4
+[ctx p0030] Relocation Right
+[ctx p0031] 21
+[ctx p0032] 1.5
+[ctx p0033] Quiet Enjoyment; Access
+[ctx p0034] 21
+[ctx p0035] 1.6
+[ctx p0036] Common Area
+[ctx p0037] 21
+[ctx p0038] 1.7
+[ctx p0039] Tenant’s Datacenter Expansion Right
+[ctx p0040] 22
+[ctx p0041] 1.8
+[ctx p0042] Determination of Prevailing Base Rent for Datacenter Expansion Area
+[ctx p0043] 23
+[ctx p0044] 1.9
+[ctx p0045] Licenses and Permits
+[ctx p0046] 24
+[ctx p0047] 2.
+[ctx p0048] TERM
+[ctx p0049] 24
+[ctx p0050] 2.1
+[ctx p0051] Term
+[ctx p0052] 24
+[ctx p0053] 2.2
+[ctx p0054] Delivery of Tenant Space
+[ctx p0055] 24
+[ctx p0056] 2.3
+[ctx p0057] Extension Options
+[ctx p0058] 25
+[ctx p0059] 3.
+[ctx p0060] BASE RENT AND OTHER CHARGES
+[ctx p0061] 26
+[ctx p0062] 3.1
+[ctx p0063] Base Rent
+[ctx p0064] 26
+[ctx p0065] 3.2
+[ctx p0066] Installation Fee
+[ctx p0067] 26
+[ctx p0068] 3.3
+[ctx p0069] Payments Generally
+[ctx p0070] 26
+[ctx p0071] 3.4
+[ctx p0072] Late Payments
+[ctx p0073] 27
+[ctx p0074] 3.5
+[ctx p0075] Utilities; Tenant’s Utility Payment
+[ctx p0076] 27
+[ctx p0077] 4.
+[ctx p0078] TAXES
+[ctx p0079] 28
+[ctx p0080] 4.1
+[ctx p0081] Taxes – Equipment
+[ctx p0082] 28
+[ctx p0083] 4.2
+[ctx p0084] Taxes – Other
+[ctx p0085] 28
+[ctx p0086] 4.3
+[ctx p0087] Taxes – Real Property
+[ctx p0088] 28
+[ctx p0089] 5.
+[ctx p0090] SECURITY DEPOSIT
+[ctx p0091] 29
+[ctx p0092] 6.
+[ctx p0093] PERMITTED USE; COMPLIANCE WITH RULES AND LAWS; HAZARDOUS MATERIALS
+[ctx p0094] 29
+[ctx p0095] 6.1
+[ctx p0096] Permitted Use
+[ctx p0097] 29
+[ctx p0098] 6.2
+[ctx p0099] Datacenter Rules and Regulations
+[ctx p0100] 29
+[ctx p0101] 6.3
+[ctx p0102] Compliance with Laws; Hazardous Materials
+[ctx p0103] 30
+[ctx p0104] 6.4
+[ctx p0105] Electricity Consumption Threshold
+[ctx p0106] 30
+[ctx p0107] 6.5
+[ctx p0108] Maximum Structural Load
+[ctx p0109] 30
+[ctx p0110] - 2 -
+[ctx p0111] 7.
+[ctx p0112] ACCESS CONTROL; LANDLORD’S ESSENTIAL SERVICES; INTERRUPTION OF SERVICES
+[ctx p0113] 30
+[ctx p0114] 7.1
+[ctx p0115] Access Control
+[ctx p0116] 30
+[ctx p0117] 7.2
+[ctx p0118] Landlord’s Essential Services
+[ctx p0119] 30
+[ctx p0120] 7.3
+[ctx p0121] Customer Handbook
+[ctx p0122] 31
+[ctx p0123] 7.4
+[ctx p0124] Interruption of Services
+[ctx p0125] 31
+[ctx p0126] 7.5
+[ctx p0127] Remote Hands Services
+[ctx p0128] 31
+[ctx p0129] 8.
+[ctx p0130] MAINTENANCE; ALTERATIONS; REMOVAL OF TENANT’S PERSONAL PROPERTY
+[ctx p0131] 31
+[ctx p0132] 8.1
+[ctx p0133] Landlord’s Maintenance
+[ctx p0134] 31
+[ctx p0135] 8.2
+[ctx p0136] Tenant’s Maintenance
+[ctx p0137] 32
+[ctx p0138] 8.3
+[p0364] “Colocation Party” shall mean and refer to and any person claiming, directly or indirectly, by, through or under any Colocation Customer, together with the officers, agents, servants and employees of each Colocation Customer.
+[p0365] “Commencement Date Conditions” shall mean and refer to the occurrence of the following:
+[p0366] (a) Landlord has performed the Commissioning of the Premises, which condition shall be deemed to have been satisfied upon Landlord’s receipt of the Commissioning Complete Letter;
+[p0367] (b) Landlord has completed Landlord’s Initial Installations; and
+[p0368] (c) Landlord has delivered the Tenant Space to Tenant by virtue of having provided the Commencement Date Notice to Tenant.
+[p0369] “Commencement Date Notice” shall mean and refer to a notice from Landlord to Tenant, substantially in the form attached hereto as Exhibit “H”, which shall (a) memorialize Landlord’s delivery of the Tenant Space to Tenant, and (b) confirm the actual Commencement Date.
+[p0370] “Commissioning” shall mean and refer to the act of causing the commissioning/turn up of the Premises’ infrastructure pursuant to the Commissioning Criteria, so that such infrastructure has passed Level 5 of such Commissioning Criteria, as described in Exhibit “E-1”.
+[p0371] “Commissioning Agent” shall mean and refer to the third party engineering firm that performs the Commissioning.
+[p0372] “Commissioning Complete Letter” shall mean and refer to a letter from the Commissioning Agent, evidencing successful Commissioning of the Premises, substantially in the form attached hereto as Attachment “1” to Exhibit “H”.
+[p0373] “Commissioning Criteria” shall mean and refer to the commissioning criteria set forth on Exhibit “E-1”.
+[p0374] - 6 -
+[p0375] Confidential Treatment Requested by Carbonite, Inc.
+[p0376] “Common Area” shall mean and refer to that part of the Property lying outside the Premises designated by Landlord from time to time for the common use of all tenants of the Datacenter or the Building, as applicable, including among other facilities, the sidewalks, service corridors, curbs, truck ways, loading areas, private streets and alleys, lighting facilities, halls, lobbies, delivery passages, elevators, drinking fountains, meeting rooms, public toilets, parking areas and garages, decks and other parking facilities, landscaping and other common rooms and common facilities.
+[p0377] “Consequential Damages” shall mean and refer to consequential damages, incidental damages, indirect damages, or special damages, or for loss of profit, loss of business opportunity or loss of income.
+[p0378] “Continuous Outage” shall mean and refer to an Interruption of Landlord’s Essential Services that continues for twenty (20) consecutive days, regardless of whether or not such Interruption of Landlord’s Essential Services was caused by Force Majeure, other than the fault of Tenant, or anyone claiming by, through or under Tenant.
+[p0379] “Continuous Outage Termination Notice” shall mean and refer to written notice from Tenant to Landlord, delivered within five (5) business days after the occurrence of a Continuous Outage, that Tenant thereby terminates this Lease.
+[p0380] “Control”, as used in the definition of Tenant Affiliate, shall mean and refer to the right to exercise, directly or indirectly, fifty percent (50%) or more of the voting rights attributable to the controlled entity and/or the power to elect a majority of the controlled entity’s board of directors.
+[p0381] “Datacenter” shall mean and refer to the Datacenter described in Item 19 of the Basic Lease Information.
+[p0382] “Datacenter Connection Area” shall mean and refer to the central shared point of pathway access in the Datacenter, as designated by Landlord.
+[p0383] “Datacenter Rules and Regulations” shall mean and refer to Landlord’s written rules and regulations for the Datacenter, as same may be amended from time to time in accordance with Section 6.2 of the Lease and that are provided, or made available to, Tenant. The current version of the Datacenter Rules and Regulations is available on the Internet at the following URL:
+[p0384] http://info.digitalrealtytrust.com/Leases.html
+[p0385] “Datacenter Utility” shall mean and refer to a utility type for which usage is billed on a “datacenter-by-datacenter” basis.
+[p0386] “Datacenter Utility Costs” shall mean and refer to the actual Datacenter Utility costs for the entirety of the Datacenter (i.e., based on the metering equipment that measures electrical and mechanical power [UPS, HVAC and other mechanical power] being used by the Datacenter), as set forth on the applicable Datacenter Utility bill(s) for the Datacenter (each such Datacenter Utility bill, a “Datacenter Utility Bill”) for the billing period covered by such Datacenter Utility Bill(s).
+[p0387] “Default Rate” shall mean and refer to an interest rate equal to the lesser of (a) [***] ([***]) per month or (b) the maximum lawful rate of interest.
+[p0388] “Delinquency Date” shall mean and refer to the date that is five (5) days after the date on which any particular payment of Rent is due from Tenant to Landlord.
+[p0389] “Digital” shall mean and refer to Digital Realty Trust, L.P., a Maryland limited partnership.
+[p0390] “Early Access” shall mean and refer to Tenant’s ability, subject to the terms of Section 2.2.3, to enter the Premises, prior to the Commencement Date, for the purposes of inspecting same and for performing Tenant Work.
+[p0391] “Early Access Date” shall mean and refer to February 1, 2014.
+[p0392] [***]  | Information has been omitted and filed separately with the Securities and Exchange Commission. Confidential Treatment has been requested with respect to the omitted portions.
+[p0393] - 7 -
+[p0394] “Early Access Period” shall mean and refer to the period between the Early Access Date and the Commencement Date.
+[p0395] “ECT Default Notice” shall mean and refer to written notice from Landlord.
+[p0396] “ECT Overage” shall mean and refer to a situation in which the electricity consumption in the Premises exceeds the Electricity Consumption Threshold.
+[p0397] “Electricity Consumption Threshold” shall mean and refer to the amount of electrical power specified in Item 1 of Exhibit “F”, Table A.
+[p0398] “Electricity Specifications” shall mean and refer, collectively, to the Electricity Consumption Threshold and the Back-Up Power Specifications.
+[p0399] “Environmental Laws” shall mean and refer to all now and hereafter existing Applicable Laws regulating, relating to, or imposing liability or standards of conduct concerning public health and safety or the environment.
+[p0400] “Event of Default by Tenant” shall mean and refer to the occurrence of any of the Events of Default by Tenant described in Sections 15.1.1-15.1.5, inclusive.
+[p0401] “Excess Rent” shall mean and refer to any consideration in excess of the sum of (a) the pro-rata portion of Rent applicable to the portion of the Tenant Space subject to the assignment or sublease, less (b) the reasonable leasing costs (i.e., tenant improvement allowances, attorneys’ fees, architectural fees, and broker commissions) actually incurred by Tenant in connection with such sublease or assignment.
+[p0402] “Extension Option Exercise Notice” shall mean and refer to written notice from Tenant to Landlord specifying that Tenant is irrevocably exercising an Extension Option so as to extend the Term of this Lease by the applicable Extension Term on the terms set forth in Section 2.3 of the Standard Lease Provisions.
+[p0403] “Extension Term” shall mean and refer to the duration of each duly exercised Extension Option, as set forth in Item 6 of the Basic Lease Information.
+[p0404] “Extension Term Base Rent” shall mean and refer to the monthly Base Rent payable with respect to the Tenant Space during an Extension Term.
+[p0405] “Financial Statements” shall mean and refer to audited annual financial statements of the indicated entity, certified by the entity’s chief financial officer, including (i) a balance sheet, and (ii) a profit and loss statement (income statement), all prepared in accordance with generally accepted accounting principles consistently applied.
+[p0406] “First Interruption” shall mean and refer to the first (1st) Separate/Independent Interruption of Landlord’s Essential Services occurring in any period of twelve (12) consecutive months.
