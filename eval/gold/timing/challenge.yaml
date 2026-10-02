@@ -1,0 +1,215 @@
+version: timing_gold_v1
+name: challenge
+documents:
+  applieddigital-2026-ex101: f1285c90592014b7b5c7734de703527f5185e9acfd93098484da769fb9e631ec
+  carbonite-2014-ex1024: cf4164bd6f7122ac21546f493f51ad01ff6eaf958ad338eced15d90a69613088
+  constantcontact-2011-ex1041: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+  constantcontact-2012-ex101: 8ee2c82ed01031e48749248bb9d0aa088b6c5ba0c55288b1da5b4917efa81b27
+  endurance-2017-ex106: 3a1dca055a888969cc785597b452da98049c841696711293ef7c3c4d98d5f345
+  mawson-2025-ex101: 15305da080071976fd2d1bc3f3ed5279a4e5b05ebdf09e0a27feac66016975e5
+provenance:
+  drafted_by: gpt-6-astra (blind to classifier output)
+  adjudicated_by: claude-opus-5-5 (coordinator)
+  spot_checked: 0
+scope: sampled
+items:
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0568
+  span_text: Landlord agrees to use commercially reasonable efforts to cause the New Pathway Installation to be completed prior to the Commencement Date.
+  timing_kind: scheduled
+  relation: lt
+  bound_date: '2011-01-01'
+  anchor:
+    name: Commencement Date
+    agreement_id: constantcontact-2011-ex1041
+    segment_id: p0430
+    span_text: January 1, 2011
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: prior to the Commencement Date
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0569
+  span_text: Landlord agrees to use commercially reasonable efforts to cause the Card Reader Installation to be completed prior to the Commencement Date.
+  timing_kind: scheduled
+  relation: lt
+  bound_date: '2011-01-01'
+  anchor:
+    name: Commencement Date
+    agreement_id: constantcontact-2011-ex1041
+    segment_id: p0430
+    span_text: January 1, 2011
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: prior to the Commencement Date
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0748
+  span_text: a short form memorandum of this Lease (the “Memo of Lease”) in the form attached hereto as Exhibit “K” shall be executed by Landlord and Tenant within ten (10) business days after the Effective Date and recorded by Tenant in the real estate records of Middlesex County, Massachusetts.
+  timing_kind: unresolved
+  relation: lte
+  bound_date: null
+  anchor:
+    name: Effective Date
+    agreement_id: constantcontact-2011-ex1041
+    segment_id: p0428
+    span_text: January 1, 2011
+  offset_days: 10
+  offset_unit: business
+  trigger_span_text: within ten (10) business days after the Effective Date
+  reason: business_days
+- agreement_id: carbonite-2014-ex1024
+  segment_id: p0747
+  span_text: Landlord shall use commercially reasonable efforts to satisfy the Commencement Date Conditions prior to the Target Commencement Date.
+  timing_kind: scheduled
+  relation: lt
+  bound_date: '2014-04-01'
+  anchor:
+    name: Target Commencement Date
+    agreement_id: carbonite-2014-ex1024
+    segment_id: p0573
+    span_text: April 1, 2014
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: prior to the Target Commencement Date
+  reason: null
+- agreement_id: carbonite-2014-ex1024
+  segment_id: p0750
+  span_text: '2.2.1.2 If the Commencement Date Conditions have not occurred prior to the Outside Completion Date, subject to extension by virtue of Force Majeure, Tenant shall have the right to terminate this Lease, provided that:'
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: If the Commencement Date Conditions have not occurred prior to the Outside Completion Date, subject to extension by virtue of Force Majeure
+  reason: conditional_or_compound
+- agreement_id: carbonite-2014-ex1024
+  segment_id: p0751
+  span_text: '(a) Tenant notifies Landlord of such termination prior to the earlier to occur of: (1) completion of the Commencement Date Conditions; or (2) ten (10) business days after the Outside Completion Date; and'
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: 'prior to the earlier to occur of: (1) completion of the Commencement Date Conditions; or (2) ten (10) business days after the Outside Completion Date'
+  reason: conditional_or_compound
+- agreement_id: constantcontact-2012-ex101
+  segment_id: p0035
+  span_text: Landlord hereby agrees to cause the completion of Landlord’s Suite 418A Installations (as defined on Exhibit “E-1”, attached hereto) on or before the 1A Expansion Date.
+  timing_kind: scheduled
+  relation: lte
+  bound_date: '2012-06-01'
+  anchor:
+    name: 1A Expansion Date
+    agreement_id: constantcontact-2012-ex101
+    segment_id: p0027
+    span_text: As of June 1, 2012 (the “1A Expansion Date”)
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: on or before the 1A Expansion Date
+  reason: null
+- agreement_id: endurance-2017-ex106
+  segment_id: p0012
+  span_text: Tenant agrees to surrender Suite 409 to Landlord no later than the 3A Suite 409 Amended Surrender Date
+  timing_kind: scheduled
+  relation: lte
+  bound_date: '2020-06-30'
+  anchor:
+    name: 3A Suite 409 Amended Surrender Date
+    agreement_id: endurance-2017-ex106
+    segment_id: p0011
+    span_text: expiring June 30, 2020 (the “3A Suite 409 Amended Surrender Date”)
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: no later than the 3A Suite 409 Amended Surrender Date
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0607
+  span_text: Landlord shall indemnify, defend upon demand with counsel reasonably acceptable to Tenant and hold Tenant harmless from and against, any liabilities, losses, claims, demands, interest, penalties, fines, attorneys’ fees, experts’ fees, court costs, remediation costs, and other expenses actually incurred by Tenant as a result of the presence of any Hazardous Materials in, on, about, under or emanating from the Premises or Property as of the Effective Date of this Lease.
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: upon demand
+  reason: null
+- agreement_id: applieddigital-2026-ex101
+  segment_id: p0025
+  span_text: Guarantor shall provide written notice to Landlord of the occurrence of any Springing Event within [***] days after the occurrence thereof, which notice shall contain a detailed explanation of such Springing Event along with copies of any relevant agreements or correspondence.
+  timing_kind: unresolved
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: calendar
+  trigger_span_text: within [***] days after the occurrence thereof
+  reason: redacted_offset
+- agreement_id: applieddigital-2026-ex101
+  segment_id: p0079
+  span_text: On or prior to the date that is [***] after the date hereof, Guarantor shall, at Guarantor’s sole cost and expense, obtain and deliver to Landlord one Lease L/C to be issued for the benefit of Landlord, in an aggregate amount equal to [***] (the “Required L/C Amount”).
+  timing_kind: unresolved
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: On or prior to the date that is [***] after the date hereof
+  reason: redacted_offset
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0485
+  span_text: Tenant hereby agrees to pay Landlord, as Additional Rent, no later than thirty (30) days following receipt of an invoice therefor, the sum of all reasonable out-of-pocket amounts expended by Landlord in connection with the performance of the New Pathway-B Installation, the New Pathway-C Installation and the Card Reader Installation
+  timing_kind: contingent
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 30
+  offset_unit: calendar
+  trigger_span_text: no later than thirty (30) days following receipt of an invoice therefor
+  reason: null
+- agreement_id: carbonite-2014-ex1024
+  segment_id: p0821
+  span_text: Notwithstanding Section 15.1.2.1 of this Lease, below, it shall be deemed to be an Event of Default by Tenant under this Lease if Tenant fails to remedy a Sub-ECT Overage within one hundred twenty (120) hours after its receipt of an ECT Default Notice for such ECT Overage.
+  timing_kind: unresolved
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: within one hundred twenty (120) hours after its receipt of an ECT Default Notice for such ECT Overage
+  reason: unsupported_unit
+- agreement_id: carbonite-2014-ex1024
+  segment_id: p0837
+  span_text: If Tenant’s PM Audit reveals that Landlord is delinquent in complying with the PM Schedule, Tenant shall deliver written notice to Landlord of such delinquency, and Landlord shall cure such delinquency within the time allowed pursuant to Section 16.1.1 of this Lease.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: within the time allowed pursuant to Section 16.1.1 of this Lease
+  reason: cross_reference
+- agreement_id: mawson-2025-ex101
+  segment_id: p0156
+  span_text: Host must within three (3) Business Days reinstate the Services once all outstanding fees have been paid in cleared funds.
+  timing_kind: unresolved
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 3
+  offset_unit: business
+  trigger_span_text: within three (3) Business Days reinstate the Services once all outstanding fees have been paid in cleared funds
+  reason: business_days
+- agreement_id: mawson-2025-ex101
+  segment_id: p0188
+  span_text: Revenue earned from the CSP from Client electing to curtail will be applied as a credit to the monthly invoice in the month that Host receives the Curtailment Program Revenue
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: in the month that Host receives the Curtailment Program Revenue
+  reason: month_granularity

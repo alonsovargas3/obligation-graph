@@ -1,0 +1,568 @@
+version: timing_gold_v1
+name: reference
+documents:
+  constantcontact-2011-ex1041: d6be4091a85cacfb3703872b91863281b6fbf61aadfd0e410144ac20881f1478
+provenance:
+  drafted_by: gpt-6-astra (blind to classifier output)
+  adjudicated_by: claude-opus-5-5 (coordinator)
+  spot_checked: 0
+scope: sampled
+items:
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0568
+  span_text: Landlord agrees to use commercially reasonable efforts to cause the New Pathway Installation to be completed prior to the Commencement Date.
+  timing_kind: scheduled
+  relation: lt
+  bound_date: '2011-01-01'
+  anchor:
+    name: Commencement Date
+    agreement_id: constantcontact-2011-ex1041
+    segment_id: p0430
+    span_text: January 1, 2011
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: prior to the Commencement Date
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0568
+  span_text: In the event that the New Pathway Installation is not completed on or prior the Deadline Date, Tenant shall receive, as Tenant’s sole remedy therefor, one-quarter (1/4) day’s abatement of Base Rent for each day following the Deadline Date until the New Pathway Completion Date occurs.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: for each day following the Deadline Date until the New Pathway Completion Date occurs
+  reason: recurring_schedule
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0568
+  span_text: Landlord agrees to deliver the New Pathway Completion Notice to Tenant upon Landlord’s completion of the New Pathway Installation.
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: upon Landlord’s completion of the New Pathway Installation
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0569
+  span_text: Landlord agrees to use commercially reasonable efforts to cause the Card Reader Installation to be completed prior to the Commencement Date.
+  timing_kind: scheduled
+  relation: lt
+  bound_date: '2011-01-01'
+  anchor:
+    name: Commencement Date
+    agreement_id: constantcontact-2011-ex1041
+    segment_id: p0430
+    span_text: January 1, 2011
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: prior to the Commencement Date
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0576
+  span_text: All Base Rent shall be paid to Landlord in monthly installments in advance on the first day of each and every calendar month throughout the Term of this Lease; provided, however, that (a) the installment of Base Rent for the first (1st) full calendar month of the Term shall be payable upon Tenant’s execution of this Lease; and (b) if the Term of this Lease does not commence on the first day of a calendar month, the Base Rent for the Partial Month shall (i) be calculated on a per diem basis determined by dividing the Base Rent above by the total number of calendar days in such Partial Month and multiplying such amount by the number of days remaining in such Partial Month from and after (and including) the Commencement Date, and (ii) be paid by Tenant to Landlord on the Commencement Date.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: in monthly installments in advance on the first day of each and every calendar month throughout the Term of this Lease
+  reason: recurring_schedule
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0577
+  span_text: Tenant shall pay the Installation Fee to Landlord, no later than the thirtieth (30th) day following receipt of an invoice therefor.
+  timing_kind: contingent
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 30
+  offset_unit: calendar
+  trigger_span_text: no later than the thirtieth (30th) day following receipt of an invoice therefor
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0580
+  span_text: Tenant shall, in addition to Tenant’s obligation to pay the Late Payment to Landlord, also be required to pay to Landlord, as Additional Rent, (i) a Late Charge
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0584
+  span_text: Tenant shall pay a proportionate share of all Ancillary Utility Costs, which proportionate share shall be a fraction expressed as a percentage, the numerator of which shall be Tenant’s Aggregate Direct Electric Loads and the denominator of which shall be the sum of the Aggregate Direct Electric Loads for all of the tenants then operating in the Building.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0586
+  span_text: Tenant shall pay the Generator Fuel Payment to Landlord, as Additional Rent, within thirty (30) days of delivery of each Generator Fuel Payment invoice.
+  timing_kind: contingent
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 30
+  offset_unit: calendar
+  trigger_span_text: within thirty (30) days of delivery of each Generator Fuel Payment invoice
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0589
+  span_text: in the event such audit by Tenant discloses such an overcharge in excess of ten percent (10%) of the amount payable pursuant to this Lease, then Landlord shall pay to Tenant the reasonable costs and expenses of such audit, not to exceed Five Thousand and No/100 Dollars ($5,000.00) for any particular audit.
+  timing_kind: contingent
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: in the event such audit by Tenant discloses such an overcharge in excess of ten percent (10%) of the amount payable pursuant to this Lease
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0596
+  span_text: Tenant shall use the Tenant Space only for the Permitted Use.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0600
+  span_text: Landlord shall notify Tenant in writing when changes are made to Datacenter Rules and Regulations.
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: when changes are made to Datacenter Rules and Regulations
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0602
+  span_text: Tenant, at Tenant’s sole cost and expense, shall timely take all action required to cause all Alterations and Tenant’s (and all other Tenant Parties’) use of the Tenant Space to comply at all times during the Term of this Lease in all respects with all Applicable Laws; provided, however, that in no event shall Tenant be obligated to make improvements of a capital nature to the Premises, Building or Property except to correct work performed by Tenant or its contractors.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: at all times during the Term of this Lease
+  reason: anchor_without_date
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0604
+  span_text: Except for the extent of Tenant’s obligations with regard to compliance with Applicable Laws set forth in Section 6.3.1, above, Landlord covenants to timely take all action required to cause the Building and the Premises to be in material compliance with all Applicable Laws, including the requirements of all applicable easement and encumbrance documents throughout the Term.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: throughout the Term
+  reason: anchor_without_date
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0607
+  span_text: Landlord shall indemnify, defend upon demand with counsel reasonably acceptable to Tenant and hold Tenant harmless from and against, any liabilities, losses, claims, demands, interest, penalties, fines, attorneys’ fees, experts’ fees, court costs, remediation costs, and other expenses actually incurred by Tenant as a result of the presence of any Hazardous Materials in, on, about, under or emanating from the Premises or Property as of the Effective Date of this Lease.
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: upon demand
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0622
+  span_text: Landlord will maintain and keep in good repair at Landlord’s sole cost and expense the Pathway, the PDUs serving the Premises, Landlord’s Access Control Systems, the HVAC system and plumbing, if any, serving the Premises, the UPS Plant serving the Premises, the Back-Up Power, the fire suppression systems serving the Premises, the Common Area cable management systems (comprised of ladder racks, fiber trays, under-floor cable trays and other similar equipment located within the Common Areas that are installed for the benefit of all tenants of the Building), the floors and foundation of the Building, the exterior walls and windows of the Building, the roof of the Building, the Common Areas, and the Common Area HVAC system within the Building.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0624
+  span_text: Tenant shall exercise the foregoing right by delivering its PM Audit Notice to Landlord no less than thirty (30) days before the date upon which Tenant desires to perform its PM Audit.
+  timing_kind: contingent
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: -30
+  offset_unit: calendar
+  trigger_span_text: no less than thirty (30) days before the date upon which Tenant desires to perform its PM Audit
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0625
+  span_text: During the Term of this Lease, Tenant shall, at Tenant’s sole cost and expense, maintain the Tenant Space and Tenant’s equipment therein in good order and in a clean and safe condition.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: During the Term of this Lease
+  reason: anchor_without_date
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0632
+  span_text: Tenant agrees that, upon the expiration or earlier termination of this Lease, Tenant shall at Tenant’s sole cost and expense, promptly remove all of Tenant’s Personal Property, and shall restore those portions of the Building and/or the Tenant Space damaged by such removal of (or by the initial installation of) such Tenant’s Personal Property to their condition existing immediately prior to the installation or placement of such items (including, without limitation, the replacement of all damaged floor tiles in the Premises), ordinary wear and tear and damage by fire or other casualty excepted.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: upon the expiration or earlier termination of this Lease
+  reason: conditional_or_compound
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0636
+  span_text: Notwithstanding the foregoing, in the event that the Repair Period-Estimated exceeds ninety (90) days, Landlord shall have the right to terminate this Lease by, and effective upon, written notice to Tenant as part of the Casualty Repair Notice.
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: effective upon, written notice to Tenant as part of the Casualty Repair Notice
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0646
+  span_text: If the part of the Building or the Property that is taken or condemned as part of the Taking contains any portion of the Premises that existed immediately prior to such Taking, or if, by reason of such Taking, Tenant no longer has reasonable means of access to the Tenant Space or Tenant’s Permitted Use of the Premises is materially impaired, Tenant may terminate this Lease by notice to Landlord given within sixty (60) days following the date upon which Tenant received notice of such Taking.
+  timing_kind: contingent
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 60
+  offset_unit: calendar
+  trigger_span_text: within sixty (60) days following the date upon which Tenant received notice of such Taking
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0653
+  span_text: Tenant shall, at Tenant’s expense, procure and maintain throughout the Term of this Lease a policy or policies of insurance in accordance with the terms and requirements set forth in Exhibit “B-1” to this Lease.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: throughout the Term of this Lease
+  reason: anchor_without_date
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0654
+  span_text: Prior to occupying the Tenant Space, and prior to the expiration of each such policy, Tenant shall submit to Landlord certificates of insurance evidencing such policies (and the applicable renewals thereof) being in effect.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: Prior to occupying the Tenant Space, and prior to the expiration of each such policy
+  reason: conditional_or_compound
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0655
+  span_text: Landlord shall, at Landlord’s expense, procure and maintain throughout the Term of this Lease a policy or policies of insurance in accordance with the terms and requirements set forth in Exhibit “B-2” to this Lease.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: throughout the Term of this Lease
+  reason: anchor_without_date
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0657
+  span_text: Except as otherwise expressly set forth in Section 10.1.1 and Section 10.5, below, to the contrary, Tenant shall not effect a Transfer, without Landlord’s express prior written consent, which consent shall not be unreasonably withheld, conditioned or delayed.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0659
+  span_text: If Tenant desires to make any Transfer (other than a Permitted Transfer, for which Tenant must merely notify Landlord prior to the occurrence of same), then at least ten (10) business days (but no more than one hundred eighty (180) days) prior to the proposed effective date of the Transfer, Tenant shall submit a Transfer Notice to Landlord.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: at least ten (10) business days (but no more than one hundred eighty (180) days) prior to the proposed effective date of the Transfer
+  reason: business_days
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0660
+  span_text: Except with regard to a Permitted Transfer, at any time within ten (10) business days after Landlord’s receipt of all (but not less than all) of the information and documents described in Section 10.2, Landlord shall have the right (but not the obligation), exercisable by written notice to Tenant, to elect to cancel and terminate this Lease.
+  timing_kind: unresolved
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 10
+  offset_unit: business
+  trigger_span_text: within ten (10) business days after Landlord’s receipt of all (but not less than all) of the information and documents described in Section 10.2
+  reason: business_days
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0664
+  span_text: Landlord and Tenant agree that, if Tenant assigns this Lease, or subleases any part of the Tenant Space, for any Excess Rent, then Tenant shall pay to Landlord, as Additional Rent, fifty percent (50%) of any such Excess Rent immediately upon Tenant’s receipt thereof.
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: immediately upon Tenant’s receipt thereof
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0665
+  span_text: At any time and from time to time, within fifteen (15) days after written request by Landlord, Tenant shall execute, acknowledge and deliver to Landlord a statement in writing certifying all matters relating to this Lease reasonably requested by Landlord and/or any prospective purchaser of the Building and/or the Property and/or any Holder.
+  timing_kind: contingent
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 15
+  offset_unit: calendar
+  trigger_span_text: within fifteen (15) days after written request by Landlord
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0672
+  span_text: Upon the expiration of the Term of this Lease, or upon any earlier termination of this Lease or the termination of Tenant’s right to possess the Tenant Space, Tenant shall, subject to the provisions of this Article 13 and Section 8.4, quit and surrender possession of the Tenant Space to Landlord in good working order and clean condition, ordinary wear and tear excepted.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: Upon the expiration of the Term of this Lease, or upon any earlier termination of this Lease or the termination of Tenant’s right to possess the Tenant Space
+  reason: conditional_or_compound
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0675
+  span_text: During any such holdover period, Tenant shall pay to Landlord a monthly Base Rent in an amount equal to one hundred fifty percent (150%) of the Base Rent payable by Tenant to Landlord during the last month of the Term of this Lease and one hundred percent (100%) of the Additional Rent payable by Tenant to Landlord during the last month of the Term of this Lease.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: During any such holdover period, Tenant shall pay to Landlord a monthly Base Rent
+  reason: recurring_schedule
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0698
+  span_text: In the event that any action or proceeding is brought against Landlord or any other member of the Landlord Group by reason of any indemnified Claim, Tenant, upon notice from Landlord, shall defend such action or proceeding at Tenant’s cost and expense by counsel reasonably approved by Landlord.
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: upon notice from Landlord
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0699
+  span_text: Landlord hereby agrees to defend, indemnify, and hold harmless Tenant and the other members of the Tenant Group from and against (and to reimburse Tenant and the other members of the Tenant Group for) all Claims to the extent arising from or in connection with the active gross negligence or willful misconduct of Landlord or any member of the Landlord Group at the Property.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0705
+  span_text: Any mechanic’s lien filed against the Tenant Space, the Building or the Property, or any portion of any of the above, for work claimed to have been done, or materials claimed to have been furnished to Tenant, shall be duly discharged or bonded off by Tenant within thirty (30) days after notice to Tenant of the filing of the lien.
+  timing_kind: contingent
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 30
+  offset_unit: calendar
+  trigger_span_text: within thirty (30) days after notice to Tenant of the filing of the lien
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0721
+  span_text: Landlord agrees to use commercially reasonable efforts to provide daily updates to Tenant regarding progress toward such completion.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: daily updates
+  reason: recurring_schedule
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0733
+  span_text: Should Landlord assign part of its obligation to a third party, Landlord shall, subject to the terms of Sections 14.1, 14.2 and 16.2, retain the responsibility for ensuring that the assigned obligations are properly performed under this Lease, including ensuring that such third party provides all reasonable account management services.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0739
+  span_text: In addition, if it should otherwise be necessary or proper for Landlord to consult an attorney concerning this Lease for the review of instruments evidencing a proposed Transfer or for the purpose of collecting Rent, Tenant agrees to pay to Landlord its actual attorneys’ fees whether suit be brought or not to the extent such fees exceed $1,000.00.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0778
+  span_text: Within ten (10) business days after Landlord’s written request therefor, which request shall be made only in the event that any actual or prospective lender, mortgagee or purchaser of the Building has required same, Tenant shall deliver Tenant’s Financial Statements to Landlord for the two (2) fiscal years immediately preceding Landlord’s request.
+  timing_kind: unresolved
+  relation: lte
+  bound_date: null
+  anchor: null
+  offset_days: 10
+  offset_unit: business
+  trigger_span_text: Within ten (10) business days after Landlord’s written request therefor
+  reason: business_days
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0863
+  span_text: Terminate this Lease
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0875
+  span_text: 'Upon an Event of Default, Tenant shall also be liable for and shall pay to Landlord, in addition to any sum provided to be paid pursuant to this Lease: (i) the reasonable costs and expenses of securing new tenants, including expenses for refixturing, alterations and other costs in connection with preparing the Tenant Space for the new tenant and any reasonable or necessary alterations, (ii) the cost of removing and storing Tenant’s or other occupant’s property, and (iii) all reasonable expenses incurred by Landlord in enforcing Landlord’s remedies, including actual attorneys’ fees.'
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: Upon an Event of Default
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0875
+  span_text: Past due rental and other past due payments shall bear interest from maturity at the Default Rate (as defined in Section 3.5 of this Lease) until paid.
+  timing_kind: unresolved
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: from maturity at the Default Rate (as defined in Section 3.5 of this Lease) until paid
+  reason: relative_to_other_obligation
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0877
+  span_text: Landlord agrees to use reasonable efforts to relet the Tenant Space after Tenant vacates the Tenant Space in the event that the Lease is terminated following an Event of Default by Tenant hereunder.
+  timing_kind: contingent
+  relation: gt
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: after Tenant vacates the Tenant Space
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0905
+  span_text: Landlord shall (i) furnish electricity to Suite 1.5 sufficient to meet ECT-Suite 1.5, (ii) furnish electricity to Suite 1.5.1 sufficient to meet the ECT-Suite 1.5.1, (iii) furnish electricity to Suite 1.5.2 sufficient to meet the ECT-Suite 1.5.2, and (iv) furnish electricity to Suite 1.14A sufficient to meet the ECT-Suite 1.14A.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0905
+  span_text: In addition, Landlord shall furnish back-up power for the Premises sufficient to meet the Back-Up Power Specifications.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0906
+  span_text: Landlord shall furnish HVAC to the Premises sufficient to cause the average temperature and humidity of the Premises (measured at the return air vents in the Premises) to meet the HVAC Specifications.
+  timing_kind: untimed
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: null
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0910
+  span_text: 'Upon the occurrence of each Separate/Independent Interruption of Landlord’s Essential Services, Tenant shall be entitled to an Outage Credit in the amount set forth opposite the duration of such Interruption of Landlord’s Essential Services in Table 2.A.(1)-A and 2.A.(1)-B, below, as applicable:'
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: Upon the occurrence of each Separate/Independent Interruption of Landlord’s Essential Services
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0933
+  span_text: 'Upon the occurrence of each Loss of Redundancy that occurs for at least one hundred sixty eight (168) consecutive hours (i.e., seven (7) full twenty-four (24) hour periods), Tenant shall be entitled to one-half (1/2) of an Outage Credit (each, a “Partial Outage Credit”) as set forth opposite the duration of such Loss of Redundancy in Table 2.A.(2), below:'
+  timing_kind: contingent
+  relation: eq
+  bound_date: null
+  anchor: null
+  offset_days: 0
+  offset_unit: calendar
+  trigger_span_text: Upon the occurrence of each Loss of Redundancy that occurs for at least one hundred sixty eight (168) consecutive hours (i.e., seven (7) full twenty-four (24) hour periods)
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0943
+  span_text: Once Landlord has rectified a particular Interruption of Landlord’s Essential Services or Loss of Redundancy, Landlord shall provide the Interruption Cure Completion Notice to Tenant as soon as is reasonably practicable thereafter.
+  timing_kind: contingent
+  relation: gt
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: Once Landlord has rectified a particular Interruption of Landlord’s Essential Services or Loss of Redundancy
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0946
+  span_text: In the event of a Continuous Outage, Tenant may terminate this Lease by timely delivery of the Continuous Outage Termination Notice to Landlord.
+  timing_kind: contingent
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: In the event of a Continuous Outage
+  reason: null
+- agreement_id: constantcontact-2011-ex1041
+  segment_id: p0947
+  span_text: In the event of a Chronic Outage, Tenant may terminate this Lease by timely delivery of the Chronic Outage Termination Notice to Landlord.
+  timing_kind: contingent
+  relation: null
+  bound_date: null
+  anchor: null
+  offset_days: null
+  offset_unit: null
+  trigger_span_text: In the event of a Chronic Outage
+  reason: null
