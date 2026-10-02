@@ -75,7 +75,7 @@ The page and the tools use document IDs, not nicknames:
 ### 1:30 to 1:50: Ask it as an agent (Claude Desktop)
 
 1. Switch to Claude Desktop, in the new chat you prepared.
-2. Type: **What do we owe the landlord at 55 Middlesex Turnpike?** and press Enter.
+2. Type: **What does the tenant owe the landlord under the 55 Middlesex Turnpike lease?** and press Enter. Use the third person: a question with "we" makes Claude Desktop check the answer against your personal context instead of answering about the lease.
 3. You'll see a "Used Obligation graph" or "Get obligations" line. Then the answer lists the base rent schedules and additional rent with section references, and says that every item is pending.
 
 - **Say:** "Agents ask the same graph over MCP. The answer comes back with its clauses, and it says plainly that none of these has a computable due date yet."
