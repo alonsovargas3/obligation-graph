@@ -121,6 +121,8 @@ def _load_alias_config(path: str | Path, base_id: str) -> _AliasConfig:
     one is dropped (target_not_in_corpus) rather than guessed at.
     """
     cfg = _AliasConfig(base_id, {}, frozenset(), ())
+    alias_to_doc: dict[str, str] = {}
+    unresolved = frozenset()
     p = Path(path)
     if not p.is_file():
         return cfg
@@ -128,7 +130,7 @@ def _load_alias_config(path: str | Path, base_id: str) -> _AliasConfig:
     for chain in data.get("chains") or []:
         if chain.get("base") != base_id:
             continue
-        alias_to_doc: dict[str, str] = {}
+        alias_to_doc = {}
         for doc_id, words in (chain.get("aliases") or {}).items():
             for word in words or []:
                 alias_to_doc[word] = doc_id
