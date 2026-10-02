@@ -5,6 +5,12 @@ chunk), verified deterministically, and written as one grounded snapshot. An
 incomplete document keeps its previous snapshot and fails the run. Every
 document-run appends one allowlisted record to logs/extract_runs.jsonl; no
 credential, request header, or exception repr ever reaches a written file.
+
+Wave 4 (Task 33): recorded model responses live under ``eval/recorded/extract/``
+(``og.replay.cache_dir``), selected by ``OG_REPLAY`` (on / strict / off). The
+API client is constructed lazily, on the first cache miss outside strict mode,
+so a full replay runs without credentials. A strict miss exits 4 with
+``replay_miss <fingerprint>`` and writes nothing.
 """
 
 from __future__ import annotations
@@ -23,6 +29,7 @@ from typing import Any
 import anthropic
 import yaml
 
+from og import replay
 from og.extract.cache import ResponseCache
 from og.extract.client import Extractor
 from og.extract.prompt import prompt_version
@@ -41,7 +48,6 @@ from og.textdoc import TextDoc
 
 SOURCES_PATH = Path("data/sources.yaml")
 TEXT_DIR = Path("data/text")
-CACHE_ROOT = Path("data/cache/extract")
 LOG_PATH = Path("logs/extract_runs.jsonl")
 
 # Dated price table, USD per million tokens. A model missing from the table
@@ -59,6 +65,19 @@ PRICE_BASIS = "PRICES_2026_10"
 EXIT_OK = 0
 EXIT_USAGE = 2
 EXIT_FAILED = 3
+EXIT_REPLAY_MISS = 4
+
+
+class _LazyClient:
+    """Constructs the real client on first use; a full replay never uses it."""
+
+    def __init__(self):
+        self._client = None
+
+    def __getattr__(self, name: str):
+        if self._client is None:
+            self._client = anthropic.Anthropic()  # credentials come from the environment
+        return getattr(self._client, name)
 
 
 def _env(name: str, default: str) -> str:
@@ -181,6 +200,8 @@ def _process_doc(
     else:
         try:
             result = extractor.extract(doc)
+        except replay.ReplayMiss:
+            raise  # a strict miss is exit 4, not a failed document run
         except Exception as exc:  # a short code only; never an exception repr
             error = type(exc).__name__
         if result is not None:
@@ -329,27 +350,40 @@ def main(argv: list[str] | None = None, *, client=None) -> int:
             file=sys.stderr,
         )
         return EXIT_USAGE
+    try:
+        replay_mode = replay.mode()
+    except ValueError as exc:
+        print(f"og.extract: {exc}", file=sys.stderr)
+        return EXIT_USAGE
 
-    if client is None:  # credentials come from the environment and are never logged
-        client = anthropic.Anthropic()
+    cache = (
+        None
+        if args.no_cache or replay_mode == "off"
+        else ResponseCache(replay.cache_dir("extract"))
+    )
     extractor = Extractor(
-        client,
-        None if args.no_cache else ResponseCache(CACHE_ROOT),
+        client if client is not None else _LazyClient(),
+        cache,
         model=_env("OG_EXTRACT_MODEL", "claude-sonnet-5-5"),
         effort=_env("OG_EXTRACT_EFFORT", "high"),
         no_cache=args.no_cache,
         archive_dir=args.runs_dir if args.no_cache else None,
         max_chars=max_chars,
+        strict=replay_mode == "strict" and not args.no_cache,
     )
     failed = False
-    for entry in selected:
-        failed |= not _process_doc(
-            entry,
-            extractor=extractor,
-            db_path=args.db,
-            runs_dir=args.runs_dir,
-            model=extractor.model,
-        )
+    try:
+        for entry in selected:
+            failed |= not _process_doc(
+                entry,
+                extractor=extractor,
+                db_path=args.db,
+                runs_dir=args.runs_dir,
+                model=extractor.model,
+            )
+    except replay.ReplayMiss as miss:
+        print(f"og.extract: replay_miss {miss.args[0]}", file=sys.stderr)
+        return EXIT_REPLAY_MISS
     return EXIT_FAILED if failed else EXIT_OK
 
 

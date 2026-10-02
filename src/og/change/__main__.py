@@ -12,6 +12,15 @@ alone replays the stored ungated outcomes with an identical fingerprint. The
 API budget is reserved before every call and sticky across documents and modes
 (R6, rev 2.1 R2-3). Every run appends one allowlisted record to the JSONL log;
 no credential, request header, or exception repr ever reaches a written file.
+
+Wave 4 (Task 33): check responses and gate samples replay from
+``eval/recorded/{change,gate}/`` (``og.replay``, mode ``OG_REPLAY``). The API
+client is constructed lazily on the first miss outside strict mode; a strict
+miss exits 4 with ``replay_miss <fingerprint>`` and writes no recordings. Run
+costs split recorded cost (always) from incremental spend (only calls this
+invocation made), and the record carries ``recorded_latency_ms`` (the checks
+plus the classifier gates' call latencies) and ``replay_wall_ms`` (this
+invocation's wall time).
 """
 
 from __future__ import annotations
@@ -32,6 +41,7 @@ from typing import Any
 import anthropic
 import yaml
 
+from og import replay
 from og.budget import Budget
 from og.change.chain import BuiltChain, ChainError, build_gate_context, build_snapshot
 from og.change.client import (
@@ -44,7 +54,7 @@ from og.change.types import ChangeRunInfo, Finding, SnapshotChanged
 from og.change.verify import verify_findings
 from og.change.writer import write_change_run
 from og.gates.cascade import run_cascade
-from og.gates.haiku import HaikuGate
+from og.gates.haiku import GateCache, HaikuGate
 from og.gates.rules import RulesGate
 from og.gates.types import QUESTIONS_PATH, GateContext, GateDecision, Question, load_questions
 from og.pricing import price
@@ -57,8 +67,22 @@ DEFAULT_DB = "data/graph.db"
 EXIT_OK = 0
 EXIT_USAGE = 2
 EXIT_FAILED = 3
+EXIT_REPLAY_MISS = 4
 
 MODE_CHOICES = ("ungated", "gated", "both")
+
+
+class _LazyClient:
+    """Constructs the real client on first use; a full replay never uses it."""
+
+    def __init__(self):
+        self._client = None
+
+    def __getattr__(self, name: str):
+        if self._client is None:
+            self._client = anthropic.Anthropic()  # credentials come from the environment
+        return getattr(self._client, name)
+
 
 _CHAIN_MESSAGES = {
     "missing_extraction": "no current extraction run; run make extract first",
@@ -118,6 +142,7 @@ def _decision_record(decision: GateDecision) -> dict[str, Any]:
         "confidence": decision.confidence,
         "samples": list(decision.samples),
         "run_check": decision.run_check,
+        "cache_hit": decision.cache_hit,
         "latency_ms": decision.latency_ms,
         "input_tokens": decision.input_tokens,
         "output_tokens": decision.output_tokens,
@@ -173,12 +198,18 @@ def _sum_cost(values: list[float | None]) -> float | None:
 
 
 def _run_costs(outcomes, decisions) -> tuple[float | None, float | None]:
-    """(recorded cost of all usage, incremental cost of the calls this run made)."""
+    """(recorded cost of all usage, incremental cost of the calls this run made).
+
+    Wave 4 rev 2 W4-4: the recorded gate cost always counts in ``cost_usd``;
+    ``incremental_cost_usd`` counts only the gate decisions that were not
+    replayed (``cache_hit`` false) plus the checks this run actually called.
+    """
     recorded = price([a for o in outcomes for a in o.attempts])[0]
     real = price([a for o in outcomes if not o.cache_hit for a in o.attempts])[0]
     gates = _sum_cost([d.cost_usd for d in decisions])
+    live_gates = _sum_cost([d.cost_usd for d in decisions if not d.cache_hit])
     cost_usd = None if recorded is None or gates is None else recorded + gates
-    incremental = None if real is None or gates is None else real + gates
+    incremental = None if real is None or live_gates is None else real + live_gates
     return cost_usd, incremental
 
 
@@ -321,6 +352,7 @@ def _run_mode(
         exit_code = EXIT_FAILED
 
     cost_usd, incremental_cost_usd = _run_costs(outcomes, decisions)
+    wall_ms = int((time.monotonic() - started) * 1000)
     record = {
         "run_id": run_id,
         "pair_id": pair_id,
@@ -343,7 +375,12 @@ def _run_mode(
         "verified": len(findings),
         "cost_usd": cost_usd,
         "incremental_cost_usd": incremental_cost_usd,
-        "latency_ms": int((time.monotonic() - started) * 1000),
+        "recorded_latency_ms": (
+            sum(o.latency_ms or 0 for o in outcomes)
+            + sum(d.latency_ms for d in decisions if d.tier == "classifier")
+        ),
+        "latency_ms": wall_ms,
+        "replay_wall_ms": wall_ms,
         "budget_exhausted": budget.exhausted,
     }
     _append_log(log_path, record)
@@ -388,10 +425,13 @@ def _process_change_order(
     log_path: Path,
     mode: str,
     client,
+    gate_cache: GateCache | None,
 ) -> int:
     co_id = built.snapshot.change_order_id
     context = build_gate_context(con, built.base_agreement_id)
-    haiku = HaikuGate(client, model=gate_model, budget=budget, timeout_s=gate_timeout_s)
+    haiku = HaikuGate(
+        client, model=gate_model, budget=budget, timeout_s=gate_timeout_s, cache=gate_cache
+    )
     stored = _stored_baseline(con, co_id)
     pair_id = _new_id()
     rc = EXIT_OK
@@ -524,14 +564,24 @@ def main(argv: list[str] | None = None, *, client=None) -> int:
     gate_model = _env("OG_GATE_MODEL", "claude-haiku-4-5-20251001")
     effort = _env("OG_CHANGE_EFFORT", "high")
     log_path = Path(args.log)
+    try:
+        replay_mode = replay.mode()
+    except ValueError as exc:
+        print(f"og.change: {exc}", file=sys.stderr)
+        return EXIT_USAGE
+    # --no-cache and OG_REPLAY=off both bypass the recorded responses; the
+    # checks then run against a throwaway scratch cache (W4-5).
+    bypass = args.no_cache or replay_mode == "off"
     con = connect(args.db)
     rc = EXIT_OK
-    if args.no_cache:
+    if bypass:
         context = tempfile.TemporaryDirectory(prefix="og-change-")
     else:
         context = contextlib.nullcontext(None)
     with context as scratch:
-        cache_dir = scratch if args.no_cache else None
+        check_cache_dir = scratch if bypass else replay.cache_dir("change")
+        gate_cache = None if bypass else GateCache(replay.cache_dir("gate"))
+        client = client if client is not None else _LazyClient()
         for co_entry in change_orders:
             try:
                 built = build_snapshot(con, entries, co_entry)
@@ -541,31 +591,34 @@ def main(argv: list[str] | None = None, *, client=None) -> int:
                 detail = _CHAIN_MESSAGES.get(code, code)
                 print(f"og.change: {where}: {detail}", file=sys.stderr)
                 return EXIT_USAGE
-            if client is None:  # credentials come from the environment, constructed lazily
-                client = anthropic.Anthropic()
-            checker_kwargs: dict[str, Any] = {
-                "model": check_model,
-                "effort": effort,
-                "budget": budget,
-            }
-            if cache_dir is not None:
-                checker_kwargs["cache_dir"] = cache_dir
-            checker = Checker(client, **checker_kwargs)
-            code = _process_change_order(
-                co_entry,
-                con=con,
-                built=built,
-                questions=questions,
-                rules=rules,
-                checker=checker,
+            checker = Checker(
+                client,
+                model=check_model,
+                effort=effort,
                 budget=budget,
-                gate_model=gate_model,
-                gate_timeout_s=gate_timeout_s,
-                question_set_sha256=question_set_sha256,
-                log_path=log_path,
-                mode=args.mode,
-                client=client,
+                cache_dir=check_cache_dir,
+                strict=replay_mode == "strict" and not bypass,
             )
+            try:
+                code = _process_change_order(
+                    co_entry,
+                    con=con,
+                    built=built,
+                    questions=questions,
+                    rules=rules,
+                    checker=checker,
+                    budget=budget,
+                    gate_model=gate_model,
+                    gate_timeout_s=gate_timeout_s,
+                    question_set_sha256=question_set_sha256,
+                    log_path=log_path,
+                    mode=args.mode,
+                    client=client,
+                    gate_cache=gate_cache,
+                )
+            except replay.ReplayMiss as miss:
+                print(f"og.change: replay_miss {miss.args[0]}", file=sys.stderr)
+                return EXIT_REPLAY_MISS
             if code == EXIT_USAGE:
                 rc = EXIT_USAGE
             elif code == EXIT_FAILED:

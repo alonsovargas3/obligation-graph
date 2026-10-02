@@ -5,6 +5,11 @@ RawItems (or a short, typed failure) and drives one API call per chunk through
 the cache. Every failure is reduced to a status plus a short error code; an
 exception repr never enters a log line. Ok outcomes are cached under the
 request fingerprint; failures never are.
+
+Wave 4 (Task 33): the cache is the recorded-response store under
+``eval/recorded/extract/``. With ``strict=True`` a cache miss raises
+:class:`og.replay.ReplayMiss` before the client is touched, so a strict replay
+never constructs an API client and never writes.
 """
 
 from __future__ import annotations
@@ -20,6 +25,7 @@ from pathlib import Path
 
 import anthropic
 
+from ..replay import ReplayMiss
 from ..textdoc import TextDoc
 from .cache import ResponseCache
 from .chunk import chunk_doc
@@ -202,6 +208,7 @@ class Extractor:
         no_cache: bool = False,
         archive_dir: str | Path | None = None,
         max_chars: int = 12000,
+        strict: bool = False,
     ):
         self.client = client
         self.cache = cache
@@ -210,6 +217,7 @@ class Extractor:
         self.no_cache = no_cache
         self.archive_dir = Path(archive_dir) if archive_dir is not None else None
         self.max_chars = max_chars
+        self.strict = strict
 
     def extract(self, doc: TextDoc) -> ExtractResult:
         chunks = chunk_doc(doc, max_chars=self.max_chars)
@@ -255,6 +263,10 @@ class Extractor:
                 return ChunkOutcome(
                     chunk.chunk_id, "ok", items, attempts, None, True, fingerprint, None
                 )
+            if self.strict:
+                # OG_REPLAY=strict: a miss is an error before any client call,
+                # and nothing is written (wave 4 rev 2 W4-5).
+                raise ReplayMiss(fingerprint)
         latency_ms = None
         try:
             start = time.monotonic()

@@ -23,6 +23,7 @@ from pathlib import Path
 from ..budget import Budget, BudgetExhausted
 from ..extract.types import Attempt, BadResponse, Refused, TruncatedResponse
 from ..gates.types import Question
+from ..replay import ReplayMiss
 from .types import FINDING_KINDS, RAW_FINDING_FIELDS, ChainDoc, CheckOutcome, RawFinding
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -30,7 +31,9 @@ PROMPT_PATH = ROOT / "prompts" / "change_v1.md"
 SCHEMA_PATH = ROOT / "prompts" / "change_v1.schema.json"
 
 MAX_TOKENS = 4096
-DEFAULT_CACHE_DIR = "data/cache/change"
+# Wave 4: the CLI passes the recorded-response directory (og.replay.cache_dir("change"));
+# a bare Checker() simply never reads or writes recordings.
+DEFAULT_CACHE_DIR = None
 
 # Nullable string fields of one finding, in schema order after the required
 # new_quote / new_segment_id / kind triple.
@@ -300,15 +303,17 @@ class Checker:
         model: str,
         effort: str,
         max_tokens: int = MAX_TOKENS,
-        cache_dir: str | Path = DEFAULT_CACHE_DIR,
+        cache_dir: str | Path | None = DEFAULT_CACHE_DIR,
         budget: Budget | None = None,
+        strict: bool = False,
     ):
         self.client = client
         self.model = model
         self.effort = effort
         self.max_tokens = max_tokens
-        self.cache = ChangeCache(cache_dir)
+        self.cache = ChangeCache(cache_dir) if cache_dir is not None else None
         self.budget = budget if budget is not None else Budget(None)
+        self.strict = strict
 
     def check(self, chain: list[ChainDoc], category: str, question: Question) -> CheckOutcome:
         request = build_request(
@@ -320,7 +325,7 @@ class Checker:
             max_tokens=self.max_tokens,
         )
         fingerprint = request_fingerprint(request, chain)
-        cached = self.cache.get(fingerprint)
+        cached = self.cache.get(fingerprint) if self.cache is not None else None
         if cached is not None:
             return self._outcome(
                 category,
@@ -332,6 +337,10 @@ class Checker:
                 fingerprint,
                 None,
             )
+        if self.strict:
+            # OG_REPLAY=strict: a miss is an error before any client call,
+            # and nothing is written (wave 4 rev 2 W4-5).
+            raise ReplayMiss(fingerprint)
         try:
             counted = self.client.beta.messages.count_tokens(
                 **{k: request[k] for k in ("model", "system", "messages", "output_config")}
@@ -369,17 +378,18 @@ class Checker:
                 category, status, [], attempts, False, latency_ms, fingerprint, None
             )
         self.budget.settle(reservation, attempts)
-        self.cache.put(
-            fingerprint,
-            {
-                "findings": [asdict(item) for item in items],
-                "attempts": [asdict(a) for a in attempts],
-                "prompt_version": prompt_version(),
-                "category": category,
-                "request_fingerprint": fingerprint,
-                "latency_ms": latency_ms,
-            },
-        )
+        if self.cache is not None:
+            self.cache.put(
+                fingerprint,
+                {
+                    "findings": [asdict(item) for item in items],
+                    "attempts": [asdict(a) for a in attempts],
+                    "prompt_version": prompt_version(),
+                    "category": category,
+                    "request_fingerprint": fingerprint,
+                    "latency_ms": latency_ms,
+                },
+            )
         return self._outcome(category, "ok", items, attempts, False, latency_ms, fingerprint, None)
 
     @staticmethod
