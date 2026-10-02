@@ -2,10 +2,11 @@
 
 The model proposes RawItems; verify() decides what may be stored. Every stored
 field is either the copied source slice or proven present in it by a field
-rule (plan task 8 with the rev 2.1 details and the rev 2.2/2.4 overrides:
-token-bounded money and day counts, deadline-conflict pairing, and the rev 2.4
-declaration grammar for event dates and party roles). Anything that fails is
-dropped or nulled with a FieldCorrection, never inferred.
+rule (plan task 8 with the rev 2.1 details and the rev 2.2/2.4/2.5 overrides:
+token-bounded money and day counts, deadline-conflict pairing, the rev 2.4
+declaration grammar for event dates and party roles, and the rev 2.5
+source-sentence governing words, whole-name fields, and finite descriptors).
+Anything that fails is dropped or nulled with a FieldCorrection, never inferred.
 """
 
 from __future__ import annotations
@@ -235,8 +236,13 @@ _DATE_FORM = (
 )
 
 
-def _event_declared_isos(quote: str, name: str) -> set[str]:
-    """Dates declared by `[The] [“]Name[”] CONNECTOR DATE [.; end]` in the quote."""
+def _event_declared_isos(quote: str, name: str, seg_text: str, base: int) -> set[str]:
+    """Dates declared by `[The] [“]Name[”] CONNECTOR DATE [.; end]` in the quote.
+
+    R5-1: a declaration whose full source sentence (R3-1 boundaries, taken from
+    the cited segment, semicolons not ending it) contains a governing word
+    binds nothing.
+    """
     words = name.split()
     if not words:
         return set()
@@ -246,7 +252,46 @@ def _event_declared_isos(quote: str, name: str) -> set[str]:
         r"" + _CONNECTORS + r"\s+(" + _DATE_FORM + r")(?=\s*[.;]|$)",
         re.IGNORECASE,
     )
-    return {iso for m in pat.finditer(quote) if (iso := _iso_of(m.group(1)))}
+    isos: set[str] = set()
+    for m in pat.finditer(quote):
+        iso = _iso_of(m.group(1))
+        if not iso:
+            continue
+        s_start, s_end = _sentence_bounds(seg_text, base + m.start())
+        if _RE_GOVERNING.search(seg_text[s_start:s_end]):
+            continue
+        isos.add(iso)
+    return isos
+
+
+# ------------------------------------------- rev 2.5 source-sentence context (R5-1)
+
+_RE_GOVERNING = re.compile(
+    r"\b(?:not|no|never|false|unless|if|provided|except|notwithstanding|neither"
+    r"|nor|without|subject\s+to)\b",
+    re.IGNORECASE,
+)
+_RE_SENT_END = re.compile(r"([.!?])(\s+)(\S)")
+_RE_MONTH_ABBR = re.compile(r"(?i)(?:jan|feb|mar|apr|may|jun|jul|aug|sept|sep|oct|nov|dec)\Z")
+_RE_CAP_INITIAL = re.compile(r"(?:^|[^A-Za-z])[A-Z]\Z")
+
+
+def _sentence_bounds(text: str, pos: int) -> tuple[int, int]:
+    """The source sentence containing pos (R3-1 boundaries; `;` does not end one)."""
+    start, end = 0, len(text)
+    for m in _RE_SENT_END.finditer(text):
+        if not m.group(3).isupper():
+            continue
+        if m.group(1) == ".":
+            head = text[: m.start(1)]
+            if _RE_MONTH_ABBR.search(head) or _RE_CAP_INITIAL.search(head):
+                continue
+        b = m.start(3)
+        if b <= pos:
+            start = max(start, b)
+        elif b < end:
+            end = b
+    return start, end
 
 
 # ------------------------------------------- rev 2.4 declaration grammar (R4-2)
@@ -255,13 +300,29 @@ _ROLE_ALT = "landlord|tenant|guarantor|provider|customer|lender|other"
 _RE_ROLE_BEFORE = re.compile(r"\b(" + _ROLE_ALT + r")\s+$", re.IGNORECASE)
 _RE_A_HEAD = re.compile(r"(?:\bbetween\s+|\bby\s+|\band\s+|,\s*)$", re.IGNORECASE)
 _RE_A_TAIL = re.compile(r"\s*(?:and\b|[,.;(])", re.IGNORECASE)
-_DESCR = "[^,()“”]{1,80}"
-_GAP_B = re.compile(r"\s*(?:,\s*(?:(?:a|an)\s+" + _DESCR + r"\s*,?)?)?\s*")
+# R5-3: the only descriptor allowed between a name and its role construction.
+_ENTITY = (
+    r"(?:limited\s+liability\s+company|limited\s+partnership|general\s+partnership"
+    r"|real\s+estate\s+investment\s+trust|statutory\s+trust|corporation|partnership"
+    r"|company|trust)"
+)
+_JUR = r"(?:[A-Z][A-Za-z]*\s+){0,4}"
+_GAP_B = re.compile(r"\s*(?:,\s*(?:(?:a|an)\s+" + _JUR + _ENTITY + r"\s*,?)?)?\s*")
 _RE_CONSTR_B = re.compile(
     r"\bas\s+(?:the\s+)?(" + _ROLE_ALT + r")\b"
     r'|\(\s*(?:the\s+)?[“"]?\s*(' + _ROLE_ALT + r')\s*[”"]?\s*\)',
     re.IGNORECASE,
 )
+# R5-2: declaration boundaries a claimed (b) name must start at.
+_RE_NAME_BOUNDARY = re.compile(
+    r"(?:\bbetween|\bby|\band|\bwith|\bfrom|\bto|\bdesignates?|\bappoints?)\s+\Z"
+    r"|,\s*\Z"
+    r"|\(\s*\Z",
+    re.IGNORECASE,
+)
+_RE_TOKEN = re.compile(r"[^\s,;:()]+|[,;:()]")
+_RE_SEP_TOK = re.compile(r"[,;:()]")
+_RE_BOUND_TOK = re.compile(r"(?i)between|by|and|with|from|to|designates?|appoints?")
 
 
 def _wb_occurrences(quote: str, name: str) -> list[tuple[int, int]]:
@@ -291,8 +352,11 @@ def _rule_a(quote: str, occ: tuple[int, int]) -> str | None:
     return m.group(1).lower()
 
 
-def _rule_b(quote: str, occ: tuple[int, int]) -> str | None:
-    """(b) A role construction directly follows the name (optional descriptor)."""
+def _rule_b(quote: str, occ: tuple[int, int], sent: str, rel_start: int) -> str | None:
+    """(b) A role construction directly follows the name (R5-2 boundary, R5-3 gap)."""
+    prefix = sent[:rel_start]
+    if prefix.strip() and not _RE_NAME_BOUNDARY.search(prefix):
+        return None
     end = occ[1]
     for m in _RE_CONSTR_B.finditer(quote):
         if m.start() < end:
@@ -305,12 +369,59 @@ def _rule_b(quote: str, occ: tuple[int, int]) -> str | None:
     return None
 
 
-def _party_bound_roles(quote: str, name: str) -> set[str]:
-    """Roles bound at any word-boundary occurrence; disagreeing (a)/(b) bind nothing."""
+def _field_extend_start(sent: str, occ_start: int) -> int | None:
+    """Start of the longer name field ending at occ_start, or None (R5-2).
+
+    Walks left over whitespace-separated name tokens, stopping at a separator,
+    a declaration boundary token, or the start of the sentence.
+    """
+    field_start = occ_start
+    extended = False
+    prev_end = occ_start
+    toks = [m for m in _RE_TOKEN.finditer(sent) if m.end() <= occ_start]
+    for m in reversed(toks):
+        if sent[m.end() : prev_end].strip():
+            break
+        tok = m.group(0)
+        if _RE_SEP_TOK.fullmatch(tok) or _RE_BOUND_TOK.fullmatch(tok):
+            break
+        field_start = m.start()
+        extended = True
+        prev_end = m.end()
+    return field_start if extended else None
+
+
+def _suffix_veto(sent: str, rel_start: int, rel_end: int) -> bool:
+    """True when the claimed name is a strict suffix of a declarable longer field."""
+    field_start = _field_extend_start(sent, rel_start)
+    if field_start is None:
+        return False
+    for m in _RE_CONSTR_B.finditer(sent):
+        if m.start() < rel_end:
+            continue
+        return bool(_GAP_B.fullmatch(sent[rel_end : m.start()]))
+    return False
+
+
+def _party_bound_roles(quote: str, name: str, seg_text: str, base: int) -> set[str]:
+    """Roles bound at any word-boundary occurrence; disagreeing (a)/(b) bind nothing.
+
+    R5-1: an occurrence whose source sentence contains a governing word binds
+    nothing. R5-2: a name that is a word-bounded suffix of a longer declarable
+    field binds nothing.
+    """
     roles: set[str] = set()
     for occ in _wb_occurrences(quote, name):
+        seg_start = occ[0] + base
+        s_start, s_end = _sentence_bounds(seg_text, seg_start)
+        sent = seg_text[s_start:s_end]
+        if _RE_GOVERNING.search(sent):
+            continue
+        rel_start, rel_end = seg_start - s_start, occ[1] + base - s_start
+        if _suffix_veto(sent, rel_start, rel_end):
+            continue
         a = _rule_a(quote, occ)
-        b = _rule_b(quote, occ)
+        b = _rule_b(quote, occ, sent, rel_start)
         if a is not None and b is not None:
             if a == b:
                 roles.add(a)
@@ -410,12 +521,18 @@ def _verify_party_ref(
 
 
 def _event_date(
-    raw: RawItem, quote: str, status: str, corrections: list[FieldCorrection]
+    raw: RawItem,
+    quote: str,
+    status: str,
+    corrections: list[FieldCorrection],
+    seg_text: str,
+    base: int,
 ) -> str | None:
     if raw.date is None:
         return None
     model = _model_iso(raw.date)
-    if status == "blank" or model is None or model not in _event_declared_isos(quote, raw.name):
+    declared = _event_declared_isos(quote, raw.name, seg_text, base)
+    if status == "blank" or model is None or model not in declared:
         corrections.append(FieldCorrection(raw, "date", "date_not_bound_to_event"))
         return None
     return model
@@ -577,16 +694,25 @@ def verify(doc: TextDoc, items: Iterable[RawItem]) -> VerifyResult:
             if not _find_all(quote, raw.name, ci=True):
                 drops.append(Drop(raw, "event_name_not_in_quote"))
                 continue
+            ev_seg = doc.segment(evidence.segment_id)
+            ev_seg_text = doc.text[ev_seg.char_start : ev_seg.char_end]
+            ev_base = evidence.char_start - ev_seg.char_start
             events.append(
                 VerifiedEvent(
-                    evidence, raw.name, _event_date(raw, quote, status, corrections), status
+                    evidence,
+                    raw.name,
+                    _event_date(raw, quote, status, corrections, ev_seg_text, ev_base),
+                    status,
                 )
             )
         else:
             if not _find_all(quote, raw.name, ci=True):
                 drops.append(Drop(raw, "party_name_not_in_quote"))
                 continue
-            roles = _party_bound_roles(quote, raw.name)
+            pt_seg = doc.segment(evidence.segment_id)
+            pt_seg_text = doc.text[pt_seg.char_start : pt_seg.char_end]
+            pt_base = evidence.char_start - pt_seg.char_start
+            roles = _party_bound_roles(quote, raw.name, pt_seg_text, pt_base)
             if len(roles) != 1 or next(iter(roles)) != raw.role.lower():
                 drops.append(Drop(raw, "role_not_bound_to_name"))
                 continue
