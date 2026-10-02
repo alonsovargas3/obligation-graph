@@ -6,8 +6,9 @@ rule (plan task 8 with the rev 2.1 details and the rev 2.2/2.4/2.5/2.6 overrides
 token-bounded money and day counts, deadline-conflict pairing, the rev 2.4
 declaration grammar for event dates and party roles, the rev 2.5
 source-sentence governing words, whole-name fields, and finite descriptors,
-and the rev 2.6 whole entity-name fields, production (a) field requirement,
-and the `shall mean and refer to` connector). Anything that fails is dropped
+the rev 2.6 whole entity-name fields, production (a) field requirement,
+and the `shall mean and refer to` connector, and the rev 2.7 label-form
+party rows, production (c)). Anything that fails is dropped
 or nulled with a FieldCorrection, never inferred.
 """
 
@@ -411,6 +412,39 @@ def _rule_b(
     return None
 
 
+# R7-1: a `Landlord:`-style label row binds the whole segment to one role.
+_RE_LABEL_C = re.compile(r"\s*(" + _ROLE_ALT + r"):\s+", re.IGNORECASE)
+# The optional finite descriptor (R5-3), then an optional `.`, then the end.
+_RE_C_TAIL = re.compile(r"\s*(?:,\s*(?:(?:a|an)\s+" + _JUR + _ENTITY + r"\s*,?)?)?\s*\.?\s*\Z")
+
+
+def _rule_c(quote: str, name: str, seg_text: str, base: int) -> str | None:
+    """(c) The whole cited segment is a `ROLE: entity` label row (R7-1).
+
+    The segment, stripped of surrounding whitespace, must be `ROLE:`, then
+    whitespace (NBSP included), then an entity-name field (R6-1), then the
+    optional finite descriptor (R5-3), then an optional `.`. The quote must
+    cover the whole segment and the claimed name must equal the field.
+    Governing words (R5-1) still apply. Real source: constantcontact-2011
+    Basic Lease Information `Landlord: ... Digital 55 Middlesex, LLC, ...`.
+    """
+    content_start = len(seg_text) - len(seg_text.lstrip())
+    content_end = len(seg_text.rstrip())
+    if base > content_start or base + len(quote) < content_end:
+        return None  # the quote must cover the whole segment
+    m = _RE_LABEL_C.match(seg_text)
+    if m is None:
+        return None
+    field = _RE_FIELD_AT.match(seg_text, m.end())
+    if field is None or not _name_eq(field.group(1), name):
+        return None
+    if _RE_C_TAIL.match(seg_text, field.end()) is None:
+        return None
+    if _RE_GOVERNING.search(seg_text):
+        return None
+    return m.group(1).lower()
+
+
 def _field_extend_start(sent: str, occ_start: int) -> int | None:
     """Start of the longer name field ending at occ_start, or None (R5-2).
 
@@ -453,6 +487,9 @@ def _party_bound_roles(quote: str, name: str, seg_text: str, base: int) -> set[s
     field binds nothing.
     """
     roles: set[str] = set()
+    c = _rule_c(quote, name, seg_text, base)
+    if c is not None:
+        roles.add(c)
     for occ in _wb_occurrences(quote, name):
         seg_start = occ[0] + base
         s_start, s_end = _sentence_bounds(seg_text, seg_start)

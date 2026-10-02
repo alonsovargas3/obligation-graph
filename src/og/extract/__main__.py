@@ -171,6 +171,7 @@ def _process_doc(
         "stats": None,
         "cost_usd": None,
         "cost_basis": None,
+        "incremental_cost_usd": None,
         "error": None,
     }
     error: str | None = None
@@ -199,9 +200,13 @@ def _process_doc(
                     runs_dir=runs_dir,
                     model=model,
                 )
-    record["cost_usd"], record["cost_basis"] = _cost(
-        [a for o in (result.outcomes if result is not None else []) for a in o.attempts]
-    )
+    outcomes = result.outcomes if result is not None else []
+    record["cost_usd"], record["cost_basis"] = _cost([a for o in outcomes for a in o.attempts])
+    # R7-3: incremental cost prices only the chunks that really called the API;
+    # cache replays are free at the margin (0.0 when every chunk hit).
+    record["incremental_cost_usd"] = _cost(
+        [a for o in outcomes if not o.cache_hit for a in o.attempts]
+    )[0]
     record["error"] = error
     _append_log(record)
     if error is None:
