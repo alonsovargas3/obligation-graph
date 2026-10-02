@@ -187,3 +187,9 @@ Red at freeze: 11 modules fail at collection on missing modules, and every wave 
 - **New fixture:** `tests/fixtures/graph/real_v5.db`, built by `build_fixture_v5.py`.
 - **Adapted for schema v5, intent kept:** `test_schema_v2.py` (version 5, and a v4 file is refused); `graph_fixture.py`, `eval_workspace.py` and several reader tests now point at `real_v5.db`.
 - **Red at freeze:** 1,345 passed. All 158 failures and 6 errors are in wave 5 modules. Each fork showed satisfiability with throwaway code on a devbox scratch copy.
+
+## Wave 5 rev 2.3 (2026-10-02)
+
+- **New frozen test:** `tests/test_timing_dates.py`, which pins that a calendar date is never a trigger event, including the real obligations 256 and 267.
+- **Adapted test:** `test_change_invalidation.py`'s `orphan_refs` helper now treats timing-owned trigger refs and site refs as owned. Both kinds were added after wave 3.
+- **Red at freeze:** 1 failing, the one-off date rule.

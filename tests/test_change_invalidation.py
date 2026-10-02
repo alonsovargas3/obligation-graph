@@ -63,7 +63,10 @@ def orphan_refs(con):
         " SELECT new_clause_ref_id FROM change_finding UNION"
         " SELECT old_clause_ref_id FROM change_finding WHERE old_clause_ref_id IS NOT NULL UNION"
         " SELECT context_clause_ref_id FROM change_finding"
-        " WHERE context_clause_ref_id IS NOT NULL)"
+        " WHERE context_clause_ref_id IS NOT NULL UNION"
+        " SELECT trigger_clause_ref_id FROM obligation_timing"
+        " WHERE trigger_clause_ref_id IS NOT NULL UNION"
+        " SELECT clause_ref_id FROM agreement_site)"
     ).fetchone()[0]
 
 

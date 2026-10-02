@@ -23,7 +23,8 @@ units:
 preprocessing:
   enumeration_strip: "a leading enumeration such as '2.2.1.2', '(a)', 'A.' or '1.' is ignored before condition detection (238)"
 condition_scope: "a construction is conditional only if it lies inside a leading If/In the event clause, which runs to the clause's first comma (238 conditional; 293 is not)"
-trigger_span: "starts at the construction and ends before the first comma, semicolon or period, never past the obligation quote"
+trigger_span: "starts at the construction and ends before the first comma, semicolon or period, never past the obligation quote; a comma followed by a four-digit year inside a calendar date ('June 30, 2020') does not end the span"
+calendar_date_not_event: "a trigger whose event phrase starts with a calendar date (Month Day[, Year]) is never an event: tied to 'each/every (calendar) year' it is unresolved recurring_schedule; otherwise unresolved anchor_not_found (absolute dates belong to the extraction's due_date field, never to timing)"
 trigger_kind_window: "the kind is read from the trigger span extended to the next semicolon or period (14: 'invoice' follows a comma); first lexicon kind in file order wins"
 defined_name: "capitalized or digit tokens (1A, 3A, 409 allowed) ending in 'Date', not followed by another capitalized word ('Commencement Date Conditions' does not bind); names compare with whitespace and NBSP normalized"
 
@@ -84,7 +85,8 @@ unresolved:
       - "the (earlier|later) (to occur )?of"
   recurring_schedule:
     patterns: ["per month", "per calendar month", "monthly installments",
-               "on the first day of each", "on the first day of every", "each calendar month"]
+               "on the first day of each", "on the first day of every", "each calendar month",
+               "each calendar year", "every calendar year", "each year", "every year"]
   unsupported_unit:
     note: "units hours or months in a construction"
   month_granularity:

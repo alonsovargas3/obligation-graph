@@ -405,3 +405,13 @@ The grammar gains the corpus rules the test forks found:
 ### Fixtures
 
 `real_v5.db` holds the v4 rows in schema v5, with no timing rows. Reader tests use it, and `real_v4.db` is kept for the history.
+
+## Rev 2.3 (Task 41 integration finding, coordinator)
+
+- **A calendar date is never a trigger event.** Found while integrating the writer: "no later than June 30, 2020" was parsed as contingent on an `other_event` named "June 30".
+- **The same defect on the real corpus:** obligations 256 and 267 ("on or before June 15 ... after the end of each calendar year") were classified contingent. They are an annual recurring schedule.
+- **Frozen rules** in `prompts/timing_grammar_v1.yaml`:
+  - `calendar_date_not_event`: a date tied to each or every year is `recurring_schedule`; any other calendar date is `anchor_not_found`, because absolute dates belong to the extraction's `due_date`.
+  - The year comma inside a date no longer ends the trigger span.
+- **Tests:** `tests/test_timing_dates.py`.
+- **Test helper:** `orphan_refs` in `test_change_invalidation.py` now counts timing-owned and site-owned refs as owned.
