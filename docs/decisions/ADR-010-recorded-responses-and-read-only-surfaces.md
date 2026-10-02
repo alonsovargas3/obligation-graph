@@ -44,8 +44,8 @@ and deadline semantics those surfaces must honor (ADR-005, ADR-008).
   the fingerprint before any client is constructed, nothing is written, and
   the CLIs exit 4; the gate cascade re-raises rather than fail open, a
   deliberate exception to ADR-003, because a strict run asserts that
-  everything is recorded and swallowing a miss would turn an audit into a
-  fabricated gate answer. `off` bypasses the recordings entirely, the same
+  everything is recorded and swallowing a miss would let a run that did
+  not replay its recordings pass as if it had. `off` bypasses the recordings entirely, the same
   as `--no-cache`, and neither reads nor writes them. The fresh-clone
   acceptance (C10) runs in strict mode.
 - **Clients are lazy.** The API client is constructed only when a replay
@@ -172,7 +172,8 @@ the whole corpus and says so plainly.
   name would masquerade as a pinned change order; arbitrary paths must
   hash-match the pinned source instead.
 - **Fail gates open on a strict miss:** would silently mask a recording
-  gap and fabricate a skip decision, so strict mode re-raises and exits 4.
+  gap (the run passes without having replayed what was recorded), so
+  strict mode re-raises and exits 4.
 - **Fill pending due dates from context:** invents a term the system
   cannot point to; the invariant forbids it, and contingent dates are
   issue #26.
