@@ -9,7 +9,7 @@ documents:
   mawson-2025-ex101: 15305da080071976fd2d1bc3f3ed5279a4e5b05ebdf09e0a27feac66016975e5
 provenance:
   drafted_by: gpt-6-astra (blind to classifier output)
-  adjudicated_by: claude-opus-5-5 (coordinator)
+  adjudicated_by: claude-opus-5-5 (coordinator), after independent reviews by claude-opus-5-5 and gpt-6-astra (docs/reviews/c14-timing-label-review-*.md)
   spot_checked: 0
 scope: sampled
 items:
@@ -82,7 +82,7 @@ items:
   anchor: null
   offset_days: null
   offset_unit: null
-  trigger_span_text: If the Commencement Date Conditions have not occurred prior to the Outside Completion Date, subject to extension by virtue of Force Majeure
+  trigger_span_text: prior to the Outside Completion Date
   reason: conditional_or_compound
 - agreement_id: carbonite-2014-ex1024
   segment_id: p0751
@@ -93,7 +93,7 @@ items:
   anchor: null
   offset_days: null
   offset_unit: null
-  trigger_span_text: 'prior to the earlier to occur of: (1) completion of the Commencement Date Conditions; or (2) ten (10) business days after the Outside Completion Date'
+  trigger_span_text: 'prior to the earlier to occur of: (1) completion of the Commencement Date Conditions'
   reason: conditional_or_compound
 - agreement_id: constantcontact-2012-ex101
   segment_id: p0035
