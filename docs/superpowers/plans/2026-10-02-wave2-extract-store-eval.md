@@ -460,3 +460,34 @@ Where rev 2 was silent, the frozen tests pin these choices. They are authoritati
 - The cache root is `data/cache/extract`.
 - A pin mismatch exits 3 with no calls and no rows. An unknown `--doc` exits nonzero.
 - `--no-cache --runs-dir X` writes `X/<doc_id>.db`, never creates `data/graph.db`, and writes no cache JSON.
+
+## Rev 2.2 (Astra wave-2 round 2: 6 blockers, 2 should-fixes, all accepted)
+
+These rules override any earlier text they conflict with.
+
+- **R2-1, context block:**
+  - Chunk 1 is packed first.
+  - The context prefix is the leading primary segments of chunk 1, up to 1500 chars of segment text, always at least one when chunk 1 is non-empty.
+  - Context segments are therefore never primary in a later chunk.
+  - A frozen test pins the exact context ids.
+- **R2-2, events:**
+  - An event is kept only if its `name` occurs in the quote (case-insensitive, whitespace-normalized; a quoted defined term `“Name”` counts).
+  - Its `date` is kept only if the date occurs after that name occurrence in the quote with no other quoted defined term (`“…”`) between them. Otherwise the date is null plus a FieldCorrection(`date`, `date_not_bound_to_event`).
+  - A name not in the quote gives Drop `event_name_not_in_quote`.
+- **R2-3, description:** the stored description is the copied quote. The model's paraphrase is never persisted, and `VerifiedObligation.description == evidence.span_text`. Two frozen description tests change (recorded in test-changes.md).
+- **R2-4, parties:** a party is kept only if, in the quote, the first role word (any of ROLES as a whole word, case-insensitive) within 120 chars after the name occurrence is the claimed role. A swapped role gives Drop `role_not_bound_to_name`.
+- **R2-5, deadline conflict:**
+  - If `due_date` and the (`offset_days`, `anchor_event`) pair both survive, keep `due_date` and null the pair, with FieldCorrection(`offset_days`, `deadline_conflict`).
+  - The verified payload therefore always satisfies the DB CHECK.
+- **R2-6, token boundaries:**
+  - Money tokens must be complete: `(?<![\d.,])` before and `(?![\d,]|\.\d)` after. `$5.123` supports no amount; malformed grouping such as `$1,00` supports nothing.
+  - Day counts are complete 1 to 3 digit tokens not adjacent to other digits, commas or periods. `1000 days` supports no offset.
+- **R2-7, lineage and samples:**
+  - The writer keeps the fail-closed `dependents_exist` check.
+  - Re-extracting a document that has dependents means rebuilding the whole graph: the coordinator moves `data/graph.db` aside and runs `make extract` for every document, base first, then promotes.
+  - `--no-cache` samples are limited to standalone documents (no `amends`). The CLI exits 2 before any API call for an amendment sample.
+- **R2-8, partial reference sets:**
+  - `scope: sampled` means the reference set is not exhaustive.
+  - The score CLI then reports recall and field metrics normally, but every precision value is null, and a separate `precision_lower_bound` carries the computed figure (unlabeled true obligations count as false positives).
+  - `score.as_dict()` is unchanged; the CLI applies this.
+  - The C2 reference set is `scope: sampled` (50 obligations, not exhaustive). The README must report it that way.
