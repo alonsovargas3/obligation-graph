@@ -12,3 +12,11 @@ Added to `tests/test_ingest.py` (no existing assertion changed):
 - `test_clause_number_in_its_own_table_cell`
 
 Red verified against the merged Task 3 implementation before dispatch. `tests/FROZEN.sha256` regenerated.
+
+## 2026-10-02: schema v2 (wave 2 bootstrap B2)
+
+Trigger: wave-2 plan rev 2 (Astra wave-2 finding 4/7) adds `run_id` and `textdoc_sha256` (NOT NULL) to `extraction_run`.
+
+Changed in `tests/test_schema.py::test_extraction_run_unique_per_source_and_prompt`:
+- Old: inserts `(source_id, prompt_version, model)` twice, expects IntegrityError on the second.
+- New: inserts `(run_id, source_id, prompt_version, model, textdoc_sha256)` with distinct run_ids `r1`, `r2`; still expects IntegrityError from `UNIQUE(source_id, prompt_version)`. The assertion's intent is unchanged.

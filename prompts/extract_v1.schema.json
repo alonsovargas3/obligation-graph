@@ -1,0 +1,178 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "span_text": {
+            "type": "string",
+            "description": "Verbatim quote copied character-for-character from exactly one [pNNNN] line. Write this first."
+          },
+          "segment_id": {
+            "type": "string",
+            "description": "The pNNNN id of the line the quote comes from."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "obligation",
+              "event",
+              "party"
+            ]
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "payment",
+              "delivery",
+              "sla",
+              "penalty",
+              "termination_right",
+              "guarantee",
+              "notice",
+              "insurance",
+              "other",
+              null
+            ],
+            "description": "Obligation type; null for events and parties."
+          },
+          "owed_by": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Party that must perform: a role word (Landlord, Tenant, ...) or the party's name as written."
+          },
+          "owed_to": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Party the obligation runs to, same form as owed_by."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "One plain sentence. Do not state any number that is not in the quote."
+          },
+          "amount": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Only a dollar amount written in the quote."
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "USD only when the quote shows $ or dollars."
+          },
+          "due_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "YYYY-MM-DD only when the quote states that calendar date as a deadline."
+          },
+          "anchor_event": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Event a relative deadline counts from, as named in the quote."
+          },
+          "offset_days": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Calendar days before (negative) or after the anchor event, only when written in the quote."
+          },
+          "trigger": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Condition text copied verbatim from the quote, or null."
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "active",
+              "redacted",
+              "blank",
+              null
+            ]
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Event or party name; null for obligations."
+          },
+          "date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Event date YYYY-MM-DD only when written in the quote."
+          },
+          "role": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "landlord",
+              "tenant",
+              "guarantor",
+              "provider",
+              "customer",
+              "lender",
+              "other",
+              null
+            ],
+            "description": "Party role; null unless kind is party."
+          }
+        },
+        "required": [
+          "span_text",
+          "segment_id",
+          "kind",
+          "type",
+          "owed_by",
+          "owed_to",
+          "description",
+          "amount",
+          "currency",
+          "due_date",
+          "anchor_event",
+          "offset_days",
+          "trigger",
+          "status",
+          "name",
+          "date",
+          "role"
+        ]
+      }
+    }
+  },
+  "required": [
+    "items"
+  ]
+}

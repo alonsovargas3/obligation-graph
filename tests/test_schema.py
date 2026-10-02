@@ -285,9 +285,13 @@ def test_defined_term_view_requires_grounding(db):
     assert db.execute("SELECT count(*) FROM visible_defined_term").fetchone()[0] == 1
 
 
+RUN_SQL = (
+    "INSERT INTO extraction_run(run_id,source_id,prompt_version,model,textdoc_sha256)"
+    " VALUES(?,'src','v1','m','t')"
+)
+
+
 def test_extraction_run_unique_per_source_and_prompt(db):
-    db.execute("INSERT INTO extraction_run(source_id,prompt_version,model) VALUES('src','v1','m')")
+    db.execute(RUN_SQL, ("r1",))
     with pytest.raises(sqlite3.IntegrityError):
-        db.execute(
-            "INSERT INTO extraction_run(source_id,prompt_version,model) VALUES('src','v1','m')"
-        )
+        db.execute(RUN_SQL, ("r2",))

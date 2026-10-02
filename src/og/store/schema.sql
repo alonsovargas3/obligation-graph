@@ -1,4 +1,5 @@
 PRAGMA foreign_keys = ON;
+-- Schema v2 (wave 2). Derived data: an older graph.db is rebuilt, not migrated (ADR-008).
 
 CREATE TABLE IF NOT EXISTS source (
   id TEXT PRIMARY KEY, url TEXT NOT NULL, filer TEXT, filing_date TEXT, form TEXT,
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS agreement_party (
   agreement_id TEXT NOT NULL REFERENCES agreement(id),
   party_id INTEGER NOT NULL REFERENCES party(id),
   role TEXT NOT NULL CHECK (role IN ('landlord','tenant','guarantor','provider','customer','lender','other')),
+  clause_ref_id INTEGER NOT NULL REFERENCES clause_ref(id),
   PRIMARY KEY (agreement_id, party_id, role)
 );
 CREATE TABLE IF NOT EXISTS site (
@@ -50,10 +52,14 @@ CREATE TABLE IF NOT EXISTS defined_term (
 );
 CREATE TABLE IF NOT EXISTS extraction_run (
   id INTEGER PRIMARY KEY,
+  run_id TEXT NOT NULL UNIQUE,
   source_id TEXT NOT NULL REFERENCES source(id),
   prompt_version TEXT NOT NULL,
   model TEXT NOT NULL,
+  textdoc_sha256 TEXT NOT NULL,
+  model_attempts_json TEXT NOT NULL DEFAULT '[]',
   started_at TEXT NOT NULL DEFAULT (datetime('now')),
+  completed_at TEXT,
   UNIQUE (source_id, prompt_version)
 );
 CREATE TABLE IF NOT EXISTS obligation (
@@ -130,6 +136,7 @@ CREATE TRIGGER IF NOT EXISTS defined_term_citation_upd BEFORE UPDATE OF clause_r
 WHEN NEW.agreement_id IS NOT (SELECT agreement_id FROM clause_ref WHERE id = NEW.clause_ref_id)
 BEGIN SELECT RAISE(ABORT, 'defined term citation from another agreement'); END;
 
+DROP VIEW IF EXISTS visible_agreement_party;
 DROP VIEW IF EXISTS visible_defined_term;
 DROP VIEW IF EXISTS visible_triggers;
 DROP VIEW IF EXISTS visible_guarantees;
@@ -178,3 +185,7 @@ WHERE c.agreement_id IN (SELECT agreement_id FROM obligation
 CREATE VIEW visible_defined_term AS
 SELECT d.* FROM defined_term d
 JOIN clause_ref c ON c.id = d.clause_ref_id AND c.grounded = 1 AND c.agreement_id = d.agreement_id;
+
+CREATE VIEW IF NOT EXISTS visible_agreement_party AS
+SELECT ap.* FROM agreement_party ap
+JOIN clause_ref c ON c.id = ap.clause_ref_id AND c.grounded = 1 AND c.agreement_id = ap.agreement_id;

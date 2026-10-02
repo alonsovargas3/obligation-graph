@@ -1,265 +1,462 @@
-# Wave 2: Extract, Verify, Store, Score Implementation Plan (rev 1)
+# Wave 2: Extract, Verify, Store, Score Implementation Plan (rev 2)
 
-> **For agentic workers:** you are a supervised Orca worker. Do only your Task. Tests under `tests/` are frozen (pinned by `tests/FROZEN.sha256`); you write implementation code only. Use your preamble's `ask` command for any ambiguity. Send `worker_done` exactly once. You never hold or read an API key. Nothing in your Task calls the network.
+> **For agentic workers:** you are a supervised Orca worker. Do only your Task. Tests under `tests/` are frozen (pinned by `tests/FROZEN.sha256`), and so are the coordinator-authored contract files `src/og/extract/types.py`, `src/og/store/schema.sql`, `src/og/store/db.py`, `prompts/extract_v1.md`, and `prompts/extract_v1.schema.json`. You write implementation code only. Use `ask` for any ambiguity. Send `worker_done` once. You never hold or read an API key, and nothing in your Task calls the network.
 
-**Goal:** Build CLAUDE.md build step 5 plus the extraction half of step 11: each pinned agreement becomes typed obligations with grounded ClauseRefs in `data/graph.db`, and extraction quality is scored against the hand-labeled gold set.
+**Goal:** CLAUDE.md build step 5 plus the extraction half of step 11. Each pinned agreement becomes typed obligations with grounded ClauseRefs in `data/graph.db`, and extraction quality is scored against a model-drafted, human-spot-checked reference set.
 
 **Architecture:**
 
 ```
-TextDoc (wave 1) ──chunk──▶ prompt (segment-numbered text) ──Claude, structured output──▶ RawItem[]
-RawItem[] ──verify (deterministic)──▶ VerifiedItem[] + Drop[]   (logs/dropped.jsonl)
-VerifiedItem[] ──writer (one transaction per source+prompt_version)──▶ graph.db (visible_* views)
-graph.db visible_obligation + eval/gold/<doc>.yaml ──score──▶ eval/results/<date>.json
+TextDoc ──chunk──▶ Chunk[] ──Claude structured output──▶ ChunkOutcome[] (ok | refused | truncated | invalid | error)
+all chunks ok? ──no──▶ log failures, keep previous snapshot, exit nonzero for this doc
+           └─yes──▶ RawItem[] ──verify (deterministic)──▶ VerifiedObligation/Event/Party[] + Drop[] + FieldCorrection[]
+                                  └──writer (one transaction, replaces this source's snapshot)──▶ graph.db
+graph.db (visible_* views) + eval/gold/<doc>.yaml ──score──▶ eval/results/<date>-extract.json
 ```
 
-The model only proposes. A deterministic `verify` step decides what may be stored:
-- **Span check:** every quote must ground inside the cited segment's section (wave-1 `ground()`).
-- **Field-level grounding (new in wave 2):** each numeric or date field the model fills must appear in the copied quote, or it is set to null and logged.
-- **Marker override:** redaction and blank markers override the model's status.
+- The model only proposes. `verify` decides what may be stored. Raw model output never supplies a stored field by fallback.
+- Every stored value is either copied from the source slice or proven present in it by a field rule.
+- The writer is the only code that sets `grounded = 1`.
 
-The writer is the only code that sets `grounded = 1`.
+**Tech Stack:** Python 3.12, uv, `anthropic` (locked), sqlite3, pyyaml, pytest, ruff. No new dependencies.
 
-**Tech Stack:** Python 3.12, uv, `anthropic` SDK (1.x, already locked), sqlite3, pyyaml, pytest, ruff. No new dependencies.
-
-**Spec:** `CLAUDE.md`, ADR-001..007, `docs/research/2026-10-01-approach.md`, wave-1 plan and report.
+**Spec:** `CLAUDE.md`, ADR-001..007, `docs/research/2026-10-01-approach.md`, wave-1 plan and report. Advisor review: `docs/reviews/2026-10-02-astra-wave2-review.md` (resolution table at the end).
 
 ## Global Constraints
 
-- The invariant: never state a term the system cannot point to.
-  - Every stored obligation, event, defined term, and edge has a ClauseRef whose `span_text` is the exact source slice `text[char_start:char_end]`.
-  - `grounded = 1` is set only by the writer, after `verify` passed against a TextDoc whose `source_sha256` equals the pinned sha in `data/sources.yaml`.
-- Redacted and blank terms are reported as `redacted` / `blank`, never inferred.
-- **API usage (coordinator-only at runtime):**
-  - Default extract model `OG_EXTRACT_MODEL=claude-sonnet-5-5`.
-  - Structured outputs via `output_config.format` (json_schema). Forced `tool_choice` returns a 400 on Sonnet 5.5, so "tool-schema structured output" in CLAUDE.md is implemented as a json_schema output format (ADR-008).
-  - No `temperature` or other sampling parameters (400 on Sonnet 5.5). `thinking` is omitted (adaptive). `output_config.effort` comes from `OG_EXTRACT_EFFORT`, default `high`.
-  - `fallbacks: "default"` with beta `server-side-fallback-2026-07-01` via `client.beta.messages.create`. The served model is recorded per call.
-  - Prompt caching on the system block.
-- **Keys:** no key in code, logs, fixtures, cache files, or test output. The client reads credentials from the environment only. Recorded fixtures store the response body and usage, never request headers.
-- **Offline tests:** tests use a fake client (synthetic responses, labeled synthetic) or recorded real responses (coordinator-recorded once, `tests/fixtures/api/`). `tests/conftest.py` already blocks real HTTP.
-- No ORM, no LangChain/LlamaIndex/agent frameworks. `uv run --locked`. Never `ruff check --fix`. No em dashes in README or user-facing copy.
+- **The invariant:** every stored obligation, event, party role, defined term, and edge has a ClauseRef whose `span_text == text[char_start:char_end]`. `grounded = 1` is set only by the writer, after `verify`, against a TextDoc whose `source_sha256` equals the sources.yaml pin. Redacted and blank terms are reported, never inferred.
+- **Field rules:** a typed value (amount, currency, due date, offset days, event date, trigger, party name, role) is stored only if its evidence is in the copied quote, per Task 8. Otherwise it is null, plus a FieldCorrection record.
+- **One snapshot per source:**
+  - `graph.db` holds exactly one extraction snapshot per source (the latest complete one). Re-extraction replaces it in one transaction.
+  - Variance and experiment samples are written to separate DB files under `eval/runs/` and never into `graph.db`.
+  - Multiple prompt versions are not kept live side by side (this rev withdraws that promise).
+- **Derived data is rebuilt, not migrated:** `graph.db` is fully reproducible from `data/sources.yaml` and the raw files. Schema v2 sets `PRAGMA user_version = 2`. `connect()` raises `SchemaOutdated` on an existing file with a lower version, with the message "delete data/graph.db and run make extract". Fresh files are created at v2.
+- **API (coordinator-only at runtime):**
+  - `OG_EXTRACT_MODEL` (default `claude-sonnet-5-5`), non-streaming `client.beta.messages.create`.
+  - `output_config = {"effort": OG_EXTRACT_EFFORT (default "high"), "format": {"type": "json_schema", "schema": <frozen schema>}}`.
+  - System block with `cache_control: {"type": "ephemeral"}`.
+  - `betas=["server-side-fallback-2026-07-01"]`, `fallbacks="default"`.
+  - Never `temperature`, `thinking`, `tools`, or `tool_choice`.
+  - Check `stop_reason` before parsing: `refusal` and `max_tokens` responses can violate the schema.
+- **Secrets:**
+  - The client reads credentials from the environment only. The coordinator loads `~/.config/og/anthropic.key` into the single process that needs it.
+  - Logs, cache files, fixtures, and results are written through explicit field allowlists. Never write request headers, client objects, environment dumps, or exception reprs.
+  - Tests plant a sentinel key and assert it appears in no written file.
+- **Tests:** offline only. They use synthetic `FakeClient` responses (labeled synthetic) or coordinator-recorded real responses under `tests/fixtures/api/`.
+- **Tooling:** no ORM or agent frameworks. `uv run --locked`. Never `ruff check --fix`. No em dashes in user-facing copy.
 
 ## Review Focus
 
-1. **Quote not in the cited segment** (model cites p0042 but quotes p0043). It must ground only within the cited segment's section, else drop with reason `not_found_in_section`. It never grounds document-wide.
-2. **Amount not in the quote** ("Base Rent of $54,000" vs model amount 45000). The amount is nulled and logged (`amount_not_in_quote`). The obligation survives with its quote. Number normalization covers `$54,000`, `54,000.00`, `54000`, and `fifty-four thousand (54,000)`. It does not cover arbitrary arithmetic.
-3. **Redacted amount** (`$[***] per month`). Status becomes `redacted` and the amount stays null even if the model guessed one (`amount_in_redacted_clause` logged).
-4. **Re-running extraction** for the same source and prompt version. The prior run's rows are replaced in one transaction, there are no duplicates, and other sources and prompt versions are untouched.
-5. **Party name variants** ("Landlord", "DIGITAL 55 MIDDLESEX, LLC", "Digital 55 Middlesex, LLC (\"Landlord\")"). These resolve to the agreement's parties by role word or normalized name. Unresolvable becomes NULL plus a log entry, never a new invented party.
+1. **Fabricated event date on a form blank** (`"Commencement Date" means [●]` with model date 2026-01-01): event stored with date null, status blank, FieldCorrection `date_not_in_quote`.
+2. **A number in the quote that is not an amount** (`Tenant shall pay within 30 days` with model amount 30): amount null (no `$`/dollars evidence). `offset_days` 30 is kept only with `days` wording.
+3. **One chunk refused out of five:** nothing is written, the previous snapshot stays, the failure is logged, and the CLI exits nonzero for that document.
+4. **Two parties quoted from the same preamble sentence:** both kept, not collapsed.
+5. **Wrong entity merge** ("Digital 55 Middlesex, LLC" vs "Digital 55 Middlesex, Inc."): these are different parties. There is no suffix stripping.
 
 ---
 
-## Decisions to record (ADR-008, written by Task 13)
+## Contract files (coordinator-authored before dispatch, frozen)
 
-- Structured outputs (`output_config.format`) replace forced tool use for extraction on Sonnet 5.5.
-- Field-level grounding: numbers, dates, and offsets must be textually present in the copied quote, or they are nulled and logged.
-- Chunking: by section, packing consecutive sections up to `OG_EXTRACT_CHUNK_CHARS` (default 12000). A section longer than the cap is split on segment boundaries. Every chunk carries the agreement header (title, parties block) for context.
-- Response cache: `data/cache/extract/<doc_id>/<prompt_version>/<chunk_id>.json` (gitignored). Re-running never re-bills an identical request.
-- Refusal fallback (`fallbacks: "default"`) is on. Each extraction_run records the served model(s).
+- **`src/og/extract/types.py`:** all shared dataclasses and exceptions below. It imports nothing from other wave-2 modules.
+- **`prompts/extract_v1.md` + `prompts/extract_v1.schema.json`:** the system prompt and output schema. The schema is flat: each item has every field, `required` lists all fields, `additionalProperties: false`, and nullable enums include `null` in the enum. The coordinator validates it against the live API in C1.
+- **`src/og/store/schema.sql` (v2) + `src/og/store/db.py`:** the schema changes listed under Task 9. `connect()` handles the version check.
+
+**Shared types** (`og.extract.types`):
+
+```python
+Kind = Literal["obligation", "event", "party"]
+OBL_TYPES = ("payment","delivery","sla","penalty","termination_right","guarantee","notice","insurance","other")
+ROLES = ("landlord","tenant","guarantor","provider","customer","lender","other")
+
+@dataclass(frozen=True)
+class RawItem:            # exactly the schema's item fields; diagnostics only after verify
+    span_text: str; segment_id: str; kind: str; type: str | None; owed_by: str | None; owed_to: str | None
+    description: str | None; amount: float | None; currency: str | None; due_date: str | None
+    anchor_event: str | None; offset_days: int | None; trigger: str | None; status: str | None
+    name: str | None; date: str | None; role: str | None
+
+@dataclass(frozen=True)
+class Evidence:           # the copied quote, located
+    segment_id: str; section_id: str | None; section_number: str | None; page: int
+    char_start: int; char_end: int; span_text: str
+
+@dataclass(frozen=True)
+class VerifiedObligation:
+    evidence: Evidence; type: str; status: str            # status in active|redacted|blank
+    owed_by: str | None; owed_to: str | None              # verified party mention or role word (see Task 8)
+    description: str                                      # model text if all its digits occur in the quote, else the quote
+    amount: Decimal | None; currency: str | None; due_date: str | None
+    anchor_event: str | None; offset_days: int | None; trigger: str | None
+
+@dataclass(frozen=True)
+class VerifiedEvent:     evidence: Evidence; name: str; date: str | None; status: str
+@dataclass(frozen=True)
+class VerifiedParty:     evidence: Evidence; name: str; role: str
+@dataclass(frozen=True)
+class Drop:              raw: RawItem; reason: str
+@dataclass(frozen=True)
+class FieldCorrection:   raw: RawItem; field: str; reason: str       # value nulled or replaced
+
+@dataclass(frozen=True)
+class VerifyResult:
+    obligations: list[VerifiedObligation]; events: list[VerifiedEvent]; parties: list[VerifiedParty]
+    drops: list[Drop]; corrections: list[FieldCorrection]
+
+@dataclass(frozen=True)
+class Attempt:            # one model attempt inside one API call (fallbacks produce several)
+    model: str; input_tokens: int | None; output_tokens: int | None
+    cache_read_tokens: int | None; cache_write_tokens: int | None; refused: bool
+
+@dataclass(frozen=True)
+class ChunkOutcome:
+    chunk_id: str; status: str            # ok | refused | truncated | invalid | error
+    items: list[RawItem]; attempts: list[Attempt]; latency_ms: int | None
+    cache_hit: bool; request_fingerprint: str; error: str | None   # error: short code only, never a repr
+
+@dataclass(frozen=True)
+class ExtractResult:
+    doc_id: str; prompt_version: str; outcomes: list[ChunkOutcome]
+    @property
+    def complete(self) -> bool: ...       # every expected chunk has status ok
+
+class TruncatedResponse(Exception): ...
+class BadResponse(Exception): ...
+class SchemaOutdated(Exception): ...      # lives in og.store.db, re-exported here
+```
 
 ## Execution topology
 
-Same as wave 1: Opus coordinator, Codex `gpt-6-astra` advisor (plan review rounds until agreement), Pi `zai/glm-5.3` workers on devbox worktrees under Orca supervision, Grok fallback, frozen coordinator-authored tests, isolated-checkout review, PR merges.
+Same as wave 1:
+- **Coordinator:** Opus.
+- **Advisor:** Astra, for plan rounds and a satisfiability proof.
+- **Workers:** Pi `zai/glm-5.3` on devbox worktrees under Orca supervision, with Grok as the fallback.
+- **Tests:** frozen and coordinator-authored, verified red before dispatch.
+- **Review and merge:** isolated-checkout review, then a PR merge.
+- **Retries:** the accepted-base-SHA dispatch log and the salvage/retry rules carry over.
 
-**Coordinator-only steps** (need the API key or the user's labels):
-- C1: record real API fixtures.
-- C2: export the gold set from the labeling artifact.
-- C3: run `make extract` on the corpus.
-- C4: run the extraction score and commit `eval/results/<date>.json`.
-
-Waves:
-- **2A (parallel):** Task 6 (ingest TOC fix), Task 7 (chunk + prompt + client), Task 8 (verify), Task 10 (gold + scorer).
-- **2B (after Task 8 merges):** Task 9 (writer), then Task 11 (CLI wiring, needs 7, 8, 9).
-- **C1** after Task 7 merges. **C2** whenever the user finishes labeling. **C3 + C4** after Task 11 merges.
-- Task 13 (ADR-008, docs) in parallel with 2A.
+- **Bootstrap B2 (coordinator):** the contract files above, all wave-2 tests, and `tests/FROZEN.sha256` regenerated. Red is verified (each new test module fails on a missing module or attribute; all wave-1 tests stay green). One commit.
+- **Wave 2A (parallel, from B2):** Task 6 (TOC), Task 7 (chunk/prompt/client/cache), Task 8 (verify), Task 10 (gold + scorer + score CLI), Task 13 (ADR-008).
+- **Wave 2B:** Task 9 (writer) from B2. It needs only the contract files, so it can run in 2A too. Task 11 (CLI) after 7, 8, 9 merge.
+- **C1** (record fixtures) after Tasks 7 and 8 merge. **C2** (reference set) runs in parallel throughout. **C3/C4** after Task 11 merges and C2 is exported.
 
 ---
 
-### Task 6: Ingest TOC suppression
+### Task 6: TOC section
 
-**Problem (wave-1 report):** table-of-contents lines (`1.1 Tenant Space` followed by a line `1`) open sections, so most clause numbers appear twice.
+**Rule (in `sections.py`):**
+- Each candidate section line (any of the four rev-4 patterns) is classified in one forward pass over the lines.
+- A candidate is a **TOC entry** when the lines between it and the next candidate are all page references (`^\d{1,3}$` or `^[ivxlc]{1,6}$`, case-insensitive), with zero or more such lines.
+- A **TOC run** is a maximal sequence of at least 3 consecutive TOC entries (only page-reference lines and an optional `TABLE OF CONTENTS`/`Page` line may sit between them).
+- Each TOC run, plus an immediately preceding line matching `^(TABLE OF CONTENTS|Table of Contents|CONTENTS)$` if present, becomes one section `Section(id, None, "Table of Contents", start, end, None)`.
+- Fewer than 3 consecutive entries are not a TOC; those lines stay ordinary sections.
+- Section ids stay sequential.
 
-**Rule:** a candidate section line is a TOC entry when every following line, up to the next candidate section line, consists only of a page reference matching `^\d{1,3}$` or `^[ivxlc]{1,6}$` (case-insensitive), and there is at least one such line, or there are none at all because the next line is immediately another candidate. Also, the same section number must appear again later as a non-TOC section.
-- TOC-entry lines do not open sections. They fall into the enclosing section, which is usually the preamble.
-- Body headings are unaffected.
+**Files:** `src/og/ingest/sections.py` (and `__init__.py` only if section assembly needs it).
 
-**Files:** `src/og/ingest/sections.py` only. **Frozen tests (coordinator):** `test_toc_entries_do_not_open_sections`, `test_numbered_line_followed_by_digit_body_is_not_toc_when_number_unique`.
+**Frozen tests:** `tests/test_ingest_toc.py`, with fixtures modeled on the Constant Contact TOC (dotted entries with page-number lines, single-level entries, a `Page` header line, a 2-entry false positive, and a body clause followed by a digit-only table cell).
 
-**Acceptance:**
-- Ingest tests pass.
-- Corpus smoke (coordinator): constantcontact-2011-ex1041 has no duplicate section numbers, and its section count drops from 293.
+**Corpus smoke (coordinator):** report the TOC sections created per document. The Constant Contact lease has exactly one TOC section, and no body clause heading is lost: every body section number from before the change is still present.
 
-### Task 7: Chunker, prompt, schema, client (no network)
+### Task 7: Chunker, prompt rendering, client, cache
 
-**Files:** create `src/og/extract/{__init__,chunk,prompt,client,cache}.py`, `prompts/extract_v1.md` (system prompt), `prompts/extract_v1.schema.json` (output schema).
+**Files:** `src/og/extract/{__init__,chunk,prompt,client,cache}.py`.
 
-**Interfaces (produces):**
-- `Chunk(chunk_id: str, doc_id: str, section_ids: list[str], segment_ids: list[str], text: str)`. `text` is a rendering where each segment is one line `[p0042] <segment text>`, prefixed by the agreement header.
-- `chunk_doc(doc: TextDoc, header: str, max_chars: int = 12000) -> list[Chunk]`:
-  - Deterministic.
-  - Chunk ids are `c0001`… in order.
-  - Every segment appears in exactly one chunk.
-  - A chunk never splits a segment.
-- `prompt_version() -> str`: `"extract_v1@" + sha256(system prompt bytes + schema bytes)[:8]`.
-- `build_request(chunk: Chunk, *, model: str, effort: str) -> dict`: the exact kwargs passed to `client.beta.messages.create`:
-  - `model`, `max_tokens=16000`.
-  - `system=[{"type": "text", "text": <system prompt>, "cache_control": {"type": "ephemeral"}}]`.
-  - `messages=[{"role": "user", "content": chunk.text}]`.
-  - `output_config={"effort": effort, "format": {"type": "json_schema", "schema": <schema>}}`.
-  - `betas=["server-side-fallback-2026-07-01"]`, `fallbacks="default"`.
-  - No `temperature`, no `thinking`, no `tools`, no `tool_choice`.
-- `RawItem` (dataclass, mirrors the schema):
-  - `kind` in {obligation, event, party}, `segment_id`, `span_text`, `type` (obligation type or null), `owed_by`, `owed_to`, `description`, `amount` (number|null), `currency`, `due_date` (YYYY-MM-DD|null), `anchor_event`, `offset_days` (int|null), `trigger`, `status` in {active, redacted, blank}.
-  - For `kind=event`: `name` and `date`.
-  - For `kind=party`: `name` and `role`.
-- `parse_response(message) -> tuple[list[RawItem], CallMeta]`:
-  - Reads the first text block as JSON.
-  - A response with `stop_reason == "refusal"` returns `[]` with `CallMeta.refused = True`.
-  - `stop_reason == "max_tokens"` raises `TruncatedResponse`.
-  - Invalid JSON raises `BadResponse`.
-- `CallMeta(model_requested, model_served, input_tokens, output_tokens, cache_read_tokens, cache_write_tokens, latency_ms, refused, fallback_used)`.
-- `ResponseCache(root)`: `get(doc_id, prompt_version, chunk_id) -> dict | None`, `put(...)`. Keyed also by `sha256(json.dumps(request, sort_keys=True))` so a changed request never hits a stale entry.
-- `Extractor(client, cache, model, effort).extract(doc: TextDoc, header: str) -> ExtractResult(items: list[RawItem], calls: list[CallMeta])`: cache first, else call. `client` is anything with `.beta.messages.create(**kwargs)`.
+- **`chunk_doc(doc, max_chars=12000) -> list[Chunk]`** (`Chunk(chunk_id, doc_id, segment_ids, text)`):
+  - Segments in sections whose heading is `Table of Contents` are excluded.
+  - Packing is greedy and in order. A chunk closes before the next section would push `len(text)` past `max_chars`. If a single section exceeds the cap, it is split at segment boundaries. A single segment longer than the cap is its own chunk (soft cap).
+  - `text` renders each segment as `[pNNNN] <text>\n`.
+  - Chunk 1 holds the opening segments. Later chunks start with a `CONTEXT (do not extract)` block: the first preamble segments up to 1500 chars, rendered `[ctx pNNNN] ...`. Context segments are never in `segment_ids` of later chunks.
+  - Every non-TOC segment is in exactly one chunk. Deterministic.
+- **`prompt_version() -> str`:** `"extract_v1@" + sha256(prompt bytes + schema bytes)[:8]`.
+- **`build_request(chunk, *, model, effort) -> dict`:** exactly the kwargs in Global Constraints. `messages=[{"role": "user", "content": chunk.text}]`.
+- **`request_fingerprint(request: dict, doc: TextDoc) -> str`:** sha256 of the canonical JSON (`sort_keys=True, separators=(",", ":")`) of the request plus `doc.source_sha256` plus `sha256(doc.to_json())`.
+- **`parse_response(message) -> tuple[list[RawItem], list[Attempt]]`:**
+  - Order of checks: `stop_reason == "refusal"` raises `Refused`; `max_tokens` raises `TruncatedResponse`.
+  - Then take the single `text` block. Thinking and fallback blocks are ignored. No text block, or more than one, raises `BadResponse("no_text")`.
+  - `json.loads` and validation run locally: every field present, types match the schema, enums valid, numbers finite, dates real calendar dates. Any failure raises `BadResponse("<code>")`.
+  - Attempts come from `usage.iterations` when present (each with its model and usage), else one Attempt from top-level usage and `message.model`.
+  - `Refused` is defined in `types.py` too.
+- **`ResponseCache(root)`:**
+  - `get(fingerprint) -> dict | None` and `put(fingerprint, payload: dict)`.
+  - The path is `root/<fingerprint[:2]>/<fingerprint>.json`, written atomically (temp + `os.replace`).
+  - Only validated ok outcomes are stored, with payload keys allowlisted: `items` (raw dicts), `attempts`, `prompt_version`, `doc_id`, `chunk_id`.
+  - A corrupt file is treated as a miss and renamed `*.corrupt`.
+- **`Extractor(client, cache, *, model, effort, no_cache=False, archive_dir=None).extract(doc) -> ExtractResult`:**
+  - Per chunk: build the request, compute the fingerprint, check the cache (unless `no_cache`), else call.
+  - On an exception: `Refused` → status `refused`, `TruncatedResponse` → `truncated`, `BadResponse` → `invalid`, an SDK `APIError` → `error` with `error=<class name>`.
+  - Latency is measured around the call.
+  - With `no_cache`, ok payloads go to `archive_dir/<attempt_id>/` (if given) and never to the canonical cache.
 
-**Schema rules (`extract_v1.schema.json`):**
-- Top-level `{"items": [...]}`.
-- Each item object lists `span_text` first, then `segment_id`, then the rest.
-- All fields are `required`, with null allowed via `["string","null"]` types. `additionalProperties: false`.
-- Enums for `kind`, `type`, `status`, `role`.
-
-**System prompt content:**
-- Role: precise contract analyst.
-- Quote first, verbatim from one `[pNNNN]` line.
-- One item per obligation.
-- Party items only for parties named in the text.
-- Event items only for defined anchor dates or events.
-- `redacted` when the term is hidden by `[***]`-style markers, `blank` for unfilled form placeholders.
-- Never infer hidden or blank values.
-- Leave fields null rather than guess.
-- No obligations from the table of contents.
-
-**Frozen tests (coordinator):** `tests/test_extract_chunk.py`, `tests/test_extract_request.py`, `tests/test_extract_parse.py`. These use a `FakeClient` returning synthetic `SimpleNamespace` messages and check request kwargs exactly, parse paths (ok / refusal / max_tokens / bad JSON), cache hit/miss, and determinism.
+**Frozen tests:** `tests/test_extract_chunk.py`, `tests/test_extract_request.py`, `tests/test_extract_parse.py`, `tests/test_extract_cache.py`. FakeClient SDK-shaped messages are built from `anthropic.types` where constructible, otherwise SimpleNamespace.
 
 ### Task 8: Verify (deterministic, TDD heavy)
 
-**Files:** create `src/og/extract/verify.py`.
+**Files:** `src/og/extract/verify.py`.
 
-**Interfaces:**
-- `VerifiedItem(raw: RawItem, char_start: int, char_end: int, span_text: str, section_number: str | None, page: int, status: str, amount, due_date, offset_days, flags: list[str])`. `span_text` is the copied source slice.
-- `Drop(raw: RawItem, reason: str, detail: dict)`.
-- `verify(doc: TextDoc, items: list[RawItem]) -> tuple[list[VerifiedItem], list[Drop]]`.
+**`verify(doc, items) -> VerifyResult`.** Rules apply per item, in order:
 
-**Rules, in order:**
-1. **Segment check:** unknown `segment_id` → Drop `unknown_segment`.
-2. **Grounding:** `ground(doc, Span(span_text, seg.char_start, seg.char_end, seg.section_id))`. A failure becomes a Drop with ground's reason. On success, `span_text = doc.text[start:end]`, and section and page come from the GroundResult.
-3. **Status from markers:**
-   - `is_redacted(slice)` → `redacted`.
-   - Else `is_blank(slice)` → `blank`.
-   - Else `active`.
-   - The model's status is ignored except as a flag `status_disagrees` when it differs.
-4. **amount:**
-   - If status is `redacted` or `blank`: amount = null, and flag `amount_in_<status>_clause` if the model gave one.
-   - Else keep it only if `amount_in_text(amount, slice)`. Otherwise null plus flag `amount_not_in_quote`.
-   - `amount_in_text` extracts every number in the slice (`\d{1,3}(,\d{3})+(\.\d+)?|\d+(\.\d+)?`, commas removed) and compares numerically with tolerance 0.005.
-5. **due_date** (`YYYY-MM-DD`): keep only if the slice contains the same date in one of these forms: `Month D, YYYY`, `Mon. D, YYYY`, `M/D/YYYY`, `YYYY-MM-DD`, or `D Month YYYY`. Otherwise null plus `due_date_not_in_quote`.
-6. **offset_days:** keep only if the slice contains the integer as digits (word boundary), or a number word for the integers 1 to 365 that the module can spell (`thirty`, `ninety`, `one hundred twenty`…). Otherwise null plus `offset_not_in_quote`. If `offset_days` is nulled, `anchor_event` is nulled too (the pair rule).
-7. **Kind-specific checks:** obligations require `type`; events require `name`; parties require `name` and `role`. A missing field is a Drop `missing_field:<name>`.
-8. **Duplicates:** exact duplicates (same kind, type, char span) collapse to one, flag `duplicate_collapsed`.
+1. **Kind and required fields.** Obligation needs `type` in OBL_TYPES; event needs `name`; party needs `name` and `role` in ROLES. A failure gives Drop `missing_field:<f>` or `bad_enum:<f>`. An unknown `segment_id` gives Drop `unknown_segment`.
+2. **Grounding.** `ground(doc, Span(span_text, seg.char_start, seg.char_end, seg.section_id))`. A failure gives Drop `<ground reason>`.
+   - On success the evidence is the copied slice. Its `segment_id` is the segment containing `char_start`.
+   - If the slice does not end inside that same segment: Drop `multi_segment_evidence`.
+   - If the final segment differs from the cited one: FieldCorrection(`segment_id`, `relocated`).
+   - TOC-section evidence gives Drop `toc_evidence`.
+3. **Status (obligation and event).**
+   - `redacted` if `is_redacted(quote)`; else `blank` if `is_blank(quote)`; else `active`.
+   - If the segment outside the quote contains a marker: FieldCorrection(`status`, `marker_in_segment_outside_quote`). Status is not changed.
+   - The model's status, if different, gives FieldCorrection(`status`, `model_status_overridden`).
+   - `superseded` is never produced by extraction (deferred to wave 3).
+4. **amount** (obligations).
+   - Kept only if the quote contains a money expression whose value equals it exactly (Decimal).
+   - Money expressions: `\$\s?(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d{2}))?` (optional leading `-` or a `(`...`)` negative), or a number in that format followed by ` dollars`/` Dollars`.
+   - Otherwise null plus FieldCorrection(`amount`, `amount_not_in_quote`).
+   - A redaction marker does not by itself remove a separately evidenced amount (field-local rule).
+5. **currency.** `USD` only if the kept amount's evidence used `$` or `dollars`, else null. The model's other value gives FieldCorrection(`currency`, ...).
+6. **offset_days** (obligations).
+   - Kept only if the quote contains `(\d{1,3})\s*\)?\s*(calendar\s+)?days?\b` with that integer, AND the word window (≤ 60 chars) after the match contains `after|following|from|of` (positive) or `before|prior to` (negative, stored negative).
+   - `business days`, `months`, and `years` are never converted.
+   - Otherwise null plus FieldCorrection. If `offset_days` is null, `anchor_event` is null (pair).
+7. **anchor_event** (obligations): kept only if `offset_days` was kept AND the anchor name occurs in the quote (case-insensitive, whitespace-normalized). Else null plus FieldCorrection.
+8. **due_date** (obligations) and **date** (events).
+   - Kept only if the quote contains that calendar date in one of these forms: `January 5, 2026`, `Jan. 5, 2026`, `5 January 2026`, `1/5/2026`, `2026-01-05`.
+   - For `due_date`, the 40 chars before the date must also contain a deadline cue: `on or before|no later than|by|until|due|prior to`.
+   - Otherwise null plus FieldCorrection. A date on a `blank` event is always null.
+9. **trigger:** kept only if it is a verbatim substring of the quote (whitespace-normalized compare, stored as the source substring). Else null.
+10. **description:** the model text if every digit-run in it occurs in the quote; otherwise the quote, plus FieldCorrection(`description`, `number_not_in_quote`).
+11. **owed_by / owed_to.**
+    - Kept if the value is a role word in ROLES that appears in the agreement's text, or a party name that appears verbatim (case/space-normalized) somewhere in the agreement.
+    - Otherwise null plus FieldCorrection.
+    - Resolution to party rows happens in the writer.
+12. **Party items.** Kept only if the quote contains the name (case/space-normalized) AND the role word (`landlord`, `tenant`, ...) occurs within the same quote. No suffix stripping and no alias inference.
+13. **Duplicates.** Collapse only items whose full verified payloads are equal (same kind, evidence offsets, and every field). Distinct facts sharing a quote are all kept.
 
-**Frozen tests (coordinator):** `tests/test_verify.py`, about 40 cases: every rule, the Review Focus 1 to 3 inputs, number-word spelling, and property tests showing that every VerifiedItem's span_text equals the doc slice.
+**Frozen tests:** `tests/test_verify.py`, about 60 cases: every rule, the Review Focus cases, the Astra counterexamples (`within 30 days` amount, `-$5`, `$54,000.00` vs 54000.004, `30 months`, business days, execution-date vs due-date, a nulled amount still in the description, two parties in one sentence, two payments in one paragraph, a marker outside the quote), plus a property test that every Evidence equals its doc slice.
 
-### Task 9: Store writer
+### Task 9: Writer
 
-**Files:** create `src/og/store/writer.py`.
+**Files:** `src/og/store/writer.py`.
 
-**Interfaces:**
-- `write_extraction(con, *, source: dict, doc: TextDoc, agreement: dict, run: RunInfo, items: list[VerifiedItem]) -> WriteStats`.
-  - `source` is a sources.yaml entry.
-  - `agreement` holds `{id, title, type, effective_date, base_agreement_id, is_form}`.
-  - `RunInfo(prompt_version, model, calls: list[CallMeta])`.
-- **Preconditions:**
-  - `doc.source_sha256 == source["sha256"]`, else `ValueError("source pin mismatch")`.
-  - Every item's `span_text == doc.text[char_start:char_end]`, else `ValueError`.
-- **Transaction (`BEGIN IMMEDIATE`):**
-  1. Upsert `source` and `agreement`.
-  2. Upsert the `extraction_run` (source_id, prompt_version).
-  3. Delete that run's prior obligations, their clause_refs, and that agreement's events, defined_terms, and agreement_party rows produced by the same run. Rows carry `extraction_run_id`. Schema change: add `extraction_run_id` to `event`, `defined_term`, `agreement_party`. Coordinator-authored migration in `schema.sql`, with tests.
-  4. Insert parties: by name, normalized (casefold, strip punctuation and `, LLC`/`, Inc.` suffix variants for matching only; the stored name is the quote's form). Then `agreement_party(role)`.
-  5. Insert events, each with its clause_ref.
-  6. Insert obligations, each with its clause_ref (`grounded = 1`, section, page).
-  7. Resolve `owed_by`/`owed_to`:
-     - A role word (landlord, tenant, guarantor, provider, customer, lender) maps to the party holding that role in this agreement.
-     - Else a normalized-name match.
-     - Else NULL plus a WriteStats warning.
-  8. Resolve `anchor_event` by normalized name among this agreement's and its base agreement's events. Else null the pair plus a warning.
-  9. Commit.
-- `WriteStats(obligations, events, parties, unresolved_parties, unresolved_anchors, replaced_rows)`.
-- **Defined terms (deterministic, no model):** `extract_defined_terms(doc) -> list[(term, char_start, char_end)]` for patterns `(“Term”)`, `(the “Term”)`, and `“Term” means`. Inserted with clause_refs (span = the quoted term including quotes).
+**Schema v2 (contract file, coordinator) adds:**
+- `agreement_party.clause_ref_id` (NOT NULL; the party evidence).
+- `extraction_run` columns: `textdoc_sha256`, `model_attempts_json`, `completed_at`.
+- `PRAGMA user_version = 2`.
+- `obligation.description` stays NOT NULL.
 
-**Frozen tests (coordinator):** `tests/test_writer.py`. Covers idempotency (run twice gives identical counts, and other runs are untouched), pin mismatch, span mismatch, party resolution variants (Review Focus 5), anchor resolution through the base agreement, all writes visible through `visible_obligation`, and defined terms.
+**`write_snapshot(con, *, source, agreement, doc, run, result: VerifyResult) -> WriteStats`.**
 
-### Task 10: Gold format and scorer
+Preconditions (each raises `WriteRefused(code)`):
+- `doc.source_sha256 == source["sha256"]`.
+- The existing `source` row, if any, has the same sha256 (`source_repin`).
+- Every Evidence slice equals the doc text.
+- No obligation in another agreement anchors on this agreement's events (`dependents_exist`). Re-extract the lineage base-first.
 
-**Gold format (`eval/gold/<doc_id>.yaml`):**
-- Top level: `doc_id`, `source_sha256`, `labeled_by` (role, not name), `labeled_at`, `obligations: [...]`.
-- Each obligation: `segment_id`, `char_start`, `char_end`, `span_text`, `type`, `owed_by`, `owed_to`, `description`, `amount`, `currency`, `due_date`, `anchor_event`, `offset_days`, `trigger`, `status`, `notes`. This is the artifact's db shape.
+Transaction (`BEGIN IMMEDIATE`; on any error, rollback and re-raise):
+1. Upsert `source` and `agreement` with `ON CONFLICT DO UPDATE` (never `INSERT OR REPLACE`).
+2. Delete this agreement's previous snapshot, children before parents: clause_refs of its obligations, obligations, then the events, defined_terms, and agreement_party rows of this agreement, then their clause_refs, then the old extraction_run.
+3. Insert a new extraction_run.
+4. **Parties:** look up the party by exact stored name, inserting it if absent. Insert `agreement_party(role, clause_ref_id)`.
+5. **Events,** with clause_refs.
+6. **Defined terms** (deterministic, `extract_defined_terms(doc)`: `(“Term”)`, `(the “Term”)`, `“Term” means`), with clause_refs. The first occurrence of each term wins.
+7. **Obligations** with clause_refs (`grounded = 1`, section number, page).
+   - `owed_by`/`owed_to` resolve to a party id only when exactly one candidate matches: the role word among this agreement's agreement_party roles, else an exact normalized name. Otherwise NULL plus a stats warning.
+   - The anchor resolves to an event id only when exactly one event in this agreement has that normalized name, else exactly one in the base agreement. Otherwise null pair plus a warning.
+8. Commit.
 
-**Files:** create `src/og/eval/{__init__,gold,score}.py`.
+`WriteStats(obligations, events, parties, defined_terms, unresolved_parties, unresolved_anchors)`.
 
-**Interfaces:**
-- `load_gold(path, doc: TextDoc) -> list[GoldItem]`. Validates `source_sha256 == doc.source_sha256` and every `span_text == doc.text[start:end]`, else `ValueError`. The gold set is held to the same invariant.
-- `score(gold: list[GoldItem], predicted: list[PredItem]) -> Score`.
-  - **Matching:** same `type`, character-span IoU ≥ 0.3, one-to-one, greedy by IoU descending with ties to the earlier gold.
-  - **Output:** per-type `tp, fp, fn, precision, recall`; overall micro and macro values; field accuracy on matched pairs for `amount` (exact numeric), `due_date` (exact), `owed_by`/`owed_to` (role-normalized), and `status` (exact).
-- `grounded_rate(con, doc_id)`: share of `visible_obligation` rows whose clause_refs are all grounded. Should be 1.0 by construction; reported anyway.
-- `drops_count(log_path, doc_id)`.
+**Frozen tests:** `tests/test_writer.py`. Cases:
+- Replace semantics (run twice gives identical counts and other agreements untouched).
+- Rollback on an injected failure.
+- Source repin refused.
+- Dependents refused.
+- Ambiguous role.
+- Distinct suffix entities.
+- Base-agreement anchor.
+- Conflicting base events left unresolved.
+- Defined terms.
+- Every row visible via the `visible_*` views.
+- Plus `tests/test_schema_v2.py` (version check, fresh create, outdated-file refusal, the new columns). These test the contract files, which must pass at B2.
 
-**Frozen tests (coordinator):** `tests/test_eval_gold.py`, `tests/test_eval_score.py` (hand-built gold and predicted sets with known P/R; IoU edge cases; ties).
+### Task 10: Reference set, scorer, score CLI
 
-### Task 11: `make extract` wiring
+**Files:** `src/og/eval/{__init__,gold,score,__main__}.py`.
 
-**Files:** create `src/og/extract/__main__.py`; Makefile `extract` target, coordinator-edited to `uv run --locked python -m og.extract`.
+**Gold format** (`eval/gold/<doc_id>.yaml`):
+- `doc_id`, `source_sha256`, `textdoc_sha256`.
+- `provenance: {drafted_by, adjudicated_by, spot_checked}`.
+- `scope: full_agreement | sampled`.
+- `obligations: [...]` with `segment_id, char_start, char_end, span_text, type, owed_by, owed_to, description, amount, currency, due_date, anchor_event, offset_days, trigger, status`.
 
-**Behavior:**
-- For each pinned source with `data/text/<id>.json`: load the TextDoc and verify its sha against the pin.
-- Build the header from the preamble section's first 1500 chars.
-- `Extractor.extract`, then `verify`, then `write_extraction`.
-- Append drops to `logs/dropped.jsonl` (`{doc_id, prompt_version, reason, segment_id, span_text[:200], flags}`).
-- Append call metadata to `logs/extract_calls.jsonl`, with no request bodies and no headers.
-- Print per-document `obligations events parties drops cost_usd`.
-- The agreement type, base agreement, and effective date come from new sources.yaml fields (`agreement_type`, `amends`, `effective_date`). The coordinator adds these in C0.
+**`load_gold(path, doc) -> Gold`** validates:
+- doc_id, both shas, and offset bounds.
+- `span_text == doc.text[s:e]`, and the span lies inside its `segment_id`.
+- Enums, date and number types.
+- Failure raises `ValueError(<code>)`.
 
-**Pricing table:** a constant in code (Sonnet 5.5 $2/$10 per MTok, cache read $0.20, cache write 1.25x input), labeled with its date.
+**`score(gold, predicted, metric="m1") -> Score`** (`PredItem` has the gold fields plus `obligation_id`):
+- **Matching:** maximum-cardinality bipartite matching over pairs with the same type and IoU ≥ 0.3. Among maximum matchings, maximize total IoU. Ties are broken by (gold index, pred index).
+- **Localization:** per-type and micro P/R/F1. Macro over types present in gold. Empty-set conventions: P = 1.0 when there are no predictions and gold is empty, else 0.0.
+- **Field correctness** on matched pairs: for each of `amount, currency, due_date, offset_days, anchor_event, owed_by, owed_to, status`, report `{gold_known, pred_known, both_known_equal, accuracy_on_known, coverage}`.
+- Results carry `metric`, the threshold, and counts.
 
-**Frozen tests (coordinator):** `tests/test_extract_cli.py`, which runs the CLI end to end on the lease fixture with a FakeClient serving synthetic responses, into a temp DB. Checks counts, the drop log, and that no key-like string appears in any written file.
+**`pred_from_db(con, doc_id) -> list[PredItem]`:** one item per visible obligation of the agreement (deduplicated across multiple clause_refs, earliest ref). `owed_by`/`owed_to` are returned as the role word of the resolved party.
 
-### Task 13: ADR-008 (docs)
+**`python -m og.eval extract --doc <id> --db <path> [--gold <path>] [--out <path>]`** writes a results JSON containing:
+- `metric`, `prompt_version`, `doc_id`, `textdoc_sha256`.
+- `score`, `proposal_grounding` (verified / proposed, from the run's log), and `integrity` (count of visible obligations lacking a grounded same-agreement ref; must be 0).
+- `drops_by_reason`, `corrections_by_field`.
+- `cost_usd` with `cost_basis`.
+- `calls` (attempt models, tokens, latency).
 
-`docs/decisions/ADR-008-structured-output-and-field-grounding.md`, from the Decisions section above. Same format as wave-1 ADRs.
+**Frozen tests:** `tests/test_eval_gold.py`, `tests/test_eval_score.py` (Astra's greedy counterexample, ties, empty sets, field coverage), `tests/test_eval_cli.py` (temp DB + gold, then a JSON shape check).
+
+### Task 11: `make extract`
+
+**Files:** `src/og/extract/__main__.py` (and a Makefile `extract` target edited by the coordinator in B2 to `uv run --locked python -m og.extract`).
+
+**Behavior** (`python -m og.extract [--doc <id>] [--db data/graph.db] [--no-cache --runs-dir eval/runs/<stamp>]`), for each pinned source with `data/text/<id>.json`:
+1. Load the TextDoc and check its pin.
+2. `Extractor.extract`. If not `complete`: log every non-ok outcome, skip the write, and mark the doc failed.
+3. `verify`, then `write_snapshot`.
+4. Append to `logs/extract_runs.jsonl` one allowlisted record per document-run:
+   - `run_id`, `doc_id`, `prompt_version`, `textdoc_sha256`, `complete`.
+   - Per-chunk `{chunk_id, status, cache_hit, latency_ms, attempts}`.
+   - `drops: [{reason, segment_id, span_text[:200]}]`, `corrections: [{field, reason, segment_id}]`, `stats`.
+5. Processing order: base agreements first (via `amends`).
+6. Exit codes: 0 when every doc completed, 3 when any failed.
+7. `--no-cache --runs-dir X` writes each sample to its own DB `X/<doc>.db` and archive dir, never touching `graph.db`.
+8. **Pricing:** a dated table constant `PRICES_2026_10 = {"claude-sonnet-5-5": {...}}`. An attempt on a model missing from the table gets `cost = None` and `cost_basis = "unknown_model"`.
+
+**Frozen tests:** `tests/test_extract_cli.py`. End to end on the lease fixture with a FakeClient: complete run, a refused chunk (no write and exit 3), a re-run that replaces the snapshot, a `--no-cache` sample isolated from `graph.db`, and a sentinel key absent from every written file.
+
+### Task 13: ADR-008
+
+`docs/decisions/ADR-008-extraction-contract.md` covers:
+- Structured outputs instead of forced tool use.
+- Field-level evidence rules.
+- One snapshot per source, with derived data rebuilt rather than migrated.
+- The completeness gate.
+- The refusal fallback and per-attempt accounting.
+- The model-drafted, spot-checked reference set and its disclosure wording.
 
 ---
 
 ## Coordinator steps
 
-- **C0:** add `agreement_type`, `effective_date` (null where unknown), and the existing `amends` to every sources.yaml entry. Commit. Add `data/cache/` to .gitignore.
-- **C1 (needs key, after Task 7 merges):**
-  - Run the Extractor against 2 chunks of the Constant Contact first amendment (small, unredacted) and 1 chunk of the Carbonite lease (redactions).
-  - Save the raw response JSON (body only) to `tests/fixtures/api/extract_v1/*.json`.
-  - Add frozen replay tests showing that `parse_response` + `verify` on recorded responses produce items whose spans all ground.
-- **C2 (reference set, user decision 2026-10-02):** the user chose a model-drafted, human-spot-checked reference set over hand labeling.
-  1. Codex `gpt-6-astra` drafts 30 to 50 obligations for constantcontact-2011-ex1041. It is a different model family from the Sonnet extractor, which limits self-agreement bias. It works blind to any extraction output and writes `eval/gold/drafts/constantcontact-2011-ex1041.astra.yaml`, quoting verbatim from one segment each.
-  2. The coordinator validates every quote against the TextDoc (exact substring of the cited segment) and adjudicates type, parties, amounts, and dates against the text. The coordinator records each change with a reason in the draft's `adjudication` field.
-  3. The adjudicated draft is loaded into the labeler artifact (`labels` collection, `origin: astra-draft`).
-  4. The user spot-checks about 10 labels there, marking each checked, editing it, or deleting it.
-  5. Export to `eval/gold/constantcontact-2011-ex1041.yaml` with `provenance: {drafted_by: gpt-6-astra, adjudicated_by: coordinator, spot_checked: <n>}`.
-  6. The README must call it a "model-drafted, human-spot-checked reference set", never hand-labeled gold.
-  7. Labels are never edited after the first extraction run is scored. Any change after that needs a recorded reason and a re-score of every prior result.
-- **C3:** `make ingest && make extract` on the integration checkout. Record cost and latency.
+- **B2:** the contract files, tests, the Makefile target, and the `.env.example` additions (`OG_EXTRACT_EFFORT`, `OG_EXTRACT_CHUNK_CHARS`). Red is verified and the freeze is regenerated.
+- **C1 (needs key, after 7 and 8 merge):**
+  - Call the live API on 2 chunks of `constantcontact-2012-ex101` and 1 chunk of `carbonite-2014-ex1024`.
+  - Save the allowlisted payloads to `tests/fixtures/api/extract_v1/`.
+  - Add frozen replay tests (`parse_response` + `verify`: every kept item grounds; the schema is accepted by the API). Record them in `test-changes.md`.
+- **C2 (reference set; user decision 2026-10-02):**
+  1. Astra drafts blind from the TextDoc (in progress).
+  2. The coordinator validates and adjudicates, recording each change with a reason.
+  3. The draft is loaded into the labeler artifact (`origin: astra-draft`).
+  4. The user spot-checks about 10.
+  5. Export to `eval/gold/` with provenance, after Task 6 re-ingest. Offsets are recomputed only if `textdoc_sha256` changed. A changed quote means the item is re-adjudicated, never silently moved.
+  6. The README wording is "model-drafted, human-spot-checked reference set".
+  7. Labels are frozen once the first scored run is recorded.
+- **C3:** `make ingest && make extract` on the integration checkout. Record cost, latency, and outcomes.
 - **C4:**
-  - Score the gold doc and write `eval/results/<date>-extract.json` (per-type P/R, field accuracy, grounded rate, drops, cost, latency, prompt_version, served model).
-  - Run extraction 3 times on the gold doc for run-to-run variance (ADR-006). The cache must be bypassed with `OG_EXTRACT_NO_CACHE=1` for those runs.
+  - Score into `eval/results/<date>-extract.json`.
+  - Variance: 5 independent `--no-cache` samples (ADR-006) on the gold doc, each scored from its own DB. Report the mean and range per metric, and label any sample that used a fallback model.
+  - No prompt changes are adopted in this wave.
 
-## Out of scope (wave 3+)
+## Review resolution (Astra wave 2 round 1)
 
-Change-order diff, supersession edges, gates, triggers/guarantees edge extraction, MCP, UI, README numbers.
+| # | Finding | Resolution |
+|---|---------|-----------|
+| 1 | Unsafe verified payload | Kind-specific Verified* types; raw output never stored; event dates, currency, trigger, and description get field rules |
+| 2 | Number occurrence ≠ meaning | `$`/dollars evidence and exact Decimal for amount; `days` wording plus before/after for offsets; a deadline cue for due dates; number words cut |
+| 3 | Party/anchor manufacturing | Party role cited (`agreement_party.clause_ref_id`); no suffix stripping; unique-candidate resolution or NULL; the anchor must be named in the quote |
+| 4 | Multi-run isolation | One snapshot per source; experiments in separate DBs; ordered delete; repin and dependents refused; `ON CONFLICT DO UPDATE` |
+| 5 | Partial or empty overwrite | Per-chunk outcomes; write only when complete; the previous snapshot is kept on any failure; failures are never cached |
+| 6 | Marker handling | Field-local amount rule; status from markers in the quote; a marker outside the quote is flagged; superseded deferred |
+| 7 | Migration | Derived DB rebuilt: `user_version` check with `SchemaOutdated`; contract files owned by the coordinator |
+| 8 | Interfaces and DAG | Frozen `types.py` and contract files in B2; disjoint modules; C1 after 7 and 8 |
+| 9 | Duplicate collapse | Only identical full payloads |
+| 10 | Schema/parser | Frozen flat schema with null in enums; local validation; Attempt metadata separate from parse |
+| 11 | Chunk/header/relocation | Soft cap and oversize rule; `[ctx]` context block not extractable; relocation recorded; multi-segment evidence dropped |
+| 12 | TOC | Forward-pass rule with a ≥3-entry run that becomes a "Table of Contents" section, excluded from chunks; corpus-modeled fixtures |
+| 13 | Cache | Fingerprint over request plus doc identity; only ok payloads cached atomically; allowlist; no-cache archive |
+| 14 | Fallback accounting | Per-attempt models and usage from `usage.iterations`; dated price table; unknown = None |
+| 15 | Eval honesty | Full gold validation; maximum-cardinality matching; separate localization and field metrics with coverage |
+| 16 | Metrics and entrypoints | Proposal grounding vs integrity split; logs keyed by run; score CLI owned by Task 10 |
+| 17 | Variance | 5 uncached samples in separate DBs, mean and range, fallback samples labeled |
+
+## Contract details pinned by the frozen tests (rev 2.1)
+
+Where rev 2 was silent, the frozen tests pin these choices. They are authoritative. A worker who believes one is wrong uses `ask` and does not work around it.
+
+**Task 6 (TOC):**
+- A candidate counts as a TOC entry only if at least one page-reference line follows it.
+- Page references are matched case-insensitively, so roman `IV` counts.
+- A `Page` line between `TABLE OF CONTENTS` and the first entry does not detach the heading; the TOC section starts at the heading line.
+
+**Task 7 (modules and contracts):**
+- **Module locations:**
+  - `og.extract.chunk.chunk_doc`.
+  - `og.extract.prompt.{prompt_version, build_request, request_fingerprint}`.
+  - `og.extract.client.{parse_response, Extractor}`.
+  - `og.extract.cache.ResponseCache`.
+  - CLI entry `og.extract.__main__.main(argv: list[str] | None = None, *, client=None) -> int`. It builds a real SDK client only when `client` is None.
+- `Extractor(..., max_chars=12000)` passes `max_chars` to `chunk_doc`.
+- **Context block:** the leading non-TOC segments, up to 1500 chars of segment text, always at least one. Every chunk after the first starts with `CONTEXT (do not extract)` followed by `[ctx pNNNN] <text>` lines. Chunk 1 has none. The soft cap applies to the full `chunk.text`; only a single-segment chunk may exceed it.
+- **System prompt:** `system[0].text` is the UTF-8 text of `prompts/extract_v1.md`.
+- **`parse_response` rejects** (`BadResponse`, non-empty code; only `no_text` is pinned):
+  - Extra or missing keys at the top level or in an item, or a non-list `items`.
+  - Booleans as numbers, a non-int `offset_days`, NaN.
+  - Bad enums, and non-ISO or non-calendar dates.
+- **Attempts:** one per `usage.iterations` entry (fields `model`, `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, read with getattr). Every entry but the last has `refused=True`. Without iterations, one Attempt comes from top-level usage plus `message.model`.
+- **`ResponseCache.put`:**
+  - Raises `ValueError` on any payload key outside the allowlist and writes nothing.
+  - Ok outcomes with empty `items` are cached; failures never are.
+  - A corrupt file is renamed with a `.corrupt` suffix and treated as a miss.
+
+**Task 8 (verify):**
+- Kind, enum and required-field checks run before the unknown-segment check. A bad `kind` drops as `bad_enum:kind`.
+- If either `offset_days` or `anchor_event` is nulled, both are nulled (the DB pair CHECK).
+- A null model description falls back to the quote.
+- Role words are matched case-insensitively. Party names are case- and space-normalized for comparison, and the model's string is stored.
+- Trigger matching is case-sensitive with whitespace normalized; the stored value is the source substring.
+- Every digit run in the description must occur in the quote.
+- **Currency:** null when no amount is kept. `USD` (plus a correction) when the model gave another code for a `$`-evidenced amount.
+- Due-date cue words match only at word boundaries.
+
+**Task 9 (writer):**
+- `source` is a sources.yaml-style dict and `agreement` a dict `{id, title, type, effective_date, base_agreement_id, is_form}`. The agreement id equals the doc_id and the source id.
+- `WriteRefused` codes `pin_mismatch`, `source_repin`, `span_mismatch`, `dependents_exist` are all checked before any write.
+- Party rows are global by exact name. A snapshot delete removes only `agreement_party` rows, never `party` rows.
+- `unresolved_parties` counts non-null `owed_by`/`owed_to` values that do not resolve.
+- `extract_defined_terms(doc) -> list[tuple[term, char_start, char_end]]`: the term is returned without quotes, and the span includes the curly quotes.
+- **Stored values:**
+  - `clause_ref.section` holds the section number.
+  - `amount` is stored as a float.
+  - `model_attempts_json` is a JSON list of attempt dicts.
+- `textdoc_sha256 = sha256(doc.to_json().encode())` everywhere: writer, gold, fingerprint.
+
+**Task 10 (eval):**
+- **Locations:** `GoldItem` in `og.eval.gold`; `PredItem` in `og.eval.score` (GoldItem fields plus `obligation_id`). `load_gold` returns `.doc_id`, `.scope`, `.provenance`, `.obligations`.
+- **`load_gold` error codes:**
+  - `doc_id_mismatch`, `source_sha_mismatch`, `textdoc_sha_mismatch`.
+  - `bad_enum:<f>`, `out_of_bounds`, `span_mismatch`, `span_outside_segment`.
+  - `bad_date:due_date`, `bad_number:<f>`.
+- **`score(...).as_dict()` keys:** `metric, iou_threshold, n_gold, n_pred, matches, micro, per_type, macro`. Macro averages over the types present in gold.
+- **Empty sets:** P = 1.0 only when there are no predictions and gold is empty; R = 1.0 when gold is empty.
+- **Field metrics:** each field also reports `both_known`. `accuracy_on_known` and `coverage` are None when their denominator is 0.
+- **`pred_from_db`:** the span comes from the earliest clause_ref, roles are lowercase role words, and `segment_id` is None.
+- **Score CLI:** `og.eval.__main__.main(argv) -> int`, `extract --doc --db --text --log --out [--gold]`. It reads the log record whose `run_id` matches the DB's run.
+
+**Task 11 (log record):** each `logs/extract_runs.jsonl` record has at least these fields, a superset of what both the extract CLI tests and the eval CLI tests read:
+- `run_id`, `doc_id`, `prompt_version`, `textdoc_sha256`, `complete`.
+- `proposed` and `verified` (counts).
+- `chunks`: `[{chunk_id, status, cache_hit, latency_ms, attempts: [{model, input_tokens, output_tokens, cache_read_tokens, cache_write_tokens, refused}]}]`.
+- `drops`: `[{reason, segment_id, span_text}]`.
+- `corrections`: `[{field, reason, segment_id}]`.
+- `stats`.
+- `cost_usd` and `cost_basis`.
+
+**CLI defaults:**
+- The cache root is `data/cache/extract`.
+- A pin mismatch exits 3 with no calls and no rows. An unknown `--doc` exits nonzero.
+- `--no-cache --runs-dir X` writes `X/<doc_id>.db`, never creates `data/graph.db`, and writes no cache JSON.
