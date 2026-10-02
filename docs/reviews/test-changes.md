@@ -71,3 +71,7 @@ New `tests/test_pipeline_regressions_r4.py`, which runs the five round-4 counter
 - `test_non_literal_event_date_never_schedules_a_deadline` (3 cases)
 - `test_truncated_company_name_never_becomes_the_payer`
 - `test_role_across_another_entity_never_becomes_the_payer`
+
+## 2026-10-02: contract change, output schema nullable enums (C1)
+
+`prompts/extract_v1.schema.json`: the live API (C1 recording, request `req_011CfcoE6JDYyxuTmKFM3BGT`) rejects `{"type": ["string","null"], "enum": [..., null]}` with "Enum value 'payment' does not match declared type". Nullable enums (`type`, `status`, `role`) are now `{"anyOf": [{"type": "string", "enum": [...]}, {"type": "null"}]}`. A live probe with the new form succeeded. No test assertion changed; `prompt_version` changes because the schema bytes changed. The parser's local validation is unchanged: it already accepts null for these fields.

@@ -25,21 +25,24 @@
             ]
           },
           "type": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "enum": [
-              "payment",
-              "delivery",
-              "sla",
-              "penalty",
-              "termination_right",
-              "guarantee",
-              "notice",
-              "insurance",
-              "other",
-              null
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "payment",
+                  "delivery",
+                  "sla",
+                  "penalty",
+                  "termination_right",
+                  "guarantee",
+                  "notice",
+                  "insurance",
+                  "other"
+                ]
+              },
+              {
+                "type": "null"
+              }
             ],
             "description": "Obligation type; null for events and parties."
           },
@@ -107,15 +110,18 @@
             "description": "Condition text copied verbatim from the quote, or null."
           },
           "status": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "enum": [
-              "active",
-              "redacted",
-              "blank",
-              null
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "active",
+                  "redacted",
+                  "blank"
+                ]
+              },
+              {
+                "type": "null"
+              }
             ]
           },
           "name": {
@@ -133,19 +139,22 @@
             "description": "Event date YYYY-MM-DD only when written in the quote."
           },
           "role": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "enum": [
-              "landlord",
-              "tenant",
-              "guarantor",
-              "provider",
-              "customer",
-              "lender",
-              "other",
-              null
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "landlord",
+                  "tenant",
+                  "guarantor",
+                  "provider",
+                  "customer",
+                  "lender",
+                  "other"
+                ]
+              },
+              {
+                "type": "null"
+              }
             ],
             "description": "Party role; null unless kind is party."
           }
