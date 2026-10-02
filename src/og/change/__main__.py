@@ -20,7 +20,9 @@ miss exits 4 with ``replay_miss <fingerprint>`` and writes no recordings. Run
 costs split recorded cost (always) from incremental spend (only calls this
 invocation made), and the record carries ``recorded_latency_ms`` (the checks
 plus the classifier gates' call latencies) and ``replay_wall_ms`` (this
-invocation's wall time).
+invocation's wall time). The stored run's ``latency_ms`` is the recorded
+latency, never the wall time (rev 2.3), so a replay stores the latency the
+live run actually spent.
 """
 
 from __future__ import annotations
@@ -213,6 +215,19 @@ def _run_costs(outcomes, decisions) -> tuple[float | None, float | None]:
     return cost_usd, incremental
 
 
+def _recorded_latency_ms(outcomes, decisions) -> int:
+    """The run's model-call latency: checks plus classifier-tier gates (W4-4).
+
+    Live or replayed, each outcome and classifier decision carries the latency
+    of the calls it actually made; this is what the DB row and the log's
+    ``recorded_latency_ms`` store. Wall time is the log's ``replay_wall_ms``
+    only.
+    """
+    return sum(o.latency_ms or 0 for o in outcomes) + sum(
+        d.latency_ms for d in decisions if d.tier == "classifier"
+    )
+
+
 @dataclass
 class _StoredBaseline:
     run_id: str
@@ -330,7 +345,7 @@ def _run_mode(
             baseline_run_id=baseline_run_id if mode == "gated" else None,
             cost_usd=cost_usd,
             incremental_cost_usd=incremental_cost_usd,
-            latency_ms=int((time.monotonic() - started) * 1000),
+            latency_ms=_recorded_latency_ms(outcomes, decisions),
         )
         try:
             write_change_run(
@@ -353,6 +368,7 @@ def _run_mode(
 
     cost_usd, incremental_cost_usd = _run_costs(outcomes, decisions)
     wall_ms = int((time.monotonic() - started) * 1000)
+    recorded_ms = _recorded_latency_ms(outcomes, decisions)
     record = {
         "run_id": run_id,
         "pair_id": pair_id,
@@ -375,11 +391,8 @@ def _run_mode(
         "verified": len(findings),
         "cost_usd": cost_usd,
         "incremental_cost_usd": incremental_cost_usd,
-        "recorded_latency_ms": (
-            sum(o.latency_ms or 0 for o in outcomes)
-            + sum(d.latency_ms for d in decisions if d.tier == "classifier")
-        ),
-        "latency_ms": wall_ms,
+        "recorded_latency_ms": recorded_ms,
+        "latency_ms": recorded_ms,
         "replay_wall_ms": wall_ms,
         "budget_exhausted": budget.exhausted,
     }
